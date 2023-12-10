@@ -107,7 +107,7 @@
       <AdditionalIncludeDirectories>..\..\Plugins\imgui;..\..\Plugins\imgui\backends;..\..\Plugins\imgui\examples\libs\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
@@ -139,6 +139,9 @@
     <ClCompile Include="..\..\Plugins\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\imgui_widgets.cpp" />
     <ClCompile Include="ZaxEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

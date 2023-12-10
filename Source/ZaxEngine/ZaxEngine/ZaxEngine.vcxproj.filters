@@ -43,4 +43,9 @@
       <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ZaxEngine.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
