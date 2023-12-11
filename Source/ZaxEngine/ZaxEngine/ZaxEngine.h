@@ -22,6 +22,9 @@
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
 
+#include <iostream>
+#include "glad/glad.h"
+
 
 GLFWwindow* window;
 bool show_demo_window = true;
@@ -86,7 +89,7 @@ static int ImGui_Init()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 #else
 	// GL 3.0 + GLSL 130
-	const char* glsl_version = "#version 130";
+	const char* glsl_version = "#version 330 core";
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
@@ -99,6 +102,12 @@ static int ImGui_Init()
 		return 1;
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
+
+	// ≥ı ºªØ glad
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		return -1;
+	}
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();

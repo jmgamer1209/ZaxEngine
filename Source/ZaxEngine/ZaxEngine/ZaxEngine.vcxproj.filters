@@ -16,6 +16,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{8295b20b-018b-4e1f-b0d6-7692ca812b42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="glad">
+      <UniqueIdentifier>{4482efa4-8e1f-47e3-b306-ffec46a95ef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ZaxEngine.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\glad\src\glad.c">
+      <Filter>glad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -102,9 +102,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\Plugins\imgui;..\..\Plugins\imgui\backends;..\..\Plugins\imgui\examples\libs\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Plugins\imgui;..\..\Plugins\imgui\backends;..\..\Plugins\imgui\examples\libs\glfw\include;..\..\Plugins\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Plugins\glad\src\glad.c" />
     <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\imgui.cpp" />
