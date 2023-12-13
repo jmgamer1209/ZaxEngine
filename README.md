@@ -20,3 +20,7 @@
 C++版本：C++14
 
 初始版本使用 OpenGL 图形库，后续随着扩展，会逐步扩充 DirectX11，DirectX12，Vulkan，当然，这是当前版本稳定后的事情了。
+
+当前版本的画面：
+
+![](./Versions/Assets/v0.2_result.png)
