@@ -11,6 +11,7 @@ unsigned int VBO;
 unsigned int EBO;
 int success;
 char infoLog[512];
+float color[4] = {1,1,1,1};
 
 int wWinMain()
 {
@@ -53,13 +54,11 @@ int wWinMain()
 	return 0;
 }
 
-
-
-void HandleRenderData()
+//*********
+// 编译 shader，并生成 shader program
+//*********
+void PrepareShader()
 {
-	//*********
-	// 编译 shader，并生成 shader program
-	//*********
 	const char* vertexShaderSource = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"void main()\n"
@@ -68,12 +67,13 @@ void HandleRenderData()
 		"}\0";
 	const char* fragmentShaderSource = "#version 330 core\n"
 		"out vec4 FragColor;\n"
+		"uniform vec4 color;\n"
 		"void main()\n"
 		"{\n"
-		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"   FragColor = color;\n"
 		"}\n\0";
 
- 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
@@ -105,11 +105,15 @@ void HandleRenderData()
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-	
+}
+
+void HandleRenderData()
+{
+	PrepareShader();
+
 	//*********
 	// 准备三角形mesh数据，并将顶点属性配置及顶点绑定放在VAO中
 	//*********
-	
 	float vertices[] = {
 	-0.5f, -0.5f, 0.0f,
 	0.5f, -0.5f, 0.0f,
@@ -143,7 +147,9 @@ void HandleRenderData()
 
 void DoRender()
 {
+	int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
 	glUseProgram(shaderProgram);
+	glUniform4f(vertexColorLocation, color[0], color[1], color[2], color[3]);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -151,9 +157,16 @@ void DoRender()
 
 void ShowUI()
 {
-	ImGui_ShowSimpleWindow();
-	ImGui_ShowDemoWindow();
-	ImGui_ShowAnotherWindow();
+	ImGui::Begin("Triangle");
+
+	ImGui::Text("Color: "); //ImGui::SameLine();
+	ImGui::SliderFloat4("", color, 0, 1);
+
+	ImGui::End();
+
+	//ImGui_ShowSimpleWindow();
+	//ImGui_ShowDemoWindow();
+	//ImGui_ShowAnotherWindow();
 
 	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 	//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
