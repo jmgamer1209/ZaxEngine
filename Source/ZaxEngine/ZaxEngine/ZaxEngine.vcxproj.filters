@@ -53,5 +53,8 @@
     <ClInclude Include="ZaxEngine.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Plugins\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
