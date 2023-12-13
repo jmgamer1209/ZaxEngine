@@ -12,6 +12,7 @@ unsigned int EBO;
 int success;
 char infoLog[512];
 float color[4] = {1,1,1,1};
+float position[3] = { 0, 0, 0 };
 
 int wWinMain()
 {
@@ -61,16 +62,17 @@ void PrepareShader()
 {
 	const char* vertexShaderSource = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
+		"uniform vec3 offset;\n"
 		"void main()\n"
 		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+		"   gl_Position = vec4(aPos.x+offset.x, aPos.y+offset.y, aPos.z+offset.z, 1.0);\n"
 		"}\0";
 	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
+		"out vec4 gl_FragColor;\n"
 		"uniform vec4 color;\n"
 		"void main()\n"
 		"{\n"
-		"   FragColor = color;\n"
+		"   gl_FragColor = color;\n"
 		"}\n\0";
 
 	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -147,9 +149,14 @@ void HandleRenderData()
 
 void DoRender()
 {
-	int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
 	glUseProgram(shaderProgram);
+
+	int vertexPostionLocation = glGetUniformLocation(shaderProgram, "offset");
+	int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
+	
 	glUniform4f(vertexColorLocation, color[0], color[1], color[2], color[3]);
+	glUniform3f(vertexPostionLocation, position[0], position[1], position[2]);
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -160,7 +167,10 @@ void ShowUI()
 	ImGui::Begin("Triangle");
 
 	ImGui::Text("Color: "); //ImGui::SameLine();
-	ImGui::SliderFloat4("", color, 0, 1);
+	ImGui::SliderFloat4("##Color",color, 0, 1);
+	
+	ImGui::Text("Position: "); //ImGui::SameLine();
+	ImGui::SliderFloat3("##Position", position, 0, 1);
 
 	ImGui::End();
 
