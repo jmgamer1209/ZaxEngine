@@ -3,10 +3,12 @@
 
 void HandleRenderData();
 void DoRender();
+void ShowUI();
 
 unsigned int VAO;
 unsigned int shaderProgram;
 unsigned int VBO;
+unsigned int EBO;
 int success;
 char infoLog[512];
 
@@ -33,9 +35,7 @@ int wWinMain()
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
-		ImGui_ShowSimpleWindow();
-		ImGui_ShowDemoWindow();
-		ImGui_ShowAnotherWindow();
+		ShowUI();
 		ImGui::Render(); // ImGui 生成渲染数据
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // ImGui 执行绘制指令
 
@@ -45,6 +45,7 @@ int wWinMain()
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderProgram);
 
 	CleanUp();
@@ -106,12 +107,16 @@ void HandleRenderData()
 	glDeleteShader(fragmentShader);
 	
 	//*********
-	// 准备三角形mesh数据，并将顶点属性配置绑定在VAO中
+	// 准备三角形mesh数据，并将顶点属性配置及顶点绑定放在VAO中
 	//*********
+	
 	float vertices[] = {
 	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	0.5f, -0.5f, 0.0f,
+	0.0f,  0.5f, 0.0f
+	};
+	unsigned int indeces[] = {
+		0,1,2
 	};
 	
 
@@ -122,12 +127,17 @@ void HandleRenderData()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), indeces, GL_STATIC_DRAW);
+
 	//设置顶点属性的顺序
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	// 将绑定操作清除
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);  // do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
 	glBindVertexArray(0);
 }
 
@@ -135,5 +145,21 @@ void DoRender()
 {
 	glUseProgram(shaderProgram);
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+void ShowUI()
+{
+	ImGui_ShowSimpleWindow();
+	ImGui_ShowDemoWindow();
+	ImGui_ShowAnotherWindow();
+
+	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+	//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+	//ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+	//ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+	//ImGui::SameLine();
+	//ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 }
