@@ -17,6 +17,7 @@ char infoLog[512];
 float position[3] = { 0, 0, 0 };
 ShaderProgram* shaderProgram;
 string contentPath; 
+unsigned int texture;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
@@ -31,10 +32,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	contentPath = projectPath + "/../../../Content/";
 
 	// 创建 Shader Program
-	shaderProgram = new ShaderProgram(contentPath + "v0.4/triangle.vs", contentPath + "v0.4/triangle.fs");
-
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load((contentPath + "Common/wall.jpg").c_str(), &width, &height, &nrChannels, 0);
+	shaderProgram = new ShaderProgram(contentPath + "v0.4/vertex.vs", contentPath + "v0.4/fragment.fs");
 
 	// 准备三角形数据
 	HandleRenderData();
@@ -78,14 +76,14 @@ void HandleRenderData()
 	//*********
 	float vertices[] = {
 		//     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
-			 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 右上
-			 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
-			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 左下
+			-0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f,   // 左下 
+			0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 右下
+			0.5f,  0.5f, 0.0f,    0.0f, 0.0f, 1.0f,   1.0f, 1.0f,   // 右上
 			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
 	};
 	unsigned int indeces[] = {
-		0,1,3,
-		1,2,3
+		0,1,2,
+		0,2,3
 	};
 	
 
@@ -109,20 +107,49 @@ void HandleRenderData()
 	glEnableVertexAttribArray(1);
 
 	//设置纹理坐标布局
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	// 将绑定操作清除
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// 将绑定操作清除，这个不是什么必须的，基本不需要
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);  // do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-	glBindVertexArray(0);
+	//glBindVertexArray(0);
+
+	// 加载纹理
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// 设置环绕方式，下面表示 s 和 t 都设置为 Repeat
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+	// 设置过滤方式，下面表示 放大缩小时都是线性
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load((contentPath + "Common/wall.jpg").c_str(), &width, &height, &nrChannels, 0);
+	
+	if (data) 
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	
+	stbi_image_free(data);
 }
 
 void DoRender()
 {
 	shaderProgram->Use();
 	shaderProgram->SetUniform("offset", position[0], position[1], position[2]);
-
+	
+	// 激活纹理单元后，再绑定，那么纹理将会被放在GPU硬件中的专门存储纹理的纹理单元中
+	glActiveTexture(GL_TEXTURE0); 
+	glBindTexture(GL_TEXTURE_2D, texture);
+	shaderProgram->SetUniform("texture1", 0);
+	 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

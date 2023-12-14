@@ -94,3 +94,9 @@ void ShaderProgram::SetUniform(const GLchar* name, GLfloat v0, GLfloat v1, GLflo
     int location = glGetUniformLocation(ID, name);
     glUniform3f(location, v0, v1, v2);
 }
+
+void ShaderProgram::SetUniform(const GLchar* name, GLint v0)
+{
+    int location = glGetUniformLocation(ID, name);
+    glUniform1i(location, v0);
+}
