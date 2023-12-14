@@ -1,26 +1,38 @@
-﻿
-#include "ZaxEngine.h"
+﻿#include "ZaxEngine.h"
+#include "ShaderProgram.h"
+#include "Debug.h"
+#include <Windows.h>
+#include "Utils.h"
 
 void HandleRenderData();
 void DoRender();
 void ShowUI();
 
 unsigned int VAO;
-unsigned int shaderProgram;
 unsigned int VBO;
 unsigned int EBO;
 int success;
 char infoLog[512];
 float color[4] = {1,1,1,1};
 float position[3] = { 0, 0, 0 };
+ShaderProgram* shaderProgram;
+string contentPath; 
 
-int wWinMain()
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
-	GLFW_INIT;
+	GLFW_INIT; 
 
 	if (ImGui_Init() == 1) return 1;
 	
-	// 准备三角形数据，以及着色器程序，VAO
+	// 设置内容路径
+	TCHAR path[MAX_PATH] = { 0 };
+	GetCurrentDirectory(MAX_PATH, path);
+	auto projectPath = Utils::WString2String(path);
+	contentPath = projectPath + "/../../../Content/";
+
+	// 创建 Shader Program
+	shaderProgram = new ShaderProgram(contentPath + "v0.3/triangle.vs", contentPath + "v0.3/triangle.fs");
+	// 准备三角形数据
 	HandleRenderData();
 
 	while (!glfwWindowShouldClose(window))
@@ -48,71 +60,15 @@ int wWinMain()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
-	glDeleteProgram(shaderProgram);
+	shaderProgram->Delete();
 
 	CleanUp();
 
 	return 0;
 }
 
-//*********
-// 编译 shader，并生成 shader program
-//*********
-void PrepareShader()
-{
-	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"uniform vec3 offset;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x+offset.x, aPos.y+offset.y, aPos.z+offset.z, 1.0);\n"
-		"}\0";
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 gl_FragColor;\n"
-		"uniform vec4 color;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_FragColor = color;\n"
-		"}\n\0";
-
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-}
-
 void HandleRenderData()
 {
-	PrepareShader();
-
 	//*********
 	// 准备三角形mesh数据，并将顶点属性配置及顶点绑定放在VAO中
 	//*********
@@ -149,17 +105,12 @@ void HandleRenderData()
 
 void DoRender()
 {
-	glUseProgram(shaderProgram);
-
-	int vertexPostionLocation = glGetUniformLocation(shaderProgram, "offset");
-	int vertexColorLocation = glGetUniformLocation(shaderProgram, "color");
-	
-	glUniform4f(vertexColorLocation, color[0], color[1], color[2], color[3]);
-	glUniform3f(vertexPostionLocation, position[0], position[1], position[2]);
+	shaderProgram->Use();
+	shaderProgram->SetUniform("color", color[0], color[1], color[2], color[3]);
+	shaderProgram->SetUniform("offset", position[0], position[1], position[2]);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void ShowUI()
