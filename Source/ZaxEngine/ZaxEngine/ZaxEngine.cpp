@@ -32,6 +32,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	// 创建 Shader Program
 	shaderProgram = new ShaderProgram(contentPath + "v0.3/triangle.vs", contentPath + "v0.3/triangle.fs");
+
 	// 准备三角形数据
 	HandleRenderData();
 
@@ -121,7 +122,7 @@ void ShowUI()
 	ImGui::SliderFloat4("##Color",color, 0, 1);
 	
 	ImGui::Text("Position: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##Position", position, 0, 1);
+	ImGui::SliderFloat3("##Position", position, -1, 1);
 
 	ImGui::End();
 
