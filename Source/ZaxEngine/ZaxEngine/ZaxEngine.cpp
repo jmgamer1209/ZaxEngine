@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include <Windows.h>
 #include "Utils.h"
+#include "stb_image.h"
 
 void HandleRenderData();
 void DoRender();
