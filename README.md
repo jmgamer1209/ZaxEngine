@@ -14,6 +14,7 @@
 引擎使用的插件：
 * imgui v1.90，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
 * glad，用于运行时查找 opengl 函数
+* stb_image，图片加载库
 
 引擎编译工具：VS2022，这里没有选择CMake，目前主要开发还是在PC平台，到后期如果有跨平台需要再进行切换。
 
@@ -23,4 +24,4 @@ C++版本：C++14
 
 当前版本的画面：
 
-![](./Versions/Assets/v0.3_result.png)
+![](./Versions/Assets/v0.4_result.png)
