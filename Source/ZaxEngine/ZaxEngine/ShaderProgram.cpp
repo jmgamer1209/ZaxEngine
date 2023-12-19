@@ -1,4 +1,5 @@
 #include "ShaderProgram.h"
+#include "Debug.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -36,7 +37,7 @@ unsigned int ShaderProgram::LoadShader(string path, int type)
     }
     catch (std::ifstream::failure& e)
     {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
+        Debug::Log({ "ERROR::Shader::FILE_NOT_SUCCESSFULLY_READ: ", e.what() });
     }
     const char* vShaderCode = shaderCode.c_str();
     
@@ -59,7 +60,7 @@ void ShaderProgram::CheckCompileError(unsigned int shader, string type)
         if (!success)
         {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            Debug::Log({"ERROR::Shader_Complication Error of type: ", type, "\\n", infoLog , "\\n -- --------------------------------------------------- --"});
         }
     }
     else
@@ -68,7 +69,7 @@ void ShaderProgram::CheckCompileError(unsigned int shader, string type)
         if (!success)
         {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            Debug::Log({ "ERROR::ProgramLink Error of type: ", type, "\\n", infoLog , "\\n -- --------------------------------------------------- --" });
         }
     }
 }
@@ -99,4 +100,10 @@ void ShaderProgram::SetUniform(const GLchar* name, GLint v0)
 {
     int location = glGetUniformLocation(ID, name);
     glUniform1i(location, v0);
+}
+
+void ShaderProgram::SetUniform(const GLchar* name, glm::mat4& mat)
+{
+    int location = glGetUniformLocation(ID, name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }
