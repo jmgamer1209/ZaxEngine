@@ -204,6 +204,7 @@ void DoRender()
 	glm::mat4 projection(1.0f);
 
 	model = glm::translate(model, glm::vec3(position[0], position[1], position[2]));
+	// 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
 	model = glm::rotate(model, rotationAngle, glm::vec3(rotationAxis[0], rotationAxis[1], rotationAxis[2]));
 	model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
 
