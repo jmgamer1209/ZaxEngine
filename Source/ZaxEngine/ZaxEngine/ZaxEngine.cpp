@@ -31,7 +31,9 @@ int viewportWidth;
 int viewportHeight;
 
 float cameraPos[3] = {0, 0, 3};
-glm::vec3 cameraEularAngle;
+glm::vec3 cameraFront;
+float pitch = 0;
+float yaw = -90.0f;
 int cameraNear;
 int cameraFar;
 
@@ -214,7 +216,17 @@ void DoRender()
 	model = glm::rotate(model, rotationAngle, glm::vec3(rotationAxis[0], rotationAxis[1], rotationAxis[2]));
 	model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
 
-	view = glm::translate(view, glm::vec3(-cameraPos[0], -cameraPos[1], -cameraPos[2]));
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
+
+	glm::vec3 pos = glm::vec3(cameraPos[0], cameraPos[1], cameraPos[2]);
+	auto lookAt = glm::lookAt(pos,
+		pos + cameraFront,
+		glm::vec3(0.0f, 1.0f, 0.0f));
+	view = lookAt;
 	projection = glm::perspective(glm::radians(45.0f), (float)viewportWidth / (float)viewportHeight, 0.1f, 100.0f);
 
 	shaderProgram->SetUniform("model", model);
@@ -234,8 +246,8 @@ void ShowUI()
 {
 	ImGui::Begin("Scene");
 	
-	//ImGui::Text("CameraPosition: "); //ImGui::SameLine();
-	//ImGui::SliderFloat3("##CameraPosition", cameraPos, -10, 10);
+	//ImGui::Text("CameraEularAngle: "); //ImGui::SameLine();
+	//ImGui::SliderFloat3("##CameraEularAngle", cameraEularAngle, -180, 180);
 	
 	ImGui::Text("Position: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Position", position, -1, 1);
@@ -271,25 +283,27 @@ void processInput(GLFWwindow* window)
 
 void HandleCameraInput()
 {
+	float moveSpeed = 0.05f;
+	glm::vec3 pos(cameraPos[0], cameraPos[1], cameraPos[2]);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		cameraPos[2] = cameraPos[2] - 0.02f;
+		pos = pos + cameraFront *  moveSpeed;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		cameraPos[2] = cameraPos[2] + 0.02f;
+		pos = pos - cameraFront * moveSpeed;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		cameraPos[0] = cameraPos[0] - 0.02f;
+		pos = pos - glm::normalize(glm::cross(cameraFront, glm::vec3(0,1,0))) * moveSpeed;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		cameraPos[0] = cameraPos[0] + 0.02f;
+		pos = pos + glm::normalize(glm::cross(cameraFront, glm::vec3(0, 1, 0))) * moveSpeed;
 	}
 
-
+	Utils::Vec3ToArray(pos, cameraPos);
 }
