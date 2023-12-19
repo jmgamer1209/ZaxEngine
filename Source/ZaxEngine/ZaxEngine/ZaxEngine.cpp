@@ -13,6 +13,7 @@ void PrepareRenderData();
 void DoRender();
 void ShowUI();
 void HandleCameraInput();
+void Mouse_Callback(GLFWwindow* window, double xpos, double ypos);
 
 unsigned int VAO;
 unsigned int VBO;
@@ -34,8 +35,14 @@ float cameraPos[3] = {0, 0, 3};
 glm::vec3 cameraFront;
 float pitch = 0;
 float yaw = -90.0f;
-int cameraNear;
-int cameraFar;
+float cameraNear = 0.1f;
+float cameraFar = 100.0f;
+
+bool firstMouseRecord = true;
+double lastXPos;
+double lastYPos;
+double xOffset = 0;
+double yOffset = 0;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
@@ -43,6 +50,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	if (ImGui_Init() == 1) return 1;
 
+	glfwSetCursorPosCallback(window, Mouse_Callback);
 
 	// 设置内容路径
 	TCHAR path[MAX_PATH] = { 0 };
@@ -79,6 +87,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 		// 缓冲区交换，将缓冲区数据显示到窗口
 		glfwSwapBuffers(window);
+
+	/*	xOffset = 0;
+		yOffset = 0;*/
 	}
 
 	glDeleteVertexArrays(1, &VAO);
@@ -227,7 +238,7 @@ void DoRender()
 		pos + cameraFront,
 		glm::vec3(0.0f, 1.0f, 0.0f));
 	view = lookAt;
-	projection = glm::perspective(glm::radians(45.0f), (float)viewportWidth / (float)viewportHeight, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(45.0f), (float)viewportWidth / (float)viewportHeight, cameraNear, cameraFar);
 
 	shaderProgram->SetUniform("model", model);
 	shaderProgram->SetUniform("view", view);
@@ -306,4 +317,24 @@ void HandleCameraInput()
 	}
 
 	Utils::Vec3ToArray(pos, cameraPos);
+}
+
+void Mouse_Callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (firstMouseRecord) 
+	{
+		firstMouseRecord = false;
+		lastXPos = xpos;
+		lastYPos = ypos;
+		return;
+	}
+
+	xOffset = xpos - lastXPos;
+	yOffset = ypos - lastYPos;
+
+	lastXPos = xpos;
+	lastYPos = ypos;
+
+	yaw += xOffset * 0.1f;
+	pitch -= yOffset * 0.1f;
 }
