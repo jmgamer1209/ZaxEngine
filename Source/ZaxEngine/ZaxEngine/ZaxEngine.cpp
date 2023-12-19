@@ -12,6 +12,7 @@
 void PrepareRenderData();
 void DoRender();
 void ShowUI();
+void HandleCameraInput();
 
 unsigned int VAO;
 unsigned int VBO;
@@ -29,6 +30,8 @@ unsigned int texture;
 int viewportWidth;
 int viewportHeight;
 
+float cameraPos[3] = {0, 0, 3};
+glm::vec3 cameraEularAngle;
 int cameraNear;
 int cameraFar;
 
@@ -37,6 +40,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GLFW_INIT;
 
 	if (ImGui_Init() == 1) return 1;
+
 
 	// 设置内容路径
 	TCHAR path[MAX_PATH] = { 0 };
@@ -54,6 +58,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	while (!glfwWindowShouldClose(window))
 	{
+		HandleCameraInput();
+
 		// 设置视口与背景
 		glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
 		glViewport(0, 0, viewportWidth, viewportHeight);
@@ -208,7 +214,7 @@ void DoRender()
 	model = glm::rotate(model, rotationAngle, glm::vec3(rotationAxis[0], rotationAxis[1], rotationAxis[2]));
 	model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
 
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	view = glm::translate(view, glm::vec3(-cameraPos[0], -cameraPos[1], -cameraPos[2]));
 	projection = glm::perspective(glm::radians(45.0f), (float)viewportWidth / (float)viewportHeight, 0.1f, 100.0f);
 
 	shaderProgram->SetUniform("model", model);
@@ -226,8 +232,11 @@ void DoRender()
 
 void ShowUI()
 {
-	ImGui::Begin("Triangle");
-
+	ImGui::Begin("Scene");
+	
+	//ImGui::Text("CameraPosition: "); //ImGui::SameLine();
+	//ImGui::SliderFloat3("##CameraPosition", cameraPos, -10, 10);
+	
 	ImGui::Text("Position: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Position", position, -1, 1);
 
@@ -252,4 +261,35 @@ void ShowUI()
 	//ImGui::SameLine();
 	//ImGuiIO& io = ImGui::GetIO(); (void)io;
 	//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+}
+
+void processInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+}
+
+void HandleCameraInput()
+{
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		cameraPos[2] = cameraPos[2] - 0.02f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		cameraPos[2] = cameraPos[2] + 0.02f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		cameraPos[0] = cameraPos[0] - 0.02f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		cameraPos[0] = cameraPos[0] + 0.02f;
+	}
+
+
 }
