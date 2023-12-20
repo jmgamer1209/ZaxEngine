@@ -4,16 +4,17 @@
 #include <Windows.h>
 #include "Utils.h"
 #include "stb_image.h"
-//#include "glm/glm.hpp"
-//#include <glm/gtc/matrix_transform.hpp>
-//#include <glm/gtc/type_ptr.hpp>
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <vector>
+#include "Camera.h"
 
 void PrepareRenderData();
 void DoRender();
 void ShowUI();
-void HandleCameraInput();
-void Mouse_Callback(GLFWwindow* window, double xpos, double ypos);
+void UpdateCursorPos();
+void WindowSize_Callback(GLFWwindow* window, int width, int height);
 
 unsigned int VAO;
 unsigned int VBO;
@@ -31,26 +32,25 @@ unsigned int texture;
 int viewportWidth;
 int viewportHeight;
 
-float cameraPos[3] = {0, 0, 3};
-glm::vec3 cameraFront;
-float pitch = 0;
-float yaw = -90.0f;
-float cameraNear = 0.1f;
-float cameraFar = 100.0f;
-
 bool firstMouseRecord = true;
-double lastXPos;
-double lastYPos;
-double xOffset = 0;
-double yOffset = 0;
+float lastXPos;
+float lastYPos;
+float xOffsetPos;
+float yOffsetPos;
+
+Camera camera;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
 	GLFW_INIT;
-
+	
 	if (ImGui_Init() == 1) return 1;
 
-	glfwSetCursorPosCallback(window, Mouse_Callback);
+	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
+	glfwSetWindowSizeCallback(window, WindowSize_Callback);
+	
+	camera.viewportWidth = viewportWidth;
+	camera.viewportHeight = viewportHeight;
 
 	// 设置内容路径
 	TCHAR path[MAX_PATH] = { 0 };
@@ -65,14 +65,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	PrepareRenderData();
 	glEnable(GL_DEPTH_TEST);
 
-
 	while (!glfwWindowShouldClose(window))
 	{
-		HandleCameraInput();
+		UpdateCursorPos();
 
-		// 设置视口与背景
-		glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
-		glViewport(0, 0, viewportWidth, viewportHeight);
+		camera.OnCursorPosChange(xOffsetPos, yOffsetPos);
+		camera.HandleCameraInput(window);
+
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -227,18 +226,8 @@ void DoRender()
 	model = glm::rotate(model, rotationAngle, glm::vec3(rotationAxis[0], rotationAxis[1], rotationAxis[2]));
 	model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
 
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
-
-	glm::vec3 pos = glm::vec3(cameraPos[0], cameraPos[1], cameraPos[2]);
-	auto lookAt = glm::lookAt(pos,
-		pos + cameraFront,
-		glm::vec3(0.0f, 1.0f, 0.0f));
-	view = lookAt;
-	projection = glm::perspective(glm::radians(45.0f), (float)viewportWidth / (float)viewportHeight, cameraNear, cameraFar);
+	view = camera.GetLookAt();
+	projection = camera.GetProjection();
 
 	shaderProgram->SetUniform("model", model);
 	shaderProgram->SetUniform("view", view);
@@ -260,15 +249,15 @@ void ShowUI()
 	//ImGui::Text("CameraEularAngle: "); //ImGui::SameLine();
 	//ImGui::SliderFloat3("##CameraEularAngle", cameraEularAngle, -180, 180);
 	
-	ImGui::Text("Position: "); //ImGui::SameLine();
+	ImGui::Text("CubePosition: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Position", position, -1, 1);
 
-	ImGui::Text("RotationAxis: "); //ImGui::SameLine();
+	ImGui::Text("CubeRotationAxis: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##RotationAxis", rotationAxis, 0, 1);
-	ImGui::Text("RotationAngle: "); //ImGui::SameLine();
+	ImGui::Text("CubeRotationAngle: "); //ImGui::SameLine();
 	ImGui::SliderFloat("##RotationAngle", &rotationAngle, -180, 180);
 
-	ImGui::Text("Scale: "); //ImGui::SameLine();
+	ImGui::Text("CubeScale: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Scale", scale, 0, 10);
 
 	ImGui::End();
@@ -292,49 +281,51 @@ void processInput(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 }
 
-void HandleCameraInput()
+//void Mouse_Callback(GLFWwindow* window, double xpos, double ypos)
+//{
+//	if (firstMouseRecord) 
+//	{
+//		firstMouseRecord = false;
+//		lastXPos = xpos;
+//		lastYPos = ypos;
+//		return;
+//	}
+//
+//	xOffset = xpos - lastXPos;
+//	yOffset = ypos - lastYPos;
+//
+//	lastXPos = xpos;
+//	lastYPos = ypos;
+//
+//	camera.OnCursorPosChange(xOffset, yOffset);
+//}
+
+void WindowSize_Callback(GLFWwindow* window, int width, int height)
 {
-	float moveSpeed = 0.05f;
-	glm::vec3 pos(cameraPos[0], cameraPos[1], cameraPos[2]);
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		pos = pos + cameraFront *  moveSpeed;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		pos = pos - cameraFront * moveSpeed;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		pos = pos - glm::normalize(glm::cross(cameraFront, glm::vec3(0,1,0))) * moveSpeed;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		pos = pos + glm::normalize(glm::cross(cameraFront, glm::vec3(0, 1, 0))) * moveSpeed;
-	}
-
-	Utils::Vec3ToArray(pos, cameraPos);
+	viewportWidth = width;
+	viewportHeight = height;
+	glViewport(0, 0, viewportWidth, viewportHeight);
+	camera.viewportWidth = viewportWidth;
+	camera.viewportHeight = viewportHeight;
 }
 
-void Mouse_Callback(GLFWwindow* window, double xpos, double ypos)
+void UpdateCursorPos()
 {
-	if (firstMouseRecord) 
+	double tempxPos, tempyPos;
+	if (firstMouseRecord)
 	{
 		firstMouseRecord = false;
-		lastXPos = xpos;
-		lastYPos = ypos;
-		return;
+		glfwGetCursorPos(window, &tempxPos, &tempyPos);
+		lastXPos = (float)tempxPos;
+		lastYPos = (float)tempyPos;
 	}
+	glfwGetCursorPos(window, &tempxPos, &tempyPos);
 
-	xOffset = xpos - lastXPos;
-	yOffset = ypos - lastYPos;
+	xOffsetPos = (float)tempxPos - lastXPos;
+	yOffsetPos = (float)tempyPos - lastYPos;
 
-	lastXPos = xpos;
-	lastYPos = ypos;
+	lastXPos = (float)tempxPos;
+	lastYPos = (float)tempyPos;
 
-	yaw += xOffset * 0.1f;
-	pitch -= yOffset * 0.1f;
+
 }

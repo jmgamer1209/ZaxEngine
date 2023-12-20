@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\Plugins\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="std_handler.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Plugins\imgui\imgui.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Utils.h" />
