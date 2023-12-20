@@ -54,7 +54,7 @@ void Camera::OnCursorPosChange(float xOffset, float yOffset)
 	pitch -= (float)yOffset * 0.1f;
 }
 
-void Camera::OnViewportChange(float width, float height)
+void Camera::OnViewportChange(int width, int height)
 {
 	viewportWidth = width;
 	viewportHeight = height;

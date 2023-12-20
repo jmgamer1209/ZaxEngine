@@ -22,6 +22,6 @@ public:
 	glm::mat4 GetProjection();
 	void HandleCameraInput(GLFWwindow* window);
 	void OnCursorPosChange(float xOffset, float yOffset);
-	void OnViewportChange(float width, float height);
+	void OnViewportChange(int width, int height);
 };
 
