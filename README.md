@@ -27,4 +27,4 @@ C++版本：C++14
 
 当前版本的画面：
 
-![](./Versions/Assets/v0.5_result.png)
+![](./Versions/Assets/v0.6_result.gif)
