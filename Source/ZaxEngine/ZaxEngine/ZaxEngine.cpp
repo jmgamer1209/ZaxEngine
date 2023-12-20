@@ -1,7 +1,7 @@
-﻿#include "ZaxEngine.h"
+﻿#include <windows.h>
+#include "ZaxEngine.h"
 #include "ShaderProgram.h"
 #include "Debug.h"
-#include <Windows.h>
 #include "Utils.h"
 #include "stb_image.h"
 #include "glm/glm.hpp"
@@ -43,7 +43,7 @@ float yOffsetPos;
 
 Camera camera;
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
+int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
 	GLFW_INIT;
 	
@@ -61,7 +61,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	int num = scene->mNumMaterials;
 
-	for (unsigned int i = 0; i< num; i++)
+	for (int i = 0; i< num; i++)
 	{
 		auto mat = scene->mMaterials[i];
 		auto name = mat->GetName();     
