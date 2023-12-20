@@ -14,7 +14,7 @@ void PrepareRenderData();
 void DoRender();
 void ShowUI();
 void UpdateCursorPos();
-void WindowSize_Callback(GLFWwindow* window, int width, int height);
+void UpdateWindowSize();
 
 unsigned int VAO;
 unsigned int VBO;
@@ -46,12 +46,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	if (ImGui_Init() == 1) return 1;
 
-	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
-	glfwSetWindowSizeCallback(window, WindowSize_Callback);
-	
-	camera.viewportWidth = viewportWidth;
-	camera.viewportHeight = viewportHeight;
-
 	// 设置内容路径
 	TCHAR path[MAX_PATH] = { 0 };
 	GetCurrentDirectory(MAX_PATH, path);
@@ -67,11 +61,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	while (!glfwWindowShouldClose(window))
 	{
+		UpdateWindowSize();
 		UpdateCursorPos();
 
+		camera.OnViewportChange(viewportWidth, viewportHeight);
 		camera.OnCursorPosChange(xOffsetPos, yOffsetPos);
 		camera.HandleCameraInput(window);
 
+		glViewport(0, 0, viewportWidth, viewportHeight);
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -86,9 +83,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 		// 缓冲区交换，将缓冲区数据显示到窗口
 		glfwSwapBuffers(window);
-
-	/*	xOffset = 0;
-		yOffset = 0;*/
 	}
 
 	glDeleteVertexArrays(1, &VAO);
@@ -300,11 +294,9 @@ void processInput(GLFWwindow* window)
 //	camera.OnCursorPosChange(xOffset, yOffset);
 //}
 
-void WindowSize_Callback(GLFWwindow* window, int width, int height)
+void UpdateWindowSize()
 {
-	viewportWidth = width;
-	viewportHeight = height;
-	glViewport(0, 0, viewportWidth, viewportHeight);
+	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
 	camera.viewportWidth = viewportWidth;
 	camera.viewportHeight = viewportHeight;
 }
