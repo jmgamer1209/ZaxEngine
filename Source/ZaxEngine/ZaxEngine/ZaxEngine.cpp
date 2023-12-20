@@ -9,6 +9,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include "Camera.h"
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 void PrepareRenderData();
 void DoRender();
@@ -51,6 +54,25 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GetCurrentDirectory(MAX_PATH, path);
 	auto projectPath = Utils::WString2String(path);
 	contentPath = projectPath + "/../../../Content/";
+
+	// 测试导入 obj
+	Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(contentPath+"Common/WoodenCrate/Wooden Crate.obj", aiProcess_Triangulate | aiProcess_FlipUVs);
+
+	int num = scene->mNumMaterials;
+
+	for (unsigned int i = 0; i< num; i++)
+	{
+		auto mat = scene->mMaterials[i];
+		auto name = mat->GetName();     
+		auto texCount = mat->GetTextureCount(aiTextureType_DIFFUSE);
+
+		if (texCount > 0) {
+			aiString s;
+			mat->GetTexture(aiTextureType_DIFFUSE, 0, &s);
+			Debug::Log(s.C_Str());
+		}
+	}
 
 	// 创建 Shader Program
 	shaderProgram = new ShaderProgram(contentPath + "v0.5/vertex.vs", contentPath + "v0.5/fragment.fs");
