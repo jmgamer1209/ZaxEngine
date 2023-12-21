@@ -19,11 +19,11 @@
     <Filter Include="glad">
       <UniqueIdentifier>{4482efa4-8e1f-47e3-b306-ffec46a95ef2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Main">
+      <UniqueIdentifier>{9389c31e-ecbc-4ba3-ae12-c832c077812b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ZaxEngine.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Plugins\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -63,6 +63,18 @@
     <ClCompile Include="Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AssetModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ZaxEngine.cpp">
+      <Filter>源文件\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Plugins\imgui\imgui.h">
@@ -81,6 +93,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DefualtMaterial.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

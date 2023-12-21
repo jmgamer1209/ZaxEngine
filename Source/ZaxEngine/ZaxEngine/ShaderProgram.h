@@ -25,3 +25,7 @@ private:
 	void CheckCompileError(unsigned int shader, string type);
 };
 
+class ShaderProgramManager
+{
+	
+};
