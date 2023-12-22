@@ -123,8 +123,8 @@ void ShowUI()
 
 	ImGui::End();
 
-	ImGui_ShowSimpleWindow();
-	ImGui_ShowDemoWindow();
+	//ImGui_ShowSimpleWindow();
+	//ImGui_ShowDemoWindow();
 	//ImGui_ShowAnotherWindow();
 
 	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
