@@ -96,10 +96,19 @@ static int ImGui_Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-	// Create window with graphics context
+	// 为了在初始的时候，可以设置窗口的位置，根据 glfwCreateWindow 的注释，需要先隐藏，设置完 Pos 后，再显示
+	// 如果不这样做，创建窗口后再调整位置，会出现启动跳变的情况。
+	glfwWindowHint(GLFW_VISIBLE, 0);
+
+	// 创建窗口
 	window = glfwCreateWindow(1280, 720, windowTitle, nullptr, nullptr);
 	if (window == nullptr)
 		return 1;
+
+	// 位置设置完后，需要再显示
+	glfwSetWindowPos(window, 1280 / 2, 720 / 2);
+	glfwShowWindow(window);
+
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
 
