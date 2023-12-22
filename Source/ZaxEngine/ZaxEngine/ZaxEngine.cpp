@@ -35,6 +35,8 @@ float yOffsetPos;
 
 Camera camera;
 
+float yaw, pitch, roll;
+
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
 	GLFW_INIT;
@@ -61,13 +63,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	glEnable(GL_DEPTH_TEST);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
 
+	camera.position[2] = 10;
+
+   
+
 	while (!glfwWindowShouldClose(window))
 	{
 		UpdateWindowSize();
 		UpdateCursorPos();
 
 		camera.OnViewportChange(viewportWidth, viewportHeight);
-		camera.OnCursorPosChange(xOffsetPos, yOffsetPos);
+//		camera.OnCursorPosChange(xOffsetPos, yOffsetPos);
 		camera.HandleCameraInput(window);
 
 		glViewport(0, 0, viewportWidth, viewportHeight);
@@ -98,25 +104,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 void ShowUI()
 {
 	ImGui::Begin("Scene");
-	
-	//ImGui::Text("CameraEularAngle: "); //ImGui::SameLine();
-	//ImGui::SliderFloat3("##CameraEularAngle", cameraEularAngle, -180, 180);
-	
-	ImGui::Text("CubePosition: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##Position", box->position, -1, 1);
+		
+	//if (ImGui::TreeNode("Cube"))
+	//{
+	//	ImGui::TreePop();
+	//}
 
-	ImGui::Text("CubeRotationAxis: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##RotationAxis", box->rotationAxis, 0, 1);
-	ImGui::Text("CubeRotationAngle: "); //ImGui::SameLine();
-	ImGui::SliderFloat("##RotationAngle", &box->rotationAngle, -180, 180);
+	ImGui::Text("CubePosition: "); //ImGui::SameLine();
+	ImGui::SliderFloat3("##Position", box->position, -5, 5);
+
+	ImGui::Text("CubeRotation: "); //ImGui::SameLine();
+	ImGui::SliderFloat3("##Rotation", box->rotation, 0, 90);
+	//ImGui::Text("CubeRotationAngle: "); //ImGui::SameLine();
+	//ImGui::SliderFloat("##RotationAngle", &box->rotationAngle, -180, 180);
 
 	ImGui::Text("CubeScale: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Scale", box->scale, 0, 10);
 
 	ImGui::End();
 
-	//ImGui_ShowSimpleWindow();
-	//ImGui_ShowDemoWindow();
+	ImGui_ShowSimpleWindow();
+	ImGui_ShowDemoWindow();
 	//ImGui_ShowAnotherWindow();
 
 	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
