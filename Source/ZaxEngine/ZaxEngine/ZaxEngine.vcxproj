@@ -149,8 +149,10 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="AssetModel.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="std_handler.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -162,8 +164,10 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="AssetModel.h" />
     <ClInclude Include="DefualtMaterial.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="ZaxEngine.h" />

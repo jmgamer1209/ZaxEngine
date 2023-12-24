@@ -3,13 +3,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
+#include "GameObject.h"
 
-class Camera
+class Camera: public Component
 {
 public:
-	float position[3] = { 0, 0, 3 };
-	float rotation[3] = { 0, 0, 0 };
-	float scale[3] = { 1, 1, 1 };
 	
 	float cameraNear = 0.1f;
 	float cameraFar = 100.0f;

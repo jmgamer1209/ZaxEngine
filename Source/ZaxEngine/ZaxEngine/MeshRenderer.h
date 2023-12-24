@@ -3,16 +3,13 @@
 #include "Material.h"
 #include "glad/glad.h"
 #include "Camera.h"
+#include "Utils.h"
 
-class MeshRenderer
+class MeshRenderer: public Component
 {
 public:
     AssetMesh* mesh;
     Material* mat;
-
-    float position[3] = { 0, 0, 0 };
-    float rotation[3] = { 0, 0, 0 };
-    float scale[3] = { 1,1,1 };
 
 	MeshRenderer(AssetModel *model, AssetMesh *mesh, Material* mat)
 	{
@@ -39,26 +36,23 @@ public:
         glGenBuffers(1, &EBO);
 
         glBindVertexArray(VAO);
-        // load data into vertex buffers
+        
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // A great thing about structs is that their memory layout is sequential for all its items.
-        // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
-        // again translates to 3/2 floats which translates to a byte array.
         glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(Vertex), &mesh->vertices[0], GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(unsigned int), &mesh->indices[0], GL_STATIC_DRAW);
 
-        // set the vertex attribute pointers
-        // vertex Positions
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-        // vertex normals
+
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-        // vertex texture coords
+
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+
+        // 切线和副切线暂时不用
         //// vertex tangent
         //glEnableVertexAttribArray(3);
         //glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
@@ -67,7 +61,7 @@ public:
         //glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
     }
 
-    void Draw(Camera &camera)
+    void Draw(Camera* camera)
     {
         auto shaderProgram = mat->shader;
         shaderProgram->Use();
@@ -76,19 +70,19 @@ public:
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
 
+        auto transform = gameObject->GetComponent<Transform>();
 
-
-        model = glm::translate(model, glm::vec3(position[0], position[1], position[2]));
+        model = glm::translate(model, Utils::ArrayToVec3(transform->position));
         // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
 
-        model = glm::rotate(model, glm::radians(rotation[1]), glm::vec3(0, 1, 0));
-        model = glm::rotate(model, glm::radians(rotation[0]), glm::vec3(1, 0, 0));
-        model = glm::rotate(model, glm::radians(rotation[2]), glm::vec3(0, 0, 1));
+        model = glm::rotate(model, glm::radians(transform->rotation[1]), glm::vec3(0, 1, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation[0]), glm::vec3(1, 0, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation[2]), glm::vec3(0, 0, 1));
 
-        model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
+        model = glm::scale(model, Utils::ArrayToVec3(transform->scale));
 
-        view = camera.GetViewMatrix();
-        projection = camera.GetProjection();
+        view = camera->GetViewMatrix();
+        projection = camera->GetProjection();
 
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);

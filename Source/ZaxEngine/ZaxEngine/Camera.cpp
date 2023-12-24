@@ -4,6 +4,10 @@
 glm::mat4 Camera::GetViewMatrix()
 {
 	glm::mat4 viewRotation(1.0f);
+	auto transform = gameObject->GetComponent<Transform>();
+	auto position = transform->position;
+	auto rotation = transform->rotation;
+
 	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[1]), glm::vec3(0, 1, 0));
 	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[0]), glm::vec3(1, 0, 0));
 	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[2]), glm::vec3(0, 0, 1));
@@ -22,8 +26,9 @@ glm::mat4 Camera::GetProjection()
 
 void Camera::HandleCameraInput(GLFWwindow* window)
 {
+	auto transform = gameObject->GetComponent<Transform>();
 	float moveSpeed = 0.05f;
-	glm::vec3 pos(position[0], position[1], position[2]);
+	glm::vec3 pos = Utils::ArrayToVec3(transform->position);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		pos = pos + cameraFront * moveSpeed;
@@ -44,7 +49,7 @@ void Camera::HandleCameraInput(GLFWwindow* window)
 		pos = pos + glm::normalize(glm::cross(cameraFront, glm::vec3(0, 1, 0))) * moveSpeed;
 	}
 
-	Utils::Vec3ToArray(pos, position);
+	Utils::Vec3ToArray(pos, transform->position);
 }
 
 void Camera::OnCursorPosChange(float xOffset, float yOffset)

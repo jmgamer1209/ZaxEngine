@@ -15,14 +15,14 @@
 #include "AssetModel.h"
 #include "MeshRenderer.h"
 #include "DefualtMaterial.h"
+#include "GameObject.h"
+#include "Scene.h"
 
 void ShowUI();
 void UpdateCursorPos();
 void UpdateWindowSize();
 
-MeshRenderer* box;
 string contentPath;
-unsigned int texture;
 
 int viewportWidth;
 int viewportHeight;
@@ -33,9 +33,8 @@ float lastYPos;
 float xOffsetPos;
 float yOffsetPos;
 
-Camera camera;
-
-float yaw, pitch, roll;
+Scene* scene;
+Camera* camera;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
@@ -50,19 +49,30 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	contentPath = projectPath + "/../../../Content/";
 
 	// 导入模型
-	AssetModel model = AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
+	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 
 	// 创建 Shader Program 和 材质
-	auto shaderProgram = new ShaderProgram(contentPath + "v0.7/vertex.vs", contentPath + "v0.7/fragment.fs");
-	DefaultMaterial mat;
-	mat.shader = shaderProgram;
+	ShaderProgram* shaderProgram = new ShaderProgram(contentPath + "v0.7/vertex.vs", contentPath + "v0.7/fragment.fs");
+	DefaultMaterial* mat = new DefaultMaterial();
+	mat->shader = shaderProgram;
 	
 	// 创建渲染物体
-	box = new MeshRenderer(&model, &(model.meshes[0]), &mat);
-	box->position[1] = -2.5f; // 因为 box 的中心点在底部，所以微调一下
+	auto box  = new GameObject("Box");
+	box->AddComponent(new Transform());
+	box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
+	box->GetComponent<Transform>()->position[1] = -2.5f; // 因为 box 的中心点在底部，所以微调一下
 
 	// 设置摄像机
-	camera.position[2] = 20;
+	auto cameraGO = new GameObject("Camera");
+	cameraGO->AddComponent(new Transform());
+	camera = new Camera();
+	cameraGO->AddComponent(camera);
+	cameraGO->GetComponent<Transform>()->position[2] = 20;
+
+	// 创建场景
+	scene = new Scene();
+	scene->AddGameObject(cameraGO);
+	scene->AddGameObject(box);
 
 	glEnable(GL_DEPTH_TEST);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
@@ -72,16 +82,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		UpdateWindowSize();
 		UpdateCursorPos();
 
-		camera.OnViewportChange(viewportWidth, viewportHeight);
-//		camera.OnCursorPosChange(xOffsetPos, yOffsetPos);
-		camera.HandleCameraInput(window);
+		camera->OnViewportChange(viewportWidth, viewportHeight);
+		camera->HandleCameraInput(window);
 
 		glViewport(0, 0, viewportWidth, viewportHeight);
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// 渲染物体
-		box->Draw(camera);
+		box->GetComponent<MeshRenderer>()->Draw(camera);
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
@@ -101,26 +110,41 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	return 0;
 }
 
+GameObject* selectedGO;
 void ShowUI()
 {
+	// 场景物体
 	ImGui::Begin("Scene");
 		
-	ImGui::Text("CameraPosition: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##CameraPosition", camera.position, -50, 50);
-
-	ImGui::Text("CameraRotation: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##CameraRotation", camera.rotation, 0, 90);
-
-	ImGui::Text("CubePosition: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##Position", box->position, -5, 5);
-
-	ImGui::Text("CubeRotation: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##Rotation", box->rotation, 0, 90);
-
-	ImGui::Text("CubeScale: "); //ImGui::SameLine();
-	ImGui::SliderFloat3("##Scale", box->scale, 0, 10);
+	for (size_t i = 0; i < scene->list.size(); i++)
+	{
+		auto go = scene->list[i];
+		if (ImGui::Selectable(go->name.c_str(), false))
+		{
+			selectedGO = go;
+		}
+	}
 
 	ImGui::End();
+
+	// 组件属性检视面板
+	ImGui::Begin("Inspector");
+
+	if (selectedGO != nullptr)
+	{
+		auto transform = selectedGO->GetComponent<Transform>();
+		ImGui::Text("Position: "); //ImGui::SameLine();
+		ImGui::SliderFloat3("##Position", transform->position, -20, 20);
+
+		ImGui::Text("Rotation: "); //ImGui::SameLine();
+		ImGui::SliderFloat3("##Rotation", transform->rotation, 0, 90);
+
+		ImGui::Text("Scale: ");
+		ImGui::SliderFloat3("##Scale", transform->scale, 0, 10);
+	}
+
+	ImGui::End();
+
 
 	//ImGui_ShowSimpleWindow();
 	//ImGui_ShowDemoWindow();
@@ -141,30 +165,11 @@ void processInput(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 }
 
-//void Mouse_Callback(GLFWwindow* window, double xpos, double ypos)
-//{
-//	if (firstMouseRecord) 
-//	{
-//		firstMouseRecord = false;
-//		lastXPos = xpos;
-//		lastYPos = ypos;
-//		return;
-//	}
-//
-//	xOffset = xpos - lastXPos;
-//	yOffset = ypos - lastYPos;
-//
-//	lastXPos = xpos;
-//	lastYPos = ypos;
-//
-//	camera.OnCursorPosChange(xOffset, yOffset);
-//}
-
 void UpdateWindowSize()
 {
 	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
-	camera.viewportWidth = viewportWidth;
-	camera.viewportHeight = viewportHeight;
+	camera->viewportWidth = viewportWidth;
+	camera->viewportHeight = viewportHeight;
 }
 
 void UpdateCursorPos()
