@@ -9,9 +9,8 @@ class Component;
 
 class GameObject
 {
-	vector<Component*> components;
-
 public:
+	vector<Component*> components;
 	string name;
 	GameObject(const string& name);
     void AddComponent(Component* component);
@@ -36,7 +35,7 @@ class Component
 {
 public:
 	GameObject* gameObject;
-	virtual void Test() {};
+	virtual void OnGui() {};
 };
 
 class Transform: public Component
@@ -45,4 +44,6 @@ public:
 	float position[3] = { 0, 0, 0 };
 	float rotation[3] = { 0, 0, 0 };
 	float scale[3] = { 1,1,1 };
+
+	void OnGui() override;
 };

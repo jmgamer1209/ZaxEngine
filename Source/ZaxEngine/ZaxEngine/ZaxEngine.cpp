@@ -132,15 +132,10 @@ void ShowUI()
 
 	if (selectedGO != nullptr)
 	{
-		auto transform = selectedGO->GetComponent<Transform>();
-		ImGui::Text("Position: "); //ImGui::SameLine();
-		ImGui::SliderFloat3("##Position", transform->position, -20, 20);
-
-		ImGui::Text("Rotation: "); //ImGui::SameLine();
-		ImGui::SliderFloat3("##Rotation", transform->rotation, 0, 90);
-
-		ImGui::Text("Scale: ");
-		ImGui::SliderFloat3("##Scale", transform->scale, 0, 10);
+		for (size_t i = 0; i < selectedGO->components.size(); i++)
+		{
+			selectedGO->components[i]->OnGui();
+		}
 	}
 
 	ImGui::End();
