@@ -87,7 +87,7 @@ public:
 
         model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
 
-        view = camera.GetLookAt();
+        view = camera.GetViewMatrix();
         projection = camera.GetProjection();
 
         shaderProgram->SetUniform("model", model);

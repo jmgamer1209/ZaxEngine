@@ -8,8 +8,9 @@ class Camera
 {
 public:
 	float position[3] = { 0, 0, 3 };
-	float pitch = 0;
-	float yaw = -90.0f;
+	float rotation[3] = { 0, 0, 0 };
+	float scale[3] = { 1, 1, 1 };
+	
 	float cameraNear = 0.1f;
 	float cameraFar = 100.0f;
 	glm::vec3 cameraFront;
@@ -18,7 +19,7 @@ public:
 	int viewportHeight;
 
 public:
-	glm::mat4 GetLookAt();
+	glm::mat4 GetViewMatrix();
 	glm::mat4 GetProjection();
 	void HandleCameraInput(GLFWwindow* window);
 	void OnCursorPosChange(float xOffset, float yOffset);

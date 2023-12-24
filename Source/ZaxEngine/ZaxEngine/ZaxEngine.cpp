@@ -59,13 +59,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	
 	// 创建渲染物体
 	box = new MeshRenderer(&model, &(model.meshes[0]), &mat);
+	box->position[1] = -2.5f; // 因为 box 的中心点在底部，所以微调一下
+
+	// 设置摄像机
+	camera.position[2] = 20;
 
 	glEnable(GL_DEPTH_TEST);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
-
-	camera.position[2] = 10;
-
-   
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -105,18 +105,17 @@ void ShowUI()
 {
 	ImGui::Begin("Scene");
 		
-	//if (ImGui::TreeNode("Cube"))
-	//{
-	//	ImGui::TreePop();
-	//}
+	ImGui::Text("CameraPosition: "); //ImGui::SameLine();
+	ImGui::SliderFloat3("##CameraPosition", camera.position, -50, 50);
+
+	ImGui::Text("CameraRotation: "); //ImGui::SameLine();
+	ImGui::SliderFloat3("##CameraRotation", camera.rotation, 0, 90);
 
 	ImGui::Text("CubePosition: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Position", box->position, -5, 5);
 
 	ImGui::Text("CubeRotation: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Rotation", box->rotation, 0, 90);
-	//ImGui::Text("CubeRotationAngle: "); //ImGui::SameLine();
-	//ImGui::SliderFloat("##RotationAngle", &box->rotationAngle, -180, 180);
 
 	ImGui::Text("CubeScale: "); //ImGui::SameLine();
 	ImGui::SliderFloat3("##Scale", box->scale, 0, 10);

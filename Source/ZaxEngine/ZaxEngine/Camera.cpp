@@ -1,19 +1,18 @@
 #include "Camera.h"
 #include "Utils.h"
 
-glm::mat4 Camera::GetLookAt()
+glm::mat4 Camera::GetViewMatrix()
 {
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
+	glm::mat4 viewRotation(1.0f);
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[1]), glm::vec3(0, 1, 0));
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[0]), glm::vec3(1, 0, 0));
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[2]), glm::vec3(0, 0, 1));
+	viewRotation = glm::transpose(viewRotation);
 
-	glm::vec3 pos = glm::vec3(position[0], position[1], position[2]);
-	auto lookAt = glm::lookAt(pos,
-		pos + cameraFront,
-		glm::vec3(0.0f, 1.0f, 0.0f));
-	return lookAt;
+	glm::mat4 viewTranslation(1.0f);
+	viewTranslation = glm::translate(viewTranslation, glm::vec3(-position[0], -position[1], -position[2]));
+
+	return viewRotation * viewTranslation;
 }
 
 glm::mat4 Camera::GetProjection()
@@ -50,8 +49,8 @@ void Camera::HandleCameraInput(GLFWwindow* window)
 
 void Camera::OnCursorPosChange(float xOffset, float yOffset)
 {
-	yaw += (float)xOffset * 0.1f;
-	pitch -= (float)yOffset * 0.1f;
+	//yaw += (float)xOffset * 0.1f;
+	//pitch -= (float)yOffset * 0.1f;
 }
 
 void Camera::OnViewportChange(int width, int height)
