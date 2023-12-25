@@ -1,7 +1,7 @@
 #pragma once
 #include "AssetModel.h"
 #include "Material.h"
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include "Camera.h"
 #include "Utils.h"
 

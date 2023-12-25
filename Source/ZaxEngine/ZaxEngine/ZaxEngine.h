@@ -23,7 +23,7 @@
 #endif
 
 #include <iostream>
-#include "glad/glad.h"
+#include "glad/gl.h"
 
 
 GLFWwindow* window;
@@ -112,8 +112,8 @@ static int ImGui_Init()
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
 
-	// 初始化 glad
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+	 //初始化 glad
+	if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}

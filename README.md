@@ -13,7 +13,7 @@
 
 引擎引入的第三方插件和库：
 * imgui v1.90，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
-* glad，用于运行时查找 opengl 函数
+* glad2，用于运行时查找 opengl 函数。需要在网站生成，选项选择 gl 3.3，勾选 loader。注意是 glad2 而不是旧版的 glad
 * stb_image，图片加载库
 * glm，数学库
 * assimp v5.3.1, 资源模型导入库，比如 obj，fbx

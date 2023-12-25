@@ -138,7 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Plugins\glad\src\glad.c" />
+    <ClCompile Include="..\..\Plugins\glad\src\gl.c" />
     <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\..\Plugins\imgui\imgui.cpp" />
