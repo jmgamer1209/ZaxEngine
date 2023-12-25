@@ -94,5 +94,10 @@ public:
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mesh->indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
+
+    void OnGui() override
+    {
+
+    }
 };
 

@@ -8,11 +8,9 @@
 class Camera: public Component
 {
 public:
-	
-	float cameraNear = 0.1f;
-	float cameraFar = 100.0f;
-	glm::vec3 cameraFront;
-	float fovy = glm::radians(45.0f);
+	float clippingNear = 0.1f;
+	float clippingFar = 100.0f;
+	float fovy = 45.0f;
 	int viewportWidth;
 	int viewportHeight;
 
@@ -22,5 +20,9 @@ public:
 	void HandleCameraInput(GLFWwindow* window);
 	void OnCursorPosChange(float xOffset, float yOffset);
 	void OnViewportChange(int width, int height);
+
+private:
+	glm::vec3 cameraFront;
+	void OnGui() override;
 };
 

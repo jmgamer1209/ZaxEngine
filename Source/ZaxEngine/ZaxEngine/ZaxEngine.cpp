@@ -1,5 +1,4 @@
-﻿#include <windows.h>
-#include "ZaxEngine.h"
+﻿#include "ZaxEngine.h"
 #include "ShaderProgram.h"
 #include "Debug.h"
 #include "Utils.h"

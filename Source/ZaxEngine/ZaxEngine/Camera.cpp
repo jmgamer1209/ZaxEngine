@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Utils.h"
+#include "imgui/imgui.h"
 
 glm::mat4 Camera::GetViewMatrix()
 {
@@ -21,7 +22,7 @@ glm::mat4 Camera::GetViewMatrix()
 
 glm::mat4 Camera::GetProjection()
 {
-	return glm::perspective(fovy, (float)viewportWidth / (float)viewportHeight, cameraNear, cameraFar);
+	return glm::perspective(glm::radians(fovy), (float)viewportWidth / (float)viewportHeight, clippingNear, clippingFar);
 }
 
 void Camera::HandleCameraInput(GLFWwindow* window)
@@ -62,4 +63,15 @@ void Camera::OnViewportChange(int width, int height)
 {
 	viewportWidth = width;
 	viewportHeight = height;
+}
+
+void Camera::OnGui()
+{
+	if (ImGui::TreeNode("Camera")) {
+		ImGui::SliderFloat("Fov-Vertical", &this->fovy, 0.1f, 179.0f);
+		ImGui::InputFloat("Near", &this->clippingNear);
+		ImGui::InputFloat("Far", &this->clippingFar);
+
+		ImGui::TreePop();
+	}
 }
