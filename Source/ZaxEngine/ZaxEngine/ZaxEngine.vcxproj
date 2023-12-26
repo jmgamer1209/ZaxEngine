@@ -170,6 +170,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="windows.h" />
     <ClInclude Include="ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
