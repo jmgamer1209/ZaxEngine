@@ -17,6 +17,8 @@ public:
 
 	void SetUniform(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
 	void SetUniform(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2);
+	void SetUniform(const GLchar* name, glm::vec3 value);
+	void SetUniform3f(const GLchar* name, float value[]);
 	void SetUniform(const GLchar* name, GLint v0);
 	void SetUniform(const GLchar* name, glm::mat4& mat);
 

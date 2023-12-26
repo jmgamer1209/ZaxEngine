@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include <string>
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 using namespace std;
 
 class Component;
@@ -46,4 +47,5 @@ public:
 	float scale[3] = { 1,1,1 };
 
 	void OnGui() override;
+	glm::vec3 GetForward();
 };

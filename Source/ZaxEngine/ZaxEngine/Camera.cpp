@@ -68,9 +68,12 @@ void Camera::OnViewportChange(int width, int height)
 void Camera::OnGui()
 {
 	if (ImGui::TreeNode("Camera")) {
-		ImGui::SliderFloat("Fov-Vertical", &this->fovy, 0.1f, 179.0f);
-		ImGui::InputFloat("Near", &this->clippingNear);
-		ImGui::InputFloat("Far", &this->clippingFar);
+		ImGui::Text("Fov-Vertical:");
+		ImGui::DragFloat("##Fov-Vertical", &this->fovy, 1.0f, 0.1f, 179.0f);
+		ImGui::Text("Near:");
+		ImGui::DragFloat("##Near", &this->clippingNear, 1.0f, 0, (float)INT32_MAX);
+		ImGui::Text("Far:");
+		ImGui::DragFloat("##Far", &this->clippingFar, 1.0f, 0, (float)INT32_MAX);
 
 		ImGui::TreePop();
 	}

@@ -81,6 +81,9 @@
     <ClCompile Include="..\..\Plugins\glad\src\gl.c">
       <Filter>glad</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Plugins\imgui\imgui.h">
@@ -120,6 +123,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="windows.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

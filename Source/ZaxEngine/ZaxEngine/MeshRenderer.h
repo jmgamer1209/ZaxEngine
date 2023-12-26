@@ -4,6 +4,7 @@
 #include "glad/gl.h"
 #include "Camera.h"
 #include "Utils.h"
+#include "Light.h"
 
 class MeshRenderer: public Component
 {
@@ -61,7 +62,7 @@ public:
         //glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
     }
 
-    void Draw(Camera* camera)
+    void Draw(Camera* camera, Light* light)
     {
         auto shaderProgram = mat->shader;
         shaderProgram->Use();
@@ -87,6 +88,10 @@ public:
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);
         shaderProgram->SetUniform("projection", projection);
+
+        auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
+        shaderProgram->SetUniform("lightDirection", forward);
+        shaderProgram->SetUniform3f("lightColor", light->color);
 
         mat->Draw();
 

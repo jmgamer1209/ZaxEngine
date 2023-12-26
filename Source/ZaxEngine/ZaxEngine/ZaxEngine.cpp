@@ -16,6 +16,7 @@
 #include "DefualtMaterial.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "Light.h"
 
 void ShowUI();
 void UpdateCursorPos();
@@ -34,6 +35,7 @@ float yOffsetPos;
 
 Scene* scene;
 Camera* camera;
+Light* light;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
@@ -51,7 +53,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 
 	// 创建 Shader Program 和 材质
-	ShaderProgram* shaderProgram = new ShaderProgram(contentPath + "v0.7/vertex.vs", contentPath + "v0.7/fragment.fs");
+	ShaderProgram* shaderProgram = new ShaderProgram(contentPath + "v0.9/vertex.vs", contentPath + "v0.9/fragment.fs");
 	DefaultMaterial* mat = new DefaultMaterial();
 	mat->shader = shaderProgram;
 	
@@ -68,10 +70,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	cameraGO->AddComponent(camera);
 	cameraGO->GetComponent<Transform>()->position[2] = 20;
 
+	// 创建光源
+	auto lightGO = new GameObject("Light");
+	lightGO->AddComponent(new Transform());
+	light = new Light();
+	lightGO->AddComponent(light);
+
 	// 创建场景
 	scene = new Scene();
 	scene->AddGameObject(cameraGO);
 	scene->AddGameObject(box);
+	scene->AddGameObject(lightGO);
 
 	glEnable(GL_DEPTH_TEST);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
@@ -89,7 +98,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// 渲染物体
-		box->GetComponent<MeshRenderer>()->Draw(camera);
+		box->GetComponent<MeshRenderer>()->Draw(camera, light);
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
