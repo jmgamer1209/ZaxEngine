@@ -25,5 +25,5 @@ void main()
     vec3 halfDir = normalize(-lightDirection + viewDir);
     float specular = pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity;
 
-    FragColor = vec4(lightColor * vec3(tex) * (diffuse + ambientIntensity + specular), 1);
+    FragColor = vec4((diffuse + ambientIntensity) * lightColor * vec3(tex) + specular * lightColor, 1);
 }
