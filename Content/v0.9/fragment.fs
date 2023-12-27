@@ -15,14 +15,15 @@ uniform float specularIntensity;
 
 void main()
 {
+    vec3 normal1 = normalize(normal);
     vec4 tex = texture(albedoTexture, texCoord);
-    
-    float diffuse = dot(-lightDirection, normal); 
+
+    float diffuse = dot(-lightDirection, normal1); 
     diffuse = max(diffuse,0); //避免负值
 
     vec3 viewDir = cameraPos - vec3(fragPos);
     vec3 halfDir = normalize(-lightDirection + viewDir);
-    float specular = pow(max(dot(halfDir, normal), 0), 32) * specularIntensity;
+    float specular = pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity;
 
     FragColor = vec4(lightColor * vec3(tex) * (diffuse + ambientIntensity + specular), 1);
 }

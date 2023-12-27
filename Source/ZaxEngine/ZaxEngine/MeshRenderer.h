@@ -85,11 +85,13 @@ public:
 
         view = camera->GetViewMatrix();
         projection = camera->GetProjection();
+        glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
         shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position);
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);
         shaderProgram->SetUniform("projection", projection);
+        shaderProgram->SetUniform("normalMatrix", normalMatrix);
 
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("lightDirection", forward);
