@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Utils.h"
 #include "Light.h"
+#include "imgui/imgui.h"
 
 class MeshRenderer: public Component
 {
@@ -104,7 +105,13 @@ public:
 
     void OnGui() override
     {
+        if (ImGui::TreeNode("MeshRenderer"))
+        {
+            mat->OnGui();
 
+            ImGui::TreePop();
+        }
+        
     }
 };
 

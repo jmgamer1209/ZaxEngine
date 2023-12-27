@@ -18,6 +18,7 @@
 #include "Scene.h"
 #include "Light.h"
 
+void DrawScene();
 void ShowUI();
 void UpdateCursorPos();
 void UpdateWindowSize();
@@ -96,14 +97,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (!isInMinimal)
-		{
-			camera->OnViewportChange(viewportWidth, viewportHeight);
-			camera->HandleCameraInput(window);
-
-			// 渲染物体
-			box->GetComponent<MeshRenderer>()->Draw(camera, light, ambient);
-		}
+		if (!isInMinimal) DrawScene();
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
@@ -115,12 +109,28 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		glfwSwapBuffers(window); 
 	}
 
-	delete box;
+	delete scene;
 	shaderProgram->Delete();
 
 	CleanUp();
 
 	return 0;
+}
+
+void DrawScene()
+{
+	// 摄像机
+	camera->OnViewportChange(viewportWidth, viewportHeight);
+	//camera->HandleCameraInput(window);
+
+	// 渲染物体
+	for (size_t i = 0; i < scene->list.size(); i++)
+	{
+		auto renderer = scene->list[i]->GetComponent<MeshRenderer>();
+		if (renderer == nullptr) continue;
+
+		renderer->Draw(camera, light, ambient);
+	}
 }
 
 GameObject* selectedGO;

@@ -6,6 +6,7 @@ class  BlinnPhongMaterial : public Material
 {
 private:
 	unsigned int albedoTexture = -1;
+	float specular = 0.5f;
 
 public:
 	BlinnPhongMaterial(ShaderProgram* shader) : Material(shader) {}
@@ -25,5 +26,13 @@ public:
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, albedoTexture);
 		shader->SetUniform("albedoTexture", 0);
+		shader->SetUniform("specularIntensity", specular);
+	}
+
+	void OnGui() override
+	{
+		ImGui::Text("AlbedoTexID: %d", albedoTexture);
+		ImGui::Text("Specular:");
+		ImGui::DragFloat("##Specular", &specular, 0.01f, 0, 1);
 	}
 };
