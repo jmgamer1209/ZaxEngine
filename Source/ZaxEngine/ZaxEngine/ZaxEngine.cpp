@@ -36,6 +36,7 @@ float yOffsetPos;
 Scene* scene;
 Camera* camera;
 Light* light;
+float ambient;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
@@ -92,13 +93,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		camera->OnViewportChange(viewportWidth, viewportHeight);
 		camera->HandleCameraInput(window);
-
+		 
 		glViewport(0, 0, viewportWidth, viewportHeight);
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// 渲染物体
-		box->GetComponent<MeshRenderer>()->Draw(camera, light);
+		box->GetComponent<MeshRenderer>()->Draw(camera, light, ambient);
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
@@ -119,8 +120,24 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 }
 
 GameObject* selectedGO;
+bool isShowLightingSettings;
 void ShowUI()
 {
+	// 菜单设置
+	ImGui::BeginMainMenuBar();
+
+	if (ImGui::BeginMenu("Scene Settings"))
+	{
+		if (ImGui::MenuItem("Lighting")) 
+		{
+			isShowLightingSettings = true;
+		}
+		ImGui::EndMenu();
+	}
+	
+
+	ImGui::EndMainMenuBar();
+
 	// 场景物体
 	ImGui::Begin("Scene");
 		
@@ -148,9 +165,19 @@ void ShowUI()
 
 	ImGui::End();
 
+	if (isShowLightingSettings)
+	{
+		ImGui::Begin("Lighting Settings", &isShowLightingSettings);
+
+		ImGui::Text("Ambient Intensity:");
+		ImGui::DragFloat("##Ambient Intensity", &ambient, 0.01f, 0, 1);
+
+		ImGui::End();
+	}
+
 
 	//ImGui_ShowSimpleWindow();
-	//ImGui_ShowDemoWindow();
+	ImGui_ShowDemoWindow();
 	//ImGui_ShowAnotherWindow();
 
 	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)

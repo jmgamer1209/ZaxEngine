@@ -62,7 +62,7 @@ public:
         //glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
     }
 
-    void Draw(Camera* camera, Light* light)
+    void Draw(Camera* camera, Light* light, float ambient)
     {
         auto shaderProgram = mat->shader;
         shaderProgram->Use();
@@ -92,6 +92,7 @@ public:
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("lightDirection", forward);
         shaderProgram->SetUniform3f("lightColor", light->color);
+        shaderProgram->SetUniform("ambientIntensity", ambient);
 
         mat->Draw();
 
