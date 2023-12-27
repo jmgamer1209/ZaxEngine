@@ -13,7 +13,7 @@
 #include <assimp/postprocess.h>
 #include "AssetModel.h"
 #include "MeshRenderer.h"
-#include "DefualtMaterial.h"
+#include "Materials/BlinnPhongMaterial.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Light.h"
@@ -26,6 +26,7 @@ string contentPath;
 
 int viewportWidth;
 int viewportHeight;
+bool isInMinimal;
 
 bool firstMouseRecord = true;
 float lastXPos;
@@ -55,14 +56,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	// 创建 Shader Program 和 材质
 	ShaderProgram* shaderProgram = new ShaderProgram(contentPath + "v0.9/vertex.vs", contentPath + "v0.9/fragment.fs");
-	DefaultMaterial* mat = new DefaultMaterial();
-	mat->shader = shaderProgram;
+	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram);
 	
 	// 创建渲染物体
 	auto box  = new GameObject("Box");
 	box->AddComponent(new Transform());
 	box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
-	box->GetComponent<Transform>()->position[1] = -2.5f; // 因为 box 的中心点在底部，所以微调一下
+	box->GetComponent<Transform>()->position[1] = -2.5f;	// 因为 box 的中心点在底部，所以微调一下
+	box->GetComponent<Transform>()->rotation[0] = 45.0f;
 
 	// 设置摄像机
 	auto cameraGO = new GameObject("Camera");
@@ -91,24 +92,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		UpdateWindowSize();
 		UpdateCursorPos();
 
-		camera->OnViewportChange(viewportWidth, viewportHeight);
-		camera->HandleCameraInput(window);
-		 
 		glViewport(0, 0, viewportWidth, viewportHeight);
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// 渲染物体
-		box->GetComponent<MeshRenderer>()->Draw(camera, light, ambient);
+		if (!isInMinimal)
+		{
+			camera->OnViewportChange(viewportWidth, viewportHeight);
+			camera->HandleCameraInput(window);
+
+			// 渲染物体
+			box->GetComponent<MeshRenderer>()->Draw(camera, light, ambient);
+		}
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
-		ShowUI();
+		if (!isInMinimal) ShowUI();
 		ImGui::Render(); // ImGui 生成渲染数据
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // ImGui 执行绘制指令
-
+		
 		// 缓冲区交换，将缓冲区数据显示到窗口
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window); 
 	}
 
 	delete box;
@@ -165,6 +169,7 @@ void ShowUI()
 
 	ImGui::End();
 
+	// 光照设置
 	if (isShowLightingSettings)
 	{
 		ImGui::Begin("Lighting Settings", &isShowLightingSettings);
@@ -175,18 +180,7 @@ void ShowUI()
 		ImGui::End();
 	}
 
-
-	//ImGui_ShowSimpleWindow();
-	ImGui_ShowDemoWindow();
-	//ImGui_ShowAnotherWindow();
-
-	//ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-	//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-	//ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-	//ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-	//ImGui::SameLine();
-	//ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+	//ImGui_ShowDemoWindow();
 }
 
 void processInput(GLFWwindow* window)
@@ -198,8 +192,7 @@ void processInput(GLFWwindow* window)
 void UpdateWindowSize()
 {
 	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
-	camera->viewportWidth = viewportWidth;
-	camera->viewportHeight = viewportHeight;
+	isInMinimal = viewportWidth == 0 && viewportHeight == 0;
 }
 
 void UpdateCursorPos()

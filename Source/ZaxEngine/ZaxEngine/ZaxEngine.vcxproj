@@ -151,7 +151,7 @@
     <ClCompile Include="AssetModel.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -164,10 +164,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="AssetModel.h" />
-    <ClInclude Include="DefualtMaterial.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="Material.h" />
+    <ClInclude Include="Materials\BlinnPhongMaterial.h" />
+    <ClInclude Include="Materials\DefualtMaterial.h" />
+    <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="MeshRenderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderProgram.h" />

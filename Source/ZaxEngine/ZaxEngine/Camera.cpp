@@ -61,6 +61,7 @@ void Camera::OnCursorPosChange(float xOffset, float yOffset)
 
 void Camera::OnViewportChange(int width, int height)
 {
+	if (width == 0 && width == 0) return;   // 当最小化时，这两者都变为0，如果继续渲染，则导致报错
 	viewportWidth = width;
 	viewportHeight = height;
 }

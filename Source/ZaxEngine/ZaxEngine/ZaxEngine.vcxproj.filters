@@ -22,6 +22,9 @@
     <Filter Include="源文件\Main">
       <UniqueIdentifier>{9389c31e-ecbc-4ba3-ae12-c832c077812b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials">
+      <UniqueIdentifier>{2e14acfd-9777-47bf-ae41-f12ccb88ae17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Plugins\imgui\imgui.cpp">
@@ -69,9 +72,6 @@
     <ClCompile Include="ZaxEngine.cpp">
       <Filter>源文件\Main</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -83,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Materials\Material.cpp">
+      <Filter>Materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,12 +113,6 @@
     <ClInclude Include="MeshRenderer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DefualtMaterial.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -127,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\DefualtMaterial.h">
+      <Filter>Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\Material.h">
+      <Filter>Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Materials\BlinnPhongMaterial.h">
+      <Filter>Materials</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

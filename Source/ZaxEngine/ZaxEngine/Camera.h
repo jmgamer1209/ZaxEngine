@@ -6,7 +6,7 @@
 #include "GameObject.h"
 
 class Camera: public Component
-{
+{	
 public:
 	float clippingNear = 0.1f;
 	float clippingFar = 100.0f;

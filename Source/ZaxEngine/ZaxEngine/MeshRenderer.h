@@ -1,6 +1,6 @@
 #pragma once
 #include "AssetModel.h"
-#include "Material.h"
+#include "Materials/Material.h"
 #include "glad/gl.h"
 #include "Camera.h"
 #include "Utils.h"
@@ -85,6 +85,7 @@ public:
         view = camera->GetViewMatrix();
         projection = camera->GetProjection();
 
+        shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position);
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);
         shaderProgram->SetUniform("projection", projection);
