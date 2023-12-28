@@ -104,21 +104,21 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\Plugins;..\..\Plugins\imgui;..\..\Plugins\imgui\backends;..\..\Plugins\imgui\examples\libs\glfw\include;..\..\Plugins\glad\include;..\..\Plugins\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalLibraryDirectories>..\..\Plugins\imgui\examples\libs\glfw\lib-vc2010-64;..\..\Plugins\assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>ThirdParty\imgui\examples\libs\glfw\lib-vc2010-64;ThirdParty\assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /y /d "..\..\Plugins\assimp\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "ThirdParty\assimp\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -138,43 +138,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Plugins\glad\src\gl.c" />
-    <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\imgui.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\..\Plugins\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Debug.cpp" />
-    <ClCompile Include="AssetModel.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Assets\AssetModel.cpp" />
+    <ClCompile Include="Component\Camera.cpp" />
+    <ClCompile Include="Component\Light.cpp" />
+    <ClCompile Include="Component\MeshRenderer.cpp" />
+    <ClCompile Include="Component\Transform.cpp" />
+    <ClCompile Include="Core\Debug.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\std_handler.cpp" />
+    <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
-    <ClCompile Include="MeshRenderer.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="std_handler.cpp" />
-    <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="ZaxEngine.cpp" />
+    <ClCompile Include="ThirdParty\glad\src\gl.c" />
+    <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="ThirdParty\imgui\imgui.cpp" />
+    <ClCompile Include="ThirdParty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="ThirdParty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="WindowsMain\ZaxEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Plugins\imgui\imgui.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Debug.h" />
-    <ClInclude Include="AssetModel.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="Assets\AssetModel.h" />
+    <ClInclude Include="Component\Camera.h" />
+    <ClInclude Include="Component\Component.h" />
+    <ClInclude Include="Component\Light.h" />
+    <ClInclude Include="Component\MeshRenderer.h" />
+    <ClInclude Include="Component\Transform.h" />
+    <ClInclude Include="Core\Debug.h" />
+    <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Materials\BlinnPhongMaterial.h" />
     <ClInclude Include="Materials\DefualtMaterial.h" />
     <ClInclude Include="Materials\Material.h" />
-    <ClInclude Include="MeshRenderer.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="windows.h" />
-    <ClInclude Include="ZaxEngine.h" />
+    <ClInclude Include="Platform\windows.h" />
+    <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

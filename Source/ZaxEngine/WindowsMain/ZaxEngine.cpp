@@ -1,22 +1,23 @@
 ﻿#include "ZaxEngine.h"
-#include "ShaderProgram.h"
-#include "Debug.h"
-#include "Utils.h"
+#include "Core/ShaderProgram.h"
+#include "Core/Debug.h"
+#include "Core/Utils.h"
 #include "stb_image.h"
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
-#include "Camera.h"
+#include "Component/Camera.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "AssetModel.h"
-#include "MeshRenderer.h"
+#include "Assets/AssetModel.h"
+#include "Component/MeshRenderer.h"
 #include "Materials/BlinnPhongMaterial.h"
-#include "GameObject.h"
-#include "Scene.h"
-#include "Light.h"
+#include "Core/GameObject.h"
+#include "Core/Scene.h"
+#include "Component/Light.h"
+#include "Component/Transform.h"
 
 void DrawScene();
 void ShowUI();
@@ -50,7 +51,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	TCHAR path[MAX_PATH] = { 0 };
 	GetCurrentDirectory(MAX_PATH, path);
 	auto projectPath = Utils::WString2String(path);
-	contentPath = projectPath + "/../../../Content/";
+	contentPath = projectPath + "/Content/";
 
 	// 导入模型
 	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");

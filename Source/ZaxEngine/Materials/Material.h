@@ -1,6 +1,6 @@
 #pragma once
-#include "../ShaderProgram.h"
-#include "../AssetModel.h"
+#include "Core/ShaderProgram.h"
+#include "Assets/AssetModel.h"
 
 class Material
 {

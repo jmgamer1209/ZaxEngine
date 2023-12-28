@@ -1,6 +1,6 @@
 #pragma once
 #include "Material.h"
-#include "../Utils.h"
+#include "Core/Utils.h"
 
 class  BlinnPhongMaterial : public Material
 {

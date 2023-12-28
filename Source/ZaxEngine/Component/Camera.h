@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
-#include "GameObject.h"
+#include "Core/GameObject.h"
 
 class Camera: public Component
 {	

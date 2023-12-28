@@ -1,22 +1,12 @@
-#include "GameObject.h"
-#include "imgui/imgui.h"
-
-GameObject::GameObject(const string& name)
-{
-	this->name = name;
-}
-
-void GameObject::AddComponent(Component* component)
-{
-	component->gameObject = this;
-	components.push_back(component);
-}
+#include "Transform.h"
+#include "imgui.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 void Transform::OnGui()
 {
 	if (ImGui::TreeNode("Transform"))
 	{
-		ImGui::Text("Position: "); 
+		ImGui::Text("Position: ");
 		ImGui::DragFloat3("##Position", this->position, 1.0f);
 
 		ImGui::Text("Rotation: ");

@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <glm/glm.hpp>
-#include "ShaderProgram.h"
+#include "Core/ShaderProgram.h"
 #include <assimp/scene.h>
 #include <unordered_map>
 

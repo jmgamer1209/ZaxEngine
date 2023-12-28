@@ -1,11 +1,13 @@
 #pragma once
-#include "AssetModel.h"
+#include "Assets/AssetModel.h"
 #include "Materials/Material.h"
 #include "glad/gl.h"
-#include "Camera.h"
-#include "Utils.h"
-#include "Light.h"
+#include "Component/Camera.h"
+#include "Component/Transform.h"
+#include "Component/Light.h"
+#include "Core/Utils.h"
 #include "imgui/imgui.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 class MeshRenderer: public Component
 {

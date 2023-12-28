@@ -4,6 +4,7 @@
 #include <string>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "Component/Component.h"
 using namespace std;
 
 class Component;
@@ -30,22 +31,4 @@ public:
 		}
 		return nullptr;
 	}
-};
-
-class Component
-{
-public:
-	GameObject* gameObject;
-	virtual void OnGui() {};
-};
-
-class Transform: public Component
-{
-public:
-	float position[3] = { 0, 0, 0 };
-	float rotation[3] = { 0, 0, 0 };
-	float scale[3] = { 1,1,1 };
-
-	void OnGui() override;
-	glm::vec3 GetForward();
 };
