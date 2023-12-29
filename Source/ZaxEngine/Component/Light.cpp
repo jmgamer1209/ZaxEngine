@@ -12,6 +12,13 @@ void Light::OnGui()
 		ImGui::Text("LightType: %s", LightTypeToString(type).c_str());
 		ImGui::Text("LightColor:");
 		ImGui::ColorEdit3("##LightColor", this->color);
+
+		if (this->type == LightType::Point)
+		{
+			ImGui::Text("Range:");
+			ImGui::DragFloat("##Range", &this->range, 0.1f, 0);
+		}
+
 		ImGui::TreePop();
 	}
 }
