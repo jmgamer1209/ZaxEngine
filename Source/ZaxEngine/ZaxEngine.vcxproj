@@ -146,6 +146,7 @@
     <ClCompile Include="Core\Debug.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Core\SceneRenderer.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\std_handler.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Core\Debug.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\SceneRenderer.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Materials\BlinnPhongMaterial.h" />

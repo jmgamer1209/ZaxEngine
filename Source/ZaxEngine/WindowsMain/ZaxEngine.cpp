@@ -18,7 +18,9 @@
 #include "Core/Scene.h"
 #include "Component/Light.h"
 #include "Component/Transform.h"
+#include "Core/SceneRenderer.h"
 
+void LoadScene();
 void DrawScene();
 void ShowUI();
 void UpdateCursorPos();
@@ -38,8 +40,8 @@ float yOffsetPos;
 
 Scene* scene;
 Camera* camera;
-Light* light;
-float ambient;
+ShaderProgram* shaderProgram;
+SceneRenderer* sceneRenderer;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
@@ -53,38 +55,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	auto projectPath = Utils::WString2String(path);
 	contentPath = projectPath + "/Content/";
 
-	// 导入模型
-	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
+	LoadScene();
 
-	// 创建 Shader Program 和 材质
-	ShaderProgram* shaderProgram = new ShaderProgram(contentPath + "v0.9/vertex.vs", contentPath + "v0.9/fragment.fs");
-	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram);
-	
-	// 创建渲染物体
-	auto box  = new GameObject("Box");
-	box->AddComponent(new Transform());
-	box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
-	box->GetComponent<Transform>()->position[1] = -2.5f;	// 因为 box 的中心点在底部，所以微调一下
-	box->GetComponent<Transform>()->rotation[0] = 45.0f;
-
-	// 设置摄像机
-	auto cameraGO = new GameObject("Camera");
-	cameraGO->AddComponent(new Transform());
-	camera = new Camera();
-	cameraGO->AddComponent(camera);
-	cameraGO->GetComponent<Transform>()->position[2] = 20;
-
-	// 创建光源
-	auto lightGO = new GameObject("Light");
-	lightGO->AddComponent(new Transform());
-	light = new Light();
-	lightGO->AddComponent(light);
-
-	// 创建场景
-	scene = new Scene();
-	scene->AddGameObject(cameraGO);
-	scene->AddGameObject(box);
-	scene->AddGameObject(lightGO);
+	sceneRenderer = new SceneRenderer();
 
 	glEnable(GL_DEPTH_TEST);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
@@ -118,20 +91,63 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	return 0;
 }
 
+void LoadScene()
+{
+	// 导入模型
+	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
+
+	// 创建 Shader Program 和 材质
+	shaderProgram = new ShaderProgram(contentPath + "v0.9/vertex.vs", contentPath + "v0.9/fragment.fs");
+	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram);
+
+	// 创建渲染物体
+	auto box = new GameObject("Box");
+	box->AddComponent(new Transform());
+	box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
+	box->GetComponent<Transform>()->position[1] = -2.5f;	// 因为 box 的中心点在底部，所以微调一下
+	box->GetComponent<Transform>()->rotation[0] = 45.0f;
+
+	// 设置摄像机
+	auto cameraGO = new GameObject("Camera");
+	cameraGO->AddComponent(new Transform());
+	camera = new Camera();
+	cameraGO->AddComponent(camera);
+	cameraGO->GetComponent<Transform>()->position[2] = 20;
+
+	// 创建光源
+	Light* light;
+	auto lightGO = new GameObject("DirectionalLight");
+	lightGO->AddComponent(new Transform());
+	light = new Light(LightType::Directional);
+	lightGO->AddComponent(light);
+
+	auto pointLightGO = new GameObject("PointLight");
+	auto transform = new Transform();
+	pointLightGO->AddComponent(transform);
+	light = new Light(LightType::Point);
+	light->color[0] = 1;
+	light->color[1] = 0;
+	light->color[2] = 0;
+	transform->position[1] = 1.5f;
+	transform->position[2] = 3.0f;
+	pointLightGO->AddComponent(light);
+
+	// 创建场景
+	scene = new Scene();
+	scene->AddGameObject(cameraGO);
+	scene->AddGameObject(box);
+	scene->AddGameObject(lightGO);
+	scene->AddGameObject(pointLightGO);
+	scene->lightingSettings.ambient = 0.1f;
+}
+
 void DrawScene()
 {
 	// 摄像机
 	camera->OnViewportChange(viewportWidth, viewportHeight);
 	//camera->HandleCameraInput(window);
 
-	// 渲染物体
-	for (size_t i = 0; i < scene->list.size(); i++)
-	{
-		auto renderer = scene->list[i]->GetComponent<MeshRenderer>();
-		if (renderer == nullptr) continue;
-
-		renderer->Draw(camera, light, ambient);
-	}
+	sceneRenderer->Draw(scene);
 }
 
 GameObject* selectedGO;
@@ -186,7 +202,7 @@ void ShowUI()
 		ImGui::Begin("Lighting Settings", &isShowLightingSettings);
 
 		ImGui::Text("Ambient Intensity:");
-		ImGui::DragFloat("##Ambient Intensity", &ambient, 0.01f, 0, 1);
+		ImGui::DragFloat("##Ambient Intensity", &scene->lightingSettings.ambient, 0.01f, 0, 1);
 
 		ImGui::End();
 	}

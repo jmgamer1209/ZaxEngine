@@ -100,6 +100,9 @@
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Core\SceneRenderer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Materials\Material.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="Component\Transform.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SceneRenderer.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
