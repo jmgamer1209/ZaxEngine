@@ -97,7 +97,7 @@ void LoadScene()
 	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 
 	// 创建 Shader Program 和 材质
-	shaderProgram = new ShaderProgram(contentPath + "v0.9/vertex.vs", contentPath + "v0.9/fragment.fs");
+	shaderProgram = new ShaderProgram(contentPath + "v0.10/vertex.vs", contentPath + "v0.10/fragment.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram);
 
 	// 创建渲染物体
