@@ -206,6 +206,12 @@ void ShowUI()
 
 	if (selectedGO != nullptr)
 	{
+		ImGui::Text(selectedGO->name.c_str());
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
 		for (size_t i = 0; i < selectedGO->components.size(); i++)
 		{
 			selectedGO->components[i]->OnGui();
