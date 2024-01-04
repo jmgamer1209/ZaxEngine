@@ -99,24 +99,26 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("pointLightsNumber", (int)pointLights.size());
         for (size_t j = 0; j < pointLights.size(); j++)
         {
+            auto light = pointLights[j];
             std::string varName = "pointLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName+std::string("position")).c_str(), pointLights[i]->gameObject->GetComponent<Transform>()->position);
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), pointLights[i]->color);
-            shaderProgram->SetUniform((varName + std::string("range")).c_str(), pointLights[i]->range);
+            shaderProgram->SetUniform3f((varName+std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position);
+            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color);
+            shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
         }
 
         // 设置聚光
         shaderProgram->SetUniform("spotLightsNumber", (int)spotLights.size());
         for (size_t j = 0; j < spotLights.size(); j++)
         {
+            auto light = spotLights[j];
             std::string varName = "spotLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), spotLights[i]->gameObject->GetComponent<Transform>()->position);
-            forward = spotLights[i]->gameObject->GetComponent<Transform>()->GetForward();
+            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position);
+            forward = light->gameObject->GetComponent<Transform>()->GetForward();
             shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), spotLights[i]->color);
-            shaderProgram->SetUniform((varName + std::string("range")).c_str(), spotLights[i]->range);
-            shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(spotLights[i]->innerAngle * (float)M_PI / 180.0f));
-            shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(spotLights[i]->outerAngle * (float)M_PI / 180.0f));
+            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color);
+            shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
+            shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
+            shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));
         }
 
         // 设置材质
