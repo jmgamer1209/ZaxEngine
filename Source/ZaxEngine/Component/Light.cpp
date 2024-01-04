@@ -16,12 +16,12 @@ void Light::OnGui()
 		if (this->type == LightType::Point)
 		{
 			ImGui::Text("Range:");
-			ImGui::DragFloat("##Range", &this->range, 0.1f, 0);
+			ImGui::DragFloat("##Range", &this->range, 0.1f, 0, FLT_MAX);
 		}
 		else if (this->type == LightType::Spot)
 		{
 			ImGui::Text("Range:");
-			ImGui::DragFloat("##Range", &this->range, 0.1f, 0);
+			ImGui::DragFloat("##Range", &this->range, 0.1f, 0, FLT_MAX);
 			ImGui::Text("Innter:");
 			ImGui::DragFloat("##Inner", &this->innerAngle, 0.1f, 1, 179);
 			ImGui::Text("Outer:");
@@ -38,12 +38,11 @@ std::string LightTypeToString(LightType type)
 	{
 	case LightType::Directional:
 		return "Directional";
-		break;
 	case LightType::Point:
 		return "Point";
-		break;
+	case LightType::Spot:
+		return "Spot";
 	default:
-		break;
+		return "No Type Name";
 	}
-	return "";
 }
