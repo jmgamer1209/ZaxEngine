@@ -98,21 +98,44 @@ void LoadScene()
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(contentPath + "v0.10/vertex.vs", contentPath + "v0.10/fragment.fs");
-	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram);
+	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, model, &(model->meshes[0]));
 
 	// 创建渲染物体
-	auto box = new GameObject("Box");
-	box->AddComponent(new Transform());
-	box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
-	box->GetComponent<Transform>()->position[1] = -2.5f;	// 因为 box 的中心点在底部，所以微调一下
-	box->GetComponent<Transform>()->rotation[0] = 45.0f;
+	vector<GameObject*> boxes;
+	for (size_t i = 1; i <= 3; i++)
+	{
+		auto box = new GameObject(string("Box")+std::to_string(i));
+		boxes.push_back(box);
+		box->AddComponent(new Transform());
+		box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
+
+		if (i == 1) {
+			box->GetComponent<Transform>()->position[0] = -11.0f;
+			box->GetComponent<Transform>()->position[1] = -2.5f;
+			box->GetComponent<Transform>()->position[2] = -8.0f;
+			box->GetComponent<Transform>()->rotation[0] = 45.0f;
+			box->GetComponent<Transform>()->rotation[1] = -30.0f;
+		}
+		else if (i == 2){
+			box->GetComponent<Transform>()->position[0] = -2.5f;
+			box->GetComponent<Transform>()->position[1] = -2.5f;	
+			box->GetComponent<Transform>()->rotation[0] = 45.0f;
+		}
+		else if (i == 3)
+		{
+			box->GetComponent<Transform>()->position[0] = 6.5f;
+			box->GetComponent<Transform>()->position[1] = -2.5f;
+			box->GetComponent<Transform>()->rotation[0] = 45.0f;
+			box->GetComponent<Transform>()->rotation[2] = -30.0f;
+		}
+	}
 
 	// 设置摄像机
 	auto cameraGO = new GameObject("Camera");
 	cameraGO->AddComponent(new Transform());
 	camera = new Camera();
 	cameraGO->AddComponent(camera);
-	cameraGO->GetComponent<Transform>()->position[2] = 20;
+	cameraGO->GetComponent<Transform>()->position[2] = 30;
 
 	// 创建光源
 	Light* light;
@@ -128,12 +151,14 @@ void LoadScene()
 	light->color[0] = 1;
 	light->color[1] = 0;
 	light->color[2] = 0;
+	transform->position[0] = -2.0f;
 	transform->position[1] = 1.5f;
 	transform->position[2] = 3.0f;
 	pointLightGO->AddComponent(light);
 
 	auto spotLightGO = new GameObject("SpotLight");
 	transform = new Transform();
+	transform->position[0] = 7;
 	transform->position[1] = -2;
 	transform->position[2] = 10;
 	spotLightGO->AddComponent(transform);
@@ -153,7 +178,10 @@ void LoadScene()
 	scene->lightingSettings.ambientColor[2] = 1;
 	scene->lightingSettings.ambientIntensity = 0.1f;
 	scene->AddGameObject(cameraGO);
-	scene->AddGameObject(box);
+	for (size_t i = 0; i < boxes.size(); i++)
+	{
+		scene->AddGameObject(boxes[i]);
+	}
 	scene->AddGameObject(lightGO);
 	scene->AddGameObject(pointLightGO);
 	scene->AddGameObject(spotLightGO);

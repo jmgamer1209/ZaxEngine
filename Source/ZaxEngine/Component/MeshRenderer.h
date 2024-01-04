@@ -20,7 +20,6 @@ public:
         this->mesh = mesh;
         this->mat = mat;
         SetupMesh();
-        mat->SetData(model, mesh);
 	}
 
     ~MeshRenderer()

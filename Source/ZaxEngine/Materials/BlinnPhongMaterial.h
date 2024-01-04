@@ -9,16 +9,13 @@ private:
 	float specular = 0.5f;
 
 public:
-	BlinnPhongMaterial(ShaderProgram* shader) : Material(shader) {}
-	~BlinnPhongMaterial() {}
-
-	void SetData(AssetModel* model, AssetMesh* mesh) override
+	BlinnPhongMaterial(ShaderProgram* shader, AssetModel* model, AssetMesh* mesh) : Material(shader) 
 	{
 		AssetMaterial& assetMat = model->materials[mesh->materialIndex];
 		AssetTexture& assetTexture = assetMat.baseColor;
-
 		Utils::LoadTexture(&albedoTexture, assetTexture.path);
 	}
+	~BlinnPhongMaterial() {}
 
 	void Draw() override
 	{
