@@ -148,7 +148,10 @@ void LoadScene()
 
 	// 创建场景
 	scene = new Scene();
-	scene->lightingSettings.ambient = 0.1f;
+	scene->lightingSettings.ambientColor[0] = 1;
+	scene->lightingSettings.ambientColor[1] = 1;
+	scene->lightingSettings.ambientColor[2] = 1;
+	scene->lightingSettings.ambientIntensity = 0.1f;
 	scene->AddGameObject(cameraGO);
 	scene->AddGameObject(box);
 	scene->AddGameObject(lightGO);
@@ -215,9 +218,10 @@ void ShowUI()
 	if (isShowLightingSettings)
 	{
 		ImGui::Begin("Lighting Settings", &isShowLightingSettings);
-
+		ImGui::Text("Ambient Color:");
+		ImGui::ColorEdit3("##Ambient Color", scene->lightingSettings.ambientColor);
 		ImGui::Text("Ambient Intensity:");
-		ImGui::DragFloat("##Ambient Intensity", &scene->lightingSettings.ambient, 0.01f, 0, 1);
+		ImGui::DragFloat("##Ambient Intensity", &scene->lightingSettings.ambientIntensity, 0.01f, 0, 1);
 
 		ImGui::End();
 	}

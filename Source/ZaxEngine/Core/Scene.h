@@ -5,7 +5,8 @@ using namespace std;
 
 struct SceneLighting
 {
-	float ambient;
+	float ambientColor[3];
+	float ambientIntensity;
 };
 
 class Scene

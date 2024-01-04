@@ -8,6 +8,7 @@ in vec4 fragPos;
 
 uniform vec3 cameraPos;
 uniform sampler2D albedoTexture;
+uniform vec3 ambientColor;
 uniform float ambientIntensity;
 uniform float specularIntensity;
 
@@ -79,5 +80,7 @@ void main()
     }
 
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
-    FragColor = vec4(diffuse + ambientIntensity + specular,1);
+    vec3 ambient = ambientColor * ambientIntensity * vec3(tex);
+
+    FragColor = vec4(diffuse + ambient + specular,1);
 }

@@ -87,7 +87,8 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("normalMatrix", normalMatrix);
 
         // 设置全局光
-        shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambient);
+        shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor);
+        shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 
         // 设置直射光
         auto forward = directionalLight->gameObject->GetComponent<Transform>()->GetForward();
