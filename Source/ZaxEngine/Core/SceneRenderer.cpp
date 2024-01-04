@@ -74,6 +74,9 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("projection", projection);
         shaderProgram->SetUniform("normalMatrix", normalMatrix);
 
+        // 设置全局光
+        shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambient);
+
         // 设置直射光
         auto forward = directionalLight->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("directionalLight.direction", forward);
