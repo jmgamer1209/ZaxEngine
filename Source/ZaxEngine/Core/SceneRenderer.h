@@ -16,6 +16,7 @@ private:
 	Camera* camera;
 	Light* directionalLight;
 	vector<Light*> pointLights;
+	vector<Light*> spotLights;
 	vector<MeshRenderer*> renderers;
 	void DrawRenderers();
 };

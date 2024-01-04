@@ -132,13 +132,28 @@ void LoadScene()
 	transform->position[2] = 3.0f;
 	pointLightGO->AddComponent(light);
 
+	auto spotLightGO = new GameObject("SpotLight");
+	transform = new Transform();
+	transform->position[1] = -2;
+	transform->position[2] = 10;
+	spotLightGO->AddComponent(transform);
+	light = new Light(LightType::Spot);
+	light->color[0] = 0;
+	light->color[1] = 1;
+	light->color[2] = 0;
+	light->range = 20;
+	light->innerAngle = 8;
+	light->outerAngle = 10;
+	spotLightGO->AddComponent(light);
+
 	// 创建场景
 	scene = new Scene();
+	scene->lightingSettings.ambient = 0.1f;
 	scene->AddGameObject(cameraGO);
 	scene->AddGameObject(box);
 	scene->AddGameObject(lightGO);
 	scene->AddGameObject(pointLightGO);
-	scene->lightingSettings.ambient = 0.1f;
+	scene->AddGameObject(spotLightGO);
 }
 
 void DrawScene()

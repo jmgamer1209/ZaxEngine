@@ -4,6 +4,8 @@
 #include "Component/MeshRenderer.h"
 #include "Component/Transform.h"
 #include "glm/gtc/matrix_transform.hpp"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 SceneRenderer::SceneRenderer()
 {
@@ -17,6 +19,7 @@ void SceneRenderer::Draw(Scene* scene)
 {
     this->scene = scene;
     pointLights.clear();
+    spotLights.clear();
     renderers.clear();
 
 	for (size_t i = 0; i < scene->list.size(); i++)
@@ -27,11 +30,20 @@ void SceneRenderer::Draw(Scene* scene)
 		auto tempLight = scene->list[i]->GetComponent<Light>();
         if (tempLight != nullptr)
         {
-            if (tempLight->type == LightType::Directional) 
-            {               
+            switch (tempLight->type)
+            {
+            case LightType::Directional:
                 this->directionalLight = tempLight;
+                break;
+            case LightType::Point:
+                this->pointLights.push_back(tempLight);
+                break;
+            case LightType::Spot:
+                this->spotLights.push_back(tempLight);
+                break;
+            default:
+                break;
             }
-            else this->pointLights.push_back(tempLight);
         }
 
 		auto tempRenderer = scene->list[i]->GetComponent<MeshRenderer>();
@@ -90,6 +102,20 @@ void SceneRenderer::DrawRenderers()
             shaderProgram->SetUniform3f((varName+std::string("position")).c_str(), pointLights[i]->gameObject->GetComponent<Transform>()->position);
             shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), pointLights[i]->color);
             shaderProgram->SetUniform((varName + std::string("range")).c_str(), pointLights[i]->range);
+        }
+
+        // 设置聚光
+        shaderProgram->SetUniform("spotLightsNumber", (int)spotLights.size());
+        for (size_t j = 0; j < spotLights.size(); j++)
+        {
+            std::string varName = "spotLights[" + std::to_string(j) + std::string("].");
+            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), spotLights[i]->gameObject->GetComponent<Transform>()->position);
+            forward = spotLights[i]->gameObject->GetComponent<Transform>()->GetForward();
+            shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
+            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), spotLights[i]->color);
+            shaderProgram->SetUniform((varName + std::string("range")).c_str(), spotLights[i]->range);
+            shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(spotLights[i]->innerAngle * (float)M_PI / 180.0f));
+            shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(spotLights[i]->outerAngle * (float)M_PI / 180.0f));
         }
 
         // 设置材质

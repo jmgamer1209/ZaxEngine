@@ -18,6 +18,15 @@ void Light::OnGui()
 			ImGui::Text("Range:");
 			ImGui::DragFloat("##Range", &this->range, 0.1f, 0);
 		}
+		else if (this->type == LightType::Spot)
+		{
+			ImGui::Text("Range:");
+			ImGui::DragFloat("##Range", &this->range, 0.1f, 0);
+			ImGui::Text("Innter:");
+			ImGui::DragFloat("##Inner", &this->innerAngle, 0.1f, 1, 179);
+			ImGui::Text("Outer:");
+			ImGui::DragFloat("##Outer", &this->outerAngle, 0.1f, 1, 179);
+		}
 
 		ImGui::TreePop();
 	}

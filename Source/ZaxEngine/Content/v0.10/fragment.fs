@@ -28,6 +28,19 @@ struct PointLight
 uniform PointLight[NUMBER_POINT_LIGHT] pointLights;
 uniform int pointLightsNumber;
 
+struct SpotLight 
+{
+    vec3 position;
+    vec3 direction;
+    vec3 color;
+    float range;
+    float cosInner;
+    float cosOuter;
+};
+#define NUMBER_SPOT_LIGHT 4
+uniform SpotLight[NUMBER_POINT_LIGHT] spotLights;
+uniform int spotLightsNumber;
+
 void main()
 {
     vec3 normal1 = normalize(normal);
@@ -50,6 +63,19 @@ void main()
 
         halfDir = normalize(normalize(pointDir) + viewDir);
         specular += pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity * pointLights[i].color * attenuation;
+    }
+
+    // 聚光灯
+    for(int i=0; i<spotLightsNumber; i++)
+    {
+        vec3 pointDir = spotLights[i].position - vec3(fragPos);
+        float attenuation = clamp(1 - length(pointDir) / spotLights[i].range,0,1);  // range线性衰减计算
+        attenuation *= (dot(normalize(-pointDir), spotLights[i].direction) - spotLights[i].cosOuter)/(spotLights[i].cosInner - spotLights[i].cosOuter); // 边缘线性衰减计算
+        attenuation = max(attenuation,0);
+        diffuse += max(dot(normalize(pointDir), normal1) * attenuation,0) * spotLights[i].color;
+
+        halfDir = normalize(normalize(pointDir) + viewDir);
+        specular += pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity * spotLights[i].color * attenuation;
     }
 
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
