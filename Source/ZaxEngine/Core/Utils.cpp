@@ -52,6 +52,10 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 	GLint format = GL_RGB;
 	if (nrChannels == 4) format = GL_RGBA;
 
+	// 根据是否是4的倍数，设置读取像素的单位
+	if (nrChannels == 4 || (width%4 == 0 && height%4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4字节读取
+	else glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
+
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);

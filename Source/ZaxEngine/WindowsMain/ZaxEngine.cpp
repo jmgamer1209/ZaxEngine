@@ -60,7 +60,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	sceneRenderer = new SceneRenderer();
 
 	glEnable(GL_DEPTH_TEST);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // 以单字节去读取像素，而不是4字节
 
 	while (!glfwWindowShouldClose(window))
 	{
