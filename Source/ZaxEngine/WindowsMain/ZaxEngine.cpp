@@ -141,9 +141,7 @@ void LoadScene()
 	auto transform = new Transform();
 	pointLightGO->AddComponent(transform);
 	light = new Light(LightType::Point);
-	light->color[0] = 1;
-	light->color[1] = 0;
-	light->color[2] = 0;
+	light->color = { 1,0,0 };
 	transform->position = Vector3(-2.0f, 1.5f, 3.0f); 
 	pointLightGO->AddComponent(light);
 
@@ -152,9 +150,7 @@ void LoadScene()
 	transform->position = Vector3(7, -2, 10);
 	spotLightGO->AddComponent(transform);
 	light = new Light(LightType::Spot);
-	light->color[0] = 0;
-	light->color[1] = 1;
-	light->color[2] = 0;
+	light->color = { 0,1,0 };
 	light->range = 20;
 	light->innerAngle = 8;
 	light->outerAngle = 10;
@@ -162,9 +158,7 @@ void LoadScene()
 
 	// 创建场景
 	scene = new Scene();
-	scene->lightingSettings.ambientColor[0] = 1;
-	scene->lightingSettings.ambientColor[1] = 1;
-	scene->lightingSettings.ambientColor[2] = 1;
+	scene->lightingSettings.ambientColor = Color(1, 1, 1);
 	scene->lightingSettings.ambientIntensity = 0.1f;
 	scene->AddGameObject(cameraGO);
 	for (size_t i = 0; i < boxes.size(); i++)
@@ -242,7 +236,7 @@ void ShowUI()
 	{
 		ImGui::Begin("Lighting Settings", &isShowLightingSettings);
 		ImGui::Text("Ambient Color:");
-		ImGui::ColorEdit3("##Ambient Color", scene->lightingSettings.ambientColor);
+		ImGui::ColorEdit3("##Ambient Color", scene->lightingSettings.ambientColor.FloatPTR());
 		ImGui::Text("Ambient Intensity:");
 		ImGui::DragFloat("##Ambient Intensity", &scene->lightingSettings.ambientIntensity, 0.01f, 0, 1);
 

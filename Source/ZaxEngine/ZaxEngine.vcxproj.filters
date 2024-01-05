@@ -162,5 +162,8 @@
     <ClInclude Include="Core\Vector3.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Color.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

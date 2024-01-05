@@ -11,7 +11,7 @@ void Light::OnGui()
 	if (ImGui::TreeNode("Light")) {
 		ImGui::Text("LightType: %s", LightTypeToString(type).c_str());
 		ImGui::Text("LightColor:");
-		ImGui::ColorEdit3("##LightColor", this->color);
+		ImGui::ColorEdit3("##LightColor", color.FloatPTR());
 
 		if (this->type == LightType::Point)
 		{

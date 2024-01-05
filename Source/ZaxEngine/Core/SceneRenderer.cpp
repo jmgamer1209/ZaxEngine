@@ -87,13 +87,13 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("normalMatrix", normalMatrix);
 
         // 设置全局光
-        shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor);
+        shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor.FloatPTR());
         shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 
         // 设置直射光
         auto forward = directionalLight->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("directionalLight.direction", forward);
-        shaderProgram->SetUniform3f("directionalLight.color", directionalLight->color);
+        shaderProgram->SetUniform3f("directionalLight.color", directionalLight->color.FloatPTR());
         
         // 设置点光
         shaderProgram->SetUniform("pointLightsNumber", (int)pointLights.size());
@@ -102,7 +102,7 @@ void SceneRenderer::DrawRenderers()
             auto light = pointLights[j];
             std::string varName = "pointLights[" + std::to_string(j) + std::string("].");
             shaderProgram->SetUniform3f((varName+std::string("position")).c_str(),  (float*)& light->gameObject->GetComponent<Transform>()->position);
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color);
+            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
             shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
         }
 
@@ -115,7 +115,7 @@ void SceneRenderer::DrawRenderers()
             shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), (float*) & light->gameObject->GetComponent<Transform>()->position);
             forward = light->gameObject->GetComponent<Transform>()->GetForward();
             shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color);
+            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
             shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
             shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
             shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));

@@ -169,6 +169,7 @@
     <ClInclude Include="Component\Light.h" />
     <ClInclude Include="Component\MeshRenderer.h" />
     <ClInclude Include="Component\Transform.h" />
+    <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Debug.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />

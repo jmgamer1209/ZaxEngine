@@ -1,11 +1,12 @@
 #pragma once
 #include <vector>
 #include "GameObject.h"
+#include "Core/Color.h"
 using namespace std;
 
 struct SceneLighting
 {
-	float ambientColor[3];
+	Color ambientColor;
 	float ambientIntensity;
 };
 
