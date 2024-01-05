@@ -14,6 +14,11 @@ public:
 		this->y = y;
 		this->z = z;
 	}
+
+	float* FloatPTR()
+	{
+		return (float*)this;
+	}
 };
 
 glm::vec3 Vector3ToGLMVec(const Vector3& vec);

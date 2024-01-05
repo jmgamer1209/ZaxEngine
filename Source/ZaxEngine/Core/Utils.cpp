@@ -19,18 +19,6 @@ wstring Utils::String2Wstring(const string& s)
     return result;
 }
 
-void Utils::Vec3ToArray(glm::vec3& vec3, float array[])
-{
-    array[0] = vec3[0];
-    array[1] = vec3[1];
-    array[2] = vec3[2];
-}
-
-glm::vec3 Utils::ArrayToVec3(float array[])
-{
-	return glm::vec3(array[0], array[1], array[2]);
-}
-
 void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_vertically)
 {
 	// ¼ÓÔØÎÆÀí

@@ -80,7 +80,7 @@ void SceneRenderer::DrawRenderers()
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
         
-        shaderProgram->SetUniform3f("cameraPos", (float*)&camera->gameObject->GetComponent<Transform>()->position);
+        shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position.FloatPTR());
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);
         shaderProgram->SetUniform("projection", projection);
@@ -101,7 +101,7 @@ void SceneRenderer::DrawRenderers()
         {
             auto light = pointLights[j];
             std::string varName = "pointLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName+std::string("position")).c_str(),  (float*)& light->gameObject->GetComponent<Transform>()->position);
+            shaderProgram->SetUniform3f((varName+std::string("position")).c_str(),  light->gameObject->GetComponent<Transform>()->position.FloatPTR());
             shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
             shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
         }
@@ -112,7 +112,7 @@ void SceneRenderer::DrawRenderers()
         {
             auto light = spotLights[j];
             std::string varName = "spotLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), (float*) & light->gameObject->GetComponent<Transform>()->position);
+            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
             forward = light->gameObject->GetComponent<Transform>()->GetForward();
             shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
             shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
