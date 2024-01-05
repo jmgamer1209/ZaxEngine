@@ -103,6 +103,9 @@
     <ClCompile Include="Core\SceneRenderer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Vector3.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Materials\Material.h">
@@ -154,6 +157,9 @@
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Core\SceneRenderer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Vector3.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

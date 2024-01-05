@@ -150,6 +150,7 @@
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\std_handler.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
+    <ClCompile Include="Core\Vector3.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_glfw.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Core\SceneRenderer.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Utils.h" />
+    <ClInclude Include="Core\Vector3.h" />
     <ClInclude Include="Materials\BlinnPhongMaterial.h" />
     <ClInclude Include="Materials\DefualtMaterial.h" />
     <ClInclude Include="Materials\Material.h" />

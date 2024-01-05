@@ -11,13 +11,13 @@ glm::mat4 Camera::GetViewMatrix()
 	auto position = transform->position;
 	auto rotation = transform->rotation;
 
-	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[1]), glm::vec3(0, 1, 0));
-	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[0]), glm::vec3(1, 0, 0));
-	viewRotation = glm::rotate(viewRotation, glm::radians(rotation[2]), glm::vec3(0, 0, 1));
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
+	viewRotation = glm::rotate(viewRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
 	viewRotation = glm::transpose(viewRotation);
 
 	glm::mat4 viewTranslation(1.0f);
-	viewTranslation = glm::translate(viewTranslation, glm::vec3(-position[0], -position[1], -position[2]));
+	viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
 
 	return viewRotation * viewTranslation;
 }
@@ -31,7 +31,7 @@ void Camera::HandleCameraInput(GLFWwindow* window)
 {
 	auto transform = gameObject->GetComponent<Transform>();
 	float moveSpeed = 0.05f;
-	glm::vec3 pos = Utils::ArrayToVec3(transform->position);
+	glm::vec3 pos = Vector3ToGLMVec(transform->position);
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		pos = pos + cameraFront * moveSpeed;
@@ -51,8 +51,7 @@ void Camera::HandleCameraInput(GLFWwindow* window)
 	{
 		pos = pos + glm::normalize(glm::cross(cameraFront, glm::vec3(0, 1, 0))) * moveSpeed;
 	}
-
-	Utils::Vec3ToArray(pos, transform->position);
+	GLMVecToVector3(pos, transform->position);
 }
 
 void Camera::OnCursorPosChange(float xOffset, float yOffset)

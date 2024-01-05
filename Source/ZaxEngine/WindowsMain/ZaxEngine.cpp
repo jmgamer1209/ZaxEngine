@@ -109,23 +109,17 @@ void LoadScene()
 		box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
 
 		if (i == 1) {
-			box->GetComponent<Transform>()->position[0] = -11.0f;
-			box->GetComponent<Transform>()->position[1] = -2.5f;
-			box->GetComponent<Transform>()->position[2] = -8.0f;
-			box->GetComponent<Transform>()->rotation[0] = 45.0f;
-			box->GetComponent<Transform>()->rotation[1] = -30.0f;
+			box->GetComponent<Transform>()->position = Vector3(-11.0f, -2.5f, -8.0f);
+			box->GetComponent<Transform>()->rotation = Vector3(45.0f, -30.0f, 0);
 		}
 		else if (i == 2){
-			box->GetComponent<Transform>()->position[0] = -2.5f;
-			box->GetComponent<Transform>()->position[1] = -2.5f;	
-			box->GetComponent<Transform>()->rotation[0] = 45.0f;
+			box->GetComponent<Transform>()->position = Vector3(-2.5f, -2.5f, 0);
+			box->GetComponent<Transform>()->rotation = Vector3(45.0f, 0, 0);
 		}
 		else if (i == 3)
 		{
-			box->GetComponent<Transform>()->position[0] = 6.5f;
-			box->GetComponent<Transform>()->position[1] = -2.5f;
-			box->GetComponent<Transform>()->rotation[0] = 45.0f;
-			box->GetComponent<Transform>()->rotation[2] = -30.0f;
+			box->GetComponent<Transform>()->position = Vector3(6.5f, -2.5f, 0);
+			box->GetComponent<Transform>()->rotation = Vector3(45.0f, 0, -30.0f);
 		}
 	}
 
@@ -134,7 +128,7 @@ void LoadScene()
 	cameraGO->AddComponent(new Transform());
 	camera = new Camera();
 	cameraGO->AddComponent(camera);
-	cameraGO->GetComponent<Transform>()->position[2] = 30;
+	cameraGO->GetComponent<Transform>()->position.z = 30;
 
 	// 创建光源
 	Light* light;
@@ -150,16 +144,12 @@ void LoadScene()
 	light->color[0] = 1;
 	light->color[1] = 0;
 	light->color[2] = 0;
-	transform->position[0] = -2.0f;
-	transform->position[1] = 1.5f;
-	transform->position[2] = 3.0f;
+	transform->position = Vector3(-2.0f, 1.5f, 3.0f); 
 	pointLightGO->AddComponent(light);
 
 	auto spotLightGO = new GameObject("SpotLight");
 	transform = new Transform();
-	transform->position[0] = 7;
-	transform->position[1] = -2;
-	transform->position[2] = 10;
+	transform->position = Vector3(7, -2, 10);
 	spotLightGO->AddComponent(transform);
 	light = new Light(LightType::Spot);
 	light->color[0] = 0;
