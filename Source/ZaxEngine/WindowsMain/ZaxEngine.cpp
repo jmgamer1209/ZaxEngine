@@ -28,8 +28,7 @@ void UpdateWindowSize();
 
 string contentPath;
 
-int viewportWidth;
-int viewportHeight;
+bool isViewportSizeChanged;
 bool isInMinimal;
 
 bool firstMouseRecord = true;
@@ -59,7 +58,45 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	sceneRenderer = new SceneRenderer();
 
-	glEnable(GL_DEPTH_TEST);
+	unsigned int framebuffer;
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+	unsigned int textureColorBuffer;
+	glGenTextures(1, &textureColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportWidth, viewportHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);  // 绑定颜色缓冲
+
+	unsigned int rbo;
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportWidth, viewportWidth); 
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);   // 绑定深度和模板缓冲
+
+	// 检查是否完成创建
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+	
+	// 重新绑定到初始帧缓冲
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	float screenVertices[] = {
+		-1, -1, 0, 0, 0,
+		 1, -1, 0, 1, 0,
+		 1,  1, 0, 1, 1,
+		-1,-1, 0, 0, 0,
+		 1,  1, 0, 1, 1,
+		-1, 1, 0, 0, 1
+	};
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(screenVertices), screenVertices, GL_STATIC_DRAW);
+
+	// 创建 Shader Program 和 材质
+	auto screenShaderProgram = new ShaderProgram(contentPath + "v0.11/screen.vs", contentPath + "v0.11/screen.fs");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -67,10 +104,37 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		UpdateCursorPos();
 
 		glViewport(0, 0, viewportWidth, viewportHeight);
-		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+		// 如果窗口变化，需要重新设置纹理和rb的大小
+		if (isViewportSizeChanged)
+		{
+			glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportWidth, viewportHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+			
+			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportWidth, viewportWidth);
+		}
 
 		if (!isInMinimal) DrawScene();
+
+		// 将离屏图像绘制到四边形
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		screenShaderProgram->Use();
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+		screenShaderProgram->SetUniform("screenTex", 0);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
@@ -80,6 +144,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		
 		// 缓冲区交换，将缓冲区数据显示到窗口
 		glfwSwapBuffers(window); 
+
+		isViewportSizeChanged = false;
 	}
 
 	delete scene;
@@ -172,6 +238,9 @@ void LoadScene()
 
 void DrawScene()
 {
+	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	// 摄像机
 	camera->OnViewportChange(viewportWidth, viewportHeight);
 	//camera->HandleCameraInput(window);
@@ -254,8 +323,11 @@ void processInput(GLFWwindow* window)
 
 void UpdateWindowSize()
 {
+	int preWidth = viewportWidth;
+	int preHeight = viewportHeight;
 	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
 	isInMinimal = viewportWidth == 0 && viewportHeight == 0;
+	isViewportSizeChanged = preWidth != viewportWidth || preHeight != viewportHeight;
 }
 
 void UpdateCursorPos()

@@ -31,6 +31,8 @@ bool show_demo_window = true;
 bool show_another_window = false;
 ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 const char* windowTitle = "ZaxEngine";
+int viewportWidth = 1280;
+int viewportHeight = 720;
 
 
 static void glfw_error_callback(int error, const char* description)
@@ -101,12 +103,12 @@ static int ImGui_Init()
 	glfwWindowHint(GLFW_VISIBLE, 0);
 
 	// 创建窗口
-	window = glfwCreateWindow(1280, 720, windowTitle, nullptr, nullptr);
+	window = glfwCreateWindow(viewportWidth, viewportHeight, windowTitle, nullptr, nullptr);
 	if (window == nullptr)
 		return 1;
 
 	// 位置设置完后，需要再显示
-	glfwSetWindowPos(window, 1280 / 2, 720 / 2);
+	glfwSetWindowPos(window, viewportWidth / 2, viewportHeight / 2);
 	glfwShowWindow(window);
 
 	glfwMakeContextCurrent(window);

@@ -55,6 +55,8 @@ void SceneRenderer::Draw(Scene* scene)
 
 void SceneRenderer::DrawRenderers()
 {
+    glEnable(GL_DEPTH_TEST);
+
 	for (size_t i = 0; i < renderers.size(); i++)
 	{
 		auto renderer = renderers[i];
