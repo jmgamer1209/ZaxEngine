@@ -126,7 +126,9 @@ void LoadScene()
 	auto camera = new Camera();
 	cameraGO->AddComponent(camera);
 	cameraGO->GetComponent<Transform>()->position.z = 30;
-	cameraGO->AddComponent(new PostProcess());
+	auto post = new PostProcess();
+	post->enabled = false;
+	cameraGO->AddComponent(post);
 
 	// 创建光源
 	Light* light;
