@@ -6,6 +6,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Core/Mesh.h"
+#include "Core/QuadMesh.h"
 
 SceneRenderer::SceneRenderer()
 {
@@ -13,6 +15,12 @@ SceneRenderer::SceneRenderer()
 
 SceneRenderer::~SceneRenderer()
 {
+}
+
+void SceneRenderer::Init(int width, int height)
+{
+    frameBuffer = new FrameBuffer(width, height);
+    screenShaderProgram = new ShaderProgram(Application::contentPath + "Common/Shader/screen.vs", Application::contentPath + "Common/Shader/screen.fs");
 }
 
 void SceneRenderer::Draw(Scene* scene)
@@ -50,7 +58,19 @@ void SceneRenderer::Draw(Scene* scene)
 		if (tempRenderer != nullptr) renderers.push_back(tempRenderer);
 	}
 
+    camera->OnViewportChange(Application::viewportWidth, Application::viewportHeight);
+    // 如果窗口变化，需要重新设置纹理和rb的大小
+    if (Application::isViewportSizeChanged)
+    {
+        frameBuffer->ChangeSize(Application::viewportWidth, Application::viewportHeight);
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     DrawRenderers();
+    DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
 }
 
 void SceneRenderer::DrawRenderers()
@@ -131,3 +151,22 @@ void SceneRenderer::DrawRenderers()
         glBindVertexArray(0);
 	}
 }
+
+void SceneRenderer::DrawPostProcess(PostProcess* postProcess)
+{
+    auto postFrameBuffer = postProcess->enabled == true? postProcess->Draw(*this->frameBuffer) : frameBuffer;
+    
+    // 将离屏图像绘制到屏幕
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    Mesh::GetQuadMesh()->Setup();
+    screenShaderProgram->Use();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, postFrameBuffer->GetTextureColorBuffer());
+    screenShaderProgram->SetUniform("screenTex", 0);
+
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+

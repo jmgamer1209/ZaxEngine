@@ -19,17 +19,14 @@
 #include "Component/Light.h"
 #include "Component/Transform.h"
 #include "Core/SceneRenderer.h"
+#include "Core/FrameBuffer.h"
+#include "Core/Application.h"
 
 void LoadScene();
 void DrawScene();
 void ShowUI();
 void UpdateCursorPos();
 void UpdateWindowSize();
-
-string contentPath;
-
-bool isViewportSizeChanged;
-bool isInMinimal;
 
 bool firstMouseRecord = true;
 float lastXPos;
@@ -38,7 +35,6 @@ float xOffsetPos;
 float yOffsetPos;
 
 Scene* scene;
-Camera* camera;
 ShaderProgram* shaderProgram;
 SceneRenderer* sceneRenderer;
 
@@ -52,51 +48,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	TCHAR path[MAX_PATH] = { 0 };
 	GetCurrentDirectory(MAX_PATH, path);
 	auto projectPath = Utils::WString2String(path);
-	contentPath = projectPath + "/Content/";
+	Application::contentPath = projectPath + "/Content/";
+
+	Application::viewportWidth = viewportWidth;
+	Application::viewportHeight = viewportHeight;
 
 	LoadScene();
 
 	sceneRenderer = new SceneRenderer();
-
-	unsigned int framebuffer;
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	unsigned int textureColorBuffer;
-	glGenTextures(1, &textureColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportWidth, viewportHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);  // 绑定颜色缓冲
-
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportWidth, viewportWidth); 
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);   // 绑定深度和模板缓冲
-
-	// 检查是否完成创建
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-	
-	// 重新绑定到初始帧缓冲
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	float screenVertices[] = {
-		-1, -1, 0, 0, 0,
-		 1, -1, 0, 1, 0,
-		 1,  1, 0, 1, 1,
-		-1,-1, 0, 0, 0,
-		 1,  1, 0, 1, 1,
-		-1, 1, 0, 0, 1
-	};
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(screenVertices), screenVertices, GL_STATIC_DRAW);
-
-	// 创建 Shader Program 和 材质
-	auto screenShaderProgram = new ShaderProgram(contentPath + "v0.11/screen.vs", contentPath + "v0.11/screen.fs");
+	sceneRenderer->Init(viewportWidth, viewportHeight);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -105,47 +65,18 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		glViewport(0, 0, viewportWidth, viewportHeight);
 
-		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-		// 如果窗口变化，需要重新设置纹理和rb的大小
-		if (isViewportSizeChanged)
-		{
-			glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportWidth, viewportHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-			
-			glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportWidth, viewportWidth);
-		}
-
-		if (!isInMinimal) DrawScene();
-
-		// 将离屏图像绘制到四边形
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		screenShaderProgram->Use();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
-		screenShaderProgram->SetUniform("screenTex", 0);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
+		if (!Application::isInMinimal) DrawScene();
 
 		// 渲染 UI 界面
 		ImGui_NewFrame(); // ImGui 开始绘制
-		if (!isInMinimal) ShowUI();
+		if (!Application::isInMinimal) ShowUI();
 		ImGui::Render(); // ImGui 生成渲染数据
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // ImGui 执行绘制指令
 		
 		// 缓冲区交换，将缓冲区数据显示到窗口
 		glfwSwapBuffers(window); 
 
-		isViewportSizeChanged = false;
+		Application::isViewportSizeChanged = false;
 	}
 
 	delete scene;
@@ -159,10 +90,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 void LoadScene()
 {
 	// 导入模型
-	AssetModel* model = new AssetModel(contentPath + "Common/WoodenCrate/Wooden Crate.obj");
+	AssetModel* model = new AssetModel(Application::contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 
 	// 创建 Shader Program 和 材质
-	shaderProgram = new ShaderProgram(contentPath + "v0.10/vertex.vs", contentPath + "v0.10/fragment.fs");
+	shaderProgram = new ShaderProgram(Application::contentPath + "v0.10/vertex.vs", Application::contentPath + "v0.10/fragment.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, model, &(model->meshes[0]));
 
 	// 创建渲染物体
@@ -192,9 +123,10 @@ void LoadScene()
 	// 设置摄像机
 	auto cameraGO = new GameObject("Camera");
 	cameraGO->AddComponent(new Transform());
-	camera = new Camera();
+	auto camera = new Camera();
 	cameraGO->AddComponent(camera);
 	cameraGO->GetComponent<Transform>()->position.z = 30;
+	cameraGO->AddComponent(new PostProcess());
 
 	// 创建光源
 	Light* light;
@@ -238,13 +170,6 @@ void LoadScene()
 
 void DrawScene()
 {
-	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// 摄像机
-	camera->OnViewportChange(viewportWidth, viewportHeight);
-	//camera->HandleCameraInput(window);
-
 	sceneRenderer->Draw(scene);
 }
 
@@ -325,9 +250,12 @@ void UpdateWindowSize()
 {
 	int preWidth = viewportWidth;
 	int preHeight = viewportHeight;
+	
 	glfwGetFramebufferSize(window, &viewportWidth, &viewportHeight);
-	isInMinimal = viewportWidth == 0 && viewportHeight == 0;
-	isViewportSizeChanged = preWidth != viewportWidth || preHeight != viewportHeight;
+	Application::viewportWidth = viewportWidth;
+	Application::viewportHeight = viewportHeight;
+	Application::isInMinimal = viewportWidth == 0 && viewportHeight == 0;
+	Application::isViewportSizeChanged = preWidth != viewportWidth || preHeight != viewportHeight;
 }
 
 void UpdateCursorPos()

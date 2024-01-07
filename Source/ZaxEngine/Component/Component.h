@@ -6,6 +6,7 @@ class GameObject;
 class Component
 {
 public:
+	bool enabled = true;
 	GameObject* gameObject;
-	virtual void OnGui() {};
+	virtual void OnGui() {}
 };

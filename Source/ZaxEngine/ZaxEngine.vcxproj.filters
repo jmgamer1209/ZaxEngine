@@ -106,6 +106,18 @@
     <ClCompile Include="Core\Vector3.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\FrameBuffer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\PostProcess.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Application.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Mesh.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Materials\Material.h">
@@ -163,6 +175,21 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Color.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\FrameBuffer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PostProcess.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\QuadMesh.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Mesh.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Application.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
