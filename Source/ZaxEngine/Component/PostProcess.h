@@ -24,7 +24,8 @@ public:
 
 	FrameBuffer* Draw(FrameBuffer& source)
 	{
-        // 将离屏图像绘制到四边形
+        if (Application::isViewportSizeChanged) frameBuffer1->ChangeSize(Application::viewportWidth, Application::viewportHeight);
+
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer1->GetID());
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
