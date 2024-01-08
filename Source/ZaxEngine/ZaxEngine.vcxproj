@@ -173,6 +173,7 @@
     <ClInclude Include="Component\Light.h" />
     <ClInclude Include="Component\MeshRenderer.h" />
     <ClInclude Include="Component\PostProcess.h" />
+    <ClInclude Include="Component\Skybox.h" />
     <ClInclude Include="Component\Transform.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Color.h" />

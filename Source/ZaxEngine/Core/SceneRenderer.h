@@ -4,7 +4,8 @@
 #include "Component/Light.h"
 #include "Component/MeshRenderer.h"
 #include "Core/FrameBuffer.h"
-#include <Component/PostProcess.h>
+#include "Component/PostProcess.h"
+#include "Component/Skybox.h"
 
 class SceneRenderer
 {
@@ -14,6 +15,7 @@ public:
 	void Init(int width, int height);
 	void Draw(Scene* scene);
 	void DrawPostProcess(PostProcess* postProcess);
+	void DrawSkybox(Skybox* skybox);
 
 public:
 	FrameBuffer* frameBuffer;

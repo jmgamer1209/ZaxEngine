@@ -1,6 +1,9 @@
 #include "Utils.h"
 #include "glad/gl.h"
 #include "stb_image.h"
+#include <string>
+#include <vector>
+#include "Core/Debug.h"
 
 
 string Utils::WString2String(const wstring& ws)
@@ -51,4 +54,51 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 	}
 
 	stbi_image_free(data);
+}
+
+void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
+{
+	glGenTextures(1, texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, *texture);
+
+    // 加载顺序固定
+    vector<std::string> faces
+    {
+        "right.jpg",
+        "left.jpg",
+        "top.jpg",
+        "bottom.jpg",
+        "front.jpg",
+        "back.jpg"
+    };
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        unsigned char* data = stbi_load((folderPath + faces[i]).c_str(), &width, &height, &nrChannels, 0);
+
+        // 根据是否是4的倍数，设置读取像素的单位
+        if (nrChannels == 4 || (width % 4 == 0 && height % 4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4字节读取
+        else glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+            );
+            stbi_image_free(data);
+        }
+        else
+        {
+            Debug::Log({ "Cubemap texture failed to load at path: " , faces[i] });
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);   // 注意环绕方式
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // 特别的 R 方向
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }

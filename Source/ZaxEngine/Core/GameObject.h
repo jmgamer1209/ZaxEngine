@@ -14,6 +14,9 @@ class GameObject
 public:
 	vector<Component*> components;
 	string name;
+	bool isActive = true;
+
+public:
 	GameObject(const string& name);
     void AddComponent(Component* component);
 

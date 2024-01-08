@@ -21,6 +21,7 @@
 #include "Core/SceneRenderer.h"
 #include "Core/FrameBuffer.h"
 #include "Core/Application.h"
+#include "Component/Skybox.h"
 
 void LoadScene();
 void DrawScene();
@@ -156,6 +157,11 @@ void LoadScene()
 	light->outerAngle = 10;
 	spotLightGO->AddComponent(light);
 
+	auto skyboxGO = new GameObject("Skybox");
+	skyboxGO->AddComponent(new Transform());
+	auto skybox = new Skybox();
+	skyboxGO->AddComponent(skybox);
+
 	// 创建场景
 	scene = new Scene();
 	scene->lightingSettings.ambientColor = Color(1, 1, 1);
@@ -168,6 +174,7 @@ void LoadScene()
 	scene->AddGameObject(lightGO);
 	scene->AddGameObject(pointLightGO);
 	scene->AddGameObject(spotLightGO);
+	scene->AddGameObject(skyboxGO);
 }
 
 void DrawScene()
@@ -214,6 +221,8 @@ void ShowUI()
 	if (selectedGO != nullptr)
 	{
 		ImGui::Text(selectedGO->name.c_str());
+		ImGui::Text("isActive: "); ImGui::SameLine();
+		ImGui::Checkbox("##isActive", &selectedGO->isActive);
 
 		ImGui::Spacing();
 		ImGui::Separator();

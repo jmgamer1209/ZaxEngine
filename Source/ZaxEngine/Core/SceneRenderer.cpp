@@ -30,10 +30,13 @@ void SceneRenderer::Draw(Scene* scene)
     spotLights.clear();
     renderers.clear();
 
+    Skybox* skybox = nullptr;
 	for (size_t i = 0; i < scene->list.size(); i++)
 	{
 		auto tempCam = scene->list[i]->GetComponent<Camera>();
 		if (tempCam != nullptr) camera = tempCam;
+
+        skybox = scene->list[i]->GetComponent<Skybox>();
 
 		auto tempLight = scene->list[i]->GetComponent<Light>();
         if (tempLight != nullptr)
@@ -70,6 +73,7 @@ void SceneRenderer::Draw(Scene* scene)
     glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     DrawRenderers();
+    DrawSkybox(skybox);
     DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
 }
 
@@ -80,6 +84,8 @@ void SceneRenderer::DrawRenderers()
 	for (size_t i = 0; i < renderers.size(); i++)
 	{
 		auto renderer = renderers[i];
+        if (renderer->gameObject->isActive == false) continue;
+
         auto shaderProgram = renderer->mat->shader;
         auto transform = renderer->gameObject->GetComponent<Transform>();
         shaderProgram->Use();
@@ -150,6 +156,14 @@ void SceneRenderer::DrawRenderers()
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 	}
+}
+
+void SceneRenderer::DrawSkybox(Skybox* skybox)
+{
+    if (skybox == nullptr) return;
+    if (skybox->gameObject->isActive == false) return;
+    
+    skybox->Draw(camera);
 }
 
 void SceneRenderer::DrawPostProcess(PostProcess* postProcess)
