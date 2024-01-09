@@ -68,8 +68,8 @@ void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
         "left.jpg",
         "top.jpg",
         "bottom.jpg",
-        "front.jpg",
-        "back.jpg"
+        "back.jpg",
+        "front.jpg"
     };
 
     int width, height, nrChannels;
