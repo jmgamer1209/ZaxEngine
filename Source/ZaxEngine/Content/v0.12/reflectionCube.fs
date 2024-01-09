@@ -12,6 +12,7 @@ uniform vec3 ambientColor;
 uniform float ambientIntensity;
 uniform float specularIntensity;
 uniform samplerCube environmentTexture;
+uniform float reflectionIntensity;
 
 struct DirectionalLight
 {
@@ -86,5 +87,5 @@ void main()
     // 反射环境颜色
     vec4 reflectionColor = texture(environmentTexture, reflect(-viewDir,normal1));
 
-    FragColor = vec4(reflectionColor.rgb, 1); //vec4(diffuse + ambient + specular,1); //reflectionColor
+    FragColor = vec4((diffuse + ambient + specular)*(1-reflectionIntensity) + reflectionColor.rgb * reflectionIntensity,1); 
 }

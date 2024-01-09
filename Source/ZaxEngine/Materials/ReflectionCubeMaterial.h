@@ -9,6 +9,7 @@ private:
 	unsigned int albedoTexture = -1;
 	float specular = 0.5f;
 	unsigned int environmentTexture = -1;
+	float reflection = 0.5f;
 
 public:
 	ReflectionCubeMaterial(ShaderProgram* shader, AssetModel* model, AssetMesh* mesh, unsigned int environmentTexture) : Material(shader)
@@ -31,6 +32,7 @@ public:
 		shader->SetUniform("environmentTexture", 1);
 
 		shader->SetUniform("specularIntensity", specular);
+		shader->SetUniform("reflectionIntensity", reflection);
 		
 	}
 
@@ -39,5 +41,7 @@ public:
 		ImGui::Text("AlbedoTexID: %d", albedoTexture);
 		ImGui::Text("Specular:");
 		ImGui::DragFloat("##Specular", &specular, 0.01f, 0, 1);
+		ImGui::Text("Reflection:");
+		ImGui::DragFloat("##Reflection", &reflection, 0.01f, 0, 1);
 	}
 };
