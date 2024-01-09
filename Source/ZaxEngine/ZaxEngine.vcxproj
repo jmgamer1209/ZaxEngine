@@ -190,6 +190,7 @@
     <ClInclude Include="Materials\BlinnPhongMaterial.h" />
     <ClInclude Include="Materials\DefualtMaterial.h" />
     <ClInclude Include="Materials\Material.h" />
+    <ClInclude Include="Materials\ReflectionCubeMaterial.h" />
     <ClInclude Include="Platform\windows.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>

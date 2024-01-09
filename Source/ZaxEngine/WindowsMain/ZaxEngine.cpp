@@ -22,6 +22,7 @@
 #include "Core/FrameBuffer.h"
 #include "Core/Application.h"
 #include "Component/Skybox.h"
+#include "Materials/ReflectionCubeMaterial.h"
 
 void LoadScene();
 void DrawScene();
@@ -97,28 +98,49 @@ void LoadScene()
 	shaderProgram = new ShaderProgram(Application::contentPath + "v0.10/vertex.vs", Application::contentPath + "v0.10/fragment.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, model, &(model->meshes[0]));
 
+	// 先创建天空盒
+	auto skyboxGO = new GameObject("Skybox");
+	skyboxGO->AddComponent(new Transform());
+	auto skybox = new Skybox();
+	skyboxGO->AddComponent(skybox);
+
+	// 反射材质
+	auto reflectionShader = new ShaderProgram(Application::contentPath + "v0.12/reflectionCube.vs", Application::contentPath + "v0.12/reflectionCube.fs");
+	auto reflectionMat = new ReflectionCubeMaterial(reflectionShader, model, &(model->meshes[0]), skybox->GetCubeMap());
+
 	// 创建渲染物体
 	vector<GameObject*> boxes;
-	for (size_t i = 1; i <= 3; i++)
+	for (size_t i = 1; i <= 4; i++)
 	{
 		auto box = new GameObject(string("Box")+std::to_string(i));
 		boxes.push_back(box);
 		box->AddComponent(new Transform());
-		box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
+		if (i < 4) box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
+		else box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), reflectionMat));
+
+		Vector3 position(0, 0, 0);
+		Vector3 rotation(0, 0, 0);
 
 		if (i == 1) {
-			box->GetComponent<Transform>()->position = Vector3(-11.0f, -2.5f, -8.0f);
-			box->GetComponent<Transform>()->rotation = Vector3(45.0f, -30.0f, 0);
+			position = Vector3(-11.0f, -2.5f, -8.0f);
+			rotation = Vector3(45.0f, -30.0f, 0);
 		}
 		else if (i == 2){
-			box->GetComponent<Transform>()->position = Vector3(-2.5f, -2.5f, 0);
-			box->GetComponent<Transform>()->rotation = Vector3(45.0f, 0, 0);
+			position = Vector3(-2.5f, -2.5f, 0);
+			rotation = Vector3(45.0f, 0, 0);
 		}
 		else if (i == 3)
 		{
-			box->GetComponent<Transform>()->position = Vector3(6.5f, -2.5f, 0);
-			box->GetComponent<Transform>()->rotation = Vector3(45.0f, 0, -30.0f);
+			position = Vector3(6.5f, -2.5f, 0);
+			rotation = Vector3(45.0f, 0, -30.0f);
 		}
+		else if (i == 4)
+		{
+			position = Vector3(4.5f, 2.0f, -2.0f);
+			rotation = Vector3(0, 35.0f, 0);
+		}
+		box->GetComponent<Transform>()->position = position;
+		box->GetComponent<Transform>()->rotation = rotation;
 	}
 
 	// 设置摄像机
@@ -156,11 +178,6 @@ void LoadScene()
 	light->innerAngle = 8;
 	light->outerAngle = 10;
 	spotLightGO->AddComponent(light);
-
-	auto skyboxGO = new GameObject("Skybox");
-	skyboxGO->AddComponent(new Transform());
-	auto skybox = new Skybox();
-	skyboxGO->AddComponent(skybox);
 
 	// 创建场景
 	scene = new Scene();

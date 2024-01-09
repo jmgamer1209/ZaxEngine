@@ -91,4 +91,6 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDepthFunc(GL_LEQUAL);
     }
+
+    unsigned int GetCubeMap() { return cubeMap; }
 };

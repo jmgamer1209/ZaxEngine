@@ -195,5 +195,8 @@
     <ClInclude Include="Component\Skybox.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="Materials\ReflectionCubeMaterial.h">
+      <Filter>Materials\Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
