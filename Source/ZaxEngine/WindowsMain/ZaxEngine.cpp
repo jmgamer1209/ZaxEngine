@@ -275,7 +275,7 @@ void ShowUI()
 		ImGui::End();
 	}
 
-	ImGui_ShowDemoWindow();
+	//ImGui_ShowDemoWindow();
 }
 
 void processInput(GLFWwindow* window)
