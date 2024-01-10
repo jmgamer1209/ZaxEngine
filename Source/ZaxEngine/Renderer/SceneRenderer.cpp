@@ -21,6 +21,8 @@ void SceneRenderer::Init(int width, int height)
 {
     frameBuffer = new FrameBuffer(width, height);
     screenShaderProgram = new ShaderProgram(Application::contentPath + "Common/Shader/screen.vs", Application::contentPath + "Common/Shader/screen.fs");
+    shadowShader = new ShaderProgram(Application::contentPath + "Shaders/Shadow/shadow.vs", Application::contentPath + "Shaders/Shadow/shadow.fs");
+    depthShader = new ShaderProgram(Application::contentPath + "Shaders/depth.vs", Application::contentPath + "Shaders/depth.fs");
 }
 
 void SceneRenderer::Draw(Scene* scene)
@@ -62,19 +64,122 @@ void SceneRenderer::Draw(Scene* scene)
 	}
 
     camera->OnViewportChange(Application::viewportWidth, Application::viewportHeight);
+
     // 如果窗口变化，需要重新设置纹理和rb的大小
     if (Application::isViewportSizeChanged)
     {
         frameBuffer->ChangeSize(Application::viewportWidth, Application::viewportHeight);
     }
 
+    if (viewMode == ViewMode::Depth) 
+    {
+        DrawDepth();
+        DrawQuad(frameBuffer);
+    }
+    else
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
+         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        glViewport(0, 0, frameBuffer->GetWidth(), frameBuffer->GetHeight());
+        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        DrawRenderers();
+        DrawSkybox(skybox);
+        auto postBuffer = DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
+        DrawQuad(postBuffer);
+    }
+}
+
+void SceneRenderer::DrawDepth()
+{
+    glEnable(GL_DEPTH_TEST);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glViewport(0, 0, Application::viewportWidth, Application::viewportHeight);
+    glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    DrawRenderers();
-    DrawSkybox(skybox);
-    DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
+
+    for (size_t i = 0; i < renderers.size(); i++)
+    {
+        auto renderer = renderers[i];
+        if (renderer->gameObject->isActive == false) continue;
+
+        auto transform = renderer->gameObject->GetComponent<Transform>();
+        depthShader->Use();
+
+        // 设置 MVP 矩阵
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+
+        model = glm::translate(model, Vector3ToGLMVec(transform->position));
+        // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
+        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
+
+        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
+
+        view = camera->GetViewMatrix();
+        projection = camera->GetProjection();
+        glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
+
+        depthShader->SetUniform("model", model);
+        depthShader->SetUniform("view", view);
+        depthShader->SetUniform("projection", projection);
+
+        depthShader->Use();
+
+        glBindVertexArray(renderer->VAO);
+        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
+}
+
+void SceneRenderer::DrawShadow()
+{
+    if (shadowFrameBuffer == nullptr) shadowFrameBuffer = new FrameBuffer(1280, 720);
+
+    glEnable(GL_DEPTH_TEST);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowFrameBuffer->GetID());
+    glViewport(0, 0, shadowFrameBuffer->GetWidth(), shadowFrameBuffer->GetHeight());
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    for (size_t i = 0; i < renderers.size(); i++)
+    {
+        auto renderer = renderers[i];
+        if (renderer->gameObject->isActive == false) continue;
+
+        auto transform = renderer->gameObject->GetComponent<Transform>();
+        shadowShader->Use();
+
+        // 设置 MVP 矩阵
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+
+        model = glm::translate(model, Vector3ToGLMVec(transform->position));
+        // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
+        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
+        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
+
+        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
+
+        view = camera->GetViewMatrix();
+        projection = camera->GetProjection();
+        glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
+
+        shadowShader->SetUniform("model", model);
+        shadowShader->SetUniform("view", view);
+        shadowShader->SetUniform("projection", projection);
+
+        shadowShader->Use();
+
+        glBindVertexArray(renderer->VAO);
+        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+    }
 }
 
 void SceneRenderer::DrawRenderers()
@@ -166,10 +271,14 @@ void SceneRenderer::DrawSkybox(Skybox* skybox)
     skybox->Draw(camera);
 }
 
-void SceneRenderer::DrawPostProcess(PostProcess* postProcess)
+FrameBuffer* SceneRenderer::DrawPostProcess(PostProcess* postProcess)
 {
     auto postFrameBuffer = postProcess->enabled == true? postProcess->Draw(*this->frameBuffer) : frameBuffer;
-    
+    return postFrameBuffer;
+}
+
+void SceneRenderer::DrawQuad(FrameBuffer *frameBuffer)
+{
     // 将离屏图像绘制到屏幕
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClearColor(0, 0, 0, 0);
@@ -178,7 +287,7 @@ void SceneRenderer::DrawPostProcess(PostProcess* postProcess)
     Mesh::GetQuadMesh()->Setup();
     screenShaderProgram->Use();
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, postFrameBuffer->GetTextureColorBuffer());
+    glBindTexture(GL_TEXTURE_2D, frameBuffer->GetTextureColorBuffer());
     screenShaderProgram->SetUniform("screenTex", 0);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);

@@ -1,24 +1,30 @@
 #pragma once
-#include "Scene.h"
+#include "Core/Scene.h"
 #include "Component/Camera.h"
 #include "Component/Light.h"
 #include "Component/MeshRenderer.h"
-#include "Core/FrameBuffer.h"
+#include "Renderer/FrameBuffer.h"
 #include "Component/PostProcess.h"
 #include "Component/Skybox.h"
 
+enum class ViewMode
+{
+	Lit, 
+	Depth
+};
+
 class SceneRenderer
 {
+public:
+	FrameBuffer* frameBuffer;
+	ViewMode viewMode = ViewMode::Lit;
+
 public:
 	SceneRenderer();
 	~SceneRenderer();
 	void Init(int width, int height);
 	void Draw(Scene* scene);
-	void DrawPostProcess(PostProcess* postProcess);
-	void DrawSkybox(Skybox* skybox);
 
-public:
-	FrameBuffer* frameBuffer;
 
 private:
 	Scene* scene;
@@ -28,6 +34,15 @@ private:
 	vector<Light*> spotLights;
 	vector<MeshRenderer*> renderers;
 	ShaderProgram* screenShaderProgram;
+	ShaderProgram* shadowShader;
+	ShaderProgram* depthShader;
+	FrameBuffer* shadowFrameBuffer;
 
+private:
+	void DrawShadow();
 	void DrawRenderers();
+	FrameBuffer* DrawPostProcess(PostProcess* postProcess);
+	void DrawSkybox(Skybox* skybox);
+	void DrawQuad(FrameBuffer* frameBuffer);
+	void DrawDepth();
 };

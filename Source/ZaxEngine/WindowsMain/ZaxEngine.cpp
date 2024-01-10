@@ -18,8 +18,8 @@
 #include "Core/Scene.h"
 #include "Component/Light.h"
 #include "Component/Transform.h"
-#include "Core/SceneRenderer.h"
-#include "Core/FrameBuffer.h"
+#include "Renderer/SceneRenderer.h"
+#include "Renderer/FrameBuffer.h"
 #include "Core/Application.h"
 #include "Component/Skybox.h"
 #include "Materials/ReflectionCubeMaterial.h"
@@ -214,6 +214,16 @@ void ShowUI()
 		}
 		ImGui::EndMenu();
 	}
+
+	if (ImGui::BeginMenu("View Mode"))
+	{
+		static int viewMode = (int)sceneRenderer->viewMode;
+		if (ImGui::Combo("##View Mode", &viewMode, "Lit\0Depth\0\0")) {
+			sceneRenderer->viewMode = (ViewMode)viewMode;
+		}
+		
+		ImGui::EndMenu();
+	}
 	
 
 	ImGui::EndMainMenuBar();
@@ -265,7 +275,7 @@ void ShowUI()
 		ImGui::End();
 	}
 
-	//ImGui_ShowDemoWindow();
+	ImGui_ShowDemoWindow();
 }
 
 void processInput(GLFWwindow* window)

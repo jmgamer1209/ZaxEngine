@@ -146,16 +146,16 @@
     <ClCompile Include="Component\Transform.cpp" />
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Debug.cpp" />
-    <ClCompile Include="Core\FrameBuffer.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
-    <ClCompile Include="Core\SceneRenderer.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\std_handler.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Core\Vector3.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
+    <ClCompile Include="Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="Renderer\SceneRenderer.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp" />
@@ -178,12 +178,10 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Debug.h" />
-    <ClInclude Include="Core\FrameBuffer.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\QuadMesh.h" />
     <ClInclude Include="Core\Scene.h" />
-    <ClInclude Include="Core\SceneRenderer.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vector3.h" />
@@ -192,6 +190,8 @@
     <ClInclude Include="Materials\Material.h" />
     <ClInclude Include="Materials\ReflectionCubeMaterial.h" />
     <ClInclude Include="Platform\windows.h" />
+    <ClInclude Include="Renderer\FrameBuffer.h" />
+    <ClInclude Include="Renderer\SceneRenderer.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

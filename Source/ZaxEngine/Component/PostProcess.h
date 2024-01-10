@@ -1,6 +1,6 @@
 #pragma once
 #include "Component/Component.h"
-#include "Core/FrameBuffer.h"
+#include "Renderer/FrameBuffer.h"
 #include "Core/Mesh.h"
 #include "Core/ShaderProgram.h"
 #include "Core/Application.h"

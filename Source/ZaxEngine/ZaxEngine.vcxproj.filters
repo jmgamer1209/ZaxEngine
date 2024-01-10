@@ -35,6 +35,9 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{02c420ad-a007-484a-b415-386774709440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{86109a35-71f6-47e5-951a-fab27f52adbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Materials\Material.cpp">
@@ -100,13 +103,7 @@
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SceneRenderer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Vector3.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\FrameBuffer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Component\PostProcess.cpp">
@@ -117,6 +114,12 @@
     </ClCompile>
     <ClCompile Include="Core\Mesh.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\FrameBuffer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\SceneRenderer.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,16 +171,10 @@
     <ClInclude Include="Component\Transform.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Core\SceneRenderer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Vector3.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Color.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\FrameBuffer.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Component\PostProcess.h">
@@ -197,6 +194,12 @@
     </ClInclude>
     <ClInclude Include="Materials\ReflectionCubeMaterial.h">
       <Filter>Materials\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\FrameBuffer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\SceneRenderer.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
