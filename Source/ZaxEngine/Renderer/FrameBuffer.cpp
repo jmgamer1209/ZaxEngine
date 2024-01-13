@@ -50,3 +50,19 @@ void FrameBuffer::ChangeSize(int width, int height)
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 }
+
+void FrameBuffer::ChangeColorTextureFilter(GLenum filter)
+{
+	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void FrameBuffer::ChangeColorTextureWrap(GLenum wrap)
+{
+	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}

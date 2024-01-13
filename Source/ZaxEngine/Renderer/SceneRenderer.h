@@ -4,6 +4,7 @@
 #include "Component/Light.h"
 #include "Component/MeshRenderer.h"
 #include "Renderer/FrameBuffer.h"
+#include "Renderer/ShadowFrameBuffer.h"
 #include "Component/PostProcess.h"
 #include "Component/Skybox.h"
 
@@ -16,7 +17,6 @@ enum class ViewMode
 class SceneRenderer
 {
 public:
-	FrameBuffer* frameBuffer;
 	ViewMode viewMode = ViewMode::Lit;
 
 public:
@@ -36,7 +36,11 @@ private:
 	ShaderProgram* screenShaderProgram;
 	ShaderProgram* shadowShader;
 	ShaderProgram* depthShader;
-	FrameBuffer* shadowFrameBuffer;
+	glm::mat4 lightView;
+	glm::mat4 lightProjection;
+
+	FrameBuffer* frameBuffer;
+	ShadowFrameBuffer* shadowFrameBuffer;
 
 private:
 	void DrawShadow();

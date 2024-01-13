@@ -192,6 +192,7 @@
     <ClInclude Include="Platform\windows.h" />
     <ClInclude Include="Renderer\FrameBuffer.h" />
     <ClInclude Include="Renderer\SceneRenderer.h" />
+    <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

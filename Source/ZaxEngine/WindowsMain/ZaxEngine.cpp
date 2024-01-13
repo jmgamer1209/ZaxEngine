@@ -95,7 +95,7 @@ void LoadScene()
 	AssetModel* model = new AssetModel(Application::contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 
 	// 创建 Shader Program 和 材质
-	shaderProgram = new ShaderProgram(Application::contentPath + "v0.10/vertex.vs", Application::contentPath + "v0.10/fragment.fs");
+	shaderProgram = new ShaderProgram(Application::contentPath + "v0.13/vertex.vs", Application::contentPath + "v0.13/fragment.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, model, &(model->meshes[0]));
 
 	// 先创建天空盒
@@ -156,12 +156,15 @@ void LoadScene()
 	// 创建光源
 	Light* light;
 	auto lightGO = new GameObject("DirectionalLight");
-	lightGO->AddComponent(new Transform());
+	auto transform = new Transform();
+	lightGO->AddComponent(transform);
 	light = new Light(LightType::Directional);
 	lightGO->AddComponent(light);
+	transform->position = Vector3(0,10,0);
+	transform->rotation = Vector3(-90, 0, 0);
 
 	auto pointLightGO = new GameObject("PointLight");
-	auto transform = new Transform();
+	transform = new Transform();
 	pointLightGO->AddComponent(transform);
 	light = new Light(LightType::Point);
 	light->color = { 1,0,0 };

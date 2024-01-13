@@ -15,6 +15,8 @@ public:
 	FrameBuffer(int width, int height, bool hasDepthStencil = true);
 	~FrameBuffer();
 	void ChangeSize(int width, int height);
+	void ChangeColorTextureFilter(GLenum filter);
+	void ChangeColorTextureWrap(GLenum wrap);
 
 	unsigned int GetID()
 	{

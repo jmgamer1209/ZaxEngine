@@ -10,7 +10,7 @@ public:
 	};
 	ShaderProgram* shader = nullptr;
 	//virtual void SetData(AssetModel* model, AssetMesh* mesh) = 0;
-	virtual void Draw() = 0;
+	virtual void Draw(int& texIndex) = 0;
 	virtual void OnGui() {};
 };
 

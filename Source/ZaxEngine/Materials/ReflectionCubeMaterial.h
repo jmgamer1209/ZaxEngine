@@ -21,15 +21,17 @@ public:
 	}
 	~ReflectionCubeMaterial() {}
 
-	void Draw() override
+	void Draw(int& texIndex) override
 	{
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0+ texIndex);
 		glBindTexture(GL_TEXTURE_2D, albedoTexture);
-		shader->SetUniform("albedoTexture", 0);
+		shader->SetUniform("albedoTexture", texIndex);
+		texIndex++;
 
-		glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE0+ texIndex);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, environmentTexture);
-		shader->SetUniform("environmentTexture", 1);
+		shader->SetUniform("environmentTexture", texIndex);
+		texIndex++;
 
 		shader->SetUniform("specularIntensity", specular);
 		shader->SetUniform("reflectionIntensity", reflection);
