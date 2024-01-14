@@ -46,7 +46,7 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
         Vertex vertex;
-        glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+        Vector3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
         // positions
         vector.x = mesh->mVertices[i].x;
         vector.y = mesh->mVertices[i].y;
@@ -54,7 +54,6 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vertex.Position = vector;
         
         // 法线
-        vector = glm::vec3(0);
         if (mesh->HasNormals())
         {
             vector.x = mesh->mNormals[i].x;
@@ -64,18 +63,18 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vertex.Normal = vector;
         
         // uv 坐标
-        vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+        vertex.TexCoords = Vector2(0.0f, 0.0f);
         if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
         {
             // 暂时只取第1个的uv坐标
-            glm::vec2 vec;
+            Vector2 vec;
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             vertex.TexCoords = vec;
         }
 
         // 切线和副切线
-        vector = glm::vec3(0);
+        vector = Vector3(0);
         if (mesh->HasTangentsAndBitangents())
         {            
             vector.x = mesh->mTangents[i].x;

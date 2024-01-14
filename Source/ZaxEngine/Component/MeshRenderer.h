@@ -8,14 +8,15 @@
 #include "Core/Utils.h"
 #include "imgui/imgui.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "Core/Mesh.h"
 
 class MeshRenderer: public Component
 {
 public:
-    AssetMesh* mesh;
+    Mesh* mesh;
     Material* mat;
 
-	MeshRenderer(AssetModel *model, AssetMesh *mesh, Material* mat)
+	MeshRenderer(Mesh *mesh, Material* mat)
 	{
         this->mesh = mesh;
         this->mat = mat;

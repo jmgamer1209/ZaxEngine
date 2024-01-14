@@ -103,9 +103,6 @@
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Vector3.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Component\PostProcess.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -120,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="Renderer\SceneRenderer.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Vector.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <ClInclude Include="Component\Transform.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Vector3.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Color.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -203,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\ShadowFrameBuffer.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Vertex.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Vector.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

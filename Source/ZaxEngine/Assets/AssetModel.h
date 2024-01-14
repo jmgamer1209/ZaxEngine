@@ -5,21 +5,9 @@
 #include "Core/ShaderProgram.h"
 #include <assimp/scene.h>
 #include <unordered_map>
-
+#include "Core/Vertex.h"
+#include "Core/Mesh.h"
 using namespace std;
-
-struct Vertex {
-    // position
-    glm::vec3 Position;
-    // normal
-    glm::vec3 Normal;
-    // texCoords
-    glm::vec2 TexCoords;
-    // tangent
-    glm::vec3 Tangent;
-    // bitangent
-    glm::vec3 Bitangent;
-};
 
 struct AssetTexture {
     string path;
@@ -40,6 +28,14 @@ public:
 
     /*  º¯Êý  */
     AssetMesh(vector<Vertex> vertices, vector<unsigned int> indices, unsigned int materialIndex);
+
+    Mesh* CreateMesh()
+    {
+        Mesh* mesh = new Mesh();
+        mesh->vertices = vertices;
+        mesh->indices = indices;
+        return mesh;
+    }
 };
 
 class AssetModel

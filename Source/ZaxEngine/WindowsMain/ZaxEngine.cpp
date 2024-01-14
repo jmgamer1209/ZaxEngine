@@ -93,6 +93,7 @@ void LoadScene()
 {
 	// 导入模型
 	AssetModel* model = new AssetModel(Application::contentPath + "Common/WoodenCrate/Wooden Crate.obj");
+	Mesh* woodenBox = model->meshes[0].CreateMesh();
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath + "v0.13/vertex.vs", Application::contentPath + "v0.13/fragment.fs");
@@ -115,8 +116,8 @@ void LoadScene()
 		auto box = new GameObject(string("Box")+std::to_string(i));
 		boxes.push_back(box);
 		box->AddComponent(new Transform());
-		if (i < 4) box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), mat));
-		else box->AddComponent(new MeshRenderer(model, &(model->meshes[0]), reflectionMat));
+		if (i < 4) box->AddComponent(new MeshRenderer(woodenBox, mat));
+		else box->AddComponent(new MeshRenderer(woodenBox, reflectionMat));
 
 		Vector3 position(0, 0, 0);
 		Vector3 rotation(0, 0, 0);
