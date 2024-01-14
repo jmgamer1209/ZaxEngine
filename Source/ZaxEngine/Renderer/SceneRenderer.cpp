@@ -249,6 +249,7 @@ void SceneRenderer::DrawRenderers()
         auto forward = directionalLight->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("directionalLight.direction", forward);
         shaderProgram->SetUniform3f("directionalLight.color", directionalLight->color.FloatPTR());
+        shaderProgram->SetUniform("directionalLight.depthBias", directionalLight->shadowDepthBias);
         
         // ÉèÖÃµã¹â
         shaderProgram->SetUniform("pointLightsNumber", (int)pointLights.size());

@@ -18,6 +18,7 @@ struct DirectionalLight
 {
     vec3 direction;
     vec3 color;
+    float depthBias;
 };
 uniform DirectionalLight directionalLight;
 
@@ -93,7 +94,7 @@ void main()
     float frustumSize = 40.0;
     float a = frustumSize / shadowSize * 0.5;
     float b = 1.0 - dot(normal1, -directionalLight.direction);
-    float bias = a * b;
+    float bias = directionalLight.depthBias * a * b;
 
     //PCF
     float shadow = 0.0;

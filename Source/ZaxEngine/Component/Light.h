@@ -18,6 +18,7 @@ public:
 	float range;
 	float innerAngle;
 	float outerAngle;
+	float shadowDepthBias = 1;
 	
 public:
 	Light(LightType type);
