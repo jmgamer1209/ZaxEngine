@@ -194,6 +194,9 @@
     <ClInclude Include="Renderer\FrameBuffer.h" />
     <ClInclude Include="Renderer\SceneRenderer.h" />
     <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
+    <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp" />
+    <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
+    <ClInclude Include="ThirdParty\glm\glm.hpp" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

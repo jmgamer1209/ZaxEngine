@@ -38,6 +38,12 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{86109a35-71f6-47e5-951a-fab27f52adbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\glm">
+      <UniqueIdentifier>{bb8a6f1c-2935-4074-bab4-8b1496163eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\assimp">
+      <UniqueIdentifier>{10c56399-d9f2-4720-833d-54fe7a1c3d4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Materials\Material.cpp">
@@ -206,6 +212,15 @@
     </ClInclude>
     <ClInclude Include="Core\Vector.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glm\glm.hpp">
+      <Filter>ThirdParty\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp">
+      <Filter>ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h">
+      <Filter>ThirdParty\assimp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
