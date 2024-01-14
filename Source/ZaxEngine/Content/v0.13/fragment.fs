@@ -84,24 +84,18 @@ void main()
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
     vec3 ambient = ambientColor * ambientIntensity * vec3(tex);
 
+    //**********************
     // 计算阴影
-
+    //**********************
     vec3 fragScreenCoordInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz * 0.5 + vec3(0.5);
     float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+    float shadowSize = textureSize(shadowMap, 0).x;
+    float frustumSize = 40.0;
+    float a = frustumSize / shadowSize * 0.5;
+    float b = 1.0 - dot(normal1, -directionalLight.direction);
+    float bias = a * b;
 
-
-    float size = 20.0 / 1024.0 / 2.0;
-
-    // float offsetMod2 = tan(acos(dot(normal1, -directionalLight.direction)));
-    // float offset2 = size + clamp(offsetMod2, 0, 0.05);
-
-  
-
-    //float bias = max(size, size * (1.0 - clamp(dot(normal1, -directionalLight.direction),0,1)));
-
-    float bias = max(0.05 * (1.0 - clamp(dot(normal1, -directionalLight.direction),0,1)), size) ;
-    
-    // PCF
+    //PCF
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0); 
     for(int x = -1; x <= 1; ++x)
@@ -109,19 +103,15 @@ void main()
         for(int y = -1; y <= 1; ++y)
         {
             float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * texelSize).r; 
-            shadow += (fragScreenCoordInLight.z - bias >= pcfDepth ? 1.0 : 0.0);        
+            shadow += (fragScreenCoordInLight.z - bias > pcfDepth ? 1.0 : 0.0);        
         }    
     }
     shadow /= 9.0;    
 
-    shadow = fragScreenCoordInLight.z - bias >= shadowDepth ? 1.0 : 0.0;
-
-    // 裁剪
+    //裁剪
     if(fragScreenCoordInLight.z > 1.0)
         shadow = 0.0;
 
     // 最后计算
     FragColor = vec4((diffuse + specular) * (1-shadow) + ambient,1);
-
-    //FragColor = vec4(vec3(fragScreenCoordInLight.z - bias),1);
 }

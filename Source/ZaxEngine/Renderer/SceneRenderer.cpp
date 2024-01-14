@@ -92,7 +92,7 @@ void SceneRenderer::Draw(Scene* scene)
         viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
 
         lightView = viewRotation * viewTranslation;
-        lightProjection = glm::ortho(-10.0f, 10.0f, 10.0f, -10.0f, 0.1f,30.0f);
+        lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f,50.0f);
 
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
@@ -160,7 +160,7 @@ void SceneRenderer::DrawDepth()
 
 void SceneRenderer::DrawShadow()
 {
-    int width = 1024, height = 1024;
+    int width = 2048, height = 2048;
     if (shadowFrameBuffer == nullptr)
     {
         shadowFrameBuffer = new ShadowFrameBuffer(width, height);
@@ -171,8 +171,7 @@ void SceneRenderer::DrawShadow()
     glDepthFunc(GL_LESS);
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFrameBuffer->GetID());
     glViewport(0, 0, width, height);
-    glClearColor(1, 1, 1, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     for (size_t i = 0; i < renderers.size(); i++)
     {
