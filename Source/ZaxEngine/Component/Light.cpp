@@ -29,7 +29,7 @@ void Light::OnGui()
 		}
 
 		ImGui::Text("ShadowDepthBias:");
-		ImGui::DragFloat("##ShadowDepthBias", &shadowDepthBias, 0.01, 0, 2);
+		ImGui::DragFloat("##ShadowDepthBias", &shadowDepthBias, 0.01f, 0, 2);
 
 		ImGui::TreePop();
 	}

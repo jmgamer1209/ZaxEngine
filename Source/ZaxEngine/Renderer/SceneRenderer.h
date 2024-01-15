@@ -36,8 +36,6 @@ private:
 	ShaderProgram* screenShaderProgram;
 	ShaderProgram* shadowShader;
 	ShaderProgram* depthShader;
-	glm::mat4 lightView;
-	glm::mat4 lightProjection;
 
 	FrameBuffer* frameBuffer;
 	ShadowFrameBuffer* shadowFrameBuffer;

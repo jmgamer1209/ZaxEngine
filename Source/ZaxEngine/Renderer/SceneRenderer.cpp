@@ -77,22 +77,6 @@ void SceneRenderer::Draw(Scene* scene)
     }
     else
     {
-        glm::mat4 viewRotation(1.0f);
-        auto transform = directionalLight->gameObject->GetComponent<Transform>();
-        auto position = transform->position;
-        auto rotation = transform->rotation;
-
-        viewRotation = glm::rotate(viewRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
-        viewRotation = glm::rotate(viewRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
-        viewRotation = glm::rotate(viewRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
-        viewRotation = glm::transpose(viewRotation);
-
-        glm::mat4 viewTranslation(1.0f);
-        viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
-
-        lightView = viewRotation * viewTranslation;
-        lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f,50.0f);
-
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
@@ -134,7 +118,6 @@ void SceneRenderer::DrawDepth()
         glm::mat4 projection(1.0f);
 
         model = glm::translate(model, Vector3ToGLMVec(transform->position));
-        // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
         model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
@@ -182,16 +165,17 @@ void SceneRenderer::DrawShadow()
         glm::mat4 model(1.0f);
 
         model = glm::translate(model, Vector3ToGLMVec(transform->position));
-        // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
         model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-
         model = glm::scale(model, Vector3ToGLMVec(transform->scale));
 
+        auto view = directionalLight->GetViewMatrix();
+        auto projection = directionalLight->GetProjectionMatrix();
+
         shadowShader->SetUniform("model", model);
-        shadowShader->SetUniform("view", lightView);
-        shadowShader->SetUniform("projection", lightProjection);
+        shadowShader->SetUniform("view", view);
+        shadowShader->SetUniform("projection", projection);
 
         renderer->mesh->Draw();
     }
@@ -280,6 +264,8 @@ void SceneRenderer::DrawRenderers()
         glBindTexture(GL_TEXTURE_2D, shadowFrameBuffer->GetDepthTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
         texIndex++;
+        auto lightView = directionalLight->GetViewMatrix();
+        auto lightProjection = directionalLight->GetProjectionMatrix();
         shaderProgram->SetUniform("lightView", lightView);
         shaderProgram->SetUniform("lightProjection", lightProjection);
 
