@@ -107,13 +107,12 @@ public:
 		if (Mesh::quadMesh == nullptr)
 		{
 			Mesh::quadMesh = new Mesh();
-			Mesh::quadMesh->hasNormal = false;
-			auto vertex1 = Vertex(Vector3(-1,-1,0), Vector3(), Vector2(0,0));
-			auto vertex2 = Vertex(Vector3(1, -1, 0), Vector3(), Vector2(1, 0));
-			auto vertex3 = Vertex(Vector3(1, 1, 0), Vector3(), Vector2(1, 1));
-			auto vertex4 = Vertex(Vector3(-1, -1, 0), Vector3(), Vector2(0, 0));
-			auto vertex5 = Vertex(Vector3(1, 1, 0), Vector3(), Vector2(1, 1));
-			auto vertex6 = Vertex(Vector3(-1, 1, 0), Vector3(), Vector2(0, 1));
+			auto vertex1 = Vertex(Vector3(-1,-1,0), Vector3(0,0,1), Vector2(0,0));
+			auto vertex2 = Vertex(Vector3(1, -1, 0), Vector3(0, 0, 1), Vector2(1, 0));
+			auto vertex3 = Vertex(Vector3(1, 1, 0), Vector3(0, 0, 1), Vector2(1, 1));
+			auto vertex4 = Vertex(Vector3(-1, -1, 0), Vector3(0, 0, 1), Vector2(0, 0));
+			auto vertex5 = Vertex(Vector3(1, 1, 0), Vector3(0, 0, 1), Vector2(1, 1));
+			auto vertex6 = Vertex(Vector3(-1, 1, 0), Vector3(0, 0, 1), Vector2(0, 1));
 			
 			Mesh::quadMesh->vertices =
 			{
