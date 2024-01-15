@@ -183,9 +183,6 @@
     <ClInclude Include="Component\PostProcess.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Core\QuadMesh.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Mesh.h">
       <Filter>Core</Filter>
     </ClInclude>

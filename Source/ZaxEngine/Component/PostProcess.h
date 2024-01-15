@@ -30,13 +30,12 @@ public:
         glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Mesh::GetQuadMesh()->Setup();
         screenShaderProgram->Use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, source.GetTextureColorBuffer());
         screenShaderProgram->SetUniform("screenTex", 0);
 
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        Mesh::GetQuadMesh()->Draw();
 
         return frameBuffer1;
 	}

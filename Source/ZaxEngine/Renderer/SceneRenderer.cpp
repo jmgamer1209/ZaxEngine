@@ -7,7 +7,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Core/Mesh.h"
-#include "Core/QuadMesh.h"
 
 SceneRenderer::SceneRenderer()
 {
@@ -152,9 +151,7 @@ void SceneRenderer::DrawDepth()
 
         depthShader->Use();
 
-        glBindVertexArray(renderer->VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        renderer->mesh->Draw();
     }
 }
 
@@ -196,9 +193,7 @@ void SceneRenderer::DrawShadow()
         shadowShader->SetUniform("view", lightView);
         shadowShader->SetUniform("projection", lightProjection);
 
-        glBindVertexArray(renderer->VAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        renderer->mesh->Draw();
     }
 }
 
@@ -288,7 +283,7 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("lightView", lightView);
         shaderProgram->SetUniform("lightProjection", lightProjection);
 
-        glBindVertexArray(renderer->VAO);
+        glBindVertexArray(renderer->mesh->GetVAO());
         glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 	}
@@ -316,12 +311,11 @@ void SceneRenderer::DrawQuad(FrameBuffer *frameBuffer)
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    Mesh::GetQuadMesh()->Setup();
     screenShaderProgram->Use();
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, frameBuffer->GetTextureColorBuffer());
     screenShaderProgram->SetUniform("screenTex", 0);
 
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    Mesh::GetQuadMesh()->Draw();
 }
 

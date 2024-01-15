@@ -180,7 +180,6 @@
     <ClInclude Include="Core\Debug.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Mesh.h" />
-    <ClInclude Include="Core\QuadMesh.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Utils.h" />

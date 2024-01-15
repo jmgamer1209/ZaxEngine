@@ -51,7 +51,7 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vector.x = mesh->mVertices[i].x;
         vector.y = mesh->mVertices[i].y;
         vector.z = mesh->mVertices[i].z;
-        vertex.Position = vector;
+        vertex.position = vector;
         
         // 法线
         if (mesh->HasNormals())
@@ -60,17 +60,17 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
             vector.y = mesh->mNormals[i].y;
             vector.z = mesh->mNormals[i].z;
         }
-        vertex.Normal = vector;
+        vertex.normal = vector;
         
         // uv 坐标
-        vertex.TexCoords = Vector2(0.0f, 0.0f);
+        vertex.texCoord = Vector2(0.0f, 0.0f);
         if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
         {
             // 暂时只取第1个的uv坐标
             Vector2 vec;
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
-            vertex.TexCoords = vec;
+            vertex.texCoord = vec;
         }
 
         // 切线和副切线
@@ -80,12 +80,12 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
             vector.x = mesh->mTangents[i].x;
             vector.y = mesh->mTangents[i].y;
             vector.z = mesh->mTangents[i].z;
-            vertex.Tangent = vector;
+            vertex.tangent = vector;
 
             vector.x = mesh->mBitangents[i].x;
             vector.y = mesh->mBitangents[i].y;
             vector.z = mesh->mBitangents[i].z;
-            vertex.Bitangent = vector;
+            vertex.bitangent = vector;
         }
 
         vertices.push_back(vertex);
