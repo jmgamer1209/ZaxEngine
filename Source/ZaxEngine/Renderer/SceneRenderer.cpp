@@ -37,7 +37,7 @@ void SceneRenderer::Draw(Scene* scene)
 		auto tempCam = scene->list[i]->GetComponent<Camera>();
 		if (tempCam != nullptr) camera = tempCam;
 
-        skybox = scene->list[i]->GetComponent<Skybox>();
+        if (skybox == nullptr) skybox = scene->list[i]->GetComponent<Skybox>();
 
 		auto tempLight = scene->list[i]->GetComponent<Light>();
         if (tempLight != nullptr)
@@ -82,11 +82,6 @@ void SceneRenderer::Draw(Scene* scene)
 
         DrawShadow();
 
-        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
-         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-        glViewport(0, 0, frameBuffer->GetWidth(), frameBuffer->GetHeight());
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         DrawRenderers();
 
         DrawSkybox(skybox);
@@ -183,6 +178,11 @@ void SceneRenderer::DrawShadow()
 
 void SceneRenderer::DrawRenderers()
 {
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    glViewport(0, 0, frameBuffer->GetWidth(), frameBuffer->GetHeight());
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glCullFace(GL_BACK);
 
@@ -269,9 +269,7 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform("lightView", lightView);
         shaderProgram->SetUniform("lightProjection", lightProjection);
 
-        glBindVertexArray(renderer->mesh->GetVAO());
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(renderer->mesh->indices.size()), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        renderer->mesh->Draw();
 	}
 }
 

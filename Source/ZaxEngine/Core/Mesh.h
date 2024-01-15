@@ -95,6 +95,8 @@ public:
 			glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
 		}
 		else glDrawArrays(GL_TRIANGLES, 0, static_cast<unsigned int>(vertices.size()));
+
+		glBindVertexArray(0);
 	}
 
 private:

@@ -94,10 +94,12 @@ void LoadScene()
 	// 导入模型
 	AssetModel* model = new AssetModel(Application::contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 	Mesh* woodenBox = model->meshes[0].CreateMesh();
+	auto texturePath = model->materials[(model->meshes[0].materialIndex)].baseColor.path;
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath + "v0.13/vertex.vs", Application::contentPath + "v0.13/fragment.fs");
-	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, model, &(model->meshes[0]));
+	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, texturePath);
+	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, texturePath);
 
 	// 先创建天空盒
 	auto skyboxGO = new GameObject("Skybox");
@@ -106,7 +108,7 @@ void LoadScene()
 	skyboxGO->AddComponent(skybox);
 
 	// 反射材质
-	auto reflectionShader = new ShaderProgram(Application::contentPath + "v0.12/reflectionCube.vs", Application::contentPath + "v0.12/reflectionCube.fs");
+	auto reflectionShader = new ShaderProgram(Application::contentPath + "Shaders/Common/reflectionCube.vs", Application::contentPath + "Shaders/Common/reflectionCube.fs");
 	auto reflectionMat = new ReflectionCubeMaterial(reflectionShader, model, &(model->meshes[0]), skybox->GetCubeMap());
 
 	// 创建渲染物体
@@ -144,6 +146,15 @@ void LoadScene()
 		box->GetComponent<Transform>()->rotation = rotation;
 	}
 
+	auto planeGO = new GameObject(string("Plane"));
+	auto transform = new Transform();
+	transform->position = Vector3(0, -10, -5);
+	transform->rotation = Vector3(-90, 0, 0);
+	transform->scale = Vector3(15);
+	planeGO->AddComponent(transform);
+	planeGO->AddComponent(new MeshRenderer(Mesh::GetQuadMesh(), mat));
+	
+
 	// 设置摄像机
 	auto cameraGO = new GameObject("Camera");
 	cameraGO->AddComponent(new Transform());
@@ -157,7 +168,7 @@ void LoadScene()
 	// 创建光源
 	Light* light;
 	auto lightGO = new GameObject("DirectionalLight");
-	auto transform = new Transform();
+	transform = new Transform();
 	lightGO->AddComponent(transform);
 	light = new Light(LightType::Directional);
 	lightGO->AddComponent(light);
@@ -196,6 +207,7 @@ void LoadScene()
 	scene->AddGameObject(pointLightGO);
 	scene->AddGameObject(spotLightGO);
 	scene->AddGameObject(skyboxGO);
+	scene->AddGameObject(planeGO);
 }
 
 void DrawScene()

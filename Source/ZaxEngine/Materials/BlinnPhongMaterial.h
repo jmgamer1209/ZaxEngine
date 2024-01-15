@@ -9,11 +9,9 @@ private:
 	float specular = 0.5f;
 
 public:
-	BlinnPhongMaterial(ShaderProgram* shader, AssetModel* model, AssetMesh* mesh) : Material(shader) 
+	BlinnPhongMaterial(ShaderProgram* shader, std::string albedoTexturePath) : Material(shader)
 	{
-		AssetMaterial& assetMat = model->materials[mesh->materialIndex];
-		AssetTexture& assetTexture = assetMat.baseColor;
-		Utils::LoadTexture(&albedoTexture, assetTexture.path);
+		Utils::LoadTexture(&albedoTexture, albedoTexturePath);
 	}
 	~BlinnPhongMaterial() {}
 
