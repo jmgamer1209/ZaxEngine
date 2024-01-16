@@ -97,7 +97,7 @@ void LoadScene()
 	auto texturePath = model->materials[(model->meshes[0].materialIndex)].baseColor.path;
 
 	// 创建 Shader Program 和 材质
-	shaderProgram = new ShaderProgram(Application::contentPath + "v0.13/vertex.vs", Application::contentPath + "v0.13/fragment.fs");
+	shaderProgram = new ShaderProgram(Application::contentPath + "Shaders/Common/forward.vs", Application::contentPath + "Shaders/Common/forward.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, texturePath);
 	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, texturePath);
 

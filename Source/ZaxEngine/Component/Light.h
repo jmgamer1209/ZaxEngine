@@ -2,6 +2,7 @@
 #include "Component/Component.h"
 #include "Core/Color.h"
 #include "Component/Transform.h"
+#include "Renderer/ShadowFrameBuffer.h"
 
 enum class  LightType
 {
@@ -20,6 +21,7 @@ public:
 	float innerAngle;
 	float outerAngle;
 	float shadowDepthBias = 1;
+	ShadowFrameBuffer* shadowFrameBuffer;
 	
 public:
 	Light(LightType type);

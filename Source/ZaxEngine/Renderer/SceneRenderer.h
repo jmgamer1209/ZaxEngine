@@ -36,13 +36,13 @@ private:
 	ShaderProgram* screenShaderProgram;
 	ShaderProgram* shadowShader;
 	ShaderProgram* depthShader;
-
 	FrameBuffer* frameBuffer;
-	ShadowFrameBuffer* shadowFrameBuffer;
 
 private:
 	void DrawShadow();
+	void DrawShadow(Light* light);
 	void DrawRenderers();
+	void DrawRendererWithLight(MeshRenderer* renderer, Light* light);
 	FrameBuffer* DrawPostProcess(PostProcess* postProcess);
 	void DrawSkybox(Skybox* skybox);
 	void DrawQuad(FrameBuffer* frameBuffer);

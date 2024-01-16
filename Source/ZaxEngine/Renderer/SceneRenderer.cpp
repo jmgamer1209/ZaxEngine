@@ -135,17 +135,30 @@ void SceneRenderer::DrawDepth()
 
 void SceneRenderer::DrawShadow()
 {
-    int width = 2048, height = 2048;
-    if (shadowFrameBuffer == nullptr)
+    DrawShadow(directionalLight);
+    for (size_t i = 0; i < spotLights.size(); i++)
     {
-        shadowFrameBuffer = new ShadowFrameBuffer(width, height);
+        DrawShadow(spotLights[i]);
     }
 
+    for (size_t i = 0; i < pointLights.size(); i++)
+    {
+        //DrawShadow(spotLights[i]);
+    }
+}
+
+void SceneRenderer::DrawShadow(Light* light)
+{
+    if (light->shadowFrameBuffer == nullptr)
+    {
+        int width = 2048, height = 2048;
+        light->shadowFrameBuffer = new ShadowFrameBuffer(width, height);
+    }
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    glBindFramebuffer(GL_FRAMEBUFFER, shadowFrameBuffer->GetID());
-    glViewport(0, 0, width, height);
+    glBindFramebuffer(GL_FRAMEBUFFER, light->shadowFrameBuffer->GetID());
+    glViewport(0, 0, light->shadowFrameBuffer->GetWidth(), light->shadowFrameBuffer->GetHeight());
     glClear(GL_DEPTH_BUFFER_BIT);
 
     for (size_t i = 0; i < renderers.size(); i++)
@@ -165,8 +178,8 @@ void SceneRenderer::DrawShadow()
         model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
         model = glm::scale(model, Vector3ToGLMVec(transform->scale));
 
-        auto view = directionalLight->GetViewMatrix();
-        auto projection = directionalLight->GetProjectionMatrix();
+        auto view = light->GetViewMatrix();
+        auto projection = light->GetProjectionMatrix();
 
         shadowShader->SetUniform("model", model);
         shadowShader->SetUniform("view", view);
@@ -181,7 +194,8 @@ void SceneRenderer::DrawRenderers()
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer->GetID());
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     glViewport(0, 0, frameBuffer->GetWidth(), frameBuffer->GetHeight());
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClearColor(0, 0, 0, 1);
+    //glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glCullFace(GL_BACK);
@@ -194,7 +208,6 @@ void SceneRenderer::DrawRenderers()
         auto shaderProgram = renderer->mat->shader;
         auto transform = renderer->gameObject->GetComponent<Transform>();
         shaderProgram->Use();
-        int texIndex = 0;
 
         // 设置 MVP 矩阵
         glm::mat4 model(1.0f);
@@ -213,7 +226,6 @@ void SceneRenderer::DrawRenderers()
         projection = camera->GetProjection();
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
-        
         shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position.FloatPTR());
         shaderProgram->SetUniform("model", model);
         shaderProgram->SetUniform("view", view);
@@ -224,53 +236,79 @@ void SceneRenderer::DrawRenderers()
         shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor.FloatPTR());
         shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 
-        // 设置直射光
-        auto forward = directionalLight->gameObject->GetComponent<Transform>()->GetForward();
-        shaderProgram->SetUniform("directionalLight.direction", forward);
-        shaderProgram->SetUniform3f("directionalLight.color", directionalLight->color.FloatPTR());
-        shaderProgram->SetUniform("directionalLight.depthBias", directionalLight->shadowDepthBias);
-        
-        // 设置点光
-        shaderProgram->SetUniform("pointLightsNumber", (int)pointLights.size());
-        for (size_t j = 0; j < pointLights.size(); j++)
+        glDepthFunc(GL_LESS);
+        glDisable(GL_BLEND);
+       
+        DrawRendererWithLight(renderer,directionalLight);
+
+        glDepthFunc(GL_LEQUAL);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE);
+
+        for (size_t i = 0; i < spotLights.size(); i++)
         {
-            auto light = pointLights[j];
-            std::string varName = "pointLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName+std::string("position")).c_str(),  light->gameObject->GetComponent<Transform>()->position.FloatPTR());
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
-            shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
+            DrawRendererWithLight(renderer,spotLights[i]);
         }
 
-        // 设置聚光
-        shaderProgram->SetUniform("spotLightsNumber", (int)spotLights.size());
-        for (size_t j = 0; j < spotLights.size(); j++)
+        for (size_t i = 0; i < pointLights.size(); i++)
         {
-            auto light = spotLights[j];
-            std::string varName = "spotLights[" + std::to_string(j) + std::string("].");
-            shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
-            forward = light->gameObject->GetComponent<Transform>()->GetForward();
-            shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
-            shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
-            shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
-            shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
-            shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));
+            DrawRendererWithLight(renderer,pointLights[i]);
         }
+	}
 
-        // 设置材质
-        renderer->mat->Draw(texIndex);
+    glDisable(GL_BLEND);
+}
 
-        // 设置 ShadowMap
+void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
+{
+    auto shaderProgram = renderer->mat->shader;
+    int texIndex = 0;
+    // 设置材质
+    renderer->mat->Draw(texIndex);
+
+    if (light->type == LightType::Directional)
+    {
+        // 设置平行光
+        shaderProgram->SetUniform("light.type", 0);
+        auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
+        shaderProgram->SetUniform("light.direction", forward);
+        shaderProgram->SetUniform3f("light.color", light->color.FloatPTR());
+        shaderProgram->SetUniform("light.depthBias", light->shadowDepthBias);
+
+         //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
-        glBindTexture(GL_TEXTURE_2D, shadowFrameBuffer->GetDepthTexture());
+        glBindTexture(GL_TEXTURE_2D, directionalLight->shadowFrameBuffer->GetDepthTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
         texIndex++;
         auto lightView = directionalLight->GetViewMatrix();
         auto lightProjection = directionalLight->GetProjectionMatrix();
         shaderProgram->SetUniform("lightView", lightView);
         shaderProgram->SetUniform("lightProjection", lightProjection);
+    }
+    else if (light->type == LightType::Point)
+    {
+        // 设置点光
+        shaderProgram->SetUniform("light.type", 1);
+        std::string varName = "light.";
+        shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
+        shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
+        shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
+    }
+    else if (light ->type == LightType::Spot)
+    {
+        // 设置聚光
+        shaderProgram->SetUniform("light.type", 2);
+        string varName = "light.";
+        shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
+        auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
+        shaderProgram->SetUniform((varName + std::string("direction")).c_str(), forward);
+        shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
+        shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
+        shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
+        shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));
+    }
 
-        renderer->mesh->Draw();
-	}
+    renderer->mesh->Draw();
 }
 
 void SceneRenderer::DrawSkybox(Skybox* skybox)
