@@ -42,7 +42,7 @@ struct SpotLight
     float cosOuter;
 };
 #define NUMBER_SPOT_LIGHT 4
-uniform SpotLight[NUMBER_POINT_LIGHT] spotLights;
+uniform SpotLight[NUMBER_SPOT_LIGHT] spotLights;
 uniform int spotLightsNumber;
 
 void main()
