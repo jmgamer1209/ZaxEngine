@@ -12,10 +12,10 @@ void Transform::OnGui()
 	if (ImGui::TreeNode("Transform"))
 	{
 		ImGui::Text("Position: ");
-		ImGui::DragFloat3("##Position", this->position.FloatPTR(), 1.0f);
+		ImGui::DragFloat3("##Position", this->position.FloatPTR(), 0.1f);
 
 		ImGui::Text("Rotation: ");
-		ImGui::DragFloat3("##Rotation", this->rotation.FloatPTR(), 1.0f, -180.0f, 180.0f);
+		ImGui::DragFloat3("##Rotation", this->rotation.FloatPTR(), 0.1f, -180.0f, 180.0f);
 
 		ImGui::Text("Scale: ");
 		ImGui::DragFloat3("##Scale", this->scale.FloatPTR(), 0.1f);
