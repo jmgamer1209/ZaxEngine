@@ -143,7 +143,7 @@ void SceneRenderer::DrawShadow()
 
     for (size_t i = 0; i < pointLights.size(); i++)
     {
-        //DrawShadow(spotLights[i]);
+        //DrawShadow(pointLights[i]);
     }
 }
 
@@ -151,8 +151,7 @@ void SceneRenderer::DrawShadow(Light* light)
 {
     if (light->shadowFrameBuffer == nullptr)
     {
-        int width = 2048, height = 2048;
-        light->shadowFrameBuffer = new ShadowFrameBuffer(width, height);
+        light->shadowFrameBuffer = new ShadowFrameBuffer(light->shadowMapSize, light->shadowMapSize);
     }
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
@@ -266,6 +265,8 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     // 设置材质
     renderer->mat->Draw(texIndex);
 
+    shaderProgram->SetUniform("light.depthBias", light->shadowDepthBias);
+
     if (light->type == LightType::Directional)
     {
         // 设置平行光
@@ -273,15 +274,15 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("light.direction", forward);
         shaderProgram->SetUniform3f("light.color", light->color.FloatPTR());
-        shaderProgram->SetUniform("light.depthBias", light->shadowDepthBias);
+
 
          //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
-        glBindTexture(GL_TEXTURE_2D, directionalLight->shadowFrameBuffer->GetDepthTexture());
+        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetDepthTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
         texIndex++;
-        auto lightView = directionalLight->GetViewMatrix();
-        auto lightProjection = directionalLight->GetProjectionMatrix();
+        auto lightView = light->GetViewMatrix();
+        auto lightProjection = light->GetProjectionMatrix();
         shaderProgram->SetUniform("lightView", lightView);
         shaderProgram->SetUniform("lightProjection", lightProjection);
     }
@@ -306,6 +307,18 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
         shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
         shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
         shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));
+        shaderProgram->SetUniform((varName + std::string("near")).c_str(), 0.1f);
+        shaderProgram->SetUniform((varName + std::string("far")).c_str(), light->range);
+
+        //设置 ShadowMap
+        glActiveTexture(GL_TEXTURE0 + texIndex);
+        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetDepthTexture());
+        shaderProgram->SetUniform("shadowMap", texIndex);
+        texIndex++;
+        auto lightView = light->GetViewMatrix();
+        auto lightProjection = light->GetProjectionMatrix();
+        shaderProgram->SetUniform("lightView", lightView);
+        shaderProgram->SetUniform("lightProjection", lightProjection);
     }
 
     renderer->mesh->Draw();

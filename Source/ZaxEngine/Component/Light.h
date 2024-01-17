@@ -21,6 +21,8 @@ public:
 	float innerAngle;
 	float outerAngle;
 	float shadowDepthBias = 1;
+	int shadowMapSize = 2048;
+public:
 	ShadowFrameBuffer* shadowFrameBuffer;
 	
 public:
@@ -45,7 +47,15 @@ public:
 
 	glm::mat4 GetProjectionMatrix()
 	{
-		return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 50.0f);
+		if (type == LightType::Directional)
+		{
+			return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 50.0f);
+		}
+		if (type == LightType::Spot)
+		{
+			return glm::perspective(glm::radians(outerAngle), 1.0f, 0.1f, range);
+		}
+		return glm::mat4(1);
 	}
 
 private:

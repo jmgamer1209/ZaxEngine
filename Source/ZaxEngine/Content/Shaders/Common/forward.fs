@@ -24,6 +24,8 @@ struct Light
     float depthBias;
     float cosInner;
     float cosOuter;
+    float near;
+    float far;
 };
 uniform Light light;
 
@@ -66,19 +68,21 @@ void main()
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
 
     float shadow = 0.0;
-    if (light.type == 0) 
+    if (light.type == 0 || light.type == 2) 
     {
     //**********************
     // 计算阴影
     //**********************
     vec3 fragScreenCoordInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz * 0.5 + vec3(0.5);
-    float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+    float fragDepth = fragScreenCoordInLight.z;
+    if (light.type == 2) fragDepth = (light.far - ((light.far * light.near) / fragDepth)) / (light.far - light.near);
+    //float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
     float shadowSize = textureSize(shadowMap, 0).x;
     float frustumSize = 40.0;
     float a = frustumSize / shadowSize * 0.5;
     float b = 1.0 - dot(normal1, -light.direction);
-    float bias = light.depthBias * a * b;
-
+    float bias = max(light.depthBias * a * b, 0.005);
+    
     //PCF
     vec2 texelSize = 1.0 / textureSize(shadowMap, 0); 
     for(int x = -1; x <= 1; ++x)
@@ -86,7 +90,8 @@ void main()
         for(int y = -1; y <= 1; ++y)
         {
             float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * texelSize).r; 
-            shadow += (fragScreenCoordInLight.z - bias > pcfDepth ? 1.0 : 0.0);        
+            if (light.type == 2) pcfDepth = (light.far - ((light.far * light.near) / pcfDepth)) / (light.far - light.near);
+            shadow += (fragDepth - bias > pcfDepth ? 1.0 : 0.0);        
         }    
     }
     shadow /= 9.0;    
