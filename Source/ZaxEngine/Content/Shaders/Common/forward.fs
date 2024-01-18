@@ -75,26 +75,40 @@ void main()
     //**********************
     vec3 fragScreenCoordInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz * 0.5 + vec3(0.5);
     float fragDepth = fragScreenCoordInLight.z;
-    if (light.type == 2) fragDepth = (light.far - ((light.far * light.near) / fragDepth)) / (light.far - light.near);
-    //float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+    if (light.type == 2) fragDepth =  (2.0 * light.near) / (light.far + light.near - fragDepth * (light.far - light.near));    
+    float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+    if (light.type == 2) shadowDepth = (2.0 * light.near) / (light.far + light.near - shadowDepth * (light.far - light.near)); 
     float shadowSize = textureSize(shadowMap, 0).x;
     float frustumSize = 40.0;
-    float a = frustumSize / shadowSize * 0.5;
-    float b = 1.0 - dot(normal1, -light.direction);
-    float bias = max(light.depthBias * a * b, 0.005);
+    float distanceScale = 1;
+    if (light.type == 2) 
+    {
+        frustumSize = tan(radians(20.0)) * light.far * 2;
+        distanceScale = (dot(normalize(vec3(fragPos) - light.position), light.direction) * length(vec3(fragPos) - light.position)) / light.far;
+    }
+    float a = frustumSize / shadowSize * 0.5 * distanceScale;
+    vec3 lightDir = -light.direction;
+    // if (light.type == 2) lightDir = normalize(light.position - vec3(fragPos)); 
+    float b = 1.0 - dot(normal1, lightDir);
+    float bias = light.depthBias * a * b;
+   // if (light.type == 2) bias = bias / dot(-light.direction, lightDir);
+    bias = max(bias, 0.0005);
+    // bias = min(bias, 0.005);
     
     //PCF
-    vec2 texelSize = 1.0 / textureSize(shadowMap, 0); 
-    for(int x = -1; x <= 1; ++x)
-    {
-        for(int y = -1; y <= 1; ++y)
-        {
-            float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * texelSize).r; 
-            if (light.type == 2) pcfDepth = (light.far - ((light.far * light.near) / pcfDepth)) / (light.far - light.near);
-            shadow += (fragDepth - bias > pcfDepth ? 1.0 : 0.0);        
-        }    
-    }
-    shadow /= 9.0;    
+    // vec2 texelSize = 1.0 / textureSize(shadowMap, 0); 
+    // for(int x = -1; x <= 1; ++x)
+    // {
+    //     for(int y = -1; y <= 1; ++y)
+    //     {
+    //         float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * texelSize).r; 
+    //         if (light.type == 2) pcfDepth = (2.0 * light.near) / (light.far + light.near - pcfDepth * (light.far - light.near));    
+    //         shadow += (fragDepth - bias > pcfDepth ? 1.0 : 0.0);        
+    //     }    
+    // }
+    // shadow /= 9.0;    
+
+    shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
 
     //裁剪
     if(fragScreenCoordInLight.z > 1.0)
