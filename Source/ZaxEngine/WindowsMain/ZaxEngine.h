@@ -106,7 +106,10 @@ static int ImGui_Init()
 		return 1;
 
 	// 位置设置完后，需要再显示
-	glfwSetWindowPos(window, viewportWidth / 2, viewportHeight / 2);
+	GLFWmonitor* pMonitor = glfwGetPrimaryMonitor(); //GLFWmonitor** pMonitor = glfwGetMonitors(&monitorCount);
+	const GLFWvidmode* mode = glfwGetVideoMode(pMonitor);
+
+	glfwSetWindowPos(window, (mode->width - viewportWidth) / 2, (mode->height - viewportHeight) / 2);
 	glfwShowWindow(window);
 
 	glfwMakeContextCurrent(window);
