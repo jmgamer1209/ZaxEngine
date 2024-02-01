@@ -49,7 +49,7 @@ public:
 	{
 		if (type == LightType::Directional)
 		{
-			return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 50.0f);
+			return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 100.0f);
 		}
 		if (type == LightType::Spot)
 		{

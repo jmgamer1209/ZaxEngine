@@ -136,6 +136,7 @@ void SceneRenderer::DrawDepth()
 void SceneRenderer::DrawShadow()
 {
     DrawShadow(directionalLight);
+
     for (size_t i = 0; i < spotLights.size(); i++)
     {
         DrawShadow(spotLights[i]);
@@ -307,6 +308,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
         shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
         shaderProgram->SetUniform((varName + std::string("cosInner")).c_str(), cosf(light->innerAngle * (float)M_PI / 180.0f));
         shaderProgram->SetUniform((varName + std::string("cosOuter")).c_str(), cosf(light->outerAngle * (float)M_PI / 180.0f));
+        shaderProgram->SetUniform((varName + std::string("tanhalf")).c_str(), tanf(glm::radians(light->outerAngle / 2.0f)));
         shaderProgram->SetUniform((varName + std::string("near")).c_str(), 0.1f);
         shaderProgram->SetUniform((varName + std::string("far")).c_str(), light->range);
 

@@ -206,7 +206,7 @@ void LoadScene()
 		scene->AddGameObject(boxes[i]);
 	}
 	scene->AddGameObject(lightGO);
-	scene->AddGameObject(pointLightGO);
+//	scene->AddGameObject(pointLightGO);
 	scene->AddGameObject(spotLightGO);
 	scene->AddGameObject(skyboxGO);
 	scene->AddGameObject(planeGO);
