@@ -17,6 +17,7 @@
 * 透明物体渲染
 * PBR材质
 * 延迟着色
+* PCF Bias优化 Receiver Plane Depth Bias
 
 **引擎引入的第三方插件和库：**
 * imgui v1.90，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
