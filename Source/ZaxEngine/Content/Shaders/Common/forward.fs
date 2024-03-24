@@ -120,23 +120,27 @@ void main()
         bias = max(bias, 0.1);
 
         //PCF
-        // vec2 shadowMapTexelSize = 1.0 / textureSize(shadowMap, 0); 
-        // for(int x = -1; x <= 1; ++x)
-        // {
-        //     for(int y = -1; y <= 1; ++y)
-        //     {
-        //         float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * shadowMapTexelSize).r;  
-        //         if (light.type == 2) 
-        //         {
-        //             pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
-        //             pcfDepth = (2.0 * light.near * light.far) / (light.far + light.near - pcfDepth * (light.far - light.near));    
-        //         }
-        //         shadow += (fragDepth - bias > pcfDepth ? 1.0 : 0.0);        
-        //     }    
-        // }
-        // shadow /= 9.0;    
-
-        shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
+        vec2 shadowMapUnitSize = 1.0 / textureSize(shadowMap, 0); 
+        for(int x = -1; x <= 1; ++x)
+        {
+            for(int y = -1; y <= 1; ++y)
+            {
+                float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * shadowMapUnitSize).r;  
+                if (light.type == 2) 
+                {
+                    pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
+                    pcfDepth = (2.0 * light.near * light.far) / (light.far + light.near - pcfDepth * (light.far - light.near));    
+                }
+                if (light.type == 0)
+                {
+                    pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
+                    pcfDepth = 0.5 * (pcfDepth * (light.far - light.near) + (light.far + light.near));
+                }
+                shadow += (fragDepth - (1 + sqrt(abs(x)*abs(x) + abs(y)*abs(y))) * bias > pcfDepth ? 1.0 : 0.0);  // bias cone 修正偏差     
+            }    
+        }
+        shadow /= 9.0;    
+        //shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
 
         //裁剪
         if(fragScreenCoordInLight.z > 1.0)
