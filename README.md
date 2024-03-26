@@ -12,12 +12,13 @@
 此文档只记录核心内容。
 
 **待完成的后续功能：**
-* 点光源阴影
+* 点光源阴影（开发中）
 * 法线贴图
 * 透明物体渲染
 * PBR材质
 * 延迟着色
-* PCF Bias优化 Receiver Plane Depth Bias
+* 阴影优化：比如，CSM，PCSS，PCF的Bias优化 Receiver Plane Depth Bias 等等
+* 更多功能后续逐步填充
 
 **引擎引入的第三方插件和库：**
 * imgui v1.90，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
