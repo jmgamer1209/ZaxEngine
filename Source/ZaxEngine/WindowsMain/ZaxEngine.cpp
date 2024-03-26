@@ -185,13 +185,14 @@ void LoadScene()
 
 	auto spotLightGO = new GameObject("SpotLight");
 	transform = new Transform();
-	transform->position = Vector3(7, -2, 10);
+	transform->position = Vector3(7, 20, 0);
+	transform->rotation = Vector3(-90, 0, 0);
 	spotLightGO->AddComponent(transform);
 	light = new Light(LightType::Spot);
 	light->color = { 0,1,0 };
-	light->range = 20;
-	light->innerAngle = 8;
-	light->outerAngle = 10;
+	light->range = 100;
+	light->innerAngle = 30;
+	light->outerAngle = 40;
 	light->shadowMapSize = 2048;
 	spotLightGO->AddComponent(light);
 
@@ -205,7 +206,7 @@ void LoadScene()
 		scene->AddGameObject(boxes[i]);
 	}
 	scene->AddGameObject(lightGO);
-	scene->AddGameObject(pointLightGO);
+//	scene->AddGameObject(pointLightGO);
 	scene->AddGameObject(spotLightGO);
 	scene->AddGameObject(skyboxGO);
 	scene->AddGameObject(planeGO);

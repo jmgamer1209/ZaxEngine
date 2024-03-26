@@ -11,7 +11,16 @@
 
 此文档只记录核心内容。
 
-引擎引入的第三方插件和库：
+**待完成的后续功能：**
+* 点光源阴影（开发中）
+* 法线贴图
+* 透明物体渲染
+* PBR材质
+* 延迟着色
+* 阴影优化：比如，CSM，PCSS，PCF的Bias优化 Receiver Plane Depth Bias 等等
+* 更多功能后续逐步填充
+
+**引擎引入的第三方插件和库：**
 * imgui v1.90，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
 * glad2 v2.0.4，用于运行时查找 opengl 函数。github 需要选择 glad2 分支。库要在网站生成，选项选择 gl 3.3，勾选 loader。注意是 glad2 而不是旧版的 glad
 * stb_image，图片加载库

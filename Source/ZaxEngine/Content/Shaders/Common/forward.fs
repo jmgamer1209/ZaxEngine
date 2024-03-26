@@ -14,6 +14,8 @@ uniform float ambientIntensity;
 uniform float specularIntensity;
 uniform sampler2D shadowMap;
 
+uniform mat4 lightProjection;
+
 struct Light
 {
     int type;
@@ -24,6 +26,7 @@ struct Light
     float depthBias;
     float cosInner;
     float cosOuter;
+    float tanhalf;
     float near;
     float far;
 };
@@ -67,38 +70,81 @@ void main()
 
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
 
+    //****************** 计算阴影  *****************************//
+
     float shadow = 0.0;
     if (light.type == 0 || light.type == 2) 
     {
-    //**********************
-    // 计算阴影
-    //**********************
-    vec3 fragScreenCoordInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz * 0.5 + vec3(0.5);
-    float fragDepth = fragScreenCoordInLight.z;
-    if (light.type == 2) fragDepth = (light.far - ((light.far * light.near) / fragDepth)) / (light.far - light.near);
-    //float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
-    float shadowSize = textureSize(shadowMap, 0).x;
-    float frustumSize = 40.0;
-    float a = frustumSize / shadowSize * 0.5;
-    float b = 1.0 - dot(normal1, -light.direction);
-    float bias = max(light.depthBias * a * b, 0.005);
-    
-    //PCF
-    vec2 texelSize = 1.0 / textureSize(shadowMap, 0); 
-    for(int x = -1; x <= 1; ++x)
-    {
-        for(int y = -1; y <= 1; ++y)
-        {
-            float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * texelSize).r; 
-            if (light.type == 2) pcfDepth = (light.far - ((light.far * light.near) / pcfDepth)) / (light.far - light.near);
-            shadow += (fragDepth - bias > pcfDepth ? 1.0 : 0.0);        
-        }    
-    }
-    shadow /= 9.0;    
+        vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
+        vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
+        float fragDepth = fragScreenCoordInLight.z;
 
-    //裁剪
-    if(fragScreenCoordInLight.z > 1.0)
-        shadow = 0.0;
+        // 片元深度转换为实际距离的线性深度
+        if (light.type == 0)
+        {
+            fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
+        }
+        else if (light.type == 2) 
+        {
+            fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
+        }
+
+        // 阴影深度转换为实际距离的线性深度
+        float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+        float shadowDepthInNDC = shadowDepth * 2.0 - 1.0;
+
+        if (light.type == 0)
+        {
+            shadowDepth = 0.5 * (shadowDepthInNDC * (light.far - light.near) + (light.far + light.near));
+        }
+        else if (light.type == 2) 
+        {
+            shadowDepth = (2.0 * light.near * light.far) / (light.far + light.near - shadowDepthInNDC * (light.far - light.near)); 
+        }
+
+        // 计算 bias
+        float shadowSize = textureSize(shadowMap, 0).x;
+        float frustumSize = 40.0;
+        if (light.type == 2) 
+        {
+            float tanhalf2 = 2.0 * light.tanhalf;
+            float distance = dot(vec3(fragPos) - light.position, light.direction);
+            frustumSize = distance * tanhalf2;
+        }
+        float texelSize = frustumSize / shadowSize;
+        float a = texelSize * 0.5 * 1.4143;
+        vec3 lightDir = -light.direction;
+        if (light.type == 2) lightDir = normalize(light.position - vec3(fragPos)); 
+        float b = length(cross(normal1, lightDir)) / dot(normal1, lightDir); //1.0 - dot(normal1, lightDir);
+        float bias = light.depthBias * a * b;
+        bias = max(bias, 0.1);
+
+        //PCF
+        vec2 shadowMapUnitSize = 1.0 / textureSize(shadowMap, 0); 
+        for(int x = -1; x <= 1; ++x)
+        {
+            for(int y = -1; y <= 1; ++y)
+            {
+                float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * shadowMapUnitSize).r;  
+                if (light.type == 2) 
+                {
+                    pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
+                    pcfDepth = (2.0 * light.near * light.far) / (light.far + light.near - pcfDepth * (light.far - light.near));    
+                }
+                if (light.type == 0)
+                {
+                    pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
+                    pcfDepth = 0.5 * (pcfDepth * (light.far - light.near) + (light.far + light.near));
+                }
+                shadow += (fragDepth - (1 + sqrt(abs(x)*abs(x) + abs(y)*abs(y))) * bias > pcfDepth ? 1.0 : 0.0);  // bias cone 修正偏差     
+            }    
+        }
+        shadow /= 9.0;    
+        //shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
+
+        //裁剪
+        if(fragScreenCoordInLight.z > 1.0)
+            shadow = 0.0;
     }
 
     // 最后计算
