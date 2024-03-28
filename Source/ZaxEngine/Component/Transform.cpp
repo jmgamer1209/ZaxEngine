@@ -23,11 +23,42 @@ void Transform::OnGui()
 	}
 }
 
-glm::vec3 Transform::GetForward()
+Vector3 Transform::GetForward()
 {
 	glm::mat4 modelRotation(1.0f);
 	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
 	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
 	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
-	return modelRotation * glm::vec4(0, 0, -1, 1);
+	
+	Vector3 v1;
+	glm::vec3 v2 = modelRotation * glm::vec4(0, 0, -1, 1);
+	GLMVecToVector3(v2, v1);
+	return v1;
+}
+
+Vector3 Transform::GetRight()
+{
+	glm::mat4 modelRotation(1.0f);
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
+	
+	Vector3 v1;
+	glm::vec3 v2 = modelRotation * glm::vec4(1, 0, 0, 1);
+	GLMVecToVector3(v2, v1);
+	return v1;
+}
+
+Vector3 Transform::GetUp()
+{
+	glm::mat4 modelRotation(1.0f);
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
+	modelRotation = glm::rotate(modelRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
+
+	Vector3 v1;
+	glm::vec3 v2 = modelRotation * glm::vec4(0, 1, 0, 1);
+	GLMVecToVector3(v2, v1);
+
+	return v1;
 }

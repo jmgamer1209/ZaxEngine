@@ -1,21 +1,16 @@
 #pragma once
 #include "glad/gl.h"
 #include "Core/Debug.h"
+#include "ShadowFrameBufferBase.h"
 
-class ShadowFrameBuffer
+class ShadowFrameBuffer: public ShadowFrameBufferBase
 {
 private:
-	unsigned int ID;
 	unsigned int depthTexture = -1;
-	int width;
-	int height;
 
 public:
-	ShadowFrameBuffer(int width, int height)
+	ShadowFrameBuffer(int width, int height): ShadowFrameBufferBase(width, height)
 	{
-		this->width = width;
-		this->height = height;
-
 		glGenTextures(1, &depthTexture);
 		glBindTexture(GL_TEXTURE_2D, depthTexture);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32,
@@ -43,16 +38,53 @@ public:
 
 	}
 
-	unsigned int GetID()
-	{
-		return ID;
-	}
-
-	unsigned int GetDepthTexture()
+	unsigned int GetBindTexture() override
 	{
 		return depthTexture;
 	}
+};
 
-	int GetWidth() { return width; }
-	int GetHeight() { return height; }
+class ShadowCubeMapFrameBuffer : public ShadowFrameBufferBase
+{
+private:
+	unsigned int cubeMapTexture = -1;
+
+public:
+	ShadowCubeMapFrameBuffer(int width, int height) : ShadowFrameBufferBase(width, height)
+	{
+		glGenTextures(1, &cubeMapTexture);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTexture);
+
+		for (GLuint i = 0; i < 6; ++i)
+		{
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT,
+				width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+		}
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+		glGenFramebuffers(1, &ID);
+		glBindFramebuffer(GL_FRAMEBUFFER, ID);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, cubeMapTexture, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// 检查是否完成创建
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+	}
+	~ShadowCubeMapFrameBuffer()
+	{
+
+	}
+
+	unsigned int GetBindTexture() override
+	{
+		return cubeMapTexture;
+	}
 };

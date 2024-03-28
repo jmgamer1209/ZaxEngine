@@ -12,5 +12,7 @@ public:
 
 	Transform();
 	void OnGui() override;
-	glm::vec3 GetForward();
+	Vector3 GetForward();
+	Vector3 GetRight();
+	Vector3 GetUp();
 };

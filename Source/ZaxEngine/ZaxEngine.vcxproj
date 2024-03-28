@@ -193,6 +193,7 @@
     <ClInclude Include="Renderer\FrameBuffer.h" />
     <ClInclude Include="Renderer\SceneRenderer.h" />
     <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
+    <ClInclude Include="Renderer\ShadowFrameBufferBase.h" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
     <ClInclude Include="ThirdParty\glm\glm.hpp" />

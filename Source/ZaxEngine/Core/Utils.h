@@ -5,6 +5,7 @@
 #pragma comment(lib, "comsuppw.lib")
 using namespace std;
 #include <glm/glm.hpp>
+#include <Component/Transform.h>
 
 namespace Utils
 {
@@ -12,5 +13,6 @@ namespace Utils
 	wstring String2Wstring(const string& s);
 	void LoadTexture(unsigned int* texture, string& path, bool flip_vertically = false);
 	void LoadCubeMap(unsigned int* texture, const string& folderPath);
+	glm::mat4 GetViewMatrix(const Transform& transform);
 };
 
