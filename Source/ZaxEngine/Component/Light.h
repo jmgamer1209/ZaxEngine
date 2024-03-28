@@ -3,6 +3,7 @@
 #include "Core/Color.h"
 #include "Component/Transform.h"
 #include "Renderer/ShadowFrameBuffer.h"
+#include "Core/Utils.h"
 
 enum class  LightType
 {
@@ -21,28 +22,21 @@ public:
 	float innerAngle;
 	float outerAngle;
 	float shadowDepthBias = 1;
-	int shadowMapSize = 2048;
+	int shadowMapSize = 1024;
 public:
-	ShadowFrameBuffer* shadowFrameBuffer;
+	ShadowFrameBufferBase* shadowFrameBuffer;
 	
 public:
 	Light(LightType type);
+
 	glm::mat4 GetViewMatrix()
 	{
-		glm::mat4 viewRotation(1.0f);
-		auto transform = gameObject->GetComponent<Transform>();
-		auto position = transform->position;
-		auto rotation = transform->rotation;
+		return Utils::GetViewMatrix(*gameObject->GetComponent<Transform>());
+	}
 
-		viewRotation = glm::rotate(viewRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
-		viewRotation = glm::rotate(viewRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
-		viewRotation = glm::rotate(viewRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
-		viewRotation = glm::transpose(viewRotation);
-
-		glm::mat4 viewTranslation(1.0f);
-		viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
-
-		return viewRotation * viewTranslation;
+	glm::mat4 GetViewMatrix(int direction)
+	{
+		return Utils::GetViewMatrix(*gameObject->GetComponent<Transform>());
 	}
 
 	glm::mat4 GetProjectionMatrix()
@@ -51,10 +45,15 @@ public:
 		{
 			return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 100.0f);
 		}
-		if (type == LightType::Spot)
+		else if (type == LightType::Spot)
 		{
 			return glm::perspective(glm::radians(outerAngle), 1.0f, 0.1f, range);
 		}
+		else if (type == LightType::Point)
+		{
+			return glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, range);
+		}
+
 		return glm::mat4(1);
 	}
 

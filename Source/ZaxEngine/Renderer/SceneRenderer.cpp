@@ -7,6 +7,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Core/Mesh.h"
+#include "Core/Vector.h"
 
 SceneRenderer::SceneRenderer()
 {
@@ -144,7 +145,7 @@ void SceneRenderer::DrawShadow()
 
     for (size_t i = 0; i < pointLights.size(); i++)
     {
-        //DrawShadow(pointLights[i]);
+        DrawShadow(pointLights[i]);
     }
 }
 
@@ -152,12 +153,22 @@ void SceneRenderer::DrawShadow(Light* light)
 {
     if (light->shadowFrameBuffer == nullptr)
     {
-        light->shadowFrameBuffer = new ShadowFrameBuffer(light->shadowMapSize, light->shadowMapSize);
+        if (light->type == LightType::Point)
+        {
+            light->shadowFrameBuffer = new ShadowCubeMapFrameBuffer(light->shadowMapSize, light->shadowMapSize);
+        }
+        else light->shadowFrameBuffer = new ShadowFrameBuffer(light->shadowMapSize, light->shadowMapSize);
     }
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glBindFramebuffer(GL_FRAMEBUFFER, light->shadowFrameBuffer->GetID());
+    if (light->type == LightType::Point)
+    {
+        // 点光需要重新绑定，因为对于 point，后面代码会修改绑定
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, light->shadowFrameBuffer->GetBindTexture(), 0);
+    }
+
     glViewport(0, 0, light->shadowFrameBuffer->GetWidth(), light->shadowFrameBuffer->GetHeight());
     glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -172,20 +183,41 @@ void SceneRenderer::DrawShadow(Light* light)
         // 设置 MVP 矩阵
         glm::mat4 model(1.0f);
 
-        model = glm::translate(model, Vector3ToGLMVec(transform->position));
+        model = glm::translate(model, transform->position.ToGLMVec());
         model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
-
-        auto view = light->GetViewMatrix();
+        model = glm::scale(model, transform->scale.ToGLMVec());
+        
         auto projection = light->GetProjectionMatrix();
-
         shadowShader->SetUniform("model", model);
-        shadowShader->SetUniform("view", view);
         shadowShader->SetUniform("projection", projection);
 
-        renderer->mesh->Draw();
+        if (light->type == LightType::Point)
+        {
+            vector<glm::mat4> viewList;
+            auto transform = light->gameObject->GetComponent<Transform>();
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position + transform->GetRight()), transform->GetUp().ToGLMVec()));
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position - transform->GetRight()), transform->GetUp().ToGLMVec()));
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position + transform->GetUp()), transform->GetForward().ToGLMVec()));
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position - transform->GetUp()), transform->GetForward().ToGLMVec()));
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position - transform->GetForward()), transform->GetUp().ToGLMVec()));
+            viewList.push_back(glm::lookAt(transform->position.ToGLMVec(), Vector3ToGLMVec(transform->position + transform->GetForward()), transform->GetUp().ToGLMVec()));
+
+            for (size_t i = 0; i < 6; i++)
+            {
+                glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, light->shadowFrameBuffer->GetBindTexture(), 0);
+           //     auto view = light->GetViewMatrix();
+                shadowShader->SetUniform("view", viewList[i]);
+                renderer->mesh->Draw();
+            }
+        }
+        else
+        {
+            auto view = light->GetViewMatrix();
+            shadowShader->SetUniform("view", view);
+            renderer->mesh->Draw();
+        }
     }
 }
 
@@ -279,7 +311,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 
          //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
-        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetDepthTexture());
+        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
         texIndex++;
         auto lightView = light->GetViewMatrix();
@@ -295,6 +327,16 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
         shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
         shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
         shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
+
+        //设置 ShadowMap
+        glActiveTexture(GL_TEXTURE0 + texIndex);
+        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
+        shaderProgram->SetUniform("shadowMap", texIndex);
+        texIndex++;
+        auto lightView = light->GetViewMatrix();
+        auto lightProjection = light->GetProjectionMatrix();
+        shaderProgram->SetUniform("lightView", lightView);
+        shaderProgram->SetUniform("lightProjection", lightProjection);
     }
     else if (light ->type == LightType::Spot)
     {
@@ -314,7 +356,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 
         //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
-        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetDepthTexture());
+        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
         texIndex++;
         auto lightView = light->GetViewMatrix();

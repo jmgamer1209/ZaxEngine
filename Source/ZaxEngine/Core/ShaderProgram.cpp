@@ -102,6 +102,12 @@ void ShaderProgram::SetUniform(const GLchar* name, glm::vec3 value)
     glUniform3f(location, value.x, value.y, value.z);
 }
 
+void ShaderProgram::SetUniform(const GLchar* name, Vector3 value)
+{
+    int location = glGetUniformLocation(ID, name);
+    glUniform3f(location, value.x, value.y, value.z);
+}
+
 void ShaderProgram::SetUniform3f(const GLchar* name, float value[])
 {
     int location = glGetUniformLocation(ID, name);

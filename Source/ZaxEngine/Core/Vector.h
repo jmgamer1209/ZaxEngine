@@ -13,10 +13,12 @@ public:
 	{
 		x = y = z = 0;
 	}
+
 	Vector3(float v)
 	{
 		x = y = z = v;
 	}
+
 	Vector3(float x, float y, float z)
 	{
 		this->x = x;
@@ -28,6 +30,12 @@ public:
 	{
 		return (float*)this;
 	}
+
+	Vector3 operator +(const Vector3& other);
+
+	Vector3 operator -(const Vector3& other);
+
+	glm::vec3 ToGLMVec();
 };
 
 glm::vec3 Vector3ToGLMVec(const Vector3& vec);

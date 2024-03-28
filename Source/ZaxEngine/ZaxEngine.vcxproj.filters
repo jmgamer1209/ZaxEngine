@@ -219,5 +219,8 @@
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h">
       <Filter>ThirdParty\assimp</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\ShadowFrameBufferBase.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
