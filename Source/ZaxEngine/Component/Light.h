@@ -7,9 +7,9 @@
 
 enum class  LightType
 {
-	Directional,
-	Point,
-	Spot
+	Directional = 0,
+	Point = 1,
+	Spot = 2
 };
 std::string LightTypeToString(LightType type);
 

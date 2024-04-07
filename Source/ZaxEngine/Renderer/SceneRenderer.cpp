@@ -163,10 +163,16 @@ void SceneRenderer::DrawShadow(Light* light)
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glBindFramebuffer(GL_FRAMEBUFFER, light->shadowFrameBuffer->GetID());
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, light->shadowFrameBuffer->GetBindTexture(), 0);
+
     if (light->type == LightType::Point)
     {
         // 点光需要重新绑定，因为对于 point，后面代码会修改绑定
-        glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, light->shadowFrameBuffer->GetBindTexture(), 0);
+        
+    }
+    else
+    {
+
     }
 
     glViewport(0, 0, light->shadowFrameBuffer->GetWidth(), light->shadowFrameBuffer->GetHeight());
@@ -192,6 +198,7 @@ void SceneRenderer::DrawShadow(Light* light)
         auto projection = light->GetProjectionMatrix();
         shadowShader->SetUniform("model", model);
         shadowShader->SetUniform("projection", projection);
+        shadowShader->SetUniform("light.type", 0);
 
         if (light->type == LightType::Point)
         {
@@ -209,12 +216,16 @@ void SceneRenderer::DrawShadow(Light* light)
                 glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, light->shadowFrameBuffer->GetBindTexture(), 0);
            //     auto view = light->GetViewMatrix();
                 shadowShader->SetUniform("view", viewList[i]);
+                shadowShader->SetUniform("light.type", 1);
+                shadowShader->SetUniform("light.near", 0.1f);
+                shadowShader->SetUniform("light.far", light->range);
                 renderer->mesh->Draw();
             }
         }
         else
         {
             auto view = light->GetViewMatrix();
+            shadowShader->SetUniform("light.type", 2);
             shadowShader->SetUniform("view", view);
             renderer->mesh->Draw();
         }
@@ -236,37 +247,6 @@ void SceneRenderer::DrawRenderers()
 	{
 		auto renderer = renderers[i];
         if (renderer->gameObject->isActive == false) continue;
-
-        auto shaderProgram = renderer->mat->shader;
-        auto transform = renderer->gameObject->GetComponent<Transform>();
-        shaderProgram->Use();
-
-        // 设置 MVP 矩阵
-        glm::mat4 model(1.0f);
-        glm::mat4 view(1.0f);
-        glm::mat4 projection(1.0f);
-
-        model = glm::translate(model, Vector3ToGLMVec(transform->position));
-        // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
-        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-
-        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
-
-        view = camera->GetViewMatrix();
-        projection = camera->GetProjection();
-        glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
-
-        shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position.FloatPTR());
-        shaderProgram->SetUniform("model", model);
-        shaderProgram->SetUniform("view", view);
-        shaderProgram->SetUniform("projection", projection);
-        shaderProgram->SetUniform("normalMatrix", normalMatrix);
-
-        // 设置全局光
-        shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor.FloatPTR());
-        shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 
         glDepthFunc(GL_LESS);
         glDisable(GL_BLEND);
@@ -293,21 +273,29 @@ void SceneRenderer::DrawRenderers()
 
 void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 {
-    auto shaderProgram = renderer->mat->shader;
+    ShaderProgram* shaderProgram = renderer->mat->shader;
+
+    if (light->type == LightType::Point) shaderProgram->EnableKeyword("ShadowCube");
+    else shaderProgram->DisableKeyword("ShadowCube");
+
+    shaderProgram->Use();
+
+    SetGlobalShaderVar(renderer, light, shaderProgram);
+
+
     int texIndex = 0;
     // 设置材质
     renderer->mat->Draw(texIndex);
 
     shaderProgram->SetUniform("light.depthBias", light->shadowDepthBias);
+    shaderProgram->SetUniform("light.type", (int)light->type);
 
     if (light->type == LightType::Directional)
     {
         // 设置平行光
-        shaderProgram->SetUniform("light.type", 0);
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("light.direction", forward);
         shaderProgram->SetUniform3f("light.color", light->color.FloatPTR());
-
 
          //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
@@ -322,7 +310,6 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     else if (light->type == LightType::Point)
     {
         // 设置点光
-        shaderProgram->SetUniform("light.type", 1);
         std::string varName = "light.";
         shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
         shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
@@ -330,8 +317,8 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 
         //设置 ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
-        glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
-        shaderProgram->SetUniform("shadowMap", texIndex);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, light->shadowFrameBuffer->GetBindTexture());
+        shaderProgram->SetUniform("shadowCubeMap", texIndex);
         texIndex++;
         auto lightView = light->GetViewMatrix();
         auto lightProjection = light->GetProjectionMatrix();
@@ -341,7 +328,6 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     else if (light ->type == LightType::Spot)
     {
         // 设置聚光
-        shaderProgram->SetUniform("light.type", 2);
         string varName = "light.";
         shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
@@ -366,6 +352,38 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     }
 
     renderer->mesh->Draw();
+}
+
+void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, ShaderProgram * shaderProgram)
+{
+    auto transform = renderer->gameObject->GetComponent<Transform>();
+
+    // 设置 MVP 矩阵
+    glm::mat4 model(1.0f);
+    glm::mat4 view(1.0f);
+    glm::mat4 projection(1.0f);
+
+    model = glm::translate(model, Vector3ToGLMVec(transform->position));
+    // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
+    model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
+    model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
+    model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
+
+    model = glm::scale(model, Vector3ToGLMVec(transform->scale));
+
+    view = camera->GetViewMatrix();
+    projection = camera->GetProjection();
+    glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
+
+    shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position.FloatPTR());
+    shaderProgram->SetUniform("model", model);
+    shaderProgram->SetUniform("view", view);
+    shaderProgram->SetUniform("projection", projection);
+    shaderProgram->SetUniform("normalMatrix", normalMatrix);
+
+    // 设置全局光
+    shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor.FloatPTR());
+    shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 }
 
 void SceneRenderer::DrawSkybox(Skybox* skybox)
