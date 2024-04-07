@@ -43,6 +43,7 @@ private:
 	void DrawShadow(Light* light);
 	void DrawRenderers();
 	void DrawRendererWithLight(MeshRenderer* renderer, Light* light);
+	void SetGlobalShaderVar(MeshRenderer* renderer, Light* light, ShaderProgram* shaderProgram);
 	FrameBuffer* DrawPostProcess(PostProcess* postProcess);
 	void DrawSkybox(Skybox* skybox);
 	void DrawQuad(FrameBuffer* frameBuffer);

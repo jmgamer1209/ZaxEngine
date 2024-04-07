@@ -1,5 +1,7 @@
 #version 330 core
 
+//KEYWORD:ShadowCube
+
 out vec4 FragColor;
 
 in vec2 texCoord;
@@ -12,7 +14,9 @@ uniform sampler2D albedoTexture;
 uniform vec3 ambientColor;
 uniform float ambientIntensity;
 uniform float specularIntensity;
+uniform samplerCube shadowCubeMap;
 uniform sampler2D shadowMap;
+
 
 uniform mat4 lightProjection;
 
@@ -73,34 +77,36 @@ void main()
     //****************** 计算阴影  *****************************//
 
     float shadow = 0.0;
-    if (light.type == 0 || light.type == 2) 
+    float shadowDepth = 0.0;
+    vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
+    vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
+    float fragDepth = fragScreenCoordInLight.z;
+
+    // 片元深度转换为+z的线性深度
+    if (light.type == 0 || light.type == 1)
     {
-        vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
-        vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
-        float fragDepth = fragScreenCoordInLight.z;
+        fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
+    }
+    else if (light.type == 2) 
+    {
+        fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
+    }
 
-        // 片元深度转换为实际距离的线性深度
-        if (light.type == 0)
-        {
-            fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
-        }
-        else if (light.type == 2) 
-        {
-            fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
-        }
 
-        // 阴影深度转换为实际距离的线性深度
-        float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
-        float shadowDepthInNDC = shadowDepth * 2.0 - 1.0;
+    #ifndef ShadowCube
 
-        if (light.type == 0)
-        {
-            shadowDepth = 0.5 * (shadowDepthInNDC * (light.far - light.near) + (light.far + light.near));
-        }
-        else if (light.type == 2) 
-        {
-            shadowDepth = (2.0 * light.near * light.far) / (light.far + light.near - shadowDepthInNDC * (light.far - light.near)); 
-        }
+       // 阴影深度转换为实际距离的线性深度,即正Z值，由于PCF计算，这里注释掉
+        // float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
+        // float shadowDepthInNDC = shadowDepth * 2.0 - 1.0;
+
+        // if (light.type == 0)
+        // {
+        //     shadowDepth = 0.5 * (shadowDepthInNDC * (light.far - light.near) + (light.far + light.near));
+        // }
+        // else if (light.type == 2) 
+        // {
+        //     shadowDepth = (2.0 * light.near * light.far) / (light.far + light.near - shadowDepthInNDC * (light.far - light.near)); 
+        // }
 
         // 计算 bias
         float shadowSize = textureSize(shadowMap, 0).x;
@@ -125,7 +131,7 @@ void main()
         {
             for(int y = -1; y <= 1; ++y)
             {
-                float pcfDepth = texture(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * shadowMapUnitSize).r;  
+                float pcfDepth = textureLod(shadowMap, fragScreenCoordInLight.xy + vec2(x, y) * shadowMapUnitSize, 0).r;  
                 if (light.type == 2) 
                 {
                     pcfDepth = pcfDepth * 2.0 - 1.0; // ndc坐标
@@ -142,10 +148,20 @@ void main()
         shadow /= 9.0;    
         //shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
 
-        //裁剪
-        if(fragScreenCoordInLight.z > 1.0)
-            shadow = 0.0;
-    }
+    #endif
+
+    #ifdef ShadowCube
+
+    vec3 lightToFragDir = vec3(fragPos) - light.position; 
+    shadowDepth = textureLod(shadowCubeMap,lightToFragDir, 0).r * light.range;
+        
+    shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
+
+    #endif
+
+    //裁剪
+    if(fragScreenCoordInLight.z > 1.0)
+        shadow = 0.0;
 
     // 最后计算
     FragColor = vec4((diffuse + specular) * (1-shadow) + ambient,1);

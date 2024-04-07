@@ -5,17 +5,37 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Core/Vector.h"
+#include <vector>
+#include <unordered_set>
 
 using namespace std;
 
+class ShaderWithKeywords
+{
+public:
+	vector<string> keywords;
+	unsigned int ID = 0;
+
+	ShaderWithKeywords()
+	{
+
+	}
+};
+
+class KeywordAndShaderPart;
+
 class ShaderProgram
 {
-	unsigned int ID;
+	vector<ShaderWithKeywords*> shaders;
+	ShaderWithKeywords* currentShader;
+	unordered_set<string> keywords;
 	
 public:
 	ShaderProgram(string vertexPath, string fragmentPath);
 	void Delete();
 	void Use();
+	void EnableKeyword(string keyword);
+	void DisableKeyword(string keyword);
 
 	void SetUniform(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
 	void SetUniform(const GLchar* name, GLfloat v0, GLfloat v1, GLfloat v2);
@@ -27,8 +47,8 @@ public:
 	void SetUniform(const GLchar* name, glm::mat4& mat);
 
 private:
-	unsigned int LoadShader(string path, int type);
-	void CheckCompileError(unsigned int shader, string type);
+	KeywordAndShaderPart* LoadShader(string path);
+	void SetShaderWithKeywords();
 };
 
 class ShaderProgramManager
