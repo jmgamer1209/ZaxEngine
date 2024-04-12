@@ -55,6 +55,19 @@ void GenerateProgram(KeywordAndShaderPart* vertexPart, KeywordAndShaderPart* fra
 	keywords.insert(keywords.end(), vertexPart->keywords.begin(), vertexPart->keywords.end());
 	keywords.insert(keywords.end(), fragmentPart->keywords.begin(), fragmentPart->keywords.end());
 
+	// 去除相同的 keyword
+	for (int i = 0; i < (int)keywords.size() - 1; i++)
+	{
+		for (int j = i+1; j < (int)keywords.size(); j++)
+		{
+			if (keywords[i] == keywords[j])
+			{
+				keywords.erase(keywords.begin()+j);
+				j--;
+			}
+		}
+	}
+
 	shaders.push_back(new ShaderWithKeywords()); // 添加空的 keyword 列表，作为默认 shader
 	auto root = new Node();
 	GenerateKeywordTree(root, 0, (int)keywords.size() - 1);

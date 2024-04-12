@@ -14,9 +14,12 @@ uniform sampler2D albedoTexture;
 uniform vec3 ambientColor;
 uniform float ambientIntensity;
 uniform float specularIntensity;
-uniform samplerCube shadowCubeMap;
-uniform sampler2D shadowMap;
 
+#ifdef ShadowCube
+uniform samplerCube shadowCubeMap;
+#else
+uniform sampler2D shadowMap;
+#endif
 
 uniform mat4 lightProjection;
 
@@ -78,12 +81,21 @@ void main()
 
     float shadow = 0.0;
     float shadowDepth = 0.0;
-    vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
-    vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
-    float fragDepth = fragScreenCoordInLight.z;
+    float fragDepth = 0.0;
 
     // 片元深度转换为+z的线性深度
-    if (light.type == 0 || light.type == 1)
+
+    #ifdef ShadowCube
+
+    fragDepth = distance(vec3(fragPos),light.position);
+
+    #else
+
+    vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
+    vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
+    fragDepth = fragScreenCoordInLight.z;
+
+    if (light.type == 0)
     {
         fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
     }
@@ -91,9 +103,6 @@ void main()
     {
         fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
     }
-
-
-    #ifndef ShadowCube
 
        // 阴影深度转换为实际距离的线性深度,即正Z值，由于PCF计算，这里注释掉
         // float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
@@ -153,15 +162,18 @@ void main()
     #ifdef ShadowCube
 
     vec3 lightToFragDir = vec3(fragPos) - light.position; 
-    shadowDepth = textureLod(shadowCubeMap,lightToFragDir, 0).r * light.range;
-        
+    shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
     shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
 
     #endif
 
+    #ifndef ShadowCube
+
     //裁剪
     if(fragScreenCoordInLight.z > 1.0)
         shadow = 0.0;
+
+    #endif
 
     // 最后计算
     FragColor = vec4((diffuse + specular) * (1-shadow) + ambient,1);
