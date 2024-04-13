@@ -85,26 +85,22 @@ void main()
 
     // 片元深度转换为+z的线性深度
 
-    #ifdef ShadowCube
+    #ifndef ShadowCube
 
-    fragDepth = distance(vec3(fragPos),light.position);
+        vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
+        vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
+        fragDepth = fragScreenCoordInLight.z;
 
-    #else
+        if (light.type == 0)
+        {
+            fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
+        }
+        else if (light.type == 2) 
+        {
+            fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
+        }
 
-    vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
-    vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
-    fragDepth = fragScreenCoordInLight.z;
-
-    if (light.type == 0)
-    {
-        fragDepth = 0.5 * (fragNDCInLight.z * (light.far - light.near) + (light.far + light.near));
-    }
-    else if (light.type == 2) 
-    {
-        fragDepth =  (2.0 * light.near * light.far) / (light.far + light.near - fragNDCInLight.z * (light.far - light.near));    
-    }
-
-       // 阴影深度转换为实际距离的线性深度,即正Z值，由于PCF计算，这里注释掉
+        // 阴影深度转换为实际距离的线性深度,即正Z值，由于PCF计算，这里注释掉
         // float shadowDepth = texture(shadowMap, fragScreenCoordInLight.xy).r;
         // float shadowDepthInNDC = shadowDepth * 2.0 - 1.0;
 
@@ -129,7 +125,7 @@ void main()
         float texelSize = frustumSize / shadowSize;
         float a = texelSize * 0.5 * 1.4143;
         vec3 lightDir = -light.direction;
-        if (light.type == 2) lightDir = normalize(light.position - vec3(fragPos)); 
+        //if (light.type == 2) lightDir = normalize(light.position - vec3(fragPos)); 
         float b = length(cross(normal1, lightDir)) / dot(normal1, lightDir); //1.0 - dot(normal1, lightDir);
         float bias = light.depthBias * a * b;
         bias = max(bias, 0.1);
@@ -157,22 +153,18 @@ void main()
         shadow /= 9.0;    
         //shadow = (fragDepth - bias > shadowDepth ? 1.0 : 0.0); 
 
-    #endif
-
-    #ifdef ShadowCube
-
-    vec3 lightToFragDir = vec3(fragPos) - light.position; 
-    shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
-    shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
-
-    #endif
-
-    #ifndef ShadowCube
-
-    //裁剪
-    if(fragScreenCoordInLight.z > 1.0)
+        //裁剪
+        if(fragScreenCoordInLight.z > 1.0)
         shadow = 0.0;
+    #else
+        
+        fragDepth = distance(vec3(fragPos),light.position);
+        vec3 lightToFragDir = vec3(fragPos) - light.position; 
+        shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
+        shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
 
+        if (fragDepth > light.range) shadow = 0; //裁剪
+    
     #endif
 
     // 最后计算
