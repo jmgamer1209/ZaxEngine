@@ -25,7 +25,7 @@
 * PBR材质
 * 延迟着色
 * 编辑器优化：SceneView 与 GameView 分离
-* 阴影优化：比如，CSM，PCSS，PCF的Bias优化 Receiver Plane Depth Bias 等等
+* 阴影优化：比如 点光源根据每个面的VP精确的计算，Normal Bias,CSM,PCSS,PCF的Bias优化(Receiver Plane Depth Bias), 等等
 * 更多功能后续逐步填充
 
 **引擎引入的第三方插件和库：**
@@ -47,4 +47,4 @@ C++版本：C++14
 
 当前版本的画面：
 
-![](./Versions/Assets/v0.12_result.png)
+![](./Versions/Assets/v0.13_result.png)

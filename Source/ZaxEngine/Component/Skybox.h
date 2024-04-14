@@ -95,4 +95,6 @@ public:
     }
 
     unsigned int GetCubeMap() { return cubeMap; }
+
+    void SetCubeMap(unsigned int ID) { cubeMap = ID; }
 };
