@@ -16,9 +16,21 @@ uniform float ambientIntensity;
 uniform float specularIntensity;
 
 #ifdef ShadowCube
-uniform samplerCube shadowCubeMap;
+
+    uniform samplerCube shadowCubeMap;
+    vec3 sampleOffsetDirections[20] = vec3[]
+    (
+    vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1), 
+    vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+    vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+    vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+    vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0,  1, -1)
+    );
+
 #else
-uniform sampler2D shadowMap;
+
+    uniform sampler2D shadowMap;
+
 #endif
 
 uniform mat4 lightProjection;
@@ -160,8 +172,21 @@ void main()
         
         fragDepth = distance(vec3(fragPos),light.position);
         vec3 lightToFragDir = vec3(fragPos) - light.position; 
-        shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
-        shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
+        //shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
+
+        float bias = 0.15;
+        int samples = 20;
+        float viewDistance = length(cameraPos - vec3(fragPos));
+        float diskRadius = (1.0 + (viewDistance / light.range)) / 25.0;
+        for(int i = 0; i < samples; ++i)
+        {
+            float closestDepth = texture(shadowCubeMap, lightToFragDir + sampleOffsetDirections[i] * diskRadius).r;
+            closestDepth *= light.range;   // Undo mapping [0;1]
+            if(fragDepth - bias > closestDepth)
+            shadow += 1.0;
+        }
+        shadow /= float(samples);
+       // shadow = (fragDepth - 0.05 > shadowDepth ? 1.0 : 0.0); 
 
         if (fragDepth > light.range) shadow = 0; //裁剪
     

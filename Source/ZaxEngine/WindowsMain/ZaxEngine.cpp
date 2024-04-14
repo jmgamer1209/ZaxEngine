@@ -180,7 +180,8 @@ void LoadScene()
 	pointLightGO->AddComponent(transform);
 	light = new Light(LightType::Point);
 	light->color = { 1,0,0 };
-	transform->position = Vector3(-2.0f, 1.5f, 3.0f); 
+	light->range = 60;
+	transform->position = Vector3(-2.0f, 10.0f, 3.0f); 
 	pointLightGO->AddComponent(light);
 
 	auto spotLightGO = new GameObject("SpotLight");
