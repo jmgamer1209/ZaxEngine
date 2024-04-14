@@ -5,10 +5,18 @@
 class  BlinnPhongMaterial : public Material
 {
 private:
-	unsigned int albedoTexture = -1;
+	unsigned int albedoTexture = 0;
+	unsigned int normalMap = 0;
 	float specular = 0.5f;
 
 public:
+
+	BlinnPhongMaterial(ShaderProgram* shader, AssetMaterial* mat) : Material(shader)
+	{
+		Utils::LoadTexture(&albedoTexture, mat->baseColor.path);
+		Utils::LoadTexture(&normalMap, mat->normal.path);
+	}
+
 	BlinnPhongMaterial(ShaderProgram* shader, std::string albedoTexturePath) : Material(shader)
 	{
 		Utils::LoadTexture(&albedoTexture, albedoTexturePath);

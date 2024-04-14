@@ -106,6 +106,7 @@ AssetMaterial AssetModel::ProcessMaterial(aiMaterial* material, const aiScene* s
 {
     AssetMaterial mat;
     mat.baseColor = LoadMaterialTexture(material, aiTextureType_DIFFUSE);
+    mat.normal = LoadMaterialTexture(material, aiTextureType_HEIGHT);  // 对于 obj 模型的法线，需要使用 height 类型加载
     return mat;
 }
 

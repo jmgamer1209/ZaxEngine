@@ -94,12 +94,12 @@ void LoadScene()
 	// 导入模型
 	AssetModel* model = new AssetModel(Application::contentPath + "Common/WoodenCrate/Wooden Crate.obj");
 	Mesh* woodenBox = model->meshes[0].CreateMesh();
-	auto texturePath = model->materials[(model->meshes[0].materialIndex)].baseColor.path;
+	AssetMaterial*  woodenBoxMat = &model->materials[model->meshes[0].materialIndex];
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath + "Shaders/Common/forward.vs", Application::contentPath + "Shaders/Common/forward.fs");
-	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, texturePath);
-	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, texturePath);
+	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
+	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, woodenBoxMat->baseColor.path);
 
 	// 先创建天空盒
 	auto skyboxGO = new GameObject("Skybox");

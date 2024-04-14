@@ -22,7 +22,7 @@ wstring Utils::String2Wstring(const string& s)
     return result;
 }
 
-void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_vertically)
+void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_vertically=false)
 {
 	// º”‘ÿŒ∆¿Ì
 	glGenTextures(1, texture);
