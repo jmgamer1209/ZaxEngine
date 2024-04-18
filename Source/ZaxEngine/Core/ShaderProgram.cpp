@@ -327,7 +327,7 @@ void ShaderProgram::SetShaderWithKeywords()
 		if (keywords.size() != shader->keywords.size()) continue;
 		for (size_t j = 0; j < shader->keywords.size(); j++)
 		{
-			if (map.count(shader->keywords[j]) < 0 || map[shader->keywords[j]] == 1)
+			if (map.count(shader->keywords[j]) <= 0 || map[shader->keywords[j]] == 1)
 			{
 				find = false;
 				break;
