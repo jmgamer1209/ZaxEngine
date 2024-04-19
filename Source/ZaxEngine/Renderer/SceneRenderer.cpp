@@ -270,7 +270,10 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     if (light->type == LightType::Point) shaderProgram->EnableKeyword("ShadowCube");
     else shaderProgram->DisableKeyword("ShadowCube");
 
-    shaderProgram->Use();
+    if (renderer->mat->HasAttribute("normalMap"))  shaderProgram->EnableKeyword("NormalMap");
+    else shaderProgram->DisableKeyword("NormalMap");
+
+    shaderProgram->Use();  
 
     SetGlobalShaderVar(renderer, light, shaderProgram);
 
