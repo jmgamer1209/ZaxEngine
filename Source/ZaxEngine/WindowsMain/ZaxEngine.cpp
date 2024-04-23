@@ -152,7 +152,7 @@ void LoadScene()
 	transform->rotation = Vector3(-90, 0, 0);
 	transform->scale = Vector3(15);
 	planeGO->AddComponent(transform);
-	planeGO->AddComponent(new MeshRenderer(Mesh::GetQuadMesh(), mat));
+	planeGO->AddComponent(new MeshRenderer(Mesh::GetQuadMesh(), planeMat));
 	
 
 	// 设置摄像机

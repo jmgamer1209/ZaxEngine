@@ -23,6 +23,7 @@ public:
 		unsigned int albedoTexture = 0;
 		Utils::LoadTexture(&albedoTexture, albedoTexturePath);
 		attributes["albedoTexture"] = MaterialAttribute(MaterialTexture(TextureType::Texture2D, albedoTexture));
+		attributes["specular"] = MaterialAttribute(0.5f);
 	}
 	~BlinnPhongMaterial() {}
 
@@ -34,10 +35,13 @@ public:
 		shader->SetUniform("albedoTexture", texIndex);
 		texIndex++; 
 
-		glActiveTexture(GL_TEXTURE0 + texIndex);
-		glBindTexture(GL_TEXTURE_2D, attributes["normalMap"].texture.ID);
-		shader->SetUniform("normalMap", texIndex);
-		texIndex++;
+		if (attributes.count("normalMap") != 0)
+		{
+			glActiveTexture(GL_TEXTURE0 + texIndex);
+			glBindTexture(GL_TEXTURE_2D, attributes["normalMap"].texture.ID);
+			shader->SetUniform("normalMap", texIndex);
+			texIndex++;
+		}
 
 		shader->SetUniform("specularIntensity", attributes["specular"].floatValue);
 	}
