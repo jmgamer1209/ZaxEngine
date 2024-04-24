@@ -194,7 +194,6 @@ void LoadScene()
 	light->range = 100;
 	light->innerAngle = 30;
 	light->outerAngle = 40;
-	light->shadowMapSize = 2048;
 	spotLightGO->AddComponent(light);
 
 	// 创建场景
