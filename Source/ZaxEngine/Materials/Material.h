@@ -3,19 +3,22 @@
 #include "Assets/AssetModel.h"
 #include <unordered_map>
 
-enum class MaterialAttributeType;
-struct MaterialAttribute;
+enum class MaterialPropertyType;
+struct MaterialProperty;
 
 class Material
 {
+protected:
+	unordered_map<string, MaterialProperty> properties;
+
 public:
-	unordered_map<string, MaterialAttribute> attributes;
 	ShaderProgram *shader;
 	Material(ShaderProgram* shader) {
 		this->shader = shader;
 	};
 
-	bool HasAttribute(const string& name);
+	bool HasProperty(const string& name);
+	void SetProperty(const string& name, MaterialProperty property);
 	virtual void Draw(int& texIndex) = 0;
 	virtual void OnGui() {};
 };
@@ -37,32 +40,32 @@ struct  MaterialTexture
 	}
 };
 
-enum class MaterialAttributeType
+enum class MaterialPropertyType
 {
 	Texture, Float
 };
 
-struct MaterialAttribute
+struct MaterialProperty
 {
-	MaterialAttributeType type;
+	MaterialPropertyType type;
 	union
 	{
 		MaterialTexture texture;
 		float floatValue;
 	};
 
-	MaterialAttribute()
+	MaterialProperty()
 	{
 		
 	};
 
-	MaterialAttribute(const MaterialTexture& v) :texture{ v } 
+	MaterialProperty(const MaterialTexture& v) :texture{ v } 
 	{
-		type = MaterialAttributeType::Texture;
+		type = MaterialPropertyType::Texture;
 	};
-	MaterialAttribute(const float& v) :floatValue{ v } 
+	MaterialProperty(const float& v) :floatValue{ v } 
 	{
-		type = MaterialAttributeType::Float;
+		type = MaterialPropertyType::Float;
 	};
 };
 

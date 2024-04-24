@@ -207,7 +207,7 @@ void SceneRenderer::DrawShadow(Light* light)
 
             for (size_t i = 0; i < 6; i++)
             {
-                glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, light->shadowFrameBuffer->GetBindTexture(), 0);
+                glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, (GLenum)(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i), light->shadowFrameBuffer->GetBindTexture(), 0);
            //     auto view = light->GetViewMatrix();
                 shadowShader->SetUniform("view", viewList[i]);
                 shadowShader->SetUniform("light.range", light->range);
@@ -270,7 +270,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     if (light->type == LightType::Point) shaderProgram->EnableKeyword("ShadowCube");
     else shaderProgram->DisableKeyword("ShadowCube");
 
-    if (renderer->mat->HasAttribute("normalMap"))  shaderProgram->EnableKeyword("NormalMap");
+    if (renderer->mat->HasProperty("normalMap"))  shaderProgram->EnableKeyword("NormalMap");
     else shaderProgram->DisableKeyword("NormalMap");
 
     shaderProgram->Use();  

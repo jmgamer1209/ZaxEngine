@@ -100,6 +100,8 @@ void LoadScene()
 	shaderProgram = new ShaderProgram(Application::contentPath + "Shaders/Common/forward.vs", Application::contentPath + "Shaders/Common/forward.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
 	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, woodenBoxMat->baseColor.path);
+	//BlinnPhongMaterial* transparentMat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
+	//transparentMat->SetProperty("surfaceType", MaterialProperty(0.0f));
 
 	// 先创建天空盒
 	auto skyboxGO = new GameObject("Skybox");
