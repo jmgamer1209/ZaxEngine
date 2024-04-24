@@ -12,6 +12,7 @@ public:
 	vector<unsigned int> indices;
 	bool hasNormal = true;
 	bool hasTexCoord = true;
+	bool hasTangent = true;
 
 private:
 	unsigned int VBO, EBO, VAO;
@@ -72,6 +73,17 @@ public:
 			indexVA++;
 		}
 
+		if (hasTangent)
+		{
+			glEnableVertexAttribArray(indexVA);
+			glVertexAttribPointer(indexVA, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+			indexVA++;
+
+			glEnableVertexAttribArray(indexVA);
+			glVertexAttribPointer(indexVA, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+			indexVA++;
+		}
+
 		// 切线和副切线暂时不用
 		//// vertex tangent
 		//glEnableVertexAttribArray(3);
@@ -109,6 +121,7 @@ public:
 		if (Mesh::quadMesh == nullptr)
 		{
 			Mesh::quadMesh = new Mesh();
+			Mesh::quadMesh->hasTangent = false;
 			auto vertex1 = Vertex(Vector3(-1,-1,0), Vector3(0,0,1), Vector2(0,0));
 			auto vertex2 = Vertex(Vector3(1, -1, 0), Vector3(0, 0, 1), Vector2(1, 0));
 			auto vertex3 = Vertex(Vector3(1, 1, 0), Vector3(0, 0, 1), Vector2(1, 1));

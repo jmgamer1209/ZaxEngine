@@ -14,7 +14,7 @@ void AssetModel::LoadModel(string path)
 {
 	// 测试导入 obj
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		Debug::Log({ "错误::Assimp导入::", importer.GetErrorString() });
@@ -106,6 +106,7 @@ AssetMaterial AssetModel::ProcessMaterial(aiMaterial* material, const aiScene* s
 {
     AssetMaterial mat;
     mat.baseColor = LoadMaterialTexture(material, aiTextureType_DIFFUSE);
+    mat.normal = LoadMaterialTexture(material, aiTextureType_HEIGHT);  // 对于 obj 模型的法线，需要使用 height 类型加载
     return mat;
 }
 

@@ -16,6 +16,7 @@ struct AssetTexture {
 struct AssetMaterial
 {
     AssetTexture baseColor;
+    AssetTexture normal;
 };
 
 class AssetMesh

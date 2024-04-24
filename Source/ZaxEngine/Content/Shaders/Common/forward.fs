@@ -1,16 +1,22 @@
 #version 330 core
 
 //KEYWORD:ShadowCube
+//KEYWORD:NormalMap
 
 out vec4 FragColor;
 
-in vec2 texCoord;
-in vec3 normal;
-in vec4 fragPos;
-in vec4 fragPosInLight;
+in VS_OUT
+{
+    vec2 texCoord;
+    vec3 normal;
+    vec4 fragPos;
+    vec4 fragPosInLight;
+    mat3 TBN;
+} vs_out;
 
 uniform vec3 cameraPos;
 uniform sampler2D albedoTexture;
+uniform sampler2D normalMap;
 uniform vec3 ambientColor;
 uniform float ambientIntensity;
 uniform float specularIntensity;
@@ -53,38 +59,45 @@ uniform Light light;
 
 void main()
 {
-    vec3 normal1 = normalize(normal);
-    vec4 tex = texture(albedoTexture, texCoord);
+#ifndef NormalMap
+    vec3 normal = normalize(vs_out.normal);
+#else
+    // vec3 normal = normalize(vs_out.normal);
+    vec3 normal = texture(normalMap, vs_out.texCoord).rgb;
+    normal = normalize(normal * 2.0 - 1.0);   // 从[0,1]变为[-1,1]
+    normal = normalize(vs_out.TBN * normal);
+#endif
+    vec4 tex = texture(albedoTexture, vs_out.texCoord);
     vec3 diffuse = vec3(0,0,0);
     vec3 specular = vec3(0,0,0);
     vec3 ambient = vec3(0,0,0);
-    vec3 viewDir = normalize(cameraPos - vec3(fragPos)); 
+    vec3 viewDir = normalize(cameraPos - vec3(vs_out.fragPos)); 
 
     // 定向光
     if (light.type == 0)
     {
-        diffuse += max(dot(-light.direction, normal1),0) * light.color; 
+        diffuse += max(dot(-light.direction, normal),0) * light.color; 
         vec3 halfDir = normalize(-light.direction + viewDir);
-        specular += pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity * light.color;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color;
         ambient = ambientColor * ambientIntensity * vec3(tex);
     }
     else if (light.type == 1) // 点光
     {
-        vec3 pointDir = light.position - vec3(fragPos);
+        vec3 pointDir = light.position - vec3(vs_out.fragPos);
         float attenuation = clamp(1 - length(pointDir) / light.range,0,1);  // 衰减计算，这个是线性衰减，并且到达 range 时，scale 会为 0
-        diffuse += max(dot(normalize(pointDir), normal1) * attenuation,0) * light.color;
+        diffuse += max(dot(normalize(pointDir), normal) * attenuation,0) * light.color;
         vec3 halfDir = normalize(normalize(pointDir) + viewDir);
-        specular += pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity * light.color * attenuation;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color * attenuation;
     }
     else if (light.type == 2) // 聚光
     {
-        vec3 pointDir = light.position - vec3(fragPos);
+        vec3 pointDir = light.position - vec3(vs_out.fragPos);
         float attenuation = clamp(1 - length(pointDir) / light.range,0,1);  // range线性衰减计算
         attenuation *= (dot(normalize(-pointDir), light.direction) - light.cosOuter)/(light.cosInner - light.cosOuter); // 边缘线性衰减计算
         attenuation = max(attenuation,0);
-        diffuse += max(dot(normalize(pointDir), normal1) * attenuation,0) * light.color;
+        diffuse += max(dot(normalize(pointDir), normal) * attenuation,0) * light.color;
         vec3 halfDir = normalize(normalize(pointDir) + viewDir);
-        specular += pow(max(dot(halfDir, normal1), 0), 32) * specularIntensity * light.color * attenuation;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color * attenuation;
     }
 
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
@@ -99,7 +112,7 @@ void main()
 
     #ifndef ShadowCube
 
-        vec3 fragNDCInLight = (fragPosInLight.xyz / fragPosInLight.w).xyz;
+        vec3 fragNDCInLight = (vs_out.fragPosInLight.xyz / vs_out.fragPosInLight.w).xyz;
         vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
         fragDepth = fragScreenCoordInLight.z;
 
@@ -131,14 +144,14 @@ void main()
         if (light.type == 2) 
         {
             float tanhalf2 = 2.0 * light.tanhalf;
-            float distance = dot(vec3(fragPos) - light.position, light.direction);
+            float distance = dot(vec3(vs_out.fragPos) - light.position, light.direction);
             frustumSize = distance * tanhalf2;
         }
         float texelSize = frustumSize / shadowSize;
         float a = texelSize * 0.5 * 1.4143;
         vec3 lightDir = -light.direction;
         //if (light.type == 2) lightDir = normalize(light.position - vec3(fragPos)); 
-        float b = length(cross(normal1, lightDir)) / dot(normal1, lightDir); //1.0 - dot(normal1, lightDir);
+        float b = length(cross(normal, lightDir)) / dot(normal, lightDir); //1.0 - dot(normal1, lightDir);
         float bias = light.depthBias * a * b;
         bias = max(bias, 0.1);
 
@@ -167,16 +180,16 @@ void main()
 
         //裁剪
         if(fragScreenCoordInLight.z > 1.0)
-        shadow = 0.0;
+            shadow = 0.0;
     #else
         
-        fragDepth = distance(vec3(fragPos),light.position);
-        vec3 lightToFragDir = vec3(fragPos) - light.position; 
+        fragDepth = distance(vec3(vs_out.fragPos),light.position);
+        vec3 lightToFragDir = vec3(vs_out.fragPos) - light.position; 
         //shadowDepth = texture(shadowCubeMap,lightToFragDir).r * light.range;
 
         float bias = 0.15;
         int samples = 20;
-        float viewDistance = length(cameraPos - vec3(fragPos));
+        float viewDistance = length(cameraPos - vec3(vs_out.fragPos));
         float diskRadius = (1.0 + (viewDistance / light.range)) / 25.0;
         for(int i = 0; i < samples; ++i)
         {
