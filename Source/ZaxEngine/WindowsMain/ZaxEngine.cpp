@@ -100,6 +100,10 @@ void LoadScene()
 	shaderProgram = new ShaderProgram(Application::contentPath + "Shaders/Common/forward.vs", Application::contentPath + "Shaders/Common/forward.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
 	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, woodenBoxMat->baseColor.path);
+	BlinnPhongMaterial* transparentMat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
+	transparentMat->SetProperty("SurfaceType", MaterialProperty(1));
+	transparentMat->SetProperty("Alpha", MaterialProperty(0.5f));
+
 
 	// 先创建天空盒
 	auto skyboxGO = new GameObject("Skybox");
@@ -118,7 +122,8 @@ void LoadScene()
 		auto box = new GameObject(string("Box")+std::to_string(i));
 		boxes.push_back(box);
 		box->AddComponent(new Transform());
-		if (i < 4) box->AddComponent(new MeshRenderer(woodenBox, mat));
+		if (i == 3) box->AddComponent(new MeshRenderer(woodenBox, transparentMat));
+		else if (i < 4) box->AddComponent(new MeshRenderer(woodenBox, mat));
 		else box->AddComponent(new MeshRenderer(woodenBox, reflectionMat));
 
 		Vector3 position(0, 0, 0);

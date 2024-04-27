@@ -33,6 +33,7 @@ private:
 	vector<Light*> pointLights;
 	vector<Light*> spotLights;
 	vector<MeshRenderer*> renderers;
+	vector<vector<MeshRenderer*>> rendererGroups;
 	ShaderProgram* screenShaderProgram;
 	ShaderProgram* shadowShader;
 	ShaderProgram* depthShader;
@@ -42,6 +43,9 @@ private:
 	void DrawShadow();
 	void DrawShadow(Light* light);
 	void DrawRenderers();
+	void DrawOpaque();
+	void DrawTransparent();
+	void DrawGroupRenderers(const vector<MeshRenderer*>& group, SurfaceType surface);
 	void DrawRendererWithLight(MeshRenderer* renderer, Light* light);
 	void SetGlobalShaderVar(MeshRenderer* renderer, Light* light, ShaderProgram* shaderProgram);
 	FrameBuffer* DrawPostProcess(PostProcess* postProcess);

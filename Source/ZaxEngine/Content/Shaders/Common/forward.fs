@@ -1,7 +1,7 @@
 #version 330 core
 
-//KEYWORD:ShadowCube
-//KEYWORD:NormalMap
+//KEYWORD:SHADOWCUBE
+//KEYWORD:NORMALMAP
 
 out vec4 FragColor;
 
@@ -15,13 +15,16 @@ in VS_OUT
 } vs_out;
 
 uniform vec3 cameraPos;
-uniform sampler2D albedoTexture;
-uniform sampler2D normalMap;
+uniform sampler2D AlbedoTexture;
+uniform sampler2D NormalMap;
 uniform vec3 ambientColor;
 uniform float ambientIntensity;
-uniform float specularIntensity;
+uniform float Specular;
+uniform int SurfaceType;
+uniform float Alpha;
 
-#ifdef ShadowCube
+
+#ifdef SHADOWCUBE
 
     uniform samplerCube shadowCubeMap;
     vec3 sampleOffsetDirections[20] = vec3[]
@@ -59,15 +62,15 @@ uniform Light light;
 
 void main()
 {
-#ifndef NormalMap
+#ifndef NORMALMAP
     vec3 normal = normalize(vs_out.normal);
 #else
     // vec3 normal = normalize(vs_out.normal);
-    vec3 normal = texture(normalMap, vs_out.texCoord).rgb;
+    vec3 normal = texture(NormalMap, vs_out.texCoord).rgb;
     normal = normalize(normal * 2.0 - 1.0);   // 从[0,1]变为[-1,1]
     normal = normalize(vs_out.TBN * normal);
 #endif
-    vec4 tex = texture(albedoTexture, vs_out.texCoord);
+    vec4 tex = texture(AlbedoTexture, vs_out.texCoord);
     vec3 diffuse = vec3(0,0,0);
     vec3 specular = vec3(0,0,0);
     vec3 ambient = vec3(0,0,0);
@@ -78,7 +81,7 @@ void main()
     {
         diffuse += max(dot(-light.direction, normal),0) * light.color; 
         vec3 halfDir = normalize(-light.direction + viewDir);
-        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * Specular * light.color;
         ambient = ambientColor * ambientIntensity * vec3(tex);
     }
     else if (light.type == 1) // 点光
@@ -87,7 +90,7 @@ void main()
         float attenuation = clamp(1 - length(pointDir) / light.range,0,1);  // 衰减计算，这个是线性衰减，并且到达 range 时，scale 会为 0
         diffuse += max(dot(normalize(pointDir), normal) * attenuation,0) * light.color;
         vec3 halfDir = normalize(normalize(pointDir) + viewDir);
-        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color * attenuation;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * Specular * light.color * attenuation;
     }
     else if (light.type == 2) // 聚光
     {
@@ -97,7 +100,7 @@ void main()
         attenuation = max(attenuation,0);
         diffuse += max(dot(normalize(pointDir), normal) * attenuation,0) * light.color;
         vec3 halfDir = normalize(normalize(pointDir) + viewDir);
-        specular += pow(max(dot(halfDir, normal), 0), 32) * specularIntensity * light.color * attenuation;
+        specular += pow(max(dot(halfDir, normal), 0), 32) * Specular * light.color * attenuation;
     }
 
     diffuse = diffuse * vec3(tex); // 最后乘上albedo
@@ -110,7 +113,7 @@ void main()
 
     // 片元深度转换为+z的线性深度
 
-    #ifndef ShadowCube
+    #ifndef SHADOWCUBE
 
         vec3 fragNDCInLight = (vs_out.fragPosInLight.xyz / vs_out.fragPosInLight.w).xyz;
         vec3 fragScreenCoordInLight = fragNDCInLight * 0.5 + vec3(0.5);
@@ -206,5 +209,5 @@ void main()
     #endif
 
     // 最后计算
-    FragColor = vec4((diffuse + specular) * (1-shadow) + ambient,1);
+    FragColor = vec4((diffuse + specular) * (1-shadow) + ambient, SurfaceType==1?Alpha:1);
 }

@@ -72,6 +72,7 @@ public:
 
     void Draw(Camera *camera)
     {
+        glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBindVertexArray(0);

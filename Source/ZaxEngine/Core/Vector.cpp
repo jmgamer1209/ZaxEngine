@@ -23,6 +23,11 @@ Vector3 Vector3::operator -(const Vector3& other)
 	return v;
 }
 
+Vector3 Vector3::operator -()
+{
+	return Vector3(-this->x, -this->y, -this->z);
+}
+
 glm::vec3 Vector3::ToGLMVec()
 {
 	glm::vec3 v;

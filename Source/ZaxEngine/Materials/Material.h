@@ -3,21 +3,30 @@
 #include "Assets/AssetModel.h"
 #include <unordered_map>
 
-enum class MaterialAttributeType;
-struct MaterialAttribute;
+enum class MaterialPropertyType;
+struct MaterialProperty;
 
 class Material
 {
+protected:
+	unordered_map<string, MaterialProperty> properties;
+
 public:
-	unordered_map<string, MaterialAttribute> attributes;
 	ShaderProgram *shader;
 	Material(ShaderProgram* shader) {
 		this->shader = shader;
 	};
 
-	bool HasAttribute(const string& name);
+	bool HasProperty(const string& name);
+	void SetProperty(const string& name, MaterialProperty property);
+	MaterialProperty GetProperty(const string& name);
 	virtual void Draw(int& texIndex) = 0;
 	virtual void OnGui() {};
+};
+
+enum class SurfaceType
+{
+	Opaque = 0, Transparent = 1
 };
 
 enum class TextureType
@@ -37,32 +46,38 @@ struct  MaterialTexture
 	}
 };
 
-enum class MaterialAttributeType
+enum class MaterialPropertyType
 {
-	Texture, Float
+	Texture, Float, Int
 };
 
-struct MaterialAttribute
+struct MaterialProperty
 {
-	MaterialAttributeType type;
+	MaterialPropertyType type;
 	union
 	{
 		MaterialTexture texture;
 		float floatValue;
+		int intValue;
 	};
 
-	MaterialAttribute()
+	MaterialProperty()
 	{
 		
 	};
 
-	MaterialAttribute(const MaterialTexture& v) :texture{ v } 
+	MaterialProperty(const MaterialTexture& v) :texture{ v } 
 	{
-		type = MaterialAttributeType::Texture;
+		type = MaterialPropertyType::Texture;
 	};
-	MaterialAttribute(const float& v) :floatValue{ v } 
+	MaterialProperty(const float& v) :floatValue{ v } 
 	{
-		type = MaterialAttributeType::Float;
+		type = MaterialPropertyType::Float;
+	};
+
+	MaterialProperty(const int& v) :intValue{ v }
+	{
+		type = MaterialPropertyType::Int;
 	};
 };
 

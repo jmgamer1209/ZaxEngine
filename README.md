@@ -15,12 +15,12 @@
 
 **已完成功能：**
 * 基本场景显示
-* 基本前向着色，着色模型为 Blinn-Phong，法线贴图
+* 基本前向着色
+* 材质为 Blinn-Phong，法线贴图，透明材质
 * 自定义Shader格式，实现 Keyword 功能
 * 光源基础阴影(三类光源阴影，以及depthbias和pcf)
 
 **待完成的后续功能：**
-* 透明物体渲染（开发中）
 * PBR材质
 * 延迟着色
 * 编辑器优化：SceneView 与 GameView 分离
@@ -46,4 +46,4 @@ C++版本：C++14
 
 当前版本的画面：
 
-![](./Versions/Assets/v0.13_result.png)
+![](./Versions/Assets/v0.15_result.png)
