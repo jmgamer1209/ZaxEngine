@@ -85,7 +85,11 @@ void SceneRenderer::Draw(Scene* scene)
 
         DrawRenderers();
 
+        DrawOpaque();
+
         DrawSkybox(skybox);
+
+        DrawTransparent();
 
         auto postBuffer = DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
         DrawQuad(postBuffer);
@@ -169,8 +173,8 @@ void SceneRenderer::DrawShadow(Light* light)
     glViewport(0, 0, light->shadowFrameBuffer->GetWidth(), light->shadowFrameBuffer->GetHeight());
     glClear(GL_DEPTH_BUFFER_BIT);
 
-    if (light->type == LightType::Point) shadowShader->EnableKeyword("ShadowCube");
-    else shadowShader->DisableKeyword("ShadowCube");
+    if (light->type == LightType::Point) shadowShader->EnableKeyword("SHADOWCUBE");
+    else shadowShader->DisableKeyword("SHADOWCUBE");
 
     for (size_t i = 0; i < renderers.size(); i++)
     {
@@ -232,46 +236,117 @@ void SceneRenderer::DrawRenderers()
     glClearColor(0, 0, 0, 1);
     //glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
     glCullFace(GL_BACK);
 
-	for (size_t i = 0; i < renderers.size(); i++)
-	{
-		auto renderer = renderers[i];
+    // 对物体进行分组
+    if (rendererGroups.size() == 0)
+    {
+        rendererGroups.push_back(vector<MeshRenderer*>());
+        rendererGroups.push_back(vector<MeshRenderer*>());
+    }
+    else 
+    {
+        for (size_t i = 0; i < rendererGroups.size(); i++)
+        {
+            rendererGroups[i].clear();
+        }
+    }
+
+    vector<MeshRenderer*>& transparentGroup = rendererGroups[1];
+    auto camTransform = camera->gameObject->GetComponent<Transform>();
+
+    for (size_t i = 0; i < renderers.size(); i++)
+    {
+        if (renderers[i]->mat->HasProperty("SurfaceType") == true &&  (SurfaceType)renderers[i]->mat->GetProperty("SurfaceType").intValue == SurfaceType::Transparent)
+        {
+            auto distance = Vector3::Dot(renderers[i]->gameObject->GetComponent<Transform>()->position - camTransform->position, camTransform->GetForward()); // 这个距离带正负号
+            bool find = false;
+            for (size_t j = 0; j < transparentGroup.size(); j++)
+            {
+                auto distanceItem = Vector3::Dot(transparentGroup[j]->gameObject->GetComponent<Transform>()->position - camTransform->position, camTransform->GetForward());
+                if (distanceItem > distance)
+                {
+                    find = true;
+                    transparentGroup.insert(transparentGroup.begin() + j, renderers[i]);
+                    break;
+                }
+            }
+
+            if (find == false)
+            {
+                transparentGroup.push_back(renderers[i]);
+            }
+        }
+        else
+        {
+            rendererGroups[0].push_back(renderers[i]);
+        }
+    }
+}
+
+void SceneRenderer::DrawOpaque()
+{
+    auto index = (int)SurfaceType::Opaque;
+    DrawGroupRenderers(rendererGroups[index], SurfaceType::Opaque);
+}
+
+void SceneRenderer::DrawTransparent()
+{
+    auto index = (int)SurfaceType::Transparent;
+    DrawGroupRenderers(rendererGroups[index], SurfaceType::Transparent);
+}
+
+void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, SurfaceType surface)
+{
+    glEnable(GL_DEPTH_TEST);
+
+    for (size_t i = 0; i < group.size(); i++)
+    {
+        auto renderer = group[i];
         if (renderer->gameObject->isActive == false) continue;
 
-        glDepthFunc(GL_LESS);
-        glDisable(GL_BLEND);
-       
-        DrawRendererWithLight(renderer,directionalLight);
+        if (surface == SurfaceType::Opaque)
+        {
+            glDepthFunc(GL_LESS);
+            glDisable(GL_BLEND);
+        }
+        else 
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthFunc(GL_LEQUAL);
+        }
 
-        glDepthFunc(GL_LEQUAL);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE);
+        DrawRendererWithLight(renderer, directionalLight);
+
+        if (surface == SurfaceType::Opaque)
+        {
+            glDepthFunc(GL_LEQUAL);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_ONE, GL_ONE);
+        }
 
         for (size_t i = 0; i < spotLights.size(); i++)
         {
-            DrawRendererWithLight(renderer,spotLights[i]);
+            DrawRendererWithLight(renderer, spotLights[i]);
         }
 
         for (size_t i = 0; i < pointLights.size(); i++)
         {
-            DrawRendererWithLight(renderer,pointLights[i]);
+            DrawRendererWithLight(renderer, pointLights[i]);
         }
-	}
-
-    glDisable(GL_BLEND);
+    }
 }
 
 void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 {
     ShaderProgram* shaderProgram = renderer->mat->shader;
 
-    if (light->type == LightType::Point) shaderProgram->EnableKeyword("ShadowCube");
-    else shaderProgram->DisableKeyword("ShadowCube");
+    if (light->type == LightType::Point) shaderProgram->EnableKeyword("SHADOWCUBE");
+    else shaderProgram->DisableKeyword("SHADOWCUBE");
 
-    if (renderer->mat->HasProperty("normalMap"))  shaderProgram->EnableKeyword("NormalMap");
-    else shaderProgram->DisableKeyword("NormalMap");
+    if (renderer->mat->HasProperty("NormalMap"))  shaderProgram->EnableKeyword("NORMALMAP");
+    else shaderProgram->DisableKeyword("NORMALMAP");
 
     shaderProgram->Use();  
 

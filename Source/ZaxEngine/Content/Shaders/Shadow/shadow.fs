@@ -1,8 +1,8 @@
 #version 330 core
 
-//KEYWORD:ShadowCube
+//KEYWORD:SHADOWCUBE
 
-#ifdef ShadowCube
+#ifdef SHADOWCUBE
 
 struct Light
 {
@@ -18,7 +18,7 @@ in vec4 fragPos;
 void main()
 {
 
-#ifdef ShadowCube
+#ifdef SHADOWCUBE
 
    float shadowLinearDepth = distance(vec3(fragPos),light.position); 
    gl_FragDepth = shadowLinearDepth / light.range;

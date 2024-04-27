@@ -13,3 +13,8 @@ void  Material::SetProperty(const string& name, MaterialProperty property)
 {
 	properties[name] = property;
 }
+
+MaterialProperty Material::GetProperty(const string& name)
+{
+	return properties[name];
+}

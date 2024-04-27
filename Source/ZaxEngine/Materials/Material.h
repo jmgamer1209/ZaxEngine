@@ -19,8 +19,14 @@ public:
 
 	bool HasProperty(const string& name);
 	void SetProperty(const string& name, MaterialProperty property);
+	MaterialProperty GetProperty(const string& name);
 	virtual void Draw(int& texIndex) = 0;
 	virtual void OnGui() {};
+};
+
+enum class SurfaceType
+{
+	Opaque = 0, Transparent = 1
 };
 
 enum class TextureType
@@ -42,7 +48,7 @@ struct  MaterialTexture
 
 enum class MaterialPropertyType
 {
-	Texture, Float
+	Texture, Float, Int
 };
 
 struct MaterialProperty
@@ -52,6 +58,7 @@ struct MaterialProperty
 	{
 		MaterialTexture texture;
 		float floatValue;
+		int intValue;
 	};
 
 	MaterialProperty()
@@ -66,6 +73,11 @@ struct MaterialProperty
 	MaterialProperty(const float& v) :floatValue{ v } 
 	{
 		type = MaterialPropertyType::Float;
+	};
+
+	MaterialProperty(const int& v) :intValue{ v }
+	{
+		type = MaterialPropertyType::Int;
 	};
 };
 
