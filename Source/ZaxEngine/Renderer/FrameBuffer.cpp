@@ -13,20 +13,20 @@ FrameBuffer::FrameBuffer(int width, int height, bool hasDepthStencil)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);  // °ó¶¨ÑÕÉ«»º³å
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);  // ç»‘å®šé¢œè‰²ç¼“å†²
 
 	if (hasDepthStencil) 
 	{
 		glGenRenderbuffers(1, &depthStencilBuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthStencilBuffer);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthStencilBuffer);   // °ó¶¨Éî¶ÈºÍÄ£°å»º³å
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthStencilBuffer);   // ç»‘å®šæ·±åº¦å’Œæ¨¡æ¿ç¼“å†²
 	}
 
-	// ¼ì²éÊÇ·ñÍê³É´´½¨
+	// æ£€æŸ¥æ˜¯å¦å®Œæˆåˆ›å»º
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 
-	// ÖØĞÂ°ó¶¨µ½´°¿ÚÖ¡»º³å
+	// é‡æ–°ç»‘å®šåˆ°çª—å£å¸§ç¼“å†²
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

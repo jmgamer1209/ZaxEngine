@@ -55,7 +55,7 @@ void GenerateProgram(KeywordAndShaderPart* vertexPart, KeywordAndShaderPart* fra
 	keywords.insert(keywords.end(), vertexPart->keywords.begin(), vertexPart->keywords.end());
 	keywords.insert(keywords.end(), fragmentPart->keywords.begin(), fragmentPart->keywords.end());
 
-	// È¥³ıÏàÍ¬µÄ keyword
+	// å»é™¤ç›¸åŒçš„ keyword
 	for (int i = 0; i < (int)keywords.size() - 1; i++)
 	{
 		for (int j = i+1; j < (int)keywords.size(); j++)
@@ -68,7 +68,7 @@ void GenerateProgram(KeywordAndShaderPart* vertexPart, KeywordAndShaderPart* fra
 		}
 	}
 
-	shaders.push_back(new ShaderWithKeywords()); // Ìí¼Ó¿ÕµÄ keyword ÁĞ±í£¬×÷ÎªÄ¬ÈÏ shader
+	shaders.push_back(new ShaderWithKeywords()); // æ·»åŠ ç©ºçš„ keyword åˆ—è¡¨ï¼Œä½œä¸ºé»˜è®¤ shader
 	auto root = new Node();
 	GenerateKeywordTree(root, 0, (int)keywords.size() - 1);
 	GenerateKeywordGroup(root, vector<Node*>(), keywords, shaders);
@@ -124,16 +124,16 @@ KeywordAndShaderPart* ShaderProgram::LoadShader(string path)
 
 	shaderFile.open(path);
 
-	// Í¨¹ı×´Ì¬»ú£¬·ÖÎöÎÄ±¾
-	// ½øÈë keyword ×´Ì¬£¬µ±Ò»ĞĞ²»ÊÇ¿Õ¸ñÇÒ²»ÊÇkeyword£¬ÔòÍË³öÅĞ¶Ï£¬keywordÅĞ¶Ï½áÊø£¬¿ªÊ¼¹¹³ÉÕæÕıµÄshaderÎÄ±¾
-	// Ä¿Ç°ÈÎÒâ keyword Ö®¼ä£¬¶¼²»ÔÊĞíÓĞÆäËûÎÄ±¾´æÔÚ
+	// é€šè¿‡çŠ¶æ€æœºï¼Œåˆ†ææ–‡æœ¬
+	// è¿›å…¥ keyword çŠ¶æ€ï¼Œå½“ä¸€è¡Œä¸æ˜¯ç©ºæ ¼ä¸”ä¸æ˜¯keywordï¼Œåˆ™é€€å‡ºåˆ¤æ–­ï¼Œkeywordåˆ¤æ–­ç»“æŸï¼Œå¼€å§‹æ„æˆçœŸæ­£çš„shaderæ–‡æœ¬
+	// ç›®å‰ä»»æ„ keyword ä¹‹é—´ï¼Œéƒ½ä¸å…è®¸æœ‰å…¶ä»–æ–‡æœ¬å­˜åœ¨
 	int stat = 0;
 	string keyword;
 	while (getline(shaderFile, shaderCodeLine))
 	{
 		switch (stat)
 		{
-		case 0: // ÕÒ version
+		case 0: // æ‰¾ version
 		{
 			string word = "";
 			bool start = false;
@@ -170,7 +170,7 @@ KeywordAndShaderPart* ShaderProgram::LoadShader(string path)
 				break;
 			}
 		}
-		case 1: // ÕÒ Keyword
+		case 1: // æ‰¾ Keyword
 		{
 			if (shaderCodeLine.length() < 10)
 			{

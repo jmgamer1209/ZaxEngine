@@ -65,7 +65,7 @@ void SceneRenderer::Draw(Scene* scene)
 
     camera->OnViewportChange(Application::viewportWidth, Application::viewportHeight);
 
-    // Èç¹û´°¿Ú±ä»¯£¬ĞèÒªÖØĞÂÉèÖÃÎÆÀíºÍrbµÄ´óĞ¡
+    // å¦‚æœçª—å£å˜åŒ–ï¼Œéœ€è¦é‡æ–°è®¾ç½®çº¹ç†å’Œrbçš„å¤§å°
     if (Application::isViewportSizeChanged)
     {
         frameBuffer->ChangeSize(Application::viewportWidth, Application::viewportHeight);
@@ -112,7 +112,7 @@ void SceneRenderer::DrawDepth()
         auto transform = renderer->gameObject->GetComponent<Transform>();
         depthShader->Use();
 
-        // ÉèÖÃ MVP ¾ØÕó
+        // è®¾ç½® MVP çŸ©é˜µ
         glm::mat4 model(1.0f);
         glm::mat4 view(1.0f);
         glm::mat4 projection(1.0f);
@@ -167,7 +167,7 @@ void SceneRenderer::DrawShadow(Light* light)
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glBindFramebuffer(GL_FRAMEBUFFER, light->shadowFrameBuffer->GetID());
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, light->shadowFrameBuffer->GetBindTexture(), 0);  // µã¹âĞèÒªÖØĞÂ°ó¶¨£¬ÒòÎª¶ÔÓÚ point£¬ºóÃæ´úÂë»áĞŞ¸Ä°ó¶¨
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, light->shadowFrameBuffer->GetBindTexture(), 0);  // ç‚¹å…‰éœ€è¦é‡æ–°ç»‘å®šï¼Œå› ä¸ºå¯¹äº pointï¼Œåé¢ä»£ç ä¼šä¿®æ”¹ç»‘å®š
 
 
     glViewport(0, 0, light->shadowFrameBuffer->GetWidth(), light->shadowFrameBuffer->GetHeight());
@@ -185,7 +185,7 @@ void SceneRenderer::DrawShadow(Light* light)
 
         shadowShader->Use();
 
-        // ÉèÖÃ MVP ¾ØÕó
+        // è®¾ç½® MVP çŸ©é˜µ
         glm::mat4 model(1.0f);
 
         model = glm::translate(model, transform->position.ToGLMVec());
@@ -238,7 +238,7 @@ void SceneRenderer::DrawRenderers()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glCullFace(GL_BACK);
 
-    // ¶ÔÎïÌå½øĞĞ·Ö×é
+    // å¯¹ç‰©ä½“è¿›è¡Œåˆ†ç»„
     if (rendererGroups.size() == 0)
     {
         rendererGroups.push_back(vector<MeshRenderer*>());
@@ -259,7 +259,7 @@ void SceneRenderer::DrawRenderers()
     {
         if (renderers[i]->mat->HasProperty("SurfaceType") == true &&  (SurfaceType)renderers[i]->mat->GetProperty("SurfaceType").intValue == SurfaceType::Transparent)
         {
-            auto distance = Vector3::Dot(renderers[i]->gameObject->GetComponent<Transform>()->position - camTransform->position, camTransform->GetForward()); // Õâ¸ö¾àÀë´øÕı¸ººÅ
+            auto distance = Vector3::Dot(renderers[i]->gameObject->GetComponent<Transform>()->position - camTransform->position, camTransform->GetForward()); // è¿™ä¸ªè·ç¦»å¸¦æ­£è´Ÿå·
             bool find = false;
             for (size_t j = 0; j < transparentGroup.size(); j++)
             {
@@ -354,7 +354,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 
 
     int texIndex = 0;
-    // ÉèÖÃ²ÄÖÊ
+    // è®¾ç½®æè´¨
     renderer->mat->Draw(texIndex);
 
     shaderProgram->SetUniform("light.depthBias", light->shadowDepthBias);
@@ -362,12 +362,12 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
 
     if (light->type == LightType::Directional)
     {
-        // ÉèÖÃÆ½ĞĞ¹â
+        // è®¾ç½®å¹³è¡Œå…‰
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
         shaderProgram->SetUniform("light.direction", forward);
         shaderProgram->SetUniform3f("light.color", light->color.FloatPTR());
 
-         //ÉèÖÃ ShadowMap
+         //è®¾ç½® ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
         glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
@@ -379,13 +379,13 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     }
     else if (light->type == LightType::Point)
     {
-        // ÉèÖÃµã¹â
+        // è®¾ç½®ç‚¹å…‰
         std::string varName = "light.";
         shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
         shaderProgram->SetUniform3f((varName + std::string("color")).c_str(), light->color.FloatPTR());
         shaderProgram->SetUniform((varName + std::string("range")).c_str(), light->range);
 
-        //ÉèÖÃ ShadowMap
+        //è®¾ç½® ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
         glBindTexture(GL_TEXTURE_CUBE_MAP, light->shadowFrameBuffer->GetBindTexture());
         shaderProgram->SetUniform("shadowCubeMap", texIndex);
@@ -397,7 +397,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
     }
     else if (light ->type == LightType::Spot)
     {
-        // ÉèÖÃ¾Û¹â
+        // è®¾ç½®èšå…‰
         string varName = "light.";
         shaderProgram->SetUniform3f((varName + std::string("position")).c_str(), light->gameObject->GetComponent<Transform>()->position.FloatPTR());
         auto forward = light->gameObject->GetComponent<Transform>()->GetForward();
@@ -410,7 +410,7 @@ void SceneRenderer::DrawRendererWithLight(MeshRenderer* renderer, Light* light)
         shaderProgram->SetUniform((varName + std::string("near")).c_str(), 0.1f);
         shaderProgram->SetUniform((varName + std::string("far")).c_str(), light->range);
 
-        //ÉèÖÃ ShadowMap
+        //è®¾ç½® ShadowMap
         glActiveTexture(GL_TEXTURE0 + texIndex);
         glBindTexture(GL_TEXTURE_2D, light->shadowFrameBuffer->GetBindTexture());
         shaderProgram->SetUniform("shadowMap", texIndex);
@@ -428,13 +428,13 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
 {
     auto transform = renderer->gameObject->GetComponent<Transform>();
 
-    // ÉèÖÃ MVP ¾ØÕó
+    // è®¾ç½® MVP çŸ©é˜µ
     glm::mat4 model(1.0f);
     glm::mat4 view(1.0f);
     glm::mat4 projection(1.0f);
 
     model = glm::translate(model, Vector3ToGLMVec(transform->position));
-    // ×¢Òâ£¬´ËĞı×ªÊÇ»ùÓÚÄ£ĞÍ±¾ÉíµÄÖá£¬ËùÒÔÆäÊµµ±Öá²»ÊÇÕıxyzÊ±£¬Ğı×ª»á¿´ÆğÀ´ºÜÆæ¹Ö¡£ÕâÊÇÕı³£µÄ£¬ºóÃæ»áµ÷ÕûÎªÅ·À­½ÇÏÔÊ¾
+    // æ³¨æ„ï¼Œæ­¤æ—‹è½¬æ˜¯åŸºäºæ¨¡å‹æœ¬èº«çš„è½´ï¼Œæ‰€ä»¥å…¶å®å½“è½´ä¸æ˜¯æ­£xyzæ—¶ï¼Œæ—‹è½¬ä¼šçœ‹èµ·æ¥å¾ˆå¥‡æ€ªã€‚è¿™æ˜¯æ­£å¸¸çš„ï¼Œåé¢ä¼šè°ƒæ•´ä¸ºæ¬§æ‹‰è§’æ˜¾ç¤º
     model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
     model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
     model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
@@ -451,7 +451,7 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
     shaderProgram->SetUniform("projection", projection);
     shaderProgram->SetUniform("normalMatrix", normalMatrix);
 
-    // ÉèÖÃÈ«¾Ö¹â
+    // è®¾ç½®å…¨å±€å…‰
     shaderProgram->SetUniform3f("ambientColor", scene->lightingSettings.ambientColor.FloatPTR());
     shaderProgram->SetUniform("ambientIntensity", scene->lightingSettings.ambientIntensity);
 }
@@ -461,7 +461,7 @@ void SceneRenderer::DrawSkybox(Skybox* skybox)
     if (skybox == nullptr) return;
     if (skybox->gameObject->isActive == false) return;
     
-    //skybox->SetCubeMap(pointLights[0]->shadowFrameBuffer->GetBindTexture()); // ÓÃÓÚ²âÊÔ pointLight ÒõÓ°ÌùÍ¼
+    //skybox->SetCubeMap(pointLights[0]->shadowFrameBuffer->GetBindTexture()); // ç”¨äºæµ‹è¯• pointLight é˜´å½±è´´å›¾
     skybox->Draw(camera);
 }
 
@@ -473,7 +473,7 @@ FrameBuffer* SceneRenderer::DrawPostProcess(PostProcess* postProcess)
 
 void SceneRenderer::DrawQuad(FrameBuffer *frameBuffer)
 {
-    // ½«ÀëÆÁÍ¼Ïñ»æÖÆµ½ÆÁÄ»
+    // å°†ç¦»å±å›¾åƒç»˜åˆ¶åˆ°å±å¹•
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0, Application::viewportWidth, Application::viewportHeight);
     glClearColor(0, 0, 0, 0);

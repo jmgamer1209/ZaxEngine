@@ -11,7 +11,7 @@ private:
     unsigned int VBO;
     unsigned int cubeMap;
 
-    // 顶点为顺时针布局，所以CullFace设置为Back
+    // 椤剁偣涓洪『鏃堕拡甯冨眬锛屾墍浠ullFace璁剧疆涓築ack
     float vertices[108] = {
         // positions          
         -1.0f,  1.0f, -1.0f,

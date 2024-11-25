@@ -30,7 +30,7 @@ public:
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		// ¼ì²éÊÇ·ñÍê³É´´½¨
+		// æ£€æŸ¥æ˜¯å¦å®Œæˆåˆ›å»º
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 	}
 	~ShadowFrameBuffer()
@@ -75,7 +75,7 @@ public:
 		glReadBuffer(GL_NONE);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		// ¼ì²éÊÇ·ñÍê³É´´½¨
+		// æ£€æŸ¥æ˜¯å¦å®Œæˆåˆ›å»º
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) Debug::Log("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
 	}
 	~ShadowCubeMapFrameBuffer()

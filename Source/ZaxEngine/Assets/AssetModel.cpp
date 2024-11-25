@@ -12,12 +12,12 @@ AssetMesh::AssetMesh(vector<Vertex> vertices, vector<unsigned int> indices, unsi
 
 void AssetModel::LoadModel(string path)
 {
-	// ²âÊÔµ¼Èë obj
+	// æµ‹è¯•å¯¼å…¥ obj
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		Debug::Log({ "´íÎó::Assimpµ¼Èë::", importer.GetErrorString() });
+		Debug::Log({ "é”™è¯¯::Assimpå¯¼å…¥::", importer.GetErrorString() });
 		return;
 	}
 	directory = path.substr(0, path.find_last_of('/'));
@@ -53,7 +53,7 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vector.z = mesh->mVertices[i].z;
         vertex.position = vector;
         
-        // ·¨Ïß
+        // æ³•çº¿
         if (mesh->HasNormals())
         {
             vector.x = mesh->mNormals[i].x;
@@ -62,18 +62,18 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         }
         vertex.normal = vector;
         
-        // uv ×ø±ê
+        // uv åæ ‡
         vertex.texCoord = Vector2(0.0f, 0.0f);
         if (mesh->HasTextureCoords(0)) // does the mesh contain texture coordinates?
         {
-            // ÔİÊ±Ö»È¡µÚ1¸öµÄuv×ø±ê
+            // æš‚æ—¶åªå–ç¬¬1ä¸ªçš„uvåæ ‡
             Vector2 vec;
             vec.x = mesh->mTextureCoords[0][i].x;
             vec.y = mesh->mTextureCoords[0][i].y;
             vertex.texCoord = vec;
         }
 
-        // ÇĞÏßºÍ¸±ÇĞÏß
+        // åˆ‡çº¿å’Œå‰¯åˆ‡çº¿
         vector = Vector3(0);
         if (mesh->HasTangentsAndBitangents())
         {            
@@ -91,7 +91,7 @@ AssetMesh AssetModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vertices.push_back(vertex);
     }
     
-    // Ë÷Òı
+    // ç´¢å¼•
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
         aiFace face = mesh->mFaces[i];
@@ -106,7 +106,7 @@ AssetMaterial AssetModel::ProcessMaterial(aiMaterial* material, const aiScene* s
 {
     AssetMaterial mat;
     mat.baseColor = LoadMaterialTexture(material, aiTextureType_DIFFUSE);
-    mat.normal = LoadMaterialTexture(material, aiTextureType_HEIGHT);  // ¶ÔÓÚ obj Ä£ĞÍµÄ·¨Ïß£¬ĞèÒªÊ¹ÓÃ height ÀàĞÍ¼ÓÔØ
+    mat.normal = LoadMaterialTexture(material, aiTextureType_HEIGHT);  // å¯¹äº obj æ¨¡å‹çš„æ³•çº¿ï¼Œéœ€è¦ä½¿ç”¨ height ç±»å‹åŠ è½½
     return mat;
 }
 
@@ -114,7 +114,7 @@ AssetTexture AssetModel::LoadMaterialTexture(aiMaterial* mat, aiTextureType type
 {
      AssetTexture aTexuture;
 
-     // Ã¿¸öÀàĞÍ£¬Ö»È¡Ò»ÕÅ
+     // æ¯ä¸ªç±»å‹ï¼Œåªå–ä¸€å¼ 
     for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
         aiString path;

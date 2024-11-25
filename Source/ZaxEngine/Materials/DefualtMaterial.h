@@ -19,7 +19,7 @@ public:
 //	void SetData(AssetModel* model, AssetMesh* mesh) override;
 	void Draw(int& texIndex) override
 	{
-		// 激活纹理单元后，再绑定，那么纹理将会被放在GPU硬件中的专门存储纹理的纹理单元中
+		// 婵�娲荤汗鐞嗗崟鍏冨悗锛屽啀缁戝畾锛岄偅涔堢汗鐞嗗皢浼氳鏀惧湪GPU纭欢涓殑涓撻棬瀛樺偍绾圭悊鐨勭汗鐞嗗崟鍏冧腑
 		glActiveTexture(GL_TEXTURE0+ texIndex);
 		glBindTexture(GL_TEXTURE_2D, albedoTexture);
 		shader->SetUniform("albedoTexture", texIndex);

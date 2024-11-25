@@ -22,12 +22,12 @@ struct AssetMaterial
 class AssetMesh
 {
 public:
-    /*  网格数据  */
+    /*  缃戞牸鏁版嵁  */
     vector<Vertex> vertices;
     vector<unsigned int> indices;
     unsigned int materialIndex;
 
-    /*  函数  */
+    /*  鍑芥暟  */
     AssetMesh(vector<Vertex> vertices, vector<unsigned int> indices, unsigned int materialIndex);
 
     Mesh* CreateMesh()
@@ -42,18 +42,18 @@ public:
 class AssetModel
 {
 public:
-    /*  函数   */
+    /*  鍑芥暟   */
     AssetModel(string path)
     {
         LoadModel(path);
     }
-    /*  模型数据  */
+    /*  妯″瀷鏁版嵁  */
     vector<AssetMesh> meshes;
     vector<AssetMaterial> materials;
 
     string directory;
     
-    /*  函数   */
+    /*  鍑芥暟   */
     void LoadModel(string path);
     //void ProcessNode(aiNode* node, const aiScene* scene);
     AssetMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);

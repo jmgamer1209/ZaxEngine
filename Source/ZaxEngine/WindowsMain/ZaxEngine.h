@@ -96,16 +96,16 @@ static int ImGui_Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-	// ÎªÁËÔÚ³õÊ¼µÄÊ±ºò£¬¿ÉÒÔÉèÖÃ´°¿ÚµÄÎ»ÖÃ£¬¸ù¾İ glfwCreateWindow µÄ×¢ÊÍ£¬ĞèÒªÏÈÒş²Ø£¬ÉèÖÃÍê Pos ºó£¬ÔÙÏÔÊ¾
-	// Èç¹û²»ÕâÑù×ö£¬´´½¨´°¿ÚºóÔÙµ÷ÕûÎ»ÖÃ£¬»á³öÏÖÆô¶¯Ìø±äµÄÇé¿ö¡£
+	// Îªï¿½ï¿½ï¿½Ú³ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ò£¬¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½Úµï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ glfwCreateWindow ï¿½ï¿½×¢ï¿½Í£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Pos ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úºï¿½ï¿½Ùµï¿½ï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glfwWindowHint(GLFW_VISIBLE, 0);
 
-	// ´´½¨´°¿Ú
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	window = glfwCreateWindow(viewportWidth, viewportHeight, windowTitle, nullptr, nullptr);
 	if (window == nullptr)
 		return 1;
 
-	// Î»ÖÃÉèÖÃÍêºó£¬ĞèÒªÔÙÏÔÊ¾
+	// Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ê¾
 	GLFWmonitor* pMonitor = glfwGetPrimaryMonitor(); //GLFWmonitor** pMonitor = glfwGetMonitors(&monitorCount);
 	const GLFWvidmode* mode = glfwGetVideoMode(pMonitor);
 
@@ -115,7 +115,7 @@ static int ImGui_Init()
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
 
-	 //³õÊ¼»¯ glad
+	 //ï¿½ï¿½Ê¼ï¿½ï¿½ glad
 	if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
@@ -161,7 +161,7 @@ static void ImGui_ShowDemoWindow()
 	if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 }
 
-// EMSCRIPTEN  ¼æÈİĞÔ´úÂëÔİÊ±È¥µô
+// EMSCRIPTEN  ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ê±È¥ï¿½ï¿½
 
 //#ifdef __EMSCRIPTEN__
 //	// For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.

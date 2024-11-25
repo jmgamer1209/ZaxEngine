@@ -84,7 +84,7 @@ public:
 			indexVA++;
 		}
 
-		// 切线和副切线暂时不用
+		// 鍒囩嚎鍜屽壇鍒囩嚎鏆傛椂涓嶇敤
 		//// vertex tangent
 		//glEnableVertexAttribArray(3);
 		//glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));

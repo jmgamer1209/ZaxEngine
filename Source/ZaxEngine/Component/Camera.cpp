@@ -49,7 +49,7 @@ void Camera::OnCursorPosChange(float xOffset, float yOffset)
 
 void Camera::OnViewportChange(int width, int height)
 {
-	if (width == 0 && height == 0) return;   // µ±×îĞ¡»¯Ê±£¬ÕâÁ½Õß¶¼±äÎª0£¬Èç¹û¼ÌĞøäÖÈ¾£¬Ôòµ¼ÖÂ±¨´í
+	if (width == 0 && height == 0) return;   // å½“æœ€å°åŒ–æ—¶ï¼Œè¿™ä¸¤è€…éƒ½å˜ä¸º0ï¼Œå¦‚æœç»§ç»­æ¸²æŸ“ï¼Œåˆ™å¯¼è‡´æŠ¥é”™
 	viewportWidth = width;
 	viewportHeight = height;
 }

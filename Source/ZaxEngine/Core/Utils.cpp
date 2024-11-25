@@ -24,27 +24,27 @@ wstring Utils::String2Wstring(const string& s)
 
 void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_vertically)
 {
-	// ¼ÓÔØÎÆÀí
+	// åŠ è½½çº¹ç†
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
 
-	// ÉèÖÃ»·ÈÆ·½Ê½£¬ÏÂÃæ±íÊ¾ s ºÍ t ¶¼ÉèÖÃÎª Repeat
+	// è®¾ç½®ç¯ç»•æ–¹å¼ï¼Œä¸‹é¢è¡¨ç¤º s å’Œ t éƒ½è®¾ç½®ä¸º Repeat
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// ÉèÖÃ¹ıÂË·½Ê½£¬ÏÂÃæ±íÊ¾ ·Å´óËõĞ¡Ê±¶¼ÊÇÏßĞÔ
+	// è®¾ç½®è¿‡æ»¤æ–¹å¼ï¼Œä¸‹é¢è¡¨ç¤º æ”¾å¤§ç¼©å°æ—¶éƒ½æ˜¯çº¿æ€§
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	stbi_set_flip_vertically_on_load(flip_vertically);  // ÊÇ·ñ½øĞĞ y Öá·´×ª£¬¶ÔÓÚÒ»°ãĞÔµÄÍ¼Æ¬£¬¶¼ÊÇĞèÒªµÄ£¬µ«ÊÇ¶ÔÓÚmesh¶¥µã´øuvµÄ£¬²¢²»ĞèÒª
+	stbi_set_flip_vertically_on_load(flip_vertically);  // æ˜¯å¦è¿›è¡Œ y è½´åè½¬ï¼Œå¯¹äºä¸€èˆ¬æ€§çš„å›¾ç‰‡ï¼Œéƒ½æ˜¯éœ€è¦çš„ï¼Œä½†æ˜¯å¯¹äºmeshé¡¶ç‚¹å¸¦uvçš„ï¼Œå¹¶ä¸éœ€è¦
 	int width, height, nrChannels;
 	unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
 	GLint format = GL_RGB;
 	if (nrChannels == 4) format = GL_RGBA;
 
-	// ¸ù¾İÊÇ·ñÊÇ4µÄ±¶Êı£¬ÉèÖÃ¶ÁÈ¡ÏñËØµÄµ¥Î»
-	if (nrChannels == 4 || (width%4 == 0 && height%4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4×Ö½Ú¶ÁÈ¡
+	// æ ¹æ®æ˜¯å¦æ˜¯4çš„å€æ•°ï¼Œè®¾ç½®è¯»å–åƒç´ çš„å•ä½
+	if (nrChannels == 4 || (width%4 == 0 && height%4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4å­—èŠ‚è¯»å–
 	else glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
 	if (data)
@@ -61,7 +61,7 @@ void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, *texture);
 
-    // ¼ÓÔØË³Ğò¹Ì¶¨
+    // åŠ è½½é¡ºåºå›ºå®š
     vector<std::string> faces
     {
         "right.jpg",
@@ -77,8 +77,8 @@ void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
     {
         unsigned char* data = stbi_load((folderPath + faces[i]).c_str(), &width, &height, &nrChannels, 0);
 
-        // ¸ù¾İÊÇ·ñÊÇ4µÄ±¶Êı£¬ÉèÖÃ¶ÁÈ¡ÏñËØµÄµ¥Î»
-        if (nrChannels == 4 || (width % 4 == 0 && height % 4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4×Ö½Ú¶ÁÈ¡
+        // æ ¹æ®æ˜¯å¦æ˜¯4çš„å€æ•°ï¼Œè®¾ç½®è¯»å–åƒç´ çš„å•ä½
+        if (nrChannels == 4 || (width % 4 == 0 && height % 4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4å­—èŠ‚è¯»å–
         else glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         if (data)
@@ -96,9 +96,9 @@ void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);   // ×¢Òâ»·ÈÆ·½Ê½
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);   // æ³¨æ„ç¯ç»•æ–¹å¼
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // ÌØ±ğµÄ R ·½Ïò
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // ç‰¹åˆ«çš„ R æ–¹å‘
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
@@ -112,7 +112,7 @@ glm::mat4 Utils::GetViewMatrix(const Transform& transform)
     viewRotation = glm::rotate(viewRotation, glm::radians(rotation.y), glm::vec3(0, 1, 0));
     viewRotation = glm::rotate(viewRotation, glm::radians(rotation.x), glm::vec3(1, 0, 0));
     viewRotation = glm::rotate(viewRotation, glm::radians(rotation.z), glm::vec3(0, 0, 1));
-    viewRotation = glm::transpose(viewRotation); // ¸ù¾İÔËËãÂß¼­È¡×ªÖÃ¾ØÕó
+    viewRotation = glm::transpose(viewRotation); // æ ¹æ®è¿ç®—é€»è¾‘å–è½¬ç½®çŸ©é˜µ
 
     glm::mat4 viewTranslation(1.0f);
     viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
