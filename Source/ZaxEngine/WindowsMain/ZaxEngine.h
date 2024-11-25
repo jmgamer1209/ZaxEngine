@@ -96,16 +96,16 @@ static int ImGui_Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-	// Ϊ���ڳ�ʼ��ʱ�򣬿������ô��ڵ�λ�ã����� glfwCreateWindow ��ע�ͣ���Ҫ�����أ������� Pos ������ʾ
-	// ��������������������ں��ٵ���λ�ã��������������������
+	// 为了在初始的时候，可以设置窗口的位置，根据 glfwCreateWindow 的注释，需要先隐藏，设置完 Pos 后，再显示
+	// 如果不这样做，创建窗口后再调整位置，会出现启动跳变的情况。
 	glfwWindowHint(GLFW_VISIBLE, 0);
 
-	// ��������
+	// 创建窗口
 	window = glfwCreateWindow(viewportWidth, viewportHeight, windowTitle, nullptr, nullptr);
 	if (window == nullptr)
 		return 1;
 
-	// λ�����������Ҫ����ʾ
+	// 位置设置完后，需要再显示
 	GLFWmonitor* pMonitor = glfwGetPrimaryMonitor(); //GLFWmonitor** pMonitor = glfwGetMonitors(&monitorCount);
 	const GLFWvidmode* mode = glfwGetVideoMode(pMonitor);
 
@@ -115,7 +115,7 @@ static int ImGui_Init()
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
 
-	 //��ʼ�� glad
+	 //初始化 glad
 	if (!gladLoadGL((GLADloadfunc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
@@ -161,7 +161,7 @@ static void ImGui_ShowDemoWindow()
 	if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 }
 
-// EMSCRIPTEN  �����Դ�����ʱȥ��
+// EMSCRIPTEN  兼容性代码暂时去掉
 
 //#ifdef __EMSCRIPTEN__
 //	// For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
