@@ -1,0 +1,166 @@
+{
+    "list":
+    [
+        {
+            "name":"Skybox",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":0, "y":0, "z":0},
+                    "rotation":{"x":0, "y":0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"Skybox"
+                }
+            ]
+        },
+        {
+            "name":"Box1",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":-11.0, "y":-2.5, "z":-8.0},
+                    "rotation":{"x":45.0, "y":-30.0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"MeshRenderer",
+                    "obj":"Common/WoodenCrate/Wooden Crate.obj",
+                    "mat":"Materials/box.mat"
+                }
+            ]
+        },
+        {
+            "name":"Box2",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":-11.0, "y":-2.5, "z":-8.0},
+                    "rotation":{"x":45.0, "y":-30.0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"MeshRenderer",
+                    "obj":"Common/WoodenCrate/Wooden Crate.obj",
+                    "mat":"Materials/box.mat"
+                }
+            ]
+        },
+        {
+            "name":"Box3",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":6.5, "y":-2.5, "z":0},
+                    "rotation":{"x":45.0, "y":0, "z":-30},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"MeshRenderer",
+                    "obj":"Common/WoodenCrate/Wooden Crate.obj",
+                    "mat":"Materials/box_transparent.mat"
+                }
+            ]
+        },
+        {
+            "name":"Box4",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":4.5, "y":2.0, "z":-2.0},
+                    "rotation":{"x":0, "y":35.0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"MeshRenderer",
+                    "obj":"Common/WoodenCrate/Wooden Crate.obj",
+                    "mat":"Materials/box_reflection.mat"
+                }
+            ]
+        },
+        {
+            "name":"Camera",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":0, "y":0, "z":30},
+                    "rotation":{"x":0, "y":0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"Camera"
+                },
+                {
+                    "class":"PostProcess",
+                    "enabled":false
+                }
+            ]
+        },
+        {
+            "name":"DirectionalLight",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":0, "y":10, "z":30},
+                    "rotation":{"x":-90, "y":0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"Light",
+                    "type":0
+                }
+            ]
+        },
+        {
+            "name":"PointLight",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":-2, "y":10, "z":3},
+                    "rotation":{"x":0, "y":0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"Light",
+                    "type":1,
+                    "color":{ "r":1, "g":0, "b":0 },
+                    "range":60
+                }
+            ]
+        },
+        {
+            "name":"SpotLight",
+            "components":
+            [
+                {
+                    "class":"Transform",
+                    "position":{"x":7, "y":20, "z":3},
+                    "rotation":{"x":-90, "y":0, "z":0},
+                    "scale":{"x":1, "y":1, "z":1}
+                },
+                {
+                    "class":"Light",
+                    "type":2,
+                    "color":{ "r":0, "g":1, "b":0 },
+                    "range":100,
+                    "innerAngle":30,
+                    "outerAngle":40
+                }
+            ]
+        }
+    ],
+    "lightingSettings":
+    {
+        "ambientColor":{ "r":0, "g":1, "b":0 },
+        "ambientIntensity":0.1
+    }
+}

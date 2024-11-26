@@ -1,0 +1,32 @@
+{
+    "vertex":"Shaders/Common/forward.vs",
+    "fragment":"Shaders/Common/forward.fs",
+    "properties":
+    [
+        {
+            "name":"SurfaceType",
+            "type":"int",
+            "value":1
+        },
+        {
+            "name":"Specular",
+            "type":"float",
+            "value":0.5
+        },
+        {
+            "name":"Alpha",
+            "type":"float",
+            "value":0.5
+        },
+        {
+            "name":"AlbedoTexture",
+            "type":"texture",
+            "path":"Common/WoodenCrate/Textures/Wooden Crate_Crate_BaseColor.png"
+        },
+        {
+            "name":"NormalMap",
+            "type":"texture",
+            "path":"Common/WoodenCrate/Textures/Wooden Crate_Crate_Normal.png"
+        }
+    ]
+}

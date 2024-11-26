@@ -1,0 +1,27 @@
+{
+    "vertex":"Shaders/Common/reflectionCube.vs",
+    "fragment":"Shaders/Common/reflectionCube.fs",
+    "properties":
+    [
+        {
+            "name":"albedoTexture",
+            "type":"texture",
+            "path":"Common/WoodenCrate/Textures/Wooden Crate_Crate_BaseColor.png"
+        },
+        {
+            "name":"environmentTexture",
+            "type":"cubemap",
+            "path":"Common/Skybox/1"
+        },
+        {
+            "name":"specularIntensity",
+            "type":"float",
+            "value":0.5
+        },
+        {
+            "name":"reflectionIntensity",
+            "type":"float",
+            "value":0.5
+        }
+    ]
+}

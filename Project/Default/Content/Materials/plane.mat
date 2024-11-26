@@ -1,0 +1,32 @@
+{
+    "vertex":"Shaders/Common/forward.vs",
+    "fragment":"Shaders/Common/forward.fs",
+    "properties":
+    [
+        {
+            "name":"SurfaceType",
+            "type":"int",
+            "value":0
+        },
+        {
+            "name":"albedoTexture",
+            "type":"texture",
+            "path":"Common/WoodenCrate/Textures/Wooden Crate_Crate_BaseColor.png"
+        },
+        {
+            "name":"environmentTexture",
+            "type":"cubemap",
+            "path":"Common/Skybox/1"
+        },
+        {
+            "name":"specularIntensity",
+            "type":"float",
+            "value":0.5
+        },
+        {
+            "name":"reflectionIntensity",
+            "type":"float",
+            "value":0.5
+        }
+    ]
+}
