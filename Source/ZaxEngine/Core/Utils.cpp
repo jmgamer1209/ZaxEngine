@@ -119,3 +119,41 @@ glm::mat4 Utils::GetViewMatrix(const Transform& transform)
 
     return viewRotation * viewTranslation;
 }
+
+std::string Utils::GetExeDirectory() {
+	std::vector<char> exePath(MAX_PATH);
+	DWORD size = GetModuleFileNameA(NULL, exePath.data(), exePath.size());
+	if (size == 0) {
+		// 处理错误情况
+		return "";
+	}
+ 
+	// 查找最后一个反斜杠
+	for (int i = size - 1; i >= 0; --i) {
+		if (exePath[i] == '\\') {
+			exePath[i] = '\0'; // 结束标记
+			return std::string(exePath.data());
+		}
+	}
+ 
+	// 如果没有找到反斜杠，则返回空字符串
+	return "";
+}
+
+std::string Utils::GetDefaultProjectPath() {
+	auto path = Utils::GetExeDirectory();
+	int count = 1;
+	int index = 0;
+	for (index = path.length(); index>= 0; index--)
+	{
+		if (path[index] == '\\')
+		{
+			count++;
+		}
+		if (count > 3)
+		{
+			break;
+		}
+	}
+	return path.substr(0,index);
+}

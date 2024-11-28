@@ -1,11 +1,13 @@
 #pragma once
 #include <string>
 
+#include "WindowBase.h"
+
 class Application
 {
 private:
-	Application() {};
-	~Application() {};
+	Application() {}
+	~Application() = default;
 
 public:
 	static std::string contentPath;
@@ -13,4 +15,8 @@ public:
 	static int viewportHeight;
 	static bool isViewportSizeChanged;
 	static bool isInMinimal;
+	static bool isRunning;
+	static WindowBase* window;
+
+	static void OpenEditor();
 };

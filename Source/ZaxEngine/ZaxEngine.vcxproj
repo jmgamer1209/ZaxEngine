@@ -154,6 +154,9 @@
     <ClCompile Include="Core\std_handler.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
+    <ClCompile Include="Core\WindowBase.cpp" />
+    <ClCompile Include="Editor\Window\EditorWindow.cpp" />
+    <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
@@ -186,6 +189,9 @@
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Vertex.h" />
+    <ClInclude Include="Core\WindowBase.h" />
+    <ClInclude Include="Editor\Window\EditorWindow.h" />
+    <ClInclude Include="Editor\Window\OpenWindow.h" />
     <ClInclude Include="Materials\BlinnPhongMaterial.h" />
     <ClInclude Include="Materials\DefualtMaterial.h" />
     <ClInclude Include="Materials\Material.h" />
