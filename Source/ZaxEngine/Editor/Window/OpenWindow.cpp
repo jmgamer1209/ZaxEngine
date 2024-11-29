@@ -7,22 +7,21 @@
 #include "Core/Debug.h"
 #include "Materials/BlinnPhongMaterial.h"
 
+using namespace boost;
+
 bool show_demo_window = false; 
 char Path[MAX_PATH] = "";
 
+
 OpenWindow::OpenWindow():WindowBase()
 {
-    // 设置内容路径
-    //TCHAR path[MAX_PATH] = { 0 };
-    //GetCurrentDirectory(MAX_PATH, path);
-    //auto projectPath = Utils::WString2String(path);
-    //printf("%s\n", projectPath.c_str());
-    
-    
-    projectPath = Utils::GetDefaultProjectPath().append("\\Project\\Default");
-    printf("%s\n", projectPath.c_str());
-    Application::contentPath = projectPath + "\\Content\\";
-    strcpy_s(Path,projectPath.c_str());
+    filesystem::path exePath(boost::filesystem::initial_path<boost::filesystem::path>());
+    auto projectRoot = exePath.parent_path().parent_path();
+    projectPath = projectRoot / ("Project") / ("Default");
+    cout << "Default Project Path: " <<  projectPath.string() << "\n";
+
+    Application::contentPath = (projectPath / ("Content")).string();
+    strcpy_s(Path,projectPath.string().c_str());
 }
 
 void OpenWindow::DrawWindowUI()
@@ -43,7 +42,8 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::InputText("##ProjectPath", Path,IM_ARRAYSIZE(Path)))
     {
         projectPath = std::string(Path);
-        Application::contentPath = projectPath + "\\Content\\";
+        Application::contentPath = (projectPath / "Content").string();
+        cout << Application::contentPath << "\n";
     }
     ImGui::SameLine();
     if (ImGui::Button("Choose Project"))
@@ -54,7 +54,6 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::Button("Open Project"))
     {
         // 检测 project Path 是不是项目目录
-        //auto filePath = 
         if (projectPath.empty() == false)
         {
             glfwSetWindowShouldClose(window, true);

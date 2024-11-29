@@ -4,11 +4,13 @@
 #include "Core/Application.h"
 #include "Core/Utils.h"
 #include "Core/WindowBase.h"
+#include "boost/filesystem/path.hpp"
+#include "filesystem/operations.hpp"
 
 class OpenWindow: public WindowBase
 {
 public:
-    std::string projectPath = "";
+    boost::filesystem::path projectPath;
     bool shouldOpenEditorOnClose = false;
     
 public:
