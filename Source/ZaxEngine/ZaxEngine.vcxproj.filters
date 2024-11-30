@@ -44,6 +44,15 @@
     <Filter Include="ThirdParty\assimp">
       <UniqueIdentifier>{10c56399-d9f2-4720-833d-54fe7a1c3d4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{9e197c48-089b-4b84-b045-52f9ced31da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\boost">
+      <UniqueIdentifier>{9e1e9f50-abe5-44b3-a078-c14f57e4f907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\boost\filesystem">
+      <UniqueIdentifier>{4d551f09-df75-426f-8c71-b59e04e9882a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Materials\Material.cpp">
@@ -126,6 +135,15 @@
     </ClCompile>
     <ClCompile Include="Core\Vector.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Window\EditorWindow.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Window\OpenWindow.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\WindowBase.cpp">
+      <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +239,18 @@
     </ClInclude>
     <ClInclude Include="Renderer\ShadowFrameBufferBase.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\EditorWindow.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\OpenWindow.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\WindowBase.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\boost\filesystem\path.hpp">
+      <Filter>ThirdParty\boost\filesystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
