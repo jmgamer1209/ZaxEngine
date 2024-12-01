@@ -7,11 +7,12 @@
 #include "Core/Debug.h"
 #include "Materials/BlinnPhongMaterial.h"
 
+#include <filesystem/path.hpp>
+#include <filesystem/directory.hpp>
+
 using namespace boost;
 
-bool show_demo_window = false; 
 char Path[MAX_PATH] = "";
-
 
 OpenWindow::OpenWindow():WindowBase()
 {
@@ -24,6 +25,8 @@ OpenWindow::OpenWindow():WindowBase()
     strcpy_s(Path,projectPath.string().c_str());
 }
 
+bool show_demo_window = false;
+bool isProject = false;
 void OpenWindow::DrawWindowUI()
 {
     glClearColor(0, 0, 0, 0);
@@ -43,7 +46,7 @@ void OpenWindow::DrawWindowUI()
     {
         projectPath = std::string(Path);
         Application::contentPath = (projectPath / "Content").string();
-        cout << Application::contentPath << "\n";
+        cout << projectPath.string() << "\n";
     }
     ImGui::SameLine();
     if (ImGui::Button("Choose Project"))
@@ -54,12 +57,46 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::Button("Open Project"))
     {
         // 检测 project Path 是不是项目目录
-        if (projectPath.empty() == false)
+        if (filesystem::is_directory(projectPath))
+        {
+            for (auto& entry : filesystem::directory_iterator(projectPath))
+            {
+                if (entry.path().extension() == ".zproject")
+                {
+                    isProject = true;
+                    break;
+                }
+            }    
+        }
+        if (isProject)
         {
             glfwSetWindowShouldClose(window, true);
             shouldOpenEditorOnClose = true;    
         }
+        else
+        {
+            ImGui::OpenPopup("Error##popup_no_project");
+        }
     }
+
+    // 如果不是项目，则提醒
+    if (ImGui::BeginPopupModal("Error##popup_no_project", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::NewLine();
+        ImGui::Text("The Folder is Not Project!");
+        ImGui::Separator();
+        ImGui::NewLine();
+        
+        auto size = ImGui::GetWindowSize();
+        auto btnSize = ImVec2(80, 0);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX()+size.x/2-btnSize.x/2);
+        if (ImGui::Button("OK", btnSize)) { ImGui::CloseCurrentPopup(); }
+        //ImGui::SetItemDefaultFocus();
+        // ImGui::SameLine();
+        // if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::EndPopup();
+    }    
+
     ImGui::End();
 }
 
