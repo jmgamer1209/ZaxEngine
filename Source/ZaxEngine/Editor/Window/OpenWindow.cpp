@@ -57,6 +57,7 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::Button("Open Project"))
     {
         // 检测 project Path 是不是项目目录
+        isProject = false;
         if (filesystem::is_directory(projectPath))
         {
             for (auto& entry : filesystem::directory_iterator(projectPath))
