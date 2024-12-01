@@ -12,6 +12,9 @@
 
 using namespace boost;
 
+#include <Editor/Window/CommonFileDialogApp.h>
+
+
 char Path[MAX_PATH] = "";
 
 OpenWindow::OpenWindow():WindowBase()
@@ -52,6 +55,7 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::Button("Choose Project"))
     {
         //m_fileDialog.Open();
+        OpenFolderDialog();
     }
     
     if (ImGui::Button("Open Project"))

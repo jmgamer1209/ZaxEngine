@@ -143,6 +143,9 @@
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Core\WindowBase.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -246,11 +249,14 @@
     <ClInclude Include="Editor\Window\OpenWindow.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Core\WindowBase.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp">
       <Filter>ThirdParty\boost\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\WindowBase.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
+      <Filter>Editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
