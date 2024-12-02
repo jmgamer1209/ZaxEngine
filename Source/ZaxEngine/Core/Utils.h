@@ -9,6 +9,7 @@ using namespace std;
 
 namespace Utils
 {
+	char* WChar2Char(const wchar_t* wchar);
 	string WString2String(const wstring& ws);
 	wstring String2Wstring(const string& s);
 	void LoadTexture(unsigned int* texture, string& path, bool flip_vertically = false);

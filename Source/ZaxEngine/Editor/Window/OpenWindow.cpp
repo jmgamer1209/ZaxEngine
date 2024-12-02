@@ -24,7 +24,7 @@ OpenWindow::OpenWindow():WindowBase()
     projectPath = projectRoot / ("Project") / ("Default");
     cout << "Default Project Path: " <<  projectPath.string() << "\n";
 
-    Application::contentPath = (projectPath / ("Content")).string();
+    
     strcpy_s(Path,projectPath.string().c_str());
 }
 
@@ -48,14 +48,18 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::InputText("##ProjectPath", Path,IM_ARRAYSIZE(Path)))
     {
         projectPath = std::string(Path);
-        Application::contentPath = (projectPath / "Content").string();
         cout << projectPath.string() << "\n";
     }
     ImGui::SameLine();
     if (ImGui::Button("Choose Project"))
     {
-        //m_fileDialog.Open();
-        OpenFolderDialog();
+        string path;
+        if (OpenFolderDialog(path))
+        {
+            projectPath = path;
+            strcpy_s(Path,projectPath.string().c_str());
+            cout << projectPath.string() << "\n";
+        }
     }
     
     if (ImGui::Button("Open Project"))
@@ -110,6 +114,8 @@ void OpenWindow::OnWindowClosed()
     WindowBase::OnWindowClosed();
     if (shouldOpenEditorOnClose)
     {
+        Application::projectPath = projectPath;
+        Application::contentPath = (projectPath / ("Content")).string();
         Application::OpenEditor();
     }
     else

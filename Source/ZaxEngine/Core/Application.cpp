@@ -2,6 +2,7 @@
 
 #include "Editor/Window/EditorWindow.h"
 
+boost::filesystem::path Application::projectPath;
 std::string Application::contentPath = "";
 int Application::viewportWidth = 1080;
 int Application::viewportHeight = 720;

@@ -2,6 +2,7 @@
 #include <string>
 
 #include "WindowBase.h"
+#include "filesystem/path.hpp"
 
 class Application
 {
@@ -10,6 +11,7 @@ private:
 	~Application() = default;
 
 public:
+	static boost::filesystem::path projectPath;
 	static std::string contentPath;
 	static int viewportWidth;
 	static int viewportHeight;

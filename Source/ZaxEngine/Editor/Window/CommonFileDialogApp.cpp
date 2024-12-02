@@ -8,6 +8,11 @@
 //
 
 #include "CommonFileDialogApp.h"
+
+#include <iostream>
+#include <string>
+#include "locale.hpp"
+#include "Core/Utils.h"
 //#include <windows.h>      // For common windows data types and function headers
 //#define STRICT_TYPED_ITEMIDS
 //#include <shlobj.h>
@@ -263,7 +268,7 @@ HRESULT _WriteDataToCustomFile(PCWSTR pszFileName)
 /* Common File Dialog Snippets ***************************************************************************************************/
 
 // This code snippet demonstrates how to work with the common file dialog interface
-HRESULT OpenFolderDialog()
+bool OpenFolderDialog(std::string& path)
 {
     //FOS_PICKFOLDERS
     // CoCreate the File Open Dialog object.
@@ -307,14 +312,16 @@ HRESULT OpenFolderDialog()
                                 hr = psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
                                 if (SUCCEEDED(hr))
                                 {
-                                    TaskDialog(NULL,
-                                        NULL,
-                                        L"CommonFileDialogApp",
-                                        pszFilePath,
-                                        NULL,
-                                        TDCBF_OK_BUTTON,
-                                        TD_INFORMATION_ICON,
-                                        NULL);
+                                    path = string(Utils::WChar2Char(pszFilePath));
+                                    //cout << path << "\n";
+                                    // TaskDialog(NULL,
+                                    //     NULL,
+                                    //     L"CommonFileDialogApp",
+                                    //     pszFilePath,
+                                    //     NULL,
+                                    //     TDCBF_OK_BUTTON,
+                                    //     TD_INFORMATION_ICON,
+                                    //     NULL);
                                     CoTaskMemFree(pszFilePath);
                                 }
                                 psiResult->Release();
@@ -329,7 +336,7 @@ HRESULT OpenFolderDialog()
         }
         pfd->Release();
     }
-    return hr;
+    return SUCCEEDED(hr);
 }
 
 // This code snippet demonstrates how to work with the common file dialog interface

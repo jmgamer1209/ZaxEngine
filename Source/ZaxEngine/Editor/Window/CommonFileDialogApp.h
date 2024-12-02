@@ -21,6 +21,7 @@
 #include <strsafe.h>      // for StringCchPrintfW
 #include <shtypes.h>      // for COMDLG_FILTERSPEC
 #include <new>
+#include <string>
 
 #pragma comment(linker, "\"/manifestdependency:type='Win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
@@ -166,4 +167,4 @@ HRESULT WritePropertiesWithoutUsingHandlers();
  // 打开选择窗口
 int CommonFileDialog();
 
-HRESULT OpenFolderDialog();
+bool OpenFolderDialog(std::string& path);
