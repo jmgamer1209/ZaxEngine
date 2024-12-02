@@ -7,8 +7,12 @@
 #include "Core/Debug.h"
 #include "Materials/BlinnPhongMaterial.h"
 
-#include <filesystem/path.hpp>
-#include <filesystem/directory.hpp>
+#include "filesystem/path.hpp"
+#include "filesystem/directory.hpp"
+#include "filesystem/operations.hpp"
+#include <string>
+
+#include "Core/Utils.h"
 
 using namespace boost;
 
@@ -16,6 +20,8 @@ using namespace boost;
 
 
 char Path[MAX_PATH] = "";
+boost::filesystem::path projectPath;
+bool shouldOpenEditorOnClose = false;
 
 OpenWindow::OpenWindow():WindowBase()
 {
@@ -23,8 +29,6 @@ OpenWindow::OpenWindow():WindowBase()
     auto projectRoot = exePath.parent_path().parent_path();
     projectPath = projectRoot / ("Project") / ("Default");
     cout << "Default Project Path: " <<  projectPath.string() << "\n";
-
-    
     strcpy_s(Path,projectPath.string().c_str());
 }
 

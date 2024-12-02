@@ -12,6 +12,7 @@ private:
 
 public:
 	static boost::filesystem::path projectPath;
+	static boost::filesystem::path zprojectPath;
 	static std::string contentPath;
 	static int viewportWidth;
 	static int viewportHeight;
