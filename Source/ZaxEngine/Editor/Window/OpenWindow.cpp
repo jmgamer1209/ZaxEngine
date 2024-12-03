@@ -118,9 +118,7 @@ void OpenWindow::OnWindowClosed()
     WindowBase::OnWindowClosed();
     if (shouldOpenEditorOnClose)
     {
-        Application::projectPath = projectPath;
-        Application::contentPath = (projectPath / ("Content")).string();
-        Application::OpenEditor();
+        Application::OpenEditor(projectPath);
     }
     else
     {

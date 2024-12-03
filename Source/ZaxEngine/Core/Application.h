@@ -21,5 +21,5 @@ public:
 	static bool isRunning;
 	static WindowBase* window;
 
-	static void OpenEditor();
+	static void OpenEditor(boost::filesystem::path& projectPath);
 };

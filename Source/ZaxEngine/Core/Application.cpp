@@ -11,7 +11,9 @@ bool Application::isInMinimal = false;
 bool Application::isRunning = false;
 WindowBase* Application::window = nullptr;
 
-void Application::OpenEditor()
+void Application::OpenEditor(boost::filesystem::path& projectPath)
 {
+    Application::projectPath = projectPath;
+    Application::contentPath = (projectPath / ("Content")).string();
     Application::window = dynamic_cast<WindowBase*>(new EditorWindow());
 }
