@@ -59,14 +59,14 @@ private:
 public:
 	Skybox()
 	{
-		shader = new ShaderProgram(Application::contentPath + "/Shaders/Skybox/skybox.vs", Application::contentPath + "/Shaders/Skybox/skybox.fs");
+		shader = new ShaderProgram(Application::contentPath / "Shaders/Skybox/skybox.vs", Application::contentPath / "Shaders/Skybox/skybox.fs");
 
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        Utils::LoadCubeMap(&cubeMap, Application::contentPath+"/Common/Skybox/1/");
+        Utils::LoadCubeMap(&cubeMap, (Application::contentPath / "/Common/Skybox/1/").string());
 	}
 	~Skybox() {}
 

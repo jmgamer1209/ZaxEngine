@@ -20,9 +20,9 @@ SceneRenderer::~SceneRenderer()
 void SceneRenderer::Init(int width, int height)
 {
     frameBuffer = new FrameBuffer(width, height);
-    screenShaderProgram = new ShaderProgram(Application::contentPath + "/Shaders/Common/screen.vs", Application::contentPath + "/Shaders/Common/screen.fs");
-    shadowShader = new ShaderProgram(Application::contentPath + "/Shaders/Shadow/shadow.vs", Application::contentPath + "/Shaders/Shadow/shadow.fs");
-    depthShader = new ShaderProgram(Application::contentPath + "/Shaders/Common/depth.vs", Application::contentPath + "/Shaders/Common/depth.fs");
+    screenShaderProgram = new ShaderProgram(Application::contentPath / "/Shaders/Common/screen.vs", Application::contentPath / "/Shaders/Common/screen.fs");
+    shadowShader = new ShaderProgram(Application::contentPath / "/Shaders/Shadow/shadow.vs", Application::contentPath / "/Shaders/Shadow/shadow.fs");
+    depthShader = new ShaderProgram(Application::contentPath / "/Shaders/Common/depth.vs", Application::contentPath / "/Shaders/Common/depth.fs");
 }
 
 void SceneRenderer::Draw(Scene* scene)

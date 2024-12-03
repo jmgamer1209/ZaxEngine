@@ -14,7 +14,7 @@ private:
 public:
 	static boost::filesystem::path projectPath;
 	static boost::filesystem::path zprojectPath;
-	static std::string contentPath;
+	static boost::filesystem::path contentPath;
 	static ProjectConfig projectConfig;
 	static int viewportWidth;
 	static int viewportHeight;
@@ -23,5 +23,5 @@ public:
 	static bool isRunning;
 	static WindowBase* window;
 
-	static void OpenEditor(boost::filesystem::path& projectPath);
+	static void OpenEditor(const boost::filesystem::path& projectPath);
 };

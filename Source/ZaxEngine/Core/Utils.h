@@ -3,9 +3,10 @@
 #include <string>
 #include <comutil.h>  
 #pragma comment(lib, "comsuppw.lib")
-using namespace std;
 #include <glm/glm.hpp>
 #include <Component/Transform.h>
+#include "boost/json.hpp"
+#include "filesystem/path.hpp"
 
 namespace Utils
 {
@@ -17,5 +18,7 @@ namespace Utils
 	glm::mat4 GetViewMatrix(const Transform& transform);
 	std::string GetExeDirectory();
 	std::string GetDefaultProjectPath();
+	boost::json::object LoadJsonFile(const boost::filesystem::path& path);
+	
 };
 

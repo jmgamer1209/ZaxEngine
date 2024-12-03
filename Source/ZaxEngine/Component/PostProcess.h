@@ -19,7 +19,7 @@ public:
 	{
         frameBuffer1 = new FrameBuffer(Application::viewportWidth, Application::viewportHeight);
         //frameBuffer2 = new FrameBuffer(Application::viewportWidth, Application::viewportHeight);
-        screenShaderProgram = new ShaderProgram(Application::contentPath + "/Shaders/PostProcess/inverse.vs", Application::contentPath + "/Shaders/PostProcess/inverse.fs");
+        screenShaderProgram = new ShaderProgram(Application::contentPath / "/Shaders/PostProcess/inverse.vs", Application::contentPath / "/Shaders/PostProcess/inverse.fs");
 	}
 
 	FrameBuffer* Draw(FrameBuffer& source)

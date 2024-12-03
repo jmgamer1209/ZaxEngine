@@ -1,8 +1,13 @@
 #include "Utils.h"
+
+#include <fstream>
+
 #include "glad/gl.h"
 #include "stb_image.h"
 #include <string>
 #include <vector>
+
+#include "Application.h"
 #include "Core/Debug.h"
 
 
@@ -128,4 +133,13 @@ glm::mat4 Utils::GetViewMatrix(const Transform& transform)
     viewTranslation = glm::translate(viewTranslation, glm::vec3(-position.x, -position.y, -position.z));
 
     return viewRotation * viewTranslation;
+}
+
+boost::json::object Utils::LoadJsonFile(const boost::filesystem::path& path)
+{
+	ifstream ifstream;
+	ifstream.open(path.string());
+	boost::json::object obj = boost::json::parse(ifstream).as_object();
+	ifstream.close();
+	return obj;
 }

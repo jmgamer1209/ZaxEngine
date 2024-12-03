@@ -1,4 +1,5 @@
 #pragma once
+#include "boost/filesystem/path.hpp"
 #include "glad/gl.h"
 #include <string>
 #include "glm/glm.hpp"
@@ -7,6 +8,7 @@
 #include "Core/Vector.h"
 #include <vector>
 #include <unordered_set>
+
 
 using namespace std;
 
@@ -31,7 +33,7 @@ class ShaderProgram
 	unordered_set<string> keywords;
 	
 public:
-	ShaderProgram(string vertexPath, string fragmentPath);
+	ShaderProgram(boost::filesystem::path vertexPath, boost::filesystem::path fragmentPath);
 	void Delete();
 	void Use();
 	void EnableKeyword(string keyword);
@@ -47,7 +49,7 @@ public:
 	void SetUniform(const GLchar* name, glm::mat4& mat);
 
 private:
-	KeywordAndShaderPart* LoadShader(string path);
+	KeywordAndShaderPart* LoadShader(boost::filesystem::path path);
 	void SetShaderWithKeywords();
 };
 

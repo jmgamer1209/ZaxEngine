@@ -2,7 +2,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Core/Color.h"
-using namespace std;
+#include "filesystem/path.hpp"
 
 struct SceneLighting
 {
@@ -16,9 +16,8 @@ public:
 	vector<GameObject*> list;
 	SceneLighting lightingSettings;
 
-	void AddGameObject(GameObject* go)
-	{
-		list.push_back(go);
-	}
+	void AddGameObject(GameObject* go);
+	void Serialize();
+	void DeSerialize(boost::filesystem::path path);
 };
 

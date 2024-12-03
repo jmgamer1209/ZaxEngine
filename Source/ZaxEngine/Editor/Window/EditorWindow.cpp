@@ -16,11 +16,7 @@ using namespace boost;
 
 EditorWindow::EditorWindow():WindowBase()
 {
-	ifstream ifstream;
-	ifstream.open((Application::projectPath / "Config" / "DefaultEngine.json").string());
-	json::object config = json::parse(ifstream).as_object();
-	ifstream.close();
-
+	auto config = Utils::LoadJsonFile(Application::projectPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	std::cout << value<< "\n";
@@ -133,13 +129,17 @@ void EditorWindow::DrawWindowUI()
 
 void EditorWindow::LoadScene()
 {
+	// scene = new Scene();
+	// scene->DeSerialize(Application::contentPath / Application::projectConfig.EditorStartupMap);
+
+	
 	// 导入模型
-	AssetModel* model = new AssetModel(Application::contentPath + "/Common/WoodenCrate/Wooden Crate.obj");
+	AssetModel* model = new AssetModel((Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj").string());
 	Mesh* woodenBox = model->meshes[0].CreateMesh();
 	AssetMaterial*  woodenBoxMat = &model->materials[model->meshes[0].materialIndex];
 
 	// 创建 Shader Program 和 材质
-	shaderProgram = new ShaderProgram(Application::contentPath + "/Shaders/Common/forward.vs", Application::contentPath + "/Shaders/Common/forward.fs");
+	shaderProgram = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs");
 	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
 	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, woodenBoxMat->baseColor.path);
 	BlinnPhongMaterial* transparentMat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
@@ -154,7 +154,7 @@ void EditorWindow::LoadScene()
 	skyboxGO->AddComponent(skybox);
 
 	// 反射材质
-	auto reflectionShader = new ShaderProgram(Application::contentPath + "/Shaders/Common/reflectionCube.vs", Application::contentPath + "/Shaders/Common/reflectionCube.fs");
+	auto reflectionShader = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "reflectionCube.vs", Application::contentPath / "Shaders" / "Common" / "reflectionCube.fs");
 	auto reflectionMat = new ReflectionCubeMaterial(reflectionShader, model, &(model->meshes[0]), skybox->GetCubeMap());
 
 	// 创建渲染物体

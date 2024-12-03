@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
+#include <algorithm>
 
 class Node
 {
@@ -36,7 +37,7 @@ void GenerateKeywordGroup(Node* node, vector<Node*> pre, vector<string>& keyword
 void GenerateProgram(KeywordAndShaderPart* vertexPart, KeywordAndShaderPart* fragmentPart, vector<ShaderWithKeywords*>& shaders);
 int CompileShader(vector<string>& keywords, std::stringstream& shaderTopStream, std::stringstream& shaderBottomStream, int type);
 
-ShaderProgram::ShaderProgram(string vertexPath, string fragmentPath)
+ShaderProgram::ShaderProgram(boost::filesystem::path vertexPath, boost::filesystem::path fragmentPath)
 {
 	KeywordAndShaderPart* vertexPart = LoadShader(vertexPath);
 	KeywordAndShaderPart* fragmentPart = LoadShader(fragmentPath);
@@ -116,13 +117,13 @@ int CompileShader(vector<string>& keywords, std::stringstream& versionStream, st
 	return ID;
 }
 
-KeywordAndShaderPart* ShaderProgram::LoadShader(string path)
+KeywordAndShaderPart* ShaderProgram::LoadShader(boost::filesystem::path path)
 {
 	auto shaderPart = new KeywordAndShaderPart();
 	std::string shaderCodeLine;
 	std::ifstream shaderFile;
 
-	shaderFile.open(path);
+	shaderFile.open(path.string());
 
 	// 通过状态机，分析文本
 	// 进入 keyword 状态，当一行不是空格且不是keyword，则退出判断，keyword判断结束，开始构成真正的shader文本
@@ -194,7 +195,7 @@ KeywordAndShaderPart* ShaderProgram::LoadShader(string path)
 		{
 			if (shaderCodeLine.length() < 10)
 			{
-				shaderCodeLine.erase(std::remove_if(shaderCodeLine.begin(), shaderCodeLine.end(), isspace), shaderCodeLine.end());
+				shaderCodeLine.erase(std::remove_if(shaderCodeLine.begin(), shaderCodeLine.end(), ::isspace), shaderCodeLine.end());
 				if (shaderCodeLine.size() <= 0) break;
 				else
 				{
