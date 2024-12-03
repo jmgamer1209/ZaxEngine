@@ -1,11 +1,30 @@
 #include "EditorWindow.h"
 
+#include <fstream>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <iostream>
+#include <sstream>
+
 #include "Materials/BlinnPhongMaterial.h"
 #include "Materials/ReflectionCubeMaterial.h"
+#include "boost/json.hpp"
+#include "boost/filesystem/path.hpp"
 
+using namespace boost;
+
+EditorWindow::EditorWindow():WindowBase()
+{
+	ifstream ifstream;
+	ifstream.open((Application::projectPath / "Config" / "DefaultEngine.json").string());
+	json::object config = json::parse(ifstream).as_object();
+	ifstream.close();
+
+	auto value = config["EditorStartupMap"].as_string();
+	Application::projectConfig.EditorStartupMap = value.c_str();
+	std::cout << value<< "\n";
+}
 
 void EditorWindow::OnWindowClosed()
 {

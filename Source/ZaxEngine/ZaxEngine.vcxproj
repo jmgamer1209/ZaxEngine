@@ -155,6 +155,7 @@
     <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\WindowBase.cpp" />
+    <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\WindowBase.h" />
+    <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />
     <ClInclude Include="Editor\Window\OpenWindow.h" />

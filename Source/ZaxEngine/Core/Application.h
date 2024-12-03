@@ -2,6 +2,7 @@
 #include <string>
 
 #include "WindowBase.h"
+#include "Editor/ProjectConfig.h"
 #include "filesystem/path.hpp"
 
 class Application
@@ -14,6 +15,7 @@ public:
 	static boost::filesystem::path projectPath;
 	static boost::filesystem::path zprojectPath;
 	static std::string contentPath;
+	static ProjectConfig projectConfig;
 	static int viewportWidth;
 	static int viewportHeight;
 	static bool isViewportSizeChanged;

@@ -1,5 +1,4 @@
 #pragma once
-#include "Core/GameObject.h"
 #include "Core/WindowBase.h"
 #include "Renderer/SceneRenderer.h"
 
@@ -12,10 +11,7 @@ public:
     Scene* scene;
     ShaderProgram* shaderProgram;
 
-    EditorWindow():WindowBase()
-    {
-        
-    }
+    EditorWindow();
     void DrawWindowUI() override;
     void LoadScene();
     void DrawScene();

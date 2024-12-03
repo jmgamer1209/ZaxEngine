@@ -3,6 +3,7 @@
 #include "Editor/Window/EditorWindow.h"
 
 boost::filesystem::path Application::projectPath;
+ProjectConfig Application::projectConfig;
 std::string Application::contentPath = "";
 int Application::viewportWidth = 1080;
 int Application::viewportHeight = 720;
@@ -14,6 +15,6 @@ WindowBase* Application::window = nullptr;
 void Application::OpenEditor(boost::filesystem::path& projectPath)
 {
     Application::projectPath = projectPath;
-    Application::contentPath = (projectPath / ("Content")).string();
-    Application::window = dynamic_cast<WindowBase*>(new EditorWindow());
+    contentPath = (projectPath / ("Content")).string();
+    window = dynamic_cast<WindowBase*>(new EditorWindow());
 }
