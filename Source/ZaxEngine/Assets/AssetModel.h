@@ -43,7 +43,7 @@ class AssetModel
 {
 public:
     /*  函数   */
-    AssetModel(string path)
+    AssetModel(boost::filesystem::path path)
     {
         LoadModel(path);
     }
@@ -51,10 +51,10 @@ public:
     vector<AssetMesh> meshes;
     vector<AssetMaterial> materials;
 
-    string directory;
+    boost::filesystem::path directory;
     
     /*  函数   */
-    void LoadModel(string path);
+    void LoadModel(boost::filesystem::path path);
     //void ProcessNode(aiNode* node, const aiScene* scene);
     AssetMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
     AssetMaterial ProcessMaterial(aiMaterial* material, const aiScene* scene);

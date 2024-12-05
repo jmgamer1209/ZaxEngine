@@ -134,7 +134,7 @@ void EditorWindow::LoadScene()
 
 	
 	// 导入模型
-	AssetModel* model = new AssetModel((Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj").string());
+	AssetModel* model = new AssetModel(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
 	Mesh* woodenBox = model->meshes[0].CreateMesh();
 	AssetMaterial*  woodenBoxMat = &model->materials[model->meshes[0].materialIndex];
 

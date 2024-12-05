@@ -10,17 +10,17 @@ AssetMesh::AssetMesh(vector<Vertex> vertices, vector<unsigned int> indices, unsi
     this->materialIndex = materialIndex;
 }
 
-void AssetModel::LoadModel(string path)
+void AssetModel::LoadModel(boost::filesystem::path path)
 {
 	// 测试导入 obj
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	const aiScene* scene = importer.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		Debug::Log({ "错误::Assimp导入::", importer.GetErrorString() });
 		return;
 	}
-	directory = path.substr(0, path.find_last_of('/'));
+	directory = path.parent_path();
 
     int meshNum = scene->mNumMeshes;
     int matNum = scene->mNumMaterials;
@@ -119,7 +119,7 @@ AssetTexture AssetModel::LoadMaterialTexture(aiMaterial* mat, aiTextureType type
     {
         aiString path;
         mat->GetTexture(type, i, &path);
-        aTexuture.path = directory + "/" + std::string(path.C_Str());
+        aTexuture.path = (directory / (path.C_Str())).string();
         break;
     }
     return aTexuture;
