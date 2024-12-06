@@ -37,6 +37,7 @@
 * stb_image，图片加载库
 * glm，数学库
 * assimp v5.3.1, 资源模型导入库，比如 obj，fbx
+* boost，v1.86.0，基础能力，比如 filesystem,json
 
 图形 Debug 工具：RenderDoc
 
