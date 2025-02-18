@@ -10,5 +10,8 @@
 {
 	 void Log(const std::string& log);
 	 void Log(std::initializer_list<std::string> list);
+
+	 void Log(const std::wstring& log);
+	 //void Log(std::initializer_list<std::wstring> list);
 };
 
