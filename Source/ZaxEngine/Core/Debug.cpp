@@ -32,3 +32,12 @@ void Debug::Log(const std::wstring& log)
 	std::cout << temp.c_str();
 	OutputDebugStringW(temp.c_str());
 }
+
+void Debug::Log(const int log)
+{
+	auto temp = std::to_string(log) + "\n";
+
+	// 控制台和调试器都输出
+	std::cout << temp;
+	OutputDebugStringA(temp.c_str());
+}

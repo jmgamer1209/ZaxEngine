@@ -13,5 +13,7 @@
 
 	 void Log(const std::wstring& log);
 	 //void Log(std::initializer_list<std::wstring> list);
+
+	 void Log(const int log);
 };
 
