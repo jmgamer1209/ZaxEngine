@@ -148,6 +148,10 @@
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\ProjectConfig.cpp" />
+    <ClCompile Include="ZObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Materials\Material.h">
@@ -257,6 +261,10 @@
     </ClInclude>
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\ProjectConfig.h" />
+    <ClInclude Include="ZObject.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -171,6 +171,7 @@
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="WindowsMain\ZaxEngine.cpp" />
+    <ClCompile Include="ZObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\AssetModel.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp" />
     <ClInclude Include="ThirdParty\glm\glm.hpp" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
+    <ClInclude Include="ZObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

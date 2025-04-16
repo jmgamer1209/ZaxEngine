@@ -129,8 +129,8 @@ void EditorWindow::DrawWindowUI()
 
 void EditorWindow::LoadScene()
 {
-	// scene = new Scene();
-	// scene->DeSerialize(Application::contentPath / Application::projectConfig.EditorStartupMap);
+	//auto scene1 = new Scene();
+	//scene1->Unserialize(Application::contentPath / Application::projectConfig.EditorStartupMap);
 
 	
 	// 导入模型

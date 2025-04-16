@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Core/Color.h"
 #include "filesystem/path.hpp"
+#include "ZObject.h"
 
 struct SceneLighting
 {
@@ -10,14 +11,14 @@ struct SceneLighting
 	float ambientIntensity;
 };
 
-class Scene
+class Scene:ZObject
 {
 public:
 	vector<GameObject*> list;
 	SceneLighting lightingSettings;
 
 	void AddGameObject(GameObject* go);
-	void Serialize();
-	void DeSerialize(boost::filesystem::path path);
+	//void Serialize();
+	void Unserialize(json::object obj) override;
 };
 

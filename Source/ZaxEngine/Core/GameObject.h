@@ -5,11 +5,12 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Component/Component.h"
+#include "ZObject.h"
 using namespace std;
 
 class Component;
 
-class GameObject
+class GameObject:ZObject
 {
 public:
 	vector<Component*> components;
@@ -19,6 +20,7 @@ public:
 public:
 	GameObject(const string& name);
     void AddComponent(Component* component);
+	//void Unserialize(json::object obj) override;
 
 	template<typename T>
 	T* GetComponent()
