@@ -17,13 +17,19 @@ void Scene::AddGameObject(GameObject* go)
 
 void Scene::Unserialize(json::object obj)
 {
-    /*auto obj = Utils::LoadJsonFile(path);
-    auto a = sizeof(Scene*);*/
+    auto golist = obj["list"].as_array(); // obj.  (json::valueto)obj["list"];
     //auto lala = static_cast<Scene*>(malloc(a));
     //cout << lala << "  sdgsg   " << a <<"\n";
     /*Debug::Log(L"什么意思");
     std::cout << obj["list"];*/
     
-    //Debug::Log(json::serialize(obj["list"]));
-    //Debug::Log(a);
+    for (int i = 0; i < golist.size(); i++)
+    {
+        auto go = new GameObject();
+        go->Unserialize(golist[i].as_object());
+        this->AddGameObject(go);
+    }
+
+    //Debug::Log(json::serialize());
+    //Debug::Log(json::serialize(test));
 }

@@ -53,6 +53,9 @@
     <Filter Include="ThirdParty\boost\filesystem">
       <UniqueIdentifier>{4d551f09-df75-426f-8c71-b59e04e9882a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\mono">
+      <UniqueIdentifier>{e4888bad-f711-41ad-aa1a-8536e90b150a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Materials\Material.cpp">
@@ -148,9 +151,17 @@
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\ProjectConfig.cpp" />
-    <ClCompile Include="ZObject.cpp">
+    <ClCompile Include="Core\ZObject.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SceneManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\ProjectConfig.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoEntry.cpp">
+      <Filter>WindowsMain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +273,28 @@
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\ProjectConfig.h" />
-    <ClInclude Include="ZObject.h">
+    <ClInclude Include="Core\ZObject.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\SceneManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\ProjectConfig.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="WindowsMain\MonoEntry.h">
+      <Filter>WindowsMain</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZaxEngine.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\assimp\assimp-vc143-mtd.dll">
+      <Filter>ThirdParty\assimp</Filter>
+    </None>
   </ItemGroup>
 </Project>

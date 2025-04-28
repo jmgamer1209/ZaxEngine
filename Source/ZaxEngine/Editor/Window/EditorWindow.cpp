@@ -11,6 +11,7 @@
 #include "Materials/ReflectionCubeMaterial.h"
 #include "boost/json.hpp"
 #include "boost/filesystem/path.hpp"
+#include "Core/SceneManager.h"
 
 using namespace boost;
 
@@ -129,8 +130,7 @@ void EditorWindow::DrawWindowUI()
 
 void EditorWindow::LoadScene()
 {
-	//auto scene1 = new Scene();
-	//scene1->Unserialize(Application::contentPath / Application::projectConfig.EditorStartupMap);
+	//SceneManager::LoadScene(Application::contentPath / Application::projectConfig.EditorStartupMap);
 
 	
 	// 导入模型

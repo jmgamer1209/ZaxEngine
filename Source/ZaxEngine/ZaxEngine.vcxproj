@@ -70,6 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CopyLocalDeploymentContent>false</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,22 +108,26 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;ThirdParty\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;ThirdParty\boost;ThirdParty\mono\include\mono-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc143-mtd.lib;shlwapi.lib;propsys.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc143-mtd.lib;shlwapi.lib;propsys.lib;comctl32.lib;coreclr.import.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib;msvcprt</IgnoreSpecificDefaultLibraries>
-      <AdditionalLibraryDirectories>ThirdParty\imgui\examples\libs\glfw\lib-vc2010-64;ThirdParty\assimp;ThirdParty\boost\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>ThirdParty\imgui\examples\libs\glfw\lib-vc2010-64;ThirdParty\assimp;ThirdParty\boost\libs;ThirdParty\mono\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>assimp-vc143-mtd.dll;coreclr.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>
       <Command>
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /y /d "ThirdParty\assimp\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
+      <Command>xcopy /y /d "ThirdParty\assimp\assimp-vc143-mtd.dll" "$(OutDir)\Data\"
+xcopy /y /d "ThirdParty\mono\dll\coreclr.dll" "$(OutDir)\Data\Mono\"
+xcopy /y /d "ThirdParty\mono\dll\System.Private.CoreLib.dll" "$(OutDir)\Data\Mono\"
+xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotNetStandard\win-x64\lib\net8.0\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,16 +158,19 @@
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\std_handler.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\WindowBase.cpp" />
+    <ClCompile Include="Core\ZObject.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
+    <ClCompile Include="MonoEntry.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
@@ -171,7 +182,6 @@
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="WindowsMain\ZaxEngine.cpp" />
-    <ClCompile Include="ZObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\AssetModel.h" />
@@ -188,11 +198,13 @@
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\WindowBase.h" />
+    <ClInclude Include="Core\ZObject.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />
@@ -206,12 +218,22 @@
     <ClInclude Include="Renderer\SceneRenderer.h" />
     <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
     <ClInclude Include="Renderer\ShadowFrameBufferBase.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp" />
     <ClInclude Include="ThirdParty\glm\glm.hpp" />
+    <ClInclude Include="WindowsMain\MonoEntry.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
-    <ClInclude Include="ZObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\assimp\assimp-vc143-mtd.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZaxEngine.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

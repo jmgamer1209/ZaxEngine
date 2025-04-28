@@ -18,9 +18,10 @@ public:
 	bool isActive = true;
 
 public:
+	GameObject();
 	GameObject(const string& name);
     void AddComponent(Component* component);
-	//void Unserialize(json::object obj) override;
+	void Unserialize(json::object obj) override;
 
 	template<typename T>
 	T* GetComponent()

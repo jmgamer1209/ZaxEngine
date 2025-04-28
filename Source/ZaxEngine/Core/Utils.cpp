@@ -143,3 +143,10 @@ boost::json::object Utils::LoadJsonFile(const boost::filesystem::path& path)
 	ifstream.close();
 	return obj;
 }
+
+boost::filesystem::path Utils::GetExeDirectory() {
+    WCHAR path[MAX_PATH];
+    GetModuleFileName(NULL, path, MAX_PATH);
+    boost::filesystem::path result(path);
+    return result.parent_path();
+}

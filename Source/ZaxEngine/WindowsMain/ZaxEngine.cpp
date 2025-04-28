@@ -1,4 +1,5 @@
-﻿#include "ZaxEngine.h"
+#include "ZaxEngine.h"
+#include <iostream>
 #include "Core/ShaderProgram.h"
 #include "Core/Debug.h"
 #include "Core/Utils.h"
@@ -15,16 +16,34 @@
 #include "Core/WindowBase.h"
 #include "Editor/Window/EditorWindow.h"
 #include "Editor/Window/OpenWindow.h"
+#include "filesystem/path.hpp"
+#include "filesystem/directory.hpp"
+#include "filesystem/operations.hpp"
+#include "MonoEntry.h"
 
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
+	// 添加 dll 搜索路径，这里需要导出后 dll 的位置，当前关联了项目设置的生成后事件的dll复制
+	filesystem::path exePath = Utils::GetExeDirectory();
+	auto dataPath = exePath / L"Data";
+	auto monoPath = dataPath / L"Mono";
+	auto standardPath = dataPath / L"DotNetStandard/win-x64/lib/net8.0";
+	SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+	AddDllDirectory(dataPath.wstring().c_str());
+	AddDllDirectory(monoPath.wstring().c_str());
+	AddDllDirectory(standardPath.wstring().c_str());
+	
+	setvbuf(stdout, nullptr, _IONBF, 0); //让控制台立即输出
+
 	GLFW_INIT
 	
 	Application::window = dynamic_cast<WindowBase*>(new OpenWindow());
 	Application::isRunning = true;
 
-	setvbuf(stdout, nullptr, _IONBF, 0); //让控制台立即输出
+	auto assemblies_path = monoPath.string() + ";" + standardPath.string(); // windows 使用; 类Unix 使用:，这里先只适配 windows
+	MonoEntry::Init(assemblies_path);
+
 	
 	while (Application::isRunning)
 	{

@@ -1,9 +1,11 @@
 #pragma once
 #include "Core/GameObject.h"
+#include "Core/ZObject.h"
 
 class GameObject;
+class ZObject;
 
-class Component
+class Component: public ZObject
 {
 public:
 	bool enabled = true;
