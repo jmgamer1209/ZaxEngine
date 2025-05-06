@@ -34,15 +34,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	AddDllDirectory(monoPath.wstring().c_str());
 	AddDllDirectory(standardPath.wstring().c_str());
 	
-	setvbuf(stdout, nullptr, _IONBF, 0); //让控制台立即输出
+	setvbuf(stdout, nullptr, _IONBF, 0); //设置控制台立即输出
 
 	GLFW_INIT
 	
 	Application::window = dynamic_cast<WindowBase*>(new OpenWindow());
 	Application::isRunning = true;
 
-	auto assemblies_path = monoPath.string() + ";" + standardPath.string(); // windows 使用; 类Unix 使用:，这里先只适配 windows
-	MonoEntry::Init(assemblies_path);
+	auto assemblies_path = monoPath.string() + ";" + standardPath.string(); // windows使用; 类Unix使用:，这里先只适配 windows
+	MonoEntry::GetInstance()->Init(assemblies_path);
 
 	
 	while (Application::isRunning)

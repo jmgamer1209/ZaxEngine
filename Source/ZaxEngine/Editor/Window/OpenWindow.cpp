@@ -27,7 +27,7 @@ OpenWindow::OpenWindow():WindowBase()
 {
     filesystem::path exePath(boost::filesystem::initial_path<boost::filesystem::path>());
     auto projectRoot = exePath.parent_path().parent_path();
-    projectPath = projectRoot / ("Project") / ("Default");
+    projectPath = projectRoot / "Project" / "Default" / "Default.zproject";
     cout << "Default Project Path: " <<  projectPath.string() << "\n";
     strcpy_s(Path,projectPath.string().c_str());
 }
@@ -70,16 +70,10 @@ void OpenWindow::DrawWindowUI()
     {
         // 检测 project Path 是不是项目目录
         isProject = false;
-        if (filesystem::is_directory(projectPath))
+        auto  extension = projectPath.extension();
+        if (extension == ".zproject")
         {
-            for (auto& entry : filesystem::directory_iterator(projectPath))
-            {
-                if (entry.path().extension() == ".zproject")
-                {
-                    isProject = true;
-                    break;
-                }
-            }    
+            isProject = true;
         }
         if (isProject)
         {
@@ -96,7 +90,7 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::BeginPopupModal("Error##popup_no_project", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::NewLine();
-        ImGui::Text("The Folder is Not Project!");
+        ImGui::Text("The File is Not Zax Project!");
         ImGui::Separator();
         ImGui::NewLine();
         

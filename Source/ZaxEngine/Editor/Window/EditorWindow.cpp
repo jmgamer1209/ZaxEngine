@@ -12,15 +12,18 @@
 #include "boost/json.hpp"
 #include "boost/filesystem/path.hpp"
 #include "Core/SceneManager.h"
+#include "WindowsMain/MonoEntry.h"
 
 using namespace boost;
 
 EditorWindow::EditorWindow():WindowBase()
 {
-	auto config = Utils::LoadJsonFile(Application::projectPath / "Config" / "DefaultEngine.json");
+	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
-	std::cout << value<< "\n";
+	Debug::Log(value.c_str());
+
+	MonoEntry::GetInstance()->LoadAssembly(Application::projectFolderPath / "bin" / "Debug" / "net8.0" / Application::projectName.replace_extension(".dll"));
 }
 
 void EditorWindow::OnWindowClosed()

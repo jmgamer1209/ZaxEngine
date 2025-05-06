@@ -160,7 +160,7 @@
     <ClCompile Include="Editor\ProjectConfig.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="MonoEntry.cpp">
+    <ClCompile Include="WindowsMain\MonoEntry.cpp">
       <Filter>WindowsMain</Filter>
     </ClCompile>
   </ItemGroup>
@@ -291,10 +291,5 @@
     <ResourceCompile Include="ZaxEngine.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ThirdParty\assimp\assimp-vc143-mtd.dll">
-      <Filter>ThirdParty\assimp</Filter>
-    </None>
   </ItemGroup>
 </Project>

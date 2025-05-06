@@ -170,7 +170,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Materials\Material.cpp" />
-    <ClCompile Include="MonoEntry.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
@@ -181,6 +180,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="WindowsMain\MonoEntry.cpp" />
     <ClCompile Include="WindowsMain\ZaxEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,12 +225,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="ThirdParty\glm\glm.hpp" />
     <ClInclude Include="WindowsMain\MonoEntry.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ThirdParty\assimp\assimp-vc143-mtd.dll">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZaxEngine.rc" />
