@@ -20,7 +20,7 @@
 * 基本场景显示
 * 基本前向着色
 * 材质为 Blinn-Phong，法线贴图，透明材质
-* 自定义Shader格式，实现 Keyword 功能
+* 自定义Shader格式，实现变体功能（通过Keyword设置）
 * 光源基础阴影(三类光源阴影，以及depthbias和pcf)
 
 **正在实现功能**
