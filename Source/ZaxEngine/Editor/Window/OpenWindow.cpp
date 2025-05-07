@@ -58,7 +58,7 @@ void OpenWindow::DrawWindowUI()
     if (ImGui::Button("Choose Project"))
     {
         string path;
-        if (OpenFolderDialog(path))
+        if (OpenFileDialog(path))
         {
             projectPath = path;
             strcpy_s(Path,projectPath.string().c_str());

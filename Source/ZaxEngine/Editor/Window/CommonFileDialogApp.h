@@ -167,4 +167,9 @@ HRESULT WritePropertiesWithoutUsingHandlers();
  // 打开选择窗口
 int CommonFileDialog();
 
+// 打开目录选择窗口
 bool OpenFolderDialog(std::string& path);
+
+// 打开文件选择窗口，自己补充的
+bool OpenFileDialog(std::string& path);
+
