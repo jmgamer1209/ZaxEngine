@@ -8,15 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Binary\**" />
     <Compile Remove="Config\**" />
     <Compile Remove="Content\**" />
+    <EmbeddedResource Remove="Binary\**" />
     <EmbeddedResource Remove="Config\**" />
     <EmbeddedResource Remove="Content\**" />
+    <None Remove="Binary\**" />
     <None Remove="Config\**" />
     <None Remove="Content\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".gitignore" />
     <None Remove="Default.zproject" />
   </ItemGroup>
 
