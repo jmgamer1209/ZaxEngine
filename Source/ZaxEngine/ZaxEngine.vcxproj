@@ -24,6 +24,7 @@
     <ProjectGuid>{1d1708c8-945c-4a68-af07-a32fe253247b}</ProjectGuid>
     <RootNamespace>ZaxEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ZaxEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -73,6 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CopyLocalDeploymentContent>false</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
+    <OutDir>$(CustomBaseOutDir)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -23,7 +23,7 @@ EditorWindow::EditorWindow():WindowBase()
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	Debug::Log(value.c_str());
 
-	MonoEntry::GetInstance()->LoadAssembly(Application::projectFolderPath / "bin" / "Debug" / "net8.0" / Application::projectName.replace_extension(".dll"));
+	MonoEntry::GetInstance()->LoadAssembly(Application::projectFolderPath / "Binary" / Application::projectName.replace_extension(".dll"));
 }
 
 void EditorWindow::OnWindowClosed()
