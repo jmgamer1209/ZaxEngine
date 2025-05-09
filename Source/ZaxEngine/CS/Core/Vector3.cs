@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZaxEngine
 {
-    public struct Vector
+    public struct Vector3
     {
         public float x;
         public float y;

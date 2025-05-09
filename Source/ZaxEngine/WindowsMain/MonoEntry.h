@@ -13,6 +13,10 @@ private:
 	MonoEntry() {}
 public:
 	MonoDomain* domain = nullptr;
+	MonoAssembly* assembly = nullptr;
+	MonoImage* image = nullptr;
+	MonoAssembly* assembly_engine = nullptr;
+	MonoImage* image_engine = nullptr;
 
 	static MonoEntry Instance;
 	static MonoEntry* GetInstance() {
@@ -20,6 +24,8 @@ public:
 	}
 
 	int Init(boost::filesystem::path standardPath);
-	int LoadAssembly(boost::filesystem::path assemblyPath);
+	int LoadAssembly(boost::filesystem::path assemblyPath, MonoAssembly** assembly, MonoImage** image);
+	int LoadProjectAssembly();
+	int LoadEngineAssembly();
 };
 

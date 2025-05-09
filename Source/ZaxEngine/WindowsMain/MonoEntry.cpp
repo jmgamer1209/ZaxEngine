@@ -2,6 +2,8 @@
 #include <iostream>
 #include "boost/filesystem/path.hpp"
 #include "Core/Debug.h"
+#include "Core/Application.h"
+#include "Core/Utils.h"
 //std::cout << LOG << std::endl;	\
 
 #define ASSERT_LOG_RETURN(A, NUM, LOG) if (!(A)) \
@@ -23,21 +25,27 @@ int MonoEntry::Init(boost::filesystem::path assemblies_search_path)
 	return 0;
 }
 
-int MonoEntry::LoadAssembly(boost::filesystem::path assemblyPath)
+int MonoEntry::LoadAssembly(boost::filesystem::path assemblyPath, MonoAssembly** assembly, MonoImage **image)
 {
-	// 以下为测试程序，这里要改为 C# 脚本项目
 	// 第二个参数填入要加载的c#的il
-	MonoAssembly* assembly = mono_domain_assembly_open(this->domain, assemblyPath.string().c_str());   //"G:\\Develop\\Windows\\ClassLibrary1\\ClassLibrary1\\bin\\Debug\\net8.0\\ClassLibrar2.dll"
-	ASSERT_LOG_RETURN(assembly != nullptr, 1, "error: can not load assembly");
+	MonoAssembly* temp_assembly = mono_domain_assembly_open(this->domain, assemblyPath.string().c_str());   //"G:\\Develop\\Windows\\ClassLibrary1\\ClassLibrary1\\bin\\Debug\\net8.0\\ClassLibrar2.dll"
+	ASSERT_LOG_RETURN(temp_assembly != nullptr, 1, "error: can not load assembly");
+	*assembly = temp_assembly;
 
-	MonoImage* image = mono_assembly_get_image(assembly);
-	ASSERT_LOG_RETURN(image != nullptr, 1, "error: image");
-
-	MonoClass* main_class = mono_class_from_name(image, "Test", "Class1");
-	ASSERT_LOG_RETURN(image != nullptr, 1, "error: main_class");
-
-	MonoMethod* mono_method = mono_class_get_method_from_name(main_class, "Fun", 0);
-	ASSERT_LOG_RETURN(mono_method != nullptr, 1, "error: main_class");
-	mono_runtime_invoke(mono_method, nullptr, nullptr, nullptr);
+	MonoImage* temp_image = mono_assembly_get_image(temp_assembly);
+	ASSERT_LOG_RETURN(temp_image != nullptr, 1, "error: image");
+	*image = temp_image;
+	
 	return 0;
+}
+
+int MonoEntry::LoadProjectAssembly() {
+	auto path = Application::projectFolderPath / "Binary" / Application::projectName.replace_extension(".dll");
+	return this->LoadAssembly(path, &this->assembly, &this->image);
+}
+
+int MonoEntry::LoadEngineAssembly()
+{
+	auto path = Utils::GetExeDirectory() / "ZaxEngine.Core.dll";
+	return this->LoadAssembly(path, &this->assembly_engine, &this->image_engine);
 }

@@ -22,8 +22,8 @@ EditorWindow::EditorWindow():WindowBase()
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	Debug::Log(value.c_str());
-
-	MonoEntry::GetInstance()->LoadAssembly(Application::projectFolderPath / "Binary" / Application::projectName.replace_extension(".dll"));
+	MonoEntry::GetInstance()->LoadEngineAssembly();
+	MonoEntry::GetInstance()->LoadProjectAssembly();
 }
 
 void EditorWindow::OnWindowClosed()
@@ -134,6 +134,7 @@ void EditorWindow::DrawWindowUI()
 void EditorWindow::LoadScene()
 {
 	//SceneManager::LoadScene(Application::contentPath / Application::projectConfig.EditorStartupMap);
+	//MonoEntry::GetInstance().
 
 	
 	// 导入模型
