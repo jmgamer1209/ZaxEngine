@@ -2,6 +2,7 @@
 #include "Core/ShaderProgram.h"
 #include "Assets/AssetModel.h"
 #include <unordered_map>
+#include "Core/Texture.h"
 
 enum class MaterialPropertyType;
 struct MaterialProperty;
@@ -24,26 +25,27 @@ public:
 	virtual void OnGui() {};
 };
 
-enum class SurfaceType
+/// <summary>
+/// 材质域，目前只有表面
+/// </summary>
+enum class MaterialDomain {
+	Surface = 0
+};
+
+/// <summary>
+/// 着色模型，比如 blinnphong
+/// </summary>
+enum class ShadingModel {
+	BlinnPhong = 0, 
+	ReflectionCube = 1
+};
+
+/// <summary>
+/// 混合模式，比如透明，不透明
+/// </summary>
+enum class BlendMode
 {
 	Opaque = 0, Transparent = 1
-};
-
-enum class TextureType
-{
-	Texture2D, CubeMap
-};
-
-struct  MaterialTexture
-{
-	TextureType type;
-	unsigned int ID;
-
-	MaterialTexture(TextureType type, unsigned int ID)
-	{
-		this->type = type;
-		this->ID = ID;
-	}
 };
 
 enum class MaterialPropertyType
@@ -56,7 +58,7 @@ struct MaterialProperty
 	MaterialPropertyType type;
 	union
 	{
-		MaterialTexture texture;
+		Texture texture;
 		float floatValue;
 		int intValue;
 	};
@@ -66,7 +68,7 @@ struct MaterialProperty
 		
 	};
 
-	MaterialProperty(const MaterialTexture& v) :texture{ v } 
+	MaterialProperty(const Texture& v) :texture{ v } 
 	{
 		type = MaterialPropertyType::Texture;
 	};

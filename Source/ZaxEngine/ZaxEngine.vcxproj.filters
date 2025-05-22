@@ -163,6 +163,9 @@
     <ClCompile Include="WindowsMain\MonoEntry.cpp">
       <Filter>WindowsMain</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Texture.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Materials\Material.h">
@@ -285,6 +288,9 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="WindowsMain\MonoEntry.h">
       <Filter>WindowsMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Texture.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,7 @@ private:
 	void DrawRenderers();
 	void DrawOpaque();
 	void DrawTransparent();
-	void DrawGroupRenderers(const vector<MeshRenderer*>& group, SurfaceType surface);
+	void DrawGroupRenderers(const vector<MeshRenderer*>& group, BlendMode surface);
 	void DrawRendererWithLight(MeshRenderer* renderer, Light* light);
 	void SetGlobalShaderVar(MeshRenderer* renderer, Light* light, ShaderProgram* shaderProgram);
 	FrameBuffer* DrawPostProcess(PostProcess* postProcess);

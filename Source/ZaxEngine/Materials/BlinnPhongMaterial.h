@@ -13,8 +13,8 @@ public:
 		Utils::LoadTexture(&albedoTexture, mat->baseColor.path);
 		Utils::LoadTexture(&normalMap, mat->normal.path);
 
-		properties["AlbedoTexture"] = MaterialProperty(MaterialTexture(TextureType::Texture2D, albedoTexture));
-		if (normalMap != 0) properties["NormalMap"] = MaterialProperty(MaterialTexture(TextureType::Texture2D, normalMap));
+		properties["AlbedoTexture"] = MaterialProperty(Texture(TextureType::Texture2D, albedoTexture));
+		if (normalMap != 0) properties["NormalMap"] = MaterialProperty(Texture(TextureType::Texture2D, normalMap));
 		properties["Specular"] = MaterialProperty(0.5f);
 	}
 
@@ -22,7 +22,7 @@ public:
 	{
 		unsigned int albedoTexture = 0; 
 		Utils::LoadTexture(&albedoTexture, albedoTexturePath);
-		properties["AlbedoTexture"] = MaterialProperty(MaterialTexture(TextureType::Texture2D, albedoTexture));
+		properties["AlbedoTexture"] = MaterialProperty(Texture(TextureType::Texture2D, albedoTexture));
 		properties["Specular"] = MaterialProperty(0.5f);
 	}
 	~BlinnPhongMaterial() {}

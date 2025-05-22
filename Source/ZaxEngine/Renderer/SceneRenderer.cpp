@@ -257,7 +257,7 @@ void SceneRenderer::DrawRenderers()
 
     for (size_t i = 0; i < renderers.size(); i++)
     {
-        if (renderers[i]->mat->HasProperty("SurfaceType") == true &&  (SurfaceType)renderers[i]->mat->GetProperty("SurfaceType").intValue == SurfaceType::Transparent)
+        if (renderers[i]->mat->HasProperty("SurfaceType") == true &&  (BlendMode)renderers[i]->mat->GetProperty("SurfaceType").intValue == BlendMode::Transparent)
         {
             auto distance = Vector3::Dot(renderers[i]->gameObject->GetComponent<Transform>()->position - camTransform->position, camTransform->GetForward()); // 这个距离带正负号
             bool find = false;
@@ -286,17 +286,17 @@ void SceneRenderer::DrawRenderers()
 
 void SceneRenderer::DrawOpaque()
 {
-    auto index = (int)SurfaceType::Opaque;
-    DrawGroupRenderers(rendererGroups[index], SurfaceType::Opaque);
+    auto index = (int)BlendMode::Opaque;
+    DrawGroupRenderers(rendererGroups[index], BlendMode::Opaque);
 }
 
 void SceneRenderer::DrawTransparent()
 {
-    auto index = (int)SurfaceType::Transparent;
-    DrawGroupRenderers(rendererGroups[index], SurfaceType::Transparent);
+    auto index = (int)BlendMode::Transparent;
+    DrawGroupRenderers(rendererGroups[index], BlendMode::Transparent);
 }
 
-void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, SurfaceType surface)
+void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, BlendMode surface)
 {
     glEnable(GL_DEPTH_TEST);
 
@@ -305,7 +305,7 @@ void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, Surfa
         auto renderer = group[i];
         if (renderer->gameObject->isActive == false) continue;
 
-        if (surface == SurfaceType::Opaque)
+        if (surface == BlendMode::Opaque)
         {
             glDepthFunc(GL_LESS);
             glDisable(GL_BLEND);
@@ -319,7 +319,7 @@ void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, Surfa
 
         DrawRendererWithLight(renderer, directionalLight);
 
-        if (surface == SurfaceType::Opaque)
+        if (surface == BlendMode::Opaque)
         {
             glDepthFunc(GL_LEQUAL);
             glEnable(GL_BLEND);

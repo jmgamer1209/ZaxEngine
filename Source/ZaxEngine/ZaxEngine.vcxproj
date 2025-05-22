@@ -163,6 +163,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\std_handler.cpp" />
+    <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Utils.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\WindowBase.cpp" />
@@ -202,6 +203,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Utils.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Vertex.h" />
