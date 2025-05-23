@@ -158,6 +158,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Debug.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
@@ -172,7 +173,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
-    <ClCompile Include="Materials\Material.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
@@ -198,7 +198,9 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Debug.h" />
+    <ClInclude Include="Core\DefualtMaterial.h" />
     <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\SceneManager.h" />
@@ -213,10 +215,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />
     <ClInclude Include="Editor\Window\OpenWindow.h" />
-    <ClInclude Include="Materials\BlinnPhongMaterial.h" />
-    <ClInclude Include="Materials\DefualtMaterial.h" />
-    <ClInclude Include="Materials\Material.h" />
-    <ClInclude Include="Materials\ReflectionCubeMaterial.h" />
     <ClInclude Include="Platform\windows.h" />
     <ClInclude Include="Renderer\FrameBuffer.h" />
     <ClInclude Include="Renderer\SceneRenderer.h" />

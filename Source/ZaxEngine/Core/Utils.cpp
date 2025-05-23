@@ -71,6 +71,14 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 	stbi_image_free(data);
 }
 
+Texture Utils::LoadTexture(string& path, bool flip_vertically) 
+{
+    unsigned int id;
+    LoadTexture(&id, path, flip_vertically);
+    Texture t(TextureType::Texture2D, id);
+    return t;
+}
+
 void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
 {
 	glGenTextures(1, texture);

@@ -5,7 +5,6 @@
 
 #include "Core/Application.h"
 #include "Core/Debug.h"
-#include "Materials/BlinnPhongMaterial.h"
 
 #include "filesystem/path.hpp"
 #include "filesystem/directory.hpp"

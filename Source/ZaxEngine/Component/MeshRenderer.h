@@ -1,6 +1,6 @@
 #pragma once
 #include "Assets/AssetModel.h"
-#include "Materials/Material.h"
+#include "Core/Material.h"
 #include "glad/gl.h"
 #include "Component/Camera.h"
 #include "Component/Transform.h"

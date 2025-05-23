@@ -7,8 +7,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "Materials/BlinnPhongMaterial.h"
-#include "Materials/ReflectionCubeMaterial.h"
 #include "boost/json.hpp"
 #include "boost/filesystem/path.hpp"
 #include "Core/SceneManager.h"
@@ -144,9 +142,20 @@ void EditorWindow::LoadScene()
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs");
-	BlinnPhongMaterial* mat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
-	BlinnPhongMaterial* planeMat = new BlinnPhongMaterial(shaderProgram, woodenBoxMat->baseColor.path);
-	BlinnPhongMaterial* transparentMat = new BlinnPhongMaterial(shaderProgram, &model->materials[model->meshes[0].materialIndex]);
+	Material* mat = new Material(shaderProgram);
+	auto woodenBoxAlbedoTexture = Utils::LoadTexture(woodenBoxMat->baseColor.path);
+	auto woodenBoxNormalTexture = Utils::LoadTexture(woodenBoxMat->normal.path);
+
+	mat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+	mat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
+
+	Material* planeMat = new Material(shaderProgram);
+	planeMat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+
+
+	Material* transparentMat = new Material(shaderProgram);
+	transparentMat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+	transparentMat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
 	transparentMat->SetProperty("SurfaceType", MaterialProperty(1));
 	transparentMat->SetProperty("Alpha", MaterialProperty(0.5f));
 
@@ -159,7 +168,13 @@ void EditorWindow::LoadScene()
 
 	// 反射材质
 	auto reflectionShader = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "reflectionCube.vs", Application::contentPath / "Shaders" / "Common" / "reflectionCube.fs");
-	auto reflectionMat = new ReflectionCubeMaterial(reflectionShader, model, &(model->meshes[0]), skybox->GetCubeMap());
+	auto reflectionMat = new Material(reflectionShader);
+	AssetTexture& assetTexture = model->materials[model->meshes[0].materialIndex].baseColor;
+	auto albedoTexture = Utils::LoadTexture(assetTexture.path);
+	reflectionMat->SetProperty("albedoTexture", MaterialProperty(albedoTexture));
+	reflectionMat->SetProperty("environmentTexture", MaterialProperty(Texture(TextureType::CubeMap,skybox->GetCubeMap())));
+	reflectionMat->SetProperty("specularIntensity", MaterialProperty(0.5f));
+	reflectionMat->SetProperty("reflectionIntensity", MaterialProperty(0.5f));
 
 	// 创建渲染物体
 	vector<GameObject*> boxes;

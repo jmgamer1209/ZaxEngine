@@ -7,24 +7,6 @@
 enum class MaterialPropertyType;
 struct MaterialProperty;
 
-class Material
-{
-protected:
-	unordered_map<string, MaterialProperty> properties;
-
-public:
-	ShaderProgram *shader;
-	Material(ShaderProgram* shader) {
-		this->shader = shader;
-	};
-
-	bool HasProperty(const string& name);
-	void SetProperty(const string& name, MaterialProperty property);
-	MaterialProperty GetProperty(const string& name);
-	virtual void Draw(int& texIndex) = 0;
-	virtual void OnGui() {};
-};
-
 /// <summary>
 /// 材质域，目前只有表面
 /// </summary>
@@ -36,7 +18,7 @@ enum class MaterialDomain {
 /// 着色模型，比如 blinnphong
 /// </summary>
 enum class ShadingModel {
-	BlinnPhong = 0, 
+	BlinnPhong = 0,
 	ReflectionCube = 1
 };
 
@@ -47,6 +29,26 @@ enum class BlendMode
 {
 	Opaque = 0, Transparent = 1
 };
+
+class Material
+{
+protected:
+	unordered_map<string, MaterialProperty> properties;
+
+public:
+	ShaderProgram *shader;
+	ShadingModel m_shadingModel = ShadingModel::BlinnPhong;
+	Material(ShaderProgram* shader) {
+		this->shader = shader;
+	};
+
+	bool HasProperty(const string& name);
+	void SetProperty(const string& name, MaterialProperty property);
+	MaterialProperty GetProperty(const string& name);
+	virtual void Draw(int& texIndex);
+	virtual void OnGui();
+};
+
 
 enum class MaterialPropertyType
 {

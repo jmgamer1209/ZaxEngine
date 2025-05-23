@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Materials">
-      <UniqueIdentifier>{2e14acfd-9777-47bf-ae41-f12ccb88ae17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty">
       <UniqueIdentifier>{e0d973de-cc9c-404f-a12a-ec339751e58d}</UniqueIdentifier>
     </Filter>
@@ -16,9 +13,6 @@
     </Filter>
     <Filter Include="ThirdParty\glad">
       <UniqueIdentifier>{1cfe4628-b42f-4552-a534-6563db3fdff3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Materials\Header">
-      <UniqueIdentifier>{43df94dd-251e-4ded-9650-6797c5fa4d35}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{854ec3d9-a919-4b68-906d-e044ca0dbc69}</UniqueIdentifier>
@@ -58,9 +52,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Materials\Material.cpp">
-      <Filter>Materials</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
@@ -166,17 +157,11 @@
     <ClCompile Include="Core\Texture.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Material.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Materials\Material.h">
-      <Filter>Materials\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Materials\DefualtMaterial.h">
-      <Filter>Materials\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Materials\BlinnPhongMaterial.h">
-      <Filter>Materials\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Debug.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -230,9 +215,6 @@
     </ClInclude>
     <ClInclude Include="Component\Skybox.h">
       <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Materials\ReflectionCubeMaterial.h">
-      <Filter>Materials\Header</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\FrameBuffer.h">
       <Filter>Renderer</Filter>
@@ -290,6 +272,12 @@
       <Filter>WindowsMain</Filter>
     </ClInclude>
     <ClInclude Include="Core\Texture.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DefualtMaterial.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Material.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
