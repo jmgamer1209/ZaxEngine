@@ -138,13 +138,14 @@ void EditorWindow::LoadScene()
 	// 导入模型
 	AssetModel* model = new AssetModel(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
 	Mesh* woodenBox = model->meshes[0].CreateMesh();
-	AssetMaterial*  woodenBoxMat = &model->materials[model->meshes[0].materialIndex];
+	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
+	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs");
 	Material* mat = new Material(shaderProgram);
-	auto woodenBoxAlbedoTexture = Utils::LoadTexture(woodenBoxMat->baseColor.path);
-	auto woodenBoxNormalTexture = Utils::LoadTexture(woodenBoxMat->normal.path);
+	auto woodenBoxAlbedoTexture = Utils::LoadTexture(baseColorPath);
+	auto woodenBoxNormalTexture = Utils::LoadTexture(normalPath);
 
 	mat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
 	mat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
@@ -169,8 +170,7 @@ void EditorWindow::LoadScene()
 	// 反射材质
 	auto reflectionShader = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "reflectionCube.vs", Application::contentPath / "Shaders" / "Common" / "reflectionCube.fs");
 	auto reflectionMat = new Material(reflectionShader);
-	AssetTexture& assetTexture = model->materials[model->meshes[0].materialIndex].baseColor;
-	auto albedoTexture = Utils::LoadTexture(assetTexture.path);
+	auto albedoTexture = Utils::LoadTexture(baseColorPath);
 	reflectionMat->SetProperty("albedoTexture", MaterialProperty(albedoTexture));
 	reflectionMat->SetProperty("environmentTexture", MaterialProperty(Texture(TextureType::CubeMap,skybox->GetCubeMap())));
 	reflectionMat->SetProperty("specularIntensity", MaterialProperty(0.5f));
