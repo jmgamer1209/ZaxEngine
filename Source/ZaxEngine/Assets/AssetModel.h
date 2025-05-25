@@ -6,8 +6,9 @@
 #include <assimp/scene.h>
 #include <unordered_map>
 #include "Core/Vertex.h"
-#include "Core/Mesh.h"
+
 using namespace std;
+class Mesh;
 
 struct AssetTexture {
     string path;
@@ -32,10 +33,11 @@ public:
 
     Mesh* CreateMesh()
     {
-        Mesh* mesh = new Mesh();
+        /*Mesh* mesh = new Mesh();
         mesh->vertices = vertices;
         mesh->indices = indices;
-        return mesh;
+        return mesh;*/
+        return nullptr;
     }
 };
 

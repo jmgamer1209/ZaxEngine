@@ -3,6 +3,8 @@
 #include "Core/Vector.h"
 #include "Core/Vertex.h"
 #include "glad/gl.h"
+#include "Assets/AssetModel.h"
+
 using namespace std;
 
 class Mesh
@@ -13,6 +15,7 @@ public:
 	bool hasNormal = true;
 	bool hasTexCoord = true;
 	bool hasTangent = true;
+	AssetModel* model = nullptr;
 
 private:
 	unsigned int VBO, EBO, VAO;
@@ -29,6 +32,10 @@ private:
 	}
 
 public:
+	Mesh() { }
+
+	Mesh(boost::filesystem::path path);
+
 	~Mesh()
 	{
 		ReleaseDrawData();

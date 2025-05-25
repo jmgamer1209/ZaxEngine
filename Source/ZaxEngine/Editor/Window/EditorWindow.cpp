@@ -135,9 +135,8 @@ void EditorWindow::LoadScene()
 	//MonoEntry::GetInstance().
 
 	
-	// 导入模型
-	AssetModel* model = new AssetModel(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
-	Mesh* woodenBox = model->meshes[0].CreateMesh();
+	// 导入 Mesh
+	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
 	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
 	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
 
