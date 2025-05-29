@@ -11,11 +11,13 @@ struct SceneLighting
 	float ambientIntensity;
 };
 
-class Scene:ZObject
+class Scene:public ZObject
 {
 public:
 	vector<GameObject*> list;
 	SceneLighting lightingSettings;
+
+	Scene();
 
 	void AddGameObject(GameObject* go);
 	//void Serialize();

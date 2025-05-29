@@ -10,6 +10,10 @@
 
 using namespace boost;
 
+Scene::Scene() {
+
+}
+
 void Scene::AddGameObject(GameObject* go)
 {
     list.push_back(go);

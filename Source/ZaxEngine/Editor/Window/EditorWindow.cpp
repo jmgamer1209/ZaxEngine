@@ -11,6 +11,7 @@
 #include "boost/filesystem/path.hpp"
 #include "Core/SceneManager.h"
 #include "WindowsMain/MonoEntry.h"
+#include "CS/MonoRegisterInternalCall.h"
 
 using namespace boost;
 
@@ -22,6 +23,7 @@ EditorWindow::EditorWindow():WindowBase()
 	Debug::Log(value.c_str());
 	MonoEntry::GetInstance()->LoadEngineAssembly();
 	MonoEntry::GetInstance()->LoadProjectAssembly();
+	MonoRegister();
 }
 
 void EditorWindow::OnWindowClosed()

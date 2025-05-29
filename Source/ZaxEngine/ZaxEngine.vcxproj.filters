@@ -50,6 +50,12 @@
     <Filter Include="ThirdParty\mono">
       <UniqueIdentifier>{e4888bad-f711-41ad-aa1a-8536e90b150a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CS">
+      <UniqueIdentifier>{4ec4768f-c7be-4704-afe6-5a7b03279933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CS\Binding">
+      <UniqueIdentifier>{4a000fac-3637-456d-97ad-f1957e023663}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -159,6 +165,12 @@
     </ClCompile>
     <ClCompile Include="Core\Material.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\Bindings\SceneBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\MonoRegisterInternalCall.cpp">
+      <Filter>CS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +291,12 @@
     </ClInclude>
     <ClInclude Include="Core\Material.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\SceneBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\MonoRegisterInternalCall.h">
+      <Filter>CS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
