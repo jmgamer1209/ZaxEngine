@@ -24,6 +24,7 @@ EditorWindow::EditorWindow():WindowBase()
 	MonoEntry::GetInstance()->LoadEngineAssembly();
 	MonoEntry::GetInstance()->LoadProjectAssembly();
 	MonoRegister();
+	MonoEntry::GetInstance()->RunGameStart();
 }
 
 void EditorWindow::OnWindowClosed()

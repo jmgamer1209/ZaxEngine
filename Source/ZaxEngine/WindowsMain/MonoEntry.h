@@ -27,5 +27,6 @@ public:
 	int LoadAssembly(boost::filesystem::path assemblyPath, MonoAssembly** assembly, MonoImage** image);
 	int LoadProjectAssembly();
 	int LoadEngineAssembly();
+	int RunGameStart();
 };
 

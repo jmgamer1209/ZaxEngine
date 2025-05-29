@@ -4,6 +4,8 @@
 #include "Core/Debug.h"
 #include "Core/Application.h"
 #include "Core/Utils.h"
+#include <mono/metadata/debug-helpers.h>
+#include <mono/metadata/mono-config.h>
 //std::cout << LOG << std::endl;	\
 
 #define ASSERT_LOG_RETURN(A, NUM, LOG) if (!(A)) \
@@ -48,4 +50,18 @@ int MonoEntry::LoadEngineAssembly()
 {
 	auto path = Utils::GetExeDirectory() / "ZaxEngine.Core.dll";
 	return this->LoadAssembly(path, &this->assembly_engine, &this->image_engine);
+}
+
+int MonoEntry::RunGameStart() 
+{ 
+	//获取MonoClass
+	MonoClass* main_class = mono_class_from_name(this->image, "", "GameEntry");
+	//获取要调用的MonoMethodDesc
+	MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("GameEntry:GameStart()", true);
+	MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
+	mono_method_desc_free(entry_point_method_desc);
+	//调用方法
+	mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+	return 0;
+
 }

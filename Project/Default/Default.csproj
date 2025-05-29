@@ -24,4 +24,10 @@
     <None Remove="Default.zproject" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ZaxEngine.Core">
+      <HintPath>..\..\Source\Binary\Debug\ZaxEngine.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
