@@ -54,14 +54,15 @@ int MonoEntry::LoadEngineAssembly()
 
 int MonoEntry::RunGameStart() 
 { 
-	//获取MonoClass
+	//获取 Class
 	MonoClass* main_class = mono_class_from_name(this->image, "", "GameEntry");
-	//获取要调用的MonoMethodDesc
-	MonoMethodDesc* entry_point_method_desc = mono_method_desc_new("GameEntry:GameStart()", true);
-	MonoMethod* entry_point_method = mono_method_desc_search_in_class(entry_point_method_desc, main_class);
-	mono_method_desc_free(entry_point_method_desc);
+
+	// 获取 Method
+	MonoMethod* mono_method = mono_class_get_method_from_name(main_class, "GameStart", 0);
+	
 	//调用方法
-	mono_runtime_invoke(entry_point_method, NULL, NULL, NULL);
+	mono_runtime_invoke(mono_method, NULL, NULL, NULL);
+
 	return 0;
 
 }
