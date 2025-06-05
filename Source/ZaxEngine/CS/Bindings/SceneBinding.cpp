@@ -4,12 +4,14 @@
 #include "mono/metadata/class.h"
 #include "Core/Scene.h"
 #include "Core/Debug.h"
+#include "Core/SceneManager.h"
 
 namespace ZaxEngine::Binding::Scene {
 
 	void CreateScene(MonoObject* obj) 
 	{
 		auto scene = new ::Scene();
+		SceneManager::mainScene = scene;
 		Debug::Log("Create Scene Success");
 	}
 

@@ -59,7 +59,7 @@ int MonoEntry::RunGameStart()
 
 	// 获取 Method
 	MonoMethod* mono_method = mono_class_get_method_from_name(main_class, "GameStart", 0);
-	
+
 	//调用方法
 	mono_runtime_invoke(mono_method, NULL, NULL, NULL);
 

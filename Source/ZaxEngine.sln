@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZaxEngine", "ZaxEngine\ZaxEngine.vcxproj", "{1D1708C8-945C-4A68-AF07-A32FE253247B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A56960F8-CBF4-447C-9385-AEDA5755C00A} = {A56960F8-CBF4-447C-9385-AEDA5755C00A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaxEngine.Core", "ZaxEngine\CS\Core\ZaxEngine.Core.csproj", "{A56960F8-CBF4-447C-9385-AEDA5755C00A}"
 EndProject

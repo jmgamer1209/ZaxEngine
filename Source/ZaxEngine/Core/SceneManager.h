@@ -5,6 +5,7 @@
 class SceneManager
 {
 public:
+	static Scene* mainScene;
 	static Scene* LoadScene(boost::filesystem::path path);
 };
 

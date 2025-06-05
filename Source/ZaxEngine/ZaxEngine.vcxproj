@@ -170,6 +170,8 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\WindowBase.cpp" />
     <ClCompile Include="Core\ZObject.cpp" />
+    <ClCompile Include="CS\Bindings\ApplicationBinding.cpp" />
+    <ClCompile Include="CS\Bindings\MeshBinding.cpp" />
     <ClCompile Include="CS\Bindings\SceneBinding.cpp" />
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
@@ -214,6 +216,8 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\WindowBase.h" />
     <ClInclude Include="Core\ZObject.h" />
+    <ClInclude Include="CS\Bindings\ApplicationBinding.h" />
+    <ClInclude Include="CS\Bindings\MeshBinding.h" />
     <ClInclude Include="CS\Bindings\SceneBinding.h" />
     <ClInclude Include="CS\MonoRegisterInternalCall.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />

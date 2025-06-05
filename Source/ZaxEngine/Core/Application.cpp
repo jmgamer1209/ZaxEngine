@@ -1,6 +1,9 @@
 #include "Application.h"
 
 #include "Editor/Window/EditorWindow.h"
+#include "CS/Bindings/ApplicationBinding.h"
+#include <WindowsMain/MonoEntry.h>
+#include <CS/MonoRegisterInternalCall.h>
 
 boost::filesystem::path Application::projectPath;
 boost::filesystem::path Application::projectName;
@@ -20,5 +23,10 @@ void Application::OpenEditor(const boost::filesystem::path& projectPath)
     Application::projectFolderPath = projectPath.parent_path();
     Application::projectName = projectPath.stem().string();
     contentPath = (Application::projectFolderPath / ("Content")).string();
+    MonoEntry::GetInstance()->LoadEngineAssembly();
+    MonoEntry::GetInstance()->LoadProjectAssembly();
+    MonoRegister();
+    ZaxEngine::Binding::Application::TriggerStaticInit();
+    ZaxEngine::Binding::Application::SetContentPath(contentPath.string());
     window = dynamic_cast<WindowBase*>(new EditorWindow());
 }

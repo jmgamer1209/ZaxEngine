@@ -172,6 +172,12 @@
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp">
       <Filter>CS</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\MeshBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\Bindings\ApplicationBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -297,6 +303,12 @@
     </ClInclude>
     <ClInclude Include="CS\MonoRegisterInternalCall.h">
       <Filter>CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\MeshBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\ApplicationBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

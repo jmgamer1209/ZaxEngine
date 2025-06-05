@@ -21,9 +21,6 @@ EditorWindow::EditorWindow():WindowBase()
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	Debug::Log(value.c_str());
-	MonoEntry::GetInstance()->LoadEngineAssembly();
-	MonoEntry::GetInstance()->LoadProjectAssembly();
-	MonoRegister();
 	MonoEntry::GetInstance()->RunGameStart();
 }
 
@@ -136,7 +133,7 @@ void EditorWindow::LoadScene()
 {
 	//SceneManager::LoadScene(Application::contentPath / Application::projectConfig.EditorStartupMap);
 	//MonoEntry::GetInstance().
-
+	scene = SceneManager::mainScene;
 	
 	// 导入 Mesh
 	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");

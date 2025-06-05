@@ -4,10 +4,11 @@
 #include "Core/Vertex.h"
 #include "glad/gl.h"
 #include "Assets/AssetModel.h"
+#include "Core/ZObject.h"
 
 using namespace std;
 
-class Mesh
+class Mesh:ZObject
 {
 public:
 	vector<Vertex> vertices;
