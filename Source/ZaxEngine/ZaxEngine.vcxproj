@@ -175,6 +175,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="CS\Bindings\BindingHelper.cpp" />
     <ClCompile Include="CS\Bindings\MeshBinding.cpp" />
     <ClCompile Include="CS\Bindings\SceneBinding.cpp" />
+    <ClCompile Include="CS\Bindings\ShaderProgramBinding.cpp" />
     <ClCompile Include="CS\MonoEntry.cpp" />
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
@@ -223,6 +224,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="CS\Bindings\BindingHelper.h" />
     <ClInclude Include="CS\Bindings\MeshBinding.h" />
     <ClInclude Include="CS\Bindings\SceneBinding.h" />
+    <ClInclude Include="CS\Bindings\ShaderProgramBinding.h" />
     <ClInclude Include="CS\MonoEntry.h" />
     <ClInclude Include="CS\MonoRegisterInternalCall.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />

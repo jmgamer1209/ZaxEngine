@@ -184,6 +184,9 @@
     <ClCompile Include="CS\Bindings\BindingCommon.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\ShaderProgramBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -320,6 +323,9 @@
       <Filter>CS\Binding</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\BindingCommon.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\ShaderProgramBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
