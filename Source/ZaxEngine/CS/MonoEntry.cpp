@@ -1,4 +1,4 @@
-#include "WindowsMain/MonoEntry.h"
+#include "MonoEntry.h"
 #include <iostream>
 #include "boost/filesystem/path.hpp"
 #include "Core/Debug.h"

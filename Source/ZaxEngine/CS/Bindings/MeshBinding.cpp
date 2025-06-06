@@ -4,7 +4,7 @@
 #include "mono/metadata/class.h"
 #include "Core/Debug.h"
 #include "Core/Mesh.h"
-#include "WindowsMain/MonoEntry.h"
+#include "CS/MonoEntry.h"
 
 namespace ZaxEngine::Binding::Mesh {
 

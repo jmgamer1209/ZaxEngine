@@ -173,6 +173,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="CS\Bindings\ApplicationBinding.cpp" />
     <ClCompile Include="CS\Bindings\MeshBinding.cpp" />
     <ClCompile Include="CS\Bindings\SceneBinding.cpp" />
+    <ClCompile Include="CS\MonoEntry.cpp" />
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
@@ -188,7 +189,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="WindowsMain\MonoEntry.cpp" />
     <ClCompile Include="WindowsMain\ZaxEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +219,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="CS\Bindings\ApplicationBinding.h" />
     <ClInclude Include="CS\Bindings\MeshBinding.h" />
     <ClInclude Include="CS\Bindings\SceneBinding.h" />
+    <ClInclude Include="CS\MonoEntry.h" />
     <ClInclude Include="CS\MonoRegisterInternalCall.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
@@ -234,7 +235,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp" />
     <ClInclude Include="ThirdParty\glm\glm.hpp" />
-    <ClInclude Include="WindowsMain\MonoEntry.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <ItemGroup>

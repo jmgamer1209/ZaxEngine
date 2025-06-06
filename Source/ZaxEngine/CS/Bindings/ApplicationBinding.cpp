@@ -2,7 +2,7 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include <WindowsMain/MonoEntry.h>
+#include <CS/MonoEntry.h>
 //#include "mono/utils/mono-logger.h"
 
 namespace ZaxEngine::Binding::Application

@@ -10,7 +10,7 @@
 #include "boost/json.hpp"
 #include "boost/filesystem/path.hpp"
 #include "Core/SceneManager.h"
-#include "WindowsMain/MonoEntry.h"
+#include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
 
 using namespace boost;
