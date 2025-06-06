@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace ZaxEngine
 {
-    public class Mesh:Object
+    public class Mesh:ZObject
     {
         public Mesh(string path)
         {

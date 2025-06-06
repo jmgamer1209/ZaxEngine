@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZaxEngine
 {
-    public class ShaderProgram:Object
+    public class ShaderProgram:ZObject
     {
         public ShaderProgram(string vertexPath, string fragmentPath)
         {

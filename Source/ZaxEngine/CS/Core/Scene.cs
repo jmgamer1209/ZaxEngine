@@ -9,7 +9,7 @@ namespace ZaxEngine
         public float ambientIntensity;
     };
 
-    public class Scene : Object
+    public class Scene : ZObject
     {
         public List<GameObject> list = new List<GameObject>();
         public SceneLighting lightingSettings;

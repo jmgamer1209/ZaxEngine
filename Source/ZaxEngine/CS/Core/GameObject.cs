@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace ZaxEngine
 {
-    public class GameObject:Object
+    public class GameObject:ZObject
     {
         public List<Component> components = new List<Component>();
         public string name;
