@@ -5,6 +5,8 @@
 #include "Core/Scene.h"
 #include "Core/Debug.h"
 #include "Core/SceneManager.h"
+#include "BindingHelper.h"
+#include "BindingCommon.h"
 
 namespace ZaxEngine::Binding::Scene {
 
@@ -12,6 +14,7 @@ namespace ZaxEngine::Binding::Scene {
 	{
 		auto scene = new ::Scene();
 		SceneManager::mainScene = scene;
+		BindingHelper::SetNativePtr(obj, scene, BindingCommon::EngineNameSpace, "Scene");
 		Debug::Log("Create Scene Success");
 	}
 

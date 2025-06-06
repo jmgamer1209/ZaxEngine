@@ -178,6 +178,12 @@
     <ClCompile Include="CS\MonoEntry.cpp">
       <Filter>CS</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\BindingHelper.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\Bindings\BindingCommon.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -309,6 +315,12 @@
     </ClInclude>
     <ClInclude Include="CS\MonoEntry.h">
       <Filter>CS</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\BindingHelper.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\BindingCommon.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

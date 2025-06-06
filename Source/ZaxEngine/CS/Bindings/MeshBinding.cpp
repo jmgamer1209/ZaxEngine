@@ -5,6 +5,8 @@
 #include "Core/Debug.h"
 #include "Core/Mesh.h"
 #include "CS/MonoEntry.h"
+#include "BindingHelper.h"
+#include "BindingCommon.h"
 
 namespace ZaxEngine::Binding::Mesh {
 
@@ -18,10 +20,14 @@ namespace ZaxEngine::Binding::Mesh {
 	{
 		auto wcharPath = mono_string_to_utf16(path);
 		auto nativeObj = new ::Mesh(wcharPath);
-		
-		MonoClass* main_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, "ZaxEngine", "Mesh");
+
+		Binding::BindingHelper::SetNativePtr(obj, nativeObj, BindingCommon::EngineNameSpace, "Mesh");
+
+		// 测试代码，注释
+		/*MonoClass* main_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, "ZaxEngine", "Mesh");
 		MonoClassField* field = mono_class_get_field_from_name(main_class, "nativePtr");
-		mono_field_set_value(obj, field, &nativeObj);
+		::Mesh* mesh = nullptr;
+		mono_field_get_value(obj, field, &mesh);*/
 			
 		Debug::Log("Create Mesh Success");
 	}
