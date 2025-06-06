@@ -137,12 +137,14 @@ void EditorWindow::LoadScene()
 	
 	// 导入 Mesh
 	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
-	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
-	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
 
 	// 创建 Shader Program 和 材质
 	shaderProgram = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs");
 	Material* mat = new Material(shaderProgram);
+
+	// 加载纹理
+	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
+	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
 	auto woodenBoxAlbedoTexture = Utils::LoadTexture(baseColorPath);
 	auto woodenBoxNormalTexture = Utils::LoadTexture(normalPath);
 
