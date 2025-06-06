@@ -21,8 +21,7 @@ namespace ZaxEngine::Binding::Mesh {
 		
 		MonoClass* main_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, "ZaxEngine", "Mesh");
 		MonoClassField* field = mono_class_get_field_from_name(main_class, "nativePtr");
-		mono_field_set_value(obj, field, nativeObj);
-		//mono_property_set_value(property,)
+		mono_field_set_value(obj, field, &nativeObj);
 			
 		Debug::Log("Create Mesh Success");
 	}
