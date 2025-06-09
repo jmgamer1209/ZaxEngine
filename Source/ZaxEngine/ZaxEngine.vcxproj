@@ -207,7 +207,6 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Debug.h" />
-    <ClInclude Include="Core\DefualtMaterial.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />

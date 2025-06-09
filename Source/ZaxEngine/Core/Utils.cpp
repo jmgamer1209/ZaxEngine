@@ -79,10 +79,11 @@ Texture Utils::LoadTexture(string& path, bool flip_vertically)
     return t;
 }
 
-void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
+unsigned int Utils::LoadCubeMap(const string& folderPath)
 {
-	glGenTextures(1, texture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, *texture);
+    unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
 
     // 加载顺序固定
     vector<std::string> faces
@@ -124,6 +125,8 @@ void Utils::LoadCubeMap(unsigned int* texture, const string& folderPath)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);  // 特别的 R 方向
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    return texture;
 }
 
 glm::mat4 Utils::GetViewMatrix(const Transform& transform)

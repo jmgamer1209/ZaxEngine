@@ -301,9 +301,6 @@
     <ClInclude Include="Core\Texture.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DefualtMaterial.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Material.h">
       <Filter>Core</Filter>
     </ClInclude>

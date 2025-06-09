@@ -9,7 +9,7 @@ private:
 
 private:
     unsigned int VBO;
-    unsigned int cubeMap;
+    Texture cubeMapTex;
 
     // 顶点为顺时针布局，所以CullFace设置为Back
     float vertices[108] = {
@@ -66,7 +66,8 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        Utils::LoadCubeMap(&cubeMap, (Application::contentPath / "/Common/Skybox/1/").string());
+        auto folderPath = (Application::contentPath / "/Common/Skybox/1/").string();
+        cubeMapTex = Texture::Load(folderPath, TextureType::CubeMap);
 	}
 	~Skybox() {}
 
@@ -81,7 +82,7 @@ public:
         
         shader->Use();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTex.ID);
         shader->SetUniform("cubeMap", 0);
 
         auto view = glm::mat4(glm::mat3(camera->GetViewMatrix()));
@@ -95,7 +96,6 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    unsigned int GetCubeMap() { return cubeMap; }
+    Texture GetCubeMap() { return cubeMapTex; }
 
-    void SetCubeMap(unsigned int ID) { cubeMap = ID; }
 };

@@ -145,8 +145,8 @@ void EditorWindow::LoadScene()
 	// 加载纹理
 	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
 	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
-	auto woodenBoxAlbedoTexture = Utils::LoadTexture(baseColorPath);
-	auto woodenBoxNormalTexture = Utils::LoadTexture(normalPath);
+	auto woodenBoxAlbedoTexture = Texture::Load(baseColorPath);
+	auto woodenBoxNormalTexture = Texture::Load(normalPath);
 
 	mat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
 	mat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
@@ -171,9 +171,9 @@ void EditorWindow::LoadScene()
 	// 反射材质
 	auto reflectionShader = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "reflectionCube.vs", Application::contentPath / "Shaders" / "Common" / "reflectionCube.fs");
 	auto reflectionMat = new Material(reflectionShader);
-	auto albedoTexture = Utils::LoadTexture(baseColorPath);
+	auto albedoTexture = woodenBoxAlbedoTexture;
 	reflectionMat->SetProperty("albedoTexture", MaterialProperty(albedoTexture));
-	reflectionMat->SetProperty("environmentTexture", MaterialProperty(Texture(TextureType::CubeMap,skybox->GetCubeMap())));
+	reflectionMat->SetProperty("environmentTexture", MaterialProperty(skybox->GetCubeMap()));
 	reflectionMat->SetProperty("specularIntensity", MaterialProperty(0.5f));
 	reflectionMat->SetProperty("reflectionIntensity", MaterialProperty(0.5f));
 
