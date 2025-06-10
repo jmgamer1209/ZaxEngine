@@ -6,7 +6,6 @@ namespace ZaxEngine
 {
     public class GameObject:ZObject
     {
-        public List<Component> components = new List<Component>();
         public string name;
         public bool isActive = true;
 
@@ -23,15 +22,17 @@ namespace ZaxEngine
 
         public void AddComponent(Component comp)
         {
-            comp.gameObject = this;
-            components.Add(comp);
+            Internal_AddComponent(GetNativePtr(), comp.GetNativePtr());
         }
-
 
         #region Internal Call
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern Component Internal_AddComponentWithType(Type componentType);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Internal_AddComponent(IntPtr gameobjectPtr, IntPtr componentPtr);
+
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_Create();

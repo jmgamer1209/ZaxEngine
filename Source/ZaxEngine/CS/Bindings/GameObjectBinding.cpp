@@ -23,9 +23,15 @@ namespace ZaxEngine::Binding::GameObject {
 		Debug::Log("Create GameObject Success");
 	}
 
+	void AddComponent(MonoObject* obj, ::GameObject* go, Component* comp)
+	{
+		go->AddComponent(comp);
+	}
+
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_CreateWithName", reinterpret_cast<void*>(CreateWithName));
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_Create", reinterpret_cast<void*>(Create));
+		mono_add_internal_call("ZaxEngine.GameObject::Internal_AddComponent", reinterpret_cast<void*>(AddComponent));
 	}
 }
