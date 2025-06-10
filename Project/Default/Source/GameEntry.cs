@@ -34,7 +34,7 @@ public class GameEntry
         var skyboxGO = new GameObject("Skybox");
         var t = new Transform();
         skyboxGO.AddComponent(t);
-        //auto skybox = new Skybox();
-        //skyboxGO->AddComponent(skybox);
+        var skybox = new Skybox();
+        skyboxGO.AddComponent(skybox);
     }
 }

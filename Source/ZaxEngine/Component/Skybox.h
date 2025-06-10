@@ -1,6 +1,9 @@
 #pragma once
 #include "Component/Component.h"
 #include "Core/ShaderProgram.h"
+#include <Core/Texture.h>
+#include "Component/Camera.h"
+#include "Core/Application.h"
 
 class Skybox: public Component
 {
