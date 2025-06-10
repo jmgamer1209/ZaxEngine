@@ -196,6 +196,9 @@
     <ClCompile Include="Core\ZString.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\GameObjectBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -342,6 +345,9 @@
     </ClInclude>
     <ClInclude Include="Core\ZString.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\GameObjectBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 #include "Bindings/ShaderProgramBinding.h"
 #include "Bindings/MaterialBinding.h"
 #include "Bindings/TextureBinding.h"
+#include "Bindings/GameObjectBinding.h"
 
 void MonoRegister()
 {
@@ -12,4 +13,5 @@ void MonoRegister()
 	ZaxEngine::Binding::ShaderProgram::RegisterInternalCall();
 	ZaxEngine::Binding::Material::RegisterInternalCall();
 	ZaxEngine::Binding::Texture::RegisterInternalCall();
+	ZaxEngine::Binding::GameObject::RegisterInternalCall();
 }

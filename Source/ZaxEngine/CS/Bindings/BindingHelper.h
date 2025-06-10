@@ -4,6 +4,8 @@
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
 #include "mono/metadata/object.h"
+#include "Core/ZString.h"
+#include <string>
 
 namespace ZaxEngine::Binding::BindingHelper {
 
@@ -22,6 +24,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 		mono_field_get_value(obj, mono_field, &value);
 		return value;
 	}
+
+	std::string StringFromMonoString(MonoString* str);
 }
 
 

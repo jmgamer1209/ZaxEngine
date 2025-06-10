@@ -25,4 +25,9 @@ namespace ZaxEngine::Binding::BindingHelper {
 		auto mono_field = mono_class_get_field_from_name(mono_class, fieldName);
 		mono_field_set_value(obj, mono_field, value);
 	}
+
+	string StringFromMonoString(MonoString* str)
+	{
+		return ZString(mono_string_to_utf16(str)).GetU8String();
+	}
 }

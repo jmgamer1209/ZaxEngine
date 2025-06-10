@@ -29,5 +29,11 @@ public class GameEntry
         transparentMat.SetProperty("NormalMap", woodenBoxNormalTexture);
         transparentMat.SetProperty("SurfaceType", 1);
         transparentMat.SetProperty("Alpha", 0.5f);
+
+        // 先创建天空盒
+        var skyboxGO = new GameObject("Skybox");
+        //skyboxGO->AddComponent(new Transform());
+        //auto skybox = new Skybox();
+        //skyboxGO->AddComponent(skybox);
     }
 }
