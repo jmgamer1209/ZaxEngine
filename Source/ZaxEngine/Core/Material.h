@@ -60,7 +60,7 @@ struct MaterialProperty
 	MaterialPropertyType type;
 	union
 	{
-		Texture texture;
+		Texture* texture;
 		float floatValue;
 		int intValue;
 	};
@@ -70,8 +70,9 @@ struct MaterialProperty
 		
 	};
 
-	MaterialProperty(const Texture& v) :texture{ v } 
+	MaterialProperty(Texture* v)
 	{
+		this->texture = v;
 		type = MaterialPropertyType::Texture;
 	};
 	MaterialProperty(const float& v) :floatValue{ v } 

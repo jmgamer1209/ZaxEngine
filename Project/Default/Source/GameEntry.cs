@@ -11,7 +11,10 @@ public class GameEntry
         var shaderProgram = new ShaderProgram(Path.Combine(Application.contentPath, "Shaders", "Common", "forward.vs"), Path.Combine(Application.contentPath, "Shaders", "Common", "forward.fs"));
         var mat = new Material(shaderProgram);
 
+        // 加载纹理
         string baseColorPath = Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Textures", "Wooden Crate_Crate_BaseColor.png");
         string normalPath = Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Textures", "Wooden Crate_Crate_Normal.png");
+        var woodenBoxAlbedoTexture = Texture.Load(baseColorPath);
+        var woodenBoxNormalTexture = Texture.Load(normalPath);
     }
 }

@@ -2,9 +2,9 @@
 #include <string>
 using namespace std;
 
-enum class TextureType
+enum class TextureType: uint8_t
 {
-	Texture2D, CubeMap
+	Texture2D = 1, CubeMap = 2
 };
 
 class Texture
@@ -17,6 +17,6 @@ public:
 
 	Texture(TextureType type, unsigned int ID);
 
-	static Texture Load(string& path, TextureType type = TextureType::Texture2D, bool flip_vertically = false);
+	static Texture* Load(string& path, TextureType type = TextureType::Texture2D, bool flip_vertically = false);
 };
 

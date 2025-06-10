@@ -21,7 +21,7 @@ namespace ZaxEngine::Binding::Material {
 		auto shader = (ShaderProgram*)shaderPtr;
 		auto nativeObj = new ::Material(shader);
 
-		Binding::BindingHelper::SetNativePtr(obj, nativeObj, BindingCommon::EngineNameSpace, "Material");
+		Binding::BindingHelper::SetNativePtr(obj, nativeObj);
 			
 		Debug::Log("Create Mat Success");
 	}

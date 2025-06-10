@@ -14,7 +14,7 @@ namespace ZaxEngine::Binding::Scene {
 	{
 		auto scene = new ::Scene();
 		SceneManager::mainScene = scene;
-		BindingHelper::SetNativePtr(obj, scene, BindingCommon::EngineNameSpace, "Scene");
+		BindingHelper::SetNativePtr(obj, scene);
 		Debug::Log("Create Scene Success");
 	}
 

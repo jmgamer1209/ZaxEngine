@@ -9,7 +9,7 @@ private:
 
 private:
     unsigned int VBO;
-    Texture cubeMapTex;
+    Texture* cubeMapTex;
 
     // 顶点为顺时针布局，所以CullFace设置为Back
     float vertices[108] = {
@@ -82,7 +82,7 @@ public:
         
         shader->Use();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTex.ID);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTex->ID);
         shader->SetUniform("cubeMap", 0);
 
         auto view = glm::mat4(glm::mat3(camera->GetViewMatrix()));
@@ -96,6 +96,6 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    Texture GetCubeMap() { return cubeMapTex; }
+    Texture* GetCubeMap() { return cubeMapTex; }
 
 };

@@ -15,7 +15,7 @@ namespace Utils
 	string WString2String(const wstring& ws);
 	wstring String2Wstring(const string& s);
 	void LoadTexture(unsigned int* texture, string& path, bool flip_vertically = false);
-	Texture LoadTexture(string& path, bool flip_vertically = false);
+	Texture* LoadTexture(string& path, bool flip_vertically = false);
 	unsigned int LoadCubeMap(const string& folderPath);
 	glm::mat4 GetViewMatrix(const Transform& transform);
 	boost::filesystem::path GetExeDirectory();

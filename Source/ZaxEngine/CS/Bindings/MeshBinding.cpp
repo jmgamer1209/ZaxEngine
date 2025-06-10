@@ -21,7 +21,7 @@ namespace ZaxEngine::Binding::Mesh {
 		auto wcharPath = mono_string_to_utf16(path);
 		auto nativeObj = new ::Mesh(wcharPath);
 
-		Binding::BindingHelper::SetNativePtr(obj, nativeObj, BindingCommon::EngineNameSpace, "Mesh");
+		Binding::BindingHelper::SetNativePtr(obj, nativeObj);
 
 		// 测试代码，注释
 		/*MonoClass* main_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, "ZaxEngine", "Mesh");

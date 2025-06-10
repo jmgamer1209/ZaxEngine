@@ -7,13 +7,13 @@ Texture::Texture(TextureType type, unsigned int ID)
 	this->ID = ID;
 }
 
-Texture Texture::Load(string& path, TextureType type, bool flip_vertically)
+Texture* Texture::Load(string& path, TextureType type, bool flip_vertically)
 {
 	if (type == TextureType::Texture2D) {
 		return Utils::LoadTexture(path, flip_vertically);
 	}
 	else {
 		auto cubemap = Utils::LoadCubeMap(path);
-		Texture(TextureType::CubeMap, cubemap);
+		return new Texture(TextureType::CubeMap, cubemap);
 	}
 }

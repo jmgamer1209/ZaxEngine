@@ -3,6 +3,7 @@
 #include "Bindings/MeshBinding.h"
 #include "Bindings/ShaderProgramBinding.h"
 #include "Bindings/MaterialBinding.h"
+#include "Bindings/TextureBinding.h"
 
 void MonoRegister()
 {
@@ -10,4 +11,5 @@ void MonoRegister()
 	ZaxEngine::Binding::Mesh::RegisterInternalCall();
 	ZaxEngine::Binding::ShaderProgram::RegisterInternalCall();
 	ZaxEngine::Binding::Material::RegisterInternalCall();
+	ZaxEngine::Binding::Texture::RegisterInternalCall();
 }

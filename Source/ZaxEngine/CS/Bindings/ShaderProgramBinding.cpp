@@ -22,7 +22,7 @@ namespace ZaxEngine::Binding::ShaderProgram {
 		auto wcharFPath = mono_string_to_utf16(fragmentPath);
 		auto nativeObj = new ::ShaderProgram(wcharVPath, wcharFPath);
 
-		Binding::BindingHelper::SetNativePtr(obj, nativeObj, BindingCommon::EngineNameSpace, "ShaderProgram");
+		Binding::BindingHelper::SetNativePtr(obj, nativeObj);
 			
 		Debug::Log("Create ShaderProgram Success");
 	}

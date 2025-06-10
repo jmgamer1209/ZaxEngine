@@ -8,10 +8,21 @@
 
 namespace ZaxEngine::Binding::BindingHelper {
 
-	void SetNativePtr(MonoObject* obj, void* value, const char* name_space, const char* name)
+	void SetNativePtr(MonoObject* obj, void* value)
 	{
-		MonoClass* main_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, name_space, name);
-		MonoClassField* field = mono_class_get_field_from_name(main_class, "nativePtr");
+		auto mono_class = mono_object_get_class(obj);
+		MonoClassField* field = mono_class_get_field_from_name(mono_class, "nativePtr");
 		mono_field_set_value(obj, field, &value);
+	}
+	
+	MonoObject* NewMonoObject(const char* name_space, const char* name) {
+		MonoClass* mono_class = mono_class_from_name(MonoEntry::GetInstance()->image_engine, name_space, name);
+		return mono_object_new(MonoEntry::GetInstance()->domain, mono_class);
+	}
+
+	void MonoObjectSetValue(MonoObject* obj, const char* fieldName, void* value) {
+		auto mono_class = mono_object_get_class(obj);
+		auto mono_field = mono_class_get_field_from_name(mono_class, fieldName);
+		mono_field_set_value(obj, mono_field, value);
 	}
 }

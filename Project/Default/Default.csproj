@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".editorconfig" />
     <None Remove=".gitignore" />
     <None Remove="Default.zproject" />
   </ItemGroup>
@@ -29,5 +30,6 @@
       <HintPath>..\..\Source\Binary\Debug\ZaxEngine.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 
 </Project>

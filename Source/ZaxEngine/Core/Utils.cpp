@@ -71,11 +71,17 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 	stbi_image_free(data);
 }
 
-Texture Utils::LoadTexture(string& path, bool flip_vertically) 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="path">utf8编码的字符串</param>
+/// <param name="flip_vertically"></param>
+/// <returns></returns>
+Texture* Utils::LoadTexture(string& path, bool flip_vertically) 
 {
     unsigned int id;
-    LoadTexture(&id, path, flip_vertically);
-    Texture t(TextureType::Texture2D, id);
+    Utils::LoadTexture(&id, path, flip_vertically);
+    Texture* t = new Texture(TextureType::Texture2D, id);
     return t;
 }
 
