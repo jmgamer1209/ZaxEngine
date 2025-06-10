@@ -21,7 +21,13 @@ EditorWindow::EditorWindow():WindowBase()
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	Debug::Log(value.c_str());
-	MonoEntry::GetInstance()->RunGameStart();
+	try {
+		MonoEntry::GetInstance()->RunGameStart();
+	}
+	catch (const std::exception& e) {
+		Debug::Log(e.what());
+	}
+	
 }
 
 void EditorWindow::OnWindowClosed()

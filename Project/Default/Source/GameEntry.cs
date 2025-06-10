@@ -16,5 +16,18 @@ public class GameEntry
         string normalPath = Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Textures", "Wooden Crate_Crate_Normal.png");
         var woodenBoxAlbedoTexture = Texture.Load(baseColorPath);
         var woodenBoxNormalTexture = Texture.Load(normalPath);
+
+        mat.SetProperty("AlbedoTexture", woodenBoxAlbedoTexture);
+        mat.SetProperty("NormalMap", woodenBoxNormalTexture);
+        mat.SetProperty("Test", 10);
+
+        Material planeMat = new Material(shaderProgram);
+        planeMat.SetProperty("AlbedoTexture", woodenBoxAlbedoTexture);
+
+        Material transparentMat = new Material(shaderProgram);
+        transparentMat.SetProperty("AlbedoTexture", woodenBoxAlbedoTexture);
+        transparentMat.SetProperty("NormalMap", woodenBoxNormalTexture);
+        transparentMat.SetProperty("SurfaceType", 1);
+        transparentMat.SetProperty("Alpha", 0.5f);
     }
 }
