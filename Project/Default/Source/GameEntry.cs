@@ -32,7 +32,8 @@ public class GameEntry
 
         // 先创建天空盒
         var skyboxGO = new GameObject("Skybox");
-        //skyboxGO->AddComponent(new Transform());
+        var t = new Transform();
+        //skyboxGO->AddComponent();
         //auto skybox = new Skybox();
         //skyboxGO->AddComponent(skybox);
     }

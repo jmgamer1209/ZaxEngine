@@ -199,6 +199,9 @@
     <ClCompile Include="CS\Bindings\GameObjectBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\TransformBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -347,6 +350,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\GameObjectBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\TransformBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>

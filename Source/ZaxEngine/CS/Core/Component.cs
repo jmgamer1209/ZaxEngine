@@ -2,7 +2,7 @@ using System;
 
 namespace ZaxEngine
 {
-    public class Component
+    public class Component:ZObject
     {
         public GameObject gameObject;
     }

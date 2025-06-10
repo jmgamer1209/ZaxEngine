@@ -5,6 +5,7 @@
 #include "Bindings/MaterialBinding.h"
 #include "Bindings/TextureBinding.h"
 #include "Bindings/GameObjectBinding.h"
+#include "Bindings/TransformBinding.h"
 
 void MonoRegister()
 {
@@ -14,4 +15,5 @@ void MonoRegister()
 	ZaxEngine::Binding::Material::RegisterInternalCall();
 	ZaxEngine::Binding::Texture::RegisterInternalCall();
 	ZaxEngine::Binding::GameObject::RegisterInternalCall();
+	ZaxEngine::Binding::Transform::RegisterInternalCall();
 }

@@ -180,6 +180,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="CS\Bindings\SceneBinding.cpp" />
     <ClCompile Include="CS\Bindings\ShaderProgramBinding.cpp" />
     <ClCompile Include="CS\Bindings\TextureBinding.cpp" />
+    <ClCompile Include="CS\Bindings\TransformBinding.cpp" />
     <ClCompile Include="CS\MonoEntry.cpp" />
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
@@ -232,6 +233,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="CS\Bindings\SceneBinding.h" />
     <ClInclude Include="CS\Bindings\ShaderProgramBinding.h" />
     <ClInclude Include="CS\Bindings\TextureBinding.h" />
+    <ClInclude Include="CS\Bindings\TransformBinding.h" />
     <ClInclude Include="CS\MonoEntry.h" />
     <ClInclude Include="CS\MonoRegisterInternalCall.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
