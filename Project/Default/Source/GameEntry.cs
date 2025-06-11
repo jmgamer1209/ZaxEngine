@@ -35,6 +35,18 @@ public class GameEntry
         var t = new Transform();
         skyboxGO.AddComponent(t);
         var skybox = new Skybox();
+        var folderPath = Path.Combine(Application.contentPath, "Common", "Skybox" , "1");
+        var cubeMapTex = Texture.Load(folderPath, TextureType.CubeMap);
+        skybox.SetCubeMap(cubeMapTex);
         skyboxGO.AddComponent(skybox);
+
+        // 反射材质
+        var reflectionShader = new ShaderProgram(Path.Combine(Application.contentPath,"Shaders", "Common" , "reflectionCube.vs"), Path.Combine(Application.contentPath,"Shaders" , "Common" , "reflectionCube.fs"));
+        var reflectionMat = new Material(reflectionShader);
+        var albedoTexture = woodenBoxAlbedoTexture;
+        reflectionMat.SetProperty("albedoTexture", albedoTexture);
+        reflectionMat.SetProperty("environmentTexture", cubeMapTex);
+        reflectionMat.SetProperty("specularIntensity", 0.5f);
+        reflectionMat.SetProperty("reflectionIntensity", 0.5f);
     }
 }

@@ -17,8 +17,14 @@ namespace ZaxEngine::Binding::Skybox {
 		Debug::Log("Create Skybox Success");
 	}
 
+	void Internal_SetCubeMap(::Skybox* skybox, Texture* tex)
+	{
+		skybox->SetCubeMap(tex);
+	}
+
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.Skybox::Internal_Create", reinterpret_cast<void*>(Create));
+		mono_add_internal_call("ZaxEngine.Skybox::Internal_SetCubeMap", reinterpret_cast<void*>(Internal_SetCubeMap));
 	}
 }

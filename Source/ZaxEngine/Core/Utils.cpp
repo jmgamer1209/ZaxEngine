@@ -103,9 +103,10 @@ unsigned int Utils::LoadCubeMap(const string& folderPath)
     };
 
     int width, height, nrChannels;
+    boost::filesystem::path path(folderPath);
     for (unsigned int i = 0; i < faces.size(); i++)
     {
-        unsigned char* data = stbi_load((folderPath + faces[i]).c_str(), &width, &height, &nrChannels, 0);
+        unsigned char* data = stbi_load((path / faces[i]).string().c_str(), &width, &height, &nrChannels, 0);
 
         // 根据是否是4的倍数，设置读取像素的单位
         if (nrChannels == 4 || (width % 4 == 0 && height % 4 == 0)) glPixelStorei(GL_UNPACK_ALIGNMENT, 4);   // 4字节读取

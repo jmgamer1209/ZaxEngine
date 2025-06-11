@@ -172,6 +172,9 @@ void EditorWindow::LoadScene()
 	auto skyboxGO = new GameObject("Skybox");
 	skyboxGO->AddComponent(new Transform());
 	auto skybox = new Skybox();
+	auto folderPath = (Application::contentPath / "/Common/Skybox/1").string();
+	auto cubeMapTex = Texture::Load(folderPath, TextureType::CubeMap);
+	skybox->SetCubeMap(cubeMapTex);
 	skyboxGO->AddComponent(skybox);
 
 	// 反射材质

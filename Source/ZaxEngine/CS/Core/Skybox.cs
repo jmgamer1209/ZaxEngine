@@ -16,5 +16,12 @@ namespace ZaxEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void Internal_Create(Skybox obj);
+
+        public void SetCubeMap(Texture tex)
+        {
+            Internal_SetCubeMap(GetNativePtr(), tex.GetNativePtr());
+        }
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern void Internal_SetCubeMap(IntPtr skybox, IntPtr tex);
     }
 }
