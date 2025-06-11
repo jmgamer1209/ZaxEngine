@@ -205,6 +205,9 @@
     <ClCompile Include="CS\Bindings\SkyboxBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\MeshRendererBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -359,6 +362,9 @@
       <Filter>CS\Binding</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\SkyboxBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\MeshRendererBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>

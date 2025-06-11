@@ -7,6 +7,7 @@
 #include "Bindings/GameObjectBinding.h"
 #include "Bindings/TransformBinding.h"
 #include "Bindings/SkyboxBinding.h"
+#include "Bindings/MeshRendererBinding.h"
 
 void MonoRegister()
 {
@@ -18,4 +19,5 @@ void MonoRegister()
 	ZaxEngine::Binding::GameObject::RegisterInternalCall();
 	ZaxEngine::Binding::Transform::RegisterInternalCall();
 	ZaxEngine::Binding::Skybox::RegisterInternalCall();
+	ZaxEngine::Binding::MeshRenderer::RegisterInternalCall();
 }
