@@ -9,7 +9,7 @@ public:
     GameObject* selectedGO;
     bool isShowLightingSettings;
     Scene* scene;
-    ShaderProgram* shaderProgram;
+    //ShaderProgram* shaderProgram;
 
     EditorWindow();
     void DrawWindowUI() override;

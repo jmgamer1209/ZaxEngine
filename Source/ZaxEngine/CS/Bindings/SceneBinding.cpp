@@ -18,8 +18,16 @@ namespace ZaxEngine::Binding::Scene {
 		Debug::Log("Create Scene Success");
 	}
 
+	void Internal_AddGameObject(MonoObject* obj, MonoObject* go)
+	{
+		auto native = BindingHelper::GetNativeObj<::Scene*>(obj);
+		auto nativeGO = BindingHelper::GetNativeObj<::GameObject*>(go);
+		native->AddGameObject(nativeGO);
+	}
+
 	void RegisterInternalCall() 
 	{
 		mono_add_internal_call("ZaxEngine.Scene::Internal_Create", reinterpret_cast<void*>(CreateScene));
+		mono_add_internal_call("ZaxEngine.Scene::Internal_AddGameObject", reinterpret_cast<void*>(Internal_AddGameObject));
 	}
 }

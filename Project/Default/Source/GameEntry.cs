@@ -136,5 +136,18 @@ public class GameEntry
         light.innerAngle = 30;
         light.outerAngle = 40;
         spotLightGO.AddComponent(light);
+
+        /*scene->lightingSettings.ambientColor = Color(1, 1, 1);
+	scene->lightingSettings.ambientIntensity = 0.1f;*/
+        scene.AddGameObject(cameraGO);
+        for (int i = 0; i < boxes.Count(); i++)
+        {
+            scene.AddGameObject(boxes[i]);
+        }
+        scene.AddGameObject(lightGO);
+        scene.AddGameObject(pointLightGO);
+        scene.AddGameObject(spotLightGO);
+        scene.AddGameObject(skyboxGO);
+        scene.AddGameObject(planeGO);
     }
 }

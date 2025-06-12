@@ -19,13 +19,17 @@ namespace ZaxEngine
             Internal_Create(this);
         }
 
+        public void AddGameObject(GameObject go)
+        {
+            Internal_AddGameObject(go);
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void Internal_Create(Scene scene);
-
+        private static extern void Internal_Create(Scene scene);
 
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void AddGameObject(GameObject go);
+        private extern void Internal_AddGameObject(GameObject go);
 
     };
 }

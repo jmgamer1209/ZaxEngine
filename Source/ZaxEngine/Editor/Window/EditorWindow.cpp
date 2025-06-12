@@ -33,7 +33,7 @@ EditorWindow::EditorWindow():WindowBase()
 void EditorWindow::OnWindowClosed()
 {
 	delete scene;
-	shaderProgram->Delete();
+	//shaderProgram->Delete();
 	WindowBase::OnWindowClosed();
 	Application::isRunning = false;
 }
@@ -137,7 +137,10 @@ void EditorWindow::DrawWindowUI()
 
 void EditorWindow::LoadScene()
 {
-	
+	scene = SceneManager::mainScene; //用脚本端创建的场景
+
+	/*******
+
 	// 导入 Mesh
 	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
 
@@ -272,8 +275,10 @@ void EditorWindow::LoadScene()
 
 	// 创建场景
 	scene = SceneManager::mainScene; //用脚本端创建的场景
-	scene->lightingSettings.ambientColor = Color(1, 1, 1);
-	scene->lightingSettings.ambientIntensity = 0.1f;
+	/*scene->lightingSettings.ambientColor = Color(1, 1, 1);
+	scene->lightingSettings.ambientIntensity = 0.1f;*/
+
+	/**
 	scene->AddGameObject(cameraGO);
 	for (size_t i = 0; i < boxes.size(); i++)
 	{
@@ -284,4 +289,5 @@ void EditorWindow::LoadScene()
 	scene->AddGameObject(spotLightGO);
 	scene->AddGameObject(skyboxGO);
 	scene->AddGameObject(planeGO);
+	*******/
 }

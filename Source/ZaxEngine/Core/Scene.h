@@ -7,8 +7,8 @@
 
 struct SceneLighting
 {
-	Color ambientColor;
-	float ambientIntensity;
+	Color ambientColor = Color(1, 1, 1);
+	float ambientIntensity = 0.1f;
 };
 
 class Scene:public ZObject
