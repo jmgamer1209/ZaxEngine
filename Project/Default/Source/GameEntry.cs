@@ -86,5 +86,14 @@ public class GameEntry
             box.GetComponent<Transform>().position = position;
             box.GetComponent<Transform>().rotation = rotation;
         }
+
+        //创建1个平面
+        var planeGO = new GameObject("Plane");
+        var transform = new Transform();
+        transform.position = new Vector3(0, -10, -5);
+        transform.rotation = new Vector3(-90, 0, 0);
+        transform.scale = new Vector3(15);
+        planeGO.AddComponent(transform);
+        planeGO.AddComponent(new MeshRenderer(Mesh.GetQuadMesh(), planeMat));
     }
 }

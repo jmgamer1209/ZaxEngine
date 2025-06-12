@@ -18,5 +18,12 @@ namespace ZaxEngine
             this.y = y;
             this.z = z;
         }
+
+        public Vector3(float value)
+        {
+            this.x = value;
+            this.y = value;
+            this.z = value;
+        }
     }
 }

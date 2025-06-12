@@ -222,6 +222,7 @@ void EditorWindow::LoadScene()
 		box->GetComponent<Transform>()->rotation = rotation;
 	}
 
+	// 创建1个平面
 	auto planeGO = new GameObject(string("Plane"));
 	auto transform = new Transform();
 	transform->position = Vector3(0, -10, -5);

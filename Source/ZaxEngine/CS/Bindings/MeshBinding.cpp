@@ -32,9 +32,18 @@ namespace ZaxEngine::Binding::Mesh {
 		Debug::Log("Create Mesh Success");
 	}
 
+	MonoObject* Internal_GetQuadMesh() 
+	{
+		auto native = ::Mesh::GetQuadMesh();
+		auto obj = Binding::BindingHelper::NewMonoObject("ZaxEngine", "Mesh");
+		Binding::BindingHelper::SetNativePtr(obj, native);
+		return obj;
+	}
+
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.Mesh::Internal_Create_Path", reinterpret_cast<void*>(CreateWithPath));
 		mono_add_internal_call("ZaxEngine.Mesh::Internal_Create", reinterpret_cast<void*>(Create));
+		mono_add_internal_call("ZaxEngine.Mesh::Internal_GetQuadMesh", reinterpret_cast<void*>(Internal_GetQuadMesh));
 	}
 }

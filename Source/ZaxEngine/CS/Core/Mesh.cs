@@ -11,7 +11,15 @@ namespace ZaxEngine
             Internal_Create_Path(this, path);
         }
 
+        public static Mesh GetQuadMesh()
+        {
+            return Internal_GetQuadMesh();
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void Internal_Create_Path(Mesh scene,string path);
+        public static extern void Internal_Create_Path(Mesh obj,string path);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern Mesh Internal_GetQuadMesh();
     }
 }
