@@ -137,9 +137,6 @@ void EditorWindow::DrawWindowUI()
 
 void EditorWindow::LoadScene()
 {
-	//SceneManager::LoadScene(Application::contentPath / Application::projectConfig.EditorStartupMap);
-	//MonoEntry::GetInstance().
-	scene = SceneManager::mainScene;
 	
 	// 导入 Mesh
 	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
@@ -274,7 +271,7 @@ void EditorWindow::LoadScene()
 	spotLightGO->AddComponent(light);
 
 	// 创建场景
-	scene = new Scene();
+	scene = SceneManager::mainScene; //用脚本端创建的场景
 	scene->lightingSettings.ambientColor = Color(1, 1, 1);
 	scene->lightingSettings.ambientIntensity = 0.1f;
 	scene->AddGameObject(cameraGO);

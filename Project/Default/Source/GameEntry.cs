@@ -95,5 +95,15 @@ public class GameEntry
         transform.scale = new Vector3(15);
         planeGO.AddComponent(transform);
         planeGO.AddComponent(new MeshRenderer(Mesh.GetQuadMesh(), planeMat));
+
+        //创建摄像机
+        var cameraGO = new GameObject("Camera");
+        cameraGO.AddComponent(new Transform());
+        var camera = new Camera();
+        cameraGO.AddComponent(camera);
+        cameraGO.GetComponent<Transform>().position = new Vector3(0, 0, 30);
+        //var post = new PostProcess();
+        //post.enabled = false;
+        //cameraGO.AddComponent(post);
     }
 }

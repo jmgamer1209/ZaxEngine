@@ -214,6 +214,9 @@
     <ClCompile Include="Scripting\ScriptObject.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\CameraBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -375,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="Scripting\ScriptObject.h">
       <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\CameraBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
