@@ -217,6 +217,12 @@
     <ClCompile Include="CS\Bindings\CameraBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\PostProcessBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\Bindings\ComponentBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -380,6 +386,12 @@
       <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\CameraBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\PostProcessBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\ComponentBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>

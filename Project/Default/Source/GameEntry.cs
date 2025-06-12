@@ -102,8 +102,8 @@ public class GameEntry
         var camera = new Camera();
         cameraGO.AddComponent(camera);
         cameraGO.GetComponent<Transform>().position = new Vector3(0, 0, 30);
-        //var post = new PostProcess();
-        //post.enabled = false;
-        //cameraGO.AddComponent(post);
+        var post = new PostProcess();
+        post.enabled = false;
+        cameraGO.AddComponent(post);
     }
 }

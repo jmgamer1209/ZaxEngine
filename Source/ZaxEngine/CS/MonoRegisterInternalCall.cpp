@@ -9,6 +9,8 @@
 #include "Bindings/SkyboxBinding.h"
 #include "Bindings/MeshRendererBinding.h"
 #include "Bindings/CameraBinding.h"
+#include "Bindings/PostProcessBinding.h"
+#include "Bindings/ComponentBinding.h"
 
 void MonoRegister()
 {
@@ -22,4 +24,6 @@ void MonoRegister()
 	ZaxEngine::Binding::Skybox::RegisterInternalCall();
 	ZaxEngine::Binding::MeshRenderer::RegisterInternalCall();
 	ZaxEngine::Binding::Camera::RegisterInternalCall();
+	ZaxEngine::Binding::PostProcess::RegisterInternalCall();
+	ZaxEngine::Binding::Component::RegisterInternalCall();
 }
