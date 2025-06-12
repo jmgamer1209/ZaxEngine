@@ -5,6 +5,8 @@
 #include "mono/metadata/class.h"
 #include "Core/Debug.h"
 #include "CS/MonoEntry.h"
+#include "Component/Component.h"
+#include "Component/Transform.h"
 
 namespace ZaxEngine::Binding::BindingHelper {
 
@@ -29,5 +31,15 @@ namespace ZaxEngine::Binding::BindingHelper {
 	string StringFromMonoString(MonoString* str)
 	{
 		return ZString(mono_string_to_utf16(str)).GetU8String();
+	}
+
+	::Component* GetComponent(GameObject* go, const char* name_space, const char* class_name) 
+	{
+		if (name_space != "ZaxEngine") return nullptr;
+		if (class_name == "Transform")
+		{
+			return go->GetComponent<::Transform>();
+		}
+		return nullptr;
 	}
 }

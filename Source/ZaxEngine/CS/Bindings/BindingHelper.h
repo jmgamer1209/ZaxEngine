@@ -26,6 +26,13 @@ namespace ZaxEngine::Binding::BindingHelper {
 	}
 
 	std::string StringFromMonoString(MonoString* str);
+
+	template<typename T>
+	T GetNativeObj(MonoObject* obj) 
+	{
+		T native = MonoObjectGetValue<T>(obj, "nativePtr");
+		return native;
+	}
 }
 
 

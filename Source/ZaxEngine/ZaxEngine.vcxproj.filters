@@ -56,6 +56,9 @@
     <Filter Include="CS\Binding">
       <UniqueIdentifier>{4a000fac-3637-456d-97ad-f1957e023663}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{daa61037-84e7-4b9c-9710-c07af81c5cf0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -207,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="CS\Bindings\MeshRendererBinding.cpp">
       <Filter>CS\Binding</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\ScriptObject.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +372,9 @@
     </ClInclude>
     <ClInclude Include="CS\Bindings\MeshRendererBinding.h">
       <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\ScriptObject.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

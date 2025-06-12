@@ -5,9 +5,26 @@ namespace ZaxEngine
 {
     public class Transform:Component
     {
-        public Vector3 position;
-        public Vector3 rotation;
-        public Vector3 scale;
+        public Vector3 position
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+        public Vector3 rotation 
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get; 
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set; 
+        }
+        public Vector3 scale { 
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get; 
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set; 
+        }
 
         public Transform()
         {

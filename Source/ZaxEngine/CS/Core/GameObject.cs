@@ -25,6 +25,12 @@ namespace ZaxEngine
             Internal_AddComponent(GetNativePtr(), comp.GetNativePtr());
         }
 
+        public T GetComponent<T>() where T : Component
+        {
+            var component = Internal_GetComponent(typeof(T));
+            return (T)component;
+        }
+
         #region Internal Call
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -33,12 +39,14 @@ namespace ZaxEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_AddComponent(IntPtr gameobjectPtr, IntPtr componentPtr);
 
-
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_Create();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_CreateWithName(string name);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern Component Internal_GetComponent(System.Type type);
 
         #endregion
     }

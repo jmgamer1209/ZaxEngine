@@ -191,6 +191,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
+    <ClCompile Include="Scripting\ScriptObject.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp" />
@@ -250,6 +251,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
     <ClInclude Include="Renderer\ShadowFrameBufferBase.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scripting\ScriptObject.h" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp" />

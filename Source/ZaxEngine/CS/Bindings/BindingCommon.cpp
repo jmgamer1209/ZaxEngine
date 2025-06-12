@@ -3,5 +3,5 @@
 namespace ZaxEngine::Binding::BindingCommon
 {
 	const char* EngineNameSpace = "ZaxEngine";
-	//const char* NativePtr = "nativePtr";
+	const char* NativePtr = "nativePtr";
 };
