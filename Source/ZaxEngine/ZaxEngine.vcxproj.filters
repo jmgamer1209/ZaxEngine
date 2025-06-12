@@ -223,6 +223,9 @@
     <ClCompile Include="CS\Bindings\ComponentBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\LightBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -392,6 +395,9 @@
       <Filter>CS\Binding</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\ComponentBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\LightBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "Renderer/ShadowFrameBuffer.h"
 #include "Core/Utils.h"
 
-enum class  LightType
+enum class LightType:uint8_t
 {
 	Directional = 0,
 	Point = 1,

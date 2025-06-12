@@ -105,5 +105,36 @@ public class GameEntry
         var post = new PostProcess();
         post.enabled = false;
         cameraGO.AddComponent(post);
+
+        // 创建光源
+        Light light;
+        var lightGO = new GameObject("DirectionalLight");
+        transform = new Transform();
+        lightGO.AddComponent(transform);
+        light = new Light(LightType.Directional);
+        lightGO.AddComponent(light);
+        transform.position = new Vector3(0, 10, 0);
+        transform.rotation = new Vector3(-90, 0, 0);
+
+        var pointLightGO = new GameObject("PointLight");
+        transform = new Transform();
+        pointLightGO.AddComponent(transform);
+        light = new Light(LightType.Point);
+        light.color = new Color(1,0,0);
+        light.range = 60;
+        transform.position = new Vector3(-2.0f, 10.0f, 3.0f);
+        pointLightGO.AddComponent(light);
+
+        var spotLightGO = new GameObject("SpotLight");
+        transform = new Transform();
+        transform.position = new Vector3(7, 20, 0);
+        transform.rotation = new Vector3(-90, 0, 0);
+        spotLightGO.AddComponent(transform);
+        light = new Light(LightType.Spot);
+        light.color = new Color(0, 1, 0);
+        light.range = 100;
+        light.innerAngle = 30;
+        light.outerAngle = 40;
+        spotLightGO.AddComponent(light);
     }
 }

@@ -11,6 +11,7 @@
 #include "Bindings/CameraBinding.h"
 #include "Bindings/PostProcessBinding.h"
 #include "Bindings/ComponentBinding.h"
+#include "Bindings/LightBinding.h"
 
 void MonoRegister()
 {
@@ -26,4 +27,6 @@ void MonoRegister()
 	ZaxEngine::Binding::Camera::RegisterInternalCall();
 	ZaxEngine::Binding::PostProcess::RegisterInternalCall();
 	ZaxEngine::Binding::Component::RegisterInternalCall();
+	ZaxEngine::Binding::Light::RegisterInternalCall();
+
 }
