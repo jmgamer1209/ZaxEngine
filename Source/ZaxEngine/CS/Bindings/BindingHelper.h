@@ -33,6 +33,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 		T native = MonoObjectGetValue<T>(obj, "nativePtr");
 		return native;
 	}
+
+	bool IsSubOfGameComponent(MonoObject* obj);
 }
 
 

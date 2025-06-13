@@ -12,6 +12,7 @@
 #include "Bindings/PostProcessBinding.h"
 #include "Bindings/ComponentBinding.h"
 #include "Bindings/LightBinding.h"
+#include "Bindings/GameComponentBinding.h"
 
 void MonoRegister()
 {
@@ -28,5 +29,6 @@ void MonoRegister()
 	ZaxEngine::Binding::PostProcess::RegisterInternalCall();
 	ZaxEngine::Binding::Component::RegisterInternalCall();
 	ZaxEngine::Binding::Light::RegisterInternalCall();
+	ZaxEngine::Binding::GameComponent::RegisterInternalCall();
 
 }

@@ -5,6 +5,9 @@ public class GameEntry
 {
     public static void GameStart()
     {
+
+        var customComponent = new TestComponent();
+
         var scene = new Scene();
         var woodenBox = new Mesh(Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Wooden Crate.obj"));
         //Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs"

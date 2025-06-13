@@ -7,6 +7,7 @@
 #include "CS/MonoEntry.h"
 #include "Component/Component.h"
 #include "Component/Transform.h"
+#include "BindingCommon.h"
 
 namespace ZaxEngine::Binding::BindingHelper {
 
@@ -41,5 +42,12 @@ namespace ZaxEngine::Binding::BindingHelper {
 			return go->GetComponent<::Transform>();
 		}
 		return nullptr;
+	}
+
+	bool IsSubOfGameComponent(MonoObject* obj)
+	{
+		auto objClass = mono_object_get_class(obj);
+		auto componentClass = mono_class_from_name(MonoEntry::GetInstance()->image_engine, BindingCommon::EngineNameSpace, "GameComponent");
+		return mono_class_is_subclass_of(objClass, componentClass, false);
 	}
 }

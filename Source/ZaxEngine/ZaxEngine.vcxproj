@@ -176,6 +176,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClCompile Include="CS\Bindings\BindingHelper.cpp" />
     <ClCompile Include="CS\Bindings\CameraBinding.cpp" />
     <ClCompile Include="CS\Bindings\ComponentBinding.cpp" />
+    <ClCompile Include="CS\Bindings\GameComponentBinding.cpp" />
     <ClCompile Include="CS\Bindings\GameObjectBinding.cpp" />
     <ClCompile Include="CS\Bindings\LightBinding.cpp" />
     <ClCompile Include="CS\Bindings\MaterialBinding.cpp" />
@@ -236,6 +237,7 @@ xcopy /y /d "ThirdParty\DotNetStandard\win-x64\lib\net8.0\" "$(OutDir)\Data\DotN
     <ClInclude Include="CS\Bindings\BindingHelper.h" />
     <ClInclude Include="CS\Bindings\CameraBinding.h" />
     <ClInclude Include="CS\Bindings\ComponentBinding.h" />
+    <ClInclude Include="CS\Bindings\GameComponentBinding.h" />
     <ClInclude Include="CS\Bindings\GameObjectBinding.h" />
     <ClInclude Include="CS\Bindings\LightBinding.h" />
     <ClInclude Include="CS\Bindings\MaterialBinding.h" />
