@@ -9,6 +9,7 @@
 #include "filesystem/path.hpp"
 #include "filesystem/directory.hpp"
 #include "filesystem/operations.hpp"
+#include "dll/runtime_symbol_info.hpp"
 #include <string>
 
 #include "Core/Utils.h"
@@ -24,8 +25,8 @@ bool shouldOpenEditorOnClose = false;
 
 OpenWindow::OpenWindow():WindowBase()
 {
-    filesystem::path exePath(boost::filesystem::initial_path<boost::filesystem::path>());
-    auto projectRoot = exePath.parent_path().parent_path();
+    boost::filesystem::path exe_path = boost::dll::program_location();
+    auto projectRoot = exe_path.parent_path().parent_path().parent_path().parent_path();
     projectPath = projectRoot / "Project" / "Default" / "Default.zproject";
     cout << "Default Project Path: " <<  projectPath.string() << "\n";
     strcpy_s(Path,projectPath.string().c_str());

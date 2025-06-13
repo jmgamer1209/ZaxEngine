@@ -1,14 +1,16 @@
 #include "EditorWindow.h"
 
 #include <fstream>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 #include <iostream>
 #include <sstream>
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include "boost/json.hpp"
 #include "boost/filesystem/path.hpp"
+
 #include "Core/SceneManager.h"
 #include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
