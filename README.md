@@ -12,12 +12,12 @@
 如果后期发现前面版本的文档有错误，只会在最新的提交上去修改版本内容。
 
 此文档只记录核心内容。
+目前工作任务繁忙，开发进度缓慢，但是会持续开发。
 
 **如何运行：**
 1. 打开 Source/ZaxEngine.sln，生成引擎项目
 2. 打开 Project/Default/Default.sln，生成项目
 3. 在ZaxEngine.sln运行或者运行Source/Binary/Debug/ZaxEngine.exe
-
 
 **已完成功能：**
 * 基本场景显示
