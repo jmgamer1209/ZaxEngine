@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<OutDir>$(SolutionDir)\Binary</OutDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Binary\**" />
+    <Compile Remove="Config\**" />
+    <Compile Remove="Content\**" />
+    <EmbeddedResource Remove="Binary\**" />
+    <EmbeddedResource Remove="Config\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <None Remove="Binary\**" />
+    <None Remove="Config\**" />
+    <None Remove="Content\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".editorconfig" />
+    <None Remove=".gitignore" />
+    <None Remove="Default.zproject" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ZaxEngine.Core">
+      <HintPath>..\..\Source\Binary\Debug\ZaxEngine.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>

@@ -19,8 +19,8 @@ MonoEntry MonoEntry::Instance;
 int MonoEntry::Init(boost::filesystem::path assemblies_search_path)
 {
 	// 设置程序集搜索目录
-	//mono_set_assemblies_path
-	mono_set_dirs(assemblies_search_path.string().c_str(), "");
+	mono_set_assemblies_path(assemblies_search_path.string().c_str());
+	//mono_set_dirs(assemblies_search_path.string().c_str(), "");
 	
 	this->domain = mono_jit_init("TestMono");
 	ASSERT_LOG_RETURN(domain != nullptr, 1, "error: domain");

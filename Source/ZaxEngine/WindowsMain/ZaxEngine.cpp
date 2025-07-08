@@ -28,7 +28,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	filesystem::path exePath = Utils::GetExeDirectory();
 	auto dataPath = exePath / L"Data";
 	auto monoPath = dataPath / L"Mono";
-	auto standardPath = dataPath / L"DotNetStandard/win-x64/lib/net8.0";
+	auto standardPath = dataPath / L"Mono" / L"net_4_x-win32";
 	SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 	AddDllDirectory(dataPath.wstring().c_str());
 	AddDllDirectory(monoPath.wstring().c_str());
