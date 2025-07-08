@@ -43,7 +43,7 @@
 * glm，数学库
 * assimp v5.3.1, 资源模型导入库，比如 obj，fbx
 * boost，v1.86.0，基础能力，比如 filesystem,json
-* mono, v8.0.15, C#脚本能力
+* unity mono, branch 是 unity-2022.3-mbe, 提供C#脚本能力
 
 图形 Debug 工具：RenderDoc
 
