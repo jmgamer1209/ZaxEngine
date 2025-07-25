@@ -3,6 +3,7 @@
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
 #include <CS/MonoEntry.h>
+#include "BindingHelper.h"
 //#include "mono/utils/mono-logger.h"
 
 namespace ZaxEngine::Binding::Application
@@ -11,7 +12,7 @@ namespace ZaxEngine::Binding::Application
 	{
 		MonoClass* mclass = mono_class_from_name(MonoEntry::GetInstance()->image_engine, "ZaxEngine", "Application");
 		auto method = mono_class_get_method_from_name(mclass, "TriggerStaticInit", 0);
-		mono_runtime_invoke(method, nullptr, nullptr, nullptr);
+		BindingHelper::MonoInvoke(method, nullptr, nullptr);
 	}
 
 	void SetContentPath(std::string path) 

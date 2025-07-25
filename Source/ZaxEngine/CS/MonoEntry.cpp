@@ -7,6 +7,7 @@
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/exception.h>
+#include "Bindings/BindingHelper.h"
 
 //std::cout << LOG << std::endl;	\
 
@@ -72,7 +73,7 @@ int MonoEntry::RunGameStart()
 	MonoMethod* mono_method = mono_class_get_method_from_name(main_class, "GameStart", 0);
 
 	//调用方法
-	mono_runtime_invoke(mono_method, NULL, NULL, NULL);
+	ZaxEngine::Binding::BindingHelper::MonoInvoke(mono_method, NULL, NULL);
 
 	return 0;
 }
