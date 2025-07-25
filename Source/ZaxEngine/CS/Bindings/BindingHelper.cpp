@@ -50,4 +50,10 @@ namespace ZaxEngine::Binding::BindingHelper {
 		auto componentClass = mono_class_from_name(MonoEntry::GetInstance()->image_engine, BindingCommon::EngineNameSpace, "GameComponent");
 		return mono_class_is_subclass_of(objClass, componentClass, false);
 	}
+
+	MonoMethod* GetUpdateFunc(MonoObject* obj) {
+		auto objClass = mono_object_get_class(obj);
+		auto updateMethod = mono_class_get_method_from_name(objClass, "Update", 0);
+		return updateMethod;
+	}
 }

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 public class TestComponent:ZaxEngine.GameComponent
 {
-    public TestComponent() {
-        
+    public TestComponent() 
+    {
+
+    }
+
+    void Update()
+    {
+        Console.WriteLine("Test");
     }
 }

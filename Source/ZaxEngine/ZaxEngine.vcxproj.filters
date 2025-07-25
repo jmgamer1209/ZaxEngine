@@ -229,6 +229,9 @@
     <ClCompile Include="CS\Bindings\GameComponentBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="Scripting\ScriptFunc.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -405,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="CS\Bindings\GameComponentBinding.h">
       <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\ScriptFunc.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

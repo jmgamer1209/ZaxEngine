@@ -42,10 +42,6 @@ void EditorWindow::OnWindowClosed()
 
 void EditorWindow::DrawScene()
 {
-	if (scene == nullptr)
-	{
-		LoadScene();
-	}
 	if (sceneRenderer == nullptr)
 	{
 		sceneRenderer = new SceneRenderer();
@@ -56,7 +52,28 @@ void EditorWindow::DrawScene()
 
 void EditorWindow::PreDrawImgui()
 {
+	if (scene == nullptr)
+	{
+		LoadScene();
+	}
+	GameLogicUpdate();
 	DrawScene();
+}
+
+void EditorWindow::GameLogicUpdate()
+{
+	for (size_t i = 0; i < this->scene->list.size(); i++)
+	{
+		auto go = this->scene->list[i];
+		for (size_t j = 0; j < go->components.size(); j++) 
+		{
+			auto comp = go->components[j];
+			if (comp->updateFunc.IsValidate())
+			{
+				comp->updateFunc.Call();
+			}
+		}
+	}
 }
 
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting;
 using ZaxEngine;
 
 public class GameEntry
@@ -109,6 +110,7 @@ public class GameEntry
         var post = new PostProcess();
         post.enabled = false;
         cameraGO.AddComponent(post);
+        cameraGO.AddComponent(customComponent);
 
         // 创建光源
         Light light;

@@ -6,12 +6,22 @@ namespace ZaxEngine::Scripting
 	/// <summary>
 	/// 脚本对象，根据不同的脚本封装不同类型，比如使用C#脚本，则对象为 Mono，如果是 Lua，则应该是 Lua
 	/// </summary>
-	struct ScriptObject
+	struct ScriptFunc
 	{
-		MonoClass* monoClass;
+		MonoMethod* method;
 
-		void operator =(MonoObject* obj) {
-			this->monoClass = mono_object_get_class(obj);
+		void operator =(MonoMethod* method) {
+			this->method = method;
+		}
+
+		bool IsValidate() {
+			if (method == nullptr) return false;
+			return true;
+		}
+
+		void Call() 
+		{
+			mono_runtime_invoke(method, NULL, NULL, NULL);
 		}
 	};
 }

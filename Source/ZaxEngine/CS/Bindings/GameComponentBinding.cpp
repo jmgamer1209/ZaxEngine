@@ -4,6 +4,7 @@
 #include "BindingHelper.h"
 #include <Core/Debug.h>
 #include <mono/jit/jit.h>
+#include "Scripting/ScriptFunc.h"
 
 namespace ZaxEngine::Binding::GameComponent
 {
@@ -17,6 +18,8 @@ namespace ZaxEngine::Binding::GameComponent
 		auto name_space = mono_class_get_namespace(objClass);
 		auto name = mono_class_get_name(objClass);*/
 		
+		native->updateFunc = BindingHelper::GetUpdateFunc(obj);
+
 		Debug::Log("Create Custom Component Success");
 	}
 

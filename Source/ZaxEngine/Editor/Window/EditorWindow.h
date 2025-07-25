@@ -17,4 +17,5 @@ public:
     void DrawScene();
     void PreDrawImgui() override;
     void OnWindowClosed() override;
+    void GameLogicUpdate();
 };
