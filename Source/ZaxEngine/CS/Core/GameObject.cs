@@ -22,6 +22,7 @@ namespace ZaxEngine
 
         public void AddComponent(Component comp)
         {
+            comp.gameObject = this;
             Internal_AddComponent(GetNativePtr(), comp.GetNativePtr());
         }
 
