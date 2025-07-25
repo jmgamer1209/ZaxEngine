@@ -13,6 +13,7 @@
 #include "Bindings/ComponentBinding.h"
 #include "Bindings/LightBinding.h"
 #include "Bindings/GameComponentBinding.h"
+#include "Bindings/DebugBinding.h"
 
 void MonoRegister()
 {
@@ -30,5 +31,5 @@ void MonoRegister()
 	ZaxEngine::Binding::Component::RegisterInternalCall();
 	ZaxEngine::Binding::Light::RegisterInternalCall();
 	ZaxEngine::Binding::GameComponent::RegisterInternalCall();
-
+	ZaxEngine::Binding::Debug::RegisterInternalCall();
 }

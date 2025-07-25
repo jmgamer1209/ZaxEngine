@@ -13,6 +13,6 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void Update()
     {
-        Console.WriteLine("Test");
+        ZaxEngine.Debug.Log("Test Update Call");
     }
 }

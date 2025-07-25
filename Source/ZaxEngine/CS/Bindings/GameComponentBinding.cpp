@@ -19,6 +19,7 @@ namespace ZaxEngine::Binding::GameComponent
 		auto name = mono_class_get_name(objClass);*/
 		
 		native->updateFunc = BindingHelper::GetUpdateFunc(obj);
+		native->updateFunc.obj = obj;
 
 		Debug::Log("Create Custom Component Success");
 	}

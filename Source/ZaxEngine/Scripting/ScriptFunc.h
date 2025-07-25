@@ -8,7 +8,8 @@ namespace ZaxEngine::Scripting
 	/// </summary>
 	struct ScriptFunc
 	{
-		MonoMethod* method;
+		MonoObject* obj = nullptr;
+		MonoMethod* method = nullptr;
 
 		void operator =(MonoMethod* method) {
 			this->method = method;
@@ -21,7 +22,7 @@ namespace ZaxEngine::Scripting
 
 		void Call() 
 		{
-			mono_runtime_invoke(method, NULL, NULL, NULL);
+			mono_runtime_invoke(method, obj, NULL, NULL);
 		}
 	};
 }

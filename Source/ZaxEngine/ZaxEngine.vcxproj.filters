@@ -232,6 +232,9 @@
     <ClCompile Include="Scripting\ScriptFunc.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\DebugBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -411,6 +414,9 @@
     </ClInclude>
     <ClInclude Include="Scripting\ScriptFunc.h">
       <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\DebugBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
