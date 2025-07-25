@@ -37,6 +37,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 	bool IsSubOfGameComponent(MonoObject* obj);
 
 	MonoMethod* GetUpdateFunc(MonoObject* obj);
+
+	MonoObject* MonoInvoke(MonoMethod* method, void* obj, void** params);
 }
 
 

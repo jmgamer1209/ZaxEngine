@@ -56,4 +56,15 @@ namespace ZaxEngine::Binding::BindingHelper {
 		auto updateMethod = mono_class_get_method_from_name(objClass, "Update", 0);
 		return updateMethod;
 	}
+
+	MonoObject* MonoInvoke(MonoMethod* method, void* obj, void** params)
+	{
+		MonoObject* exc = NULL;
+		MonoObject* result = mono_runtime_invoke(method, obj, params, &exc);
+		if (exc) {
+			MonoString* exc_msg = mono_object_to_string(exc, NULL);
+			Debug::Log(mono_string_to_utf8(exc_msg));
+		}
+		return result;
+	}
 }

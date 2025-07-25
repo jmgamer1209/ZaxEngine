@@ -1,5 +1,6 @@
 #pragma once
 #include "mono/metadata/object.h"
+#include "Core/Debug.h"
 
 namespace ZaxEngine::Scripting
 {
@@ -11,19 +12,11 @@ namespace ZaxEngine::Scripting
 		MonoObject* obj = nullptr;
 		MonoMethod* method = nullptr;
 
-		void operator =(MonoMethod* method) {
-			this->method = method;
-		}
+		void operator =(MonoMethod* method);
 
-		bool IsValidate() {
-			if (method == nullptr) return false;
-			return true;
-		}
+		bool IsValidate();
 
-		void Call() 
-		{
-			mono_runtime_invoke(method, obj, NULL, NULL);
-		}
+		void Call();
 	};
 }
 

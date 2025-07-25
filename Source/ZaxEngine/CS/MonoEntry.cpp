@@ -6,6 +6,8 @@
 #include "Core/Utils.h"
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/mono-config.h>
+#include <mono/metadata/exception.h>
+
 //std::cout << LOG << std::endl;	\
 
 #define ASSERT_LOG_RETURN(A, NUM, LOG) if (!(A)) \
@@ -16,6 +18,12 @@
 
 MonoEntry MonoEntry::Instance;
 
+
+void on_unhandled_exception(MonoObject* exc, void* user_data) {
+	MonoString* exc_msg = mono_object_to_string(exc, NULL);
+	Debug::Log(mono_string_to_utf8(exc_msg));
+}
+
 int MonoEntry::Init(boost::filesystem::path assemblies_search_path)
 {
 	// 设置程序集搜索目录
@@ -24,6 +32,9 @@ int MonoEntry::Init(boost::filesystem::path assemblies_search_path)
 	
 	this->domain = mono_jit_init("TestMono");
 	ASSERT_LOG_RETURN(domain != nullptr, 1, "error: domain");
+
+	//注册全局异常回调
+	mono_install_unhandled_exception_hook(on_unhandled_exception, NULL);
 	return 0;
 }
 
@@ -64,5 +75,5 @@ int MonoEntry::RunGameStart()
 	mono_runtime_invoke(mono_method, NULL, NULL, NULL);
 
 	return 0;
-
 }
+
