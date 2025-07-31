@@ -235,6 +235,9 @@
     <ClCompile Include="CS\Bindings\DebugBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="Core\PlatformTime.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -417,6 +420,9 @@
     </ClInclude>
     <ClInclude Include="CS\Bindings\DebugBinding.h">
       <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PlatformTime.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

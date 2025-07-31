@@ -15,6 +15,9 @@
 #include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
 
+
+#include "Core/PlatformTime.h"
+
 using namespace boost;
 
 EditorWindow::EditorWindow():WindowBase()
@@ -52,6 +55,7 @@ void EditorWindow::DrawScene()
 
 void EditorWindow::PreDrawImgui()
 {
+	HandleDeltaTime();
 	if (scene == nullptr)
 	{
 		LoadScene();
@@ -74,6 +78,16 @@ void EditorWindow::GameLogicUpdate()
 			}
 		}
 	}
+}
+
+void EditorWindow::HandleDeltaTime()
+{
+	//声明 lastRealTime 并同时初始化
+	static double lastRealTime = PlatformTime::Seconds() - 0.0001;
+	double CurrentRealTime = PlatformTime::Seconds();
+	double RealDeltaTime = CurrentRealTime - lastRealTime;
+	lastRealTime = CurrentRealTime;
+	Debug::Log(RealDeltaTime);
 }
 
 

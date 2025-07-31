@@ -18,4 +18,7 @@ public:
     void PreDrawImgui() override;
     void OnWindowClosed() override;
     void GameLogicUpdate();
+
+private:
+    void HandleDeltaTime();
 };

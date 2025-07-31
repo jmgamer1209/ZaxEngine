@@ -15,5 +15,6 @@
 	 //void Log(std::initializer_list<std::wstring> list);
 
 	 void Log(const int log);
+	 void Log(const double log);
 };
 

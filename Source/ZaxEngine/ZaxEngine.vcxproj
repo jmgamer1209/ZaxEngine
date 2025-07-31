@@ -160,6 +160,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
+    <ClCompile Include="Core\PlatformTime.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
@@ -223,6 +224,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />
+    <ClInclude Include="Core\PlatformTime.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
