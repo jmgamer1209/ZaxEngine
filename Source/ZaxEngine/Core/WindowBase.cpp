@@ -26,6 +26,18 @@ void WindowBase::Update()
         ImGui::Render(); // ImGui 生成渲染数据
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // ImGui 执行绘制指令
 		
+		// Update and Render additional Platform Windows
+		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+		//  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
+		}
+
         // 缓冲区交换，将缓冲区数据显示到窗口
         glfwSwapBuffers(window); 
 
@@ -66,6 +78,9 @@ int WindowBase::ImGui_Init()
 	// 如果不这样做，创建窗口后再调整位置，会出现启动跳变的情况。
 	glfwWindowHint(GLFW_VISIBLE, 0);
 
+	// 重置标题栏，这是因为 imgui 开启了 multi viewport 后，在 hub 界面在关闭时，如果有子界面是窗口，则导致 glfw 会遗留错误配置
+	glfwWindowHint(GLFW_DECORATED, GLFW_TRUE); 
+
 	// 创建窗口
 	window = glfwCreateWindow(viewportWidth, viewportHeight, windowTitle, nullptr, nullptr);
 	if (window == nullptr)
@@ -93,6 +108,8 @@ int WindowBase::ImGui_Init()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
