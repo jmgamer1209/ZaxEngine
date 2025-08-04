@@ -16,6 +16,8 @@ bool Application::isViewportSizeChanged = false;
 bool Application::isInMinimal = false;
 bool Application::isRunning = false;
 WindowBase* Application::window = nullptr;
+SceneRenderer* Application::sceneRenderer = nullptr;
+
 
 void Application::OpenEditor(const boost::filesystem::path& projectPath)
 {

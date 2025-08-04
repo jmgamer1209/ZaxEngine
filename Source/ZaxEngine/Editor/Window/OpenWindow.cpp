@@ -23,7 +23,7 @@ char Path[MAX_PATH] = "";
 boost::filesystem::path projectPath;
 bool shouldOpenEditorOnClose = false;
 
-OpenWindow::OpenWindow():WindowBase()
+OpenWindow::OpenWindow():WindowBase("Project Hub")
 {
     boost::filesystem::path exe_path = boost::dll::program_location();
     auto projectRoot = exe_path.parent_path().parent_path().parent_path().parent_path();
@@ -45,8 +45,19 @@ void OpenWindow::DrawWindowUI()
         return;
     }
     
-    // 组件属性检视面板
-    ImGui::Begin("Choose");
+    // 项目选择面板
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    ImGui::Begin("Choose", nullptr,
+        ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoCollapse |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus);
 
     ImGui::Text("ProjectPath:");
     if (ImGui::InputText("##ProjectPath", Path,IM_ARRAYSIZE(Path)))

@@ -4,6 +4,7 @@
 #include "WindowBase.h"
 #include "Editor/ProjectConfig.h"
 #include "filesystem/path.hpp"
+#include "Renderer/SceneRenderer.h"
 
 class Application
 {
@@ -23,6 +24,7 @@ public:
 	static bool isInMinimal;
 	static bool isRunning;
 	static WindowBase* window;
+	static SceneRenderer* sceneRenderer;
 
 	static void OpenEditor(const boost::filesystem::path& projectPath);
 };

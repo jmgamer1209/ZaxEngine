@@ -24,6 +24,7 @@ public:
 	~SceneRenderer();
 	void Init(int width, int height);
 	void Draw(Scene* scene);
+	void ChangeRenderSize(int width, int height);
 
 
 private:
@@ -37,7 +38,10 @@ private:
 	ShaderProgram* screenShaderProgram;
 	ShaderProgram* shadowShader;
 	ShaderProgram* depthShader;
+public:
 	FrameBuffer* frameBuffer;
+	int renderWidth;
+	int renderHeight;
 
 private:
 	void DrawShadow();

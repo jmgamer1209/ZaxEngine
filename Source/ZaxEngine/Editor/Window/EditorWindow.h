@@ -21,4 +21,6 @@ public:
 
 private:
     void HandleDeltaTime();
+    int sceneViewWidth = 1280;
+    int sceneViewHeight = 720;
 };

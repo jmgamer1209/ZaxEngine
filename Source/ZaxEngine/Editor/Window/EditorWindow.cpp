@@ -17,14 +17,21 @@
 
 
 #include "Core/PlatformTime.h"
+#include <Core/Application.h>
+#include <imgui_internal.h>
 
 using namespace boost;
 
-EditorWindow::EditorWindow():WindowBase()
+EditorWindow::EditorWindow():WindowBase("Editor")
 {
 	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
+
+	sceneRenderer = new SceneRenderer();
+	sceneRenderer->Init(sceneViewWidth, sceneViewHeight);
+	Application::sceneRenderer = sceneRenderer;
+
 	Debug::Log(value.c_str());
 	try {
 		MonoEntry::GetInstance()->RunGameStart();
@@ -45,11 +52,6 @@ void EditorWindow::OnWindowClosed()
 
 void EditorWindow::DrawScene()
 {
-	if (sceneRenderer == nullptr)
-	{
-		sceneRenderer = new SceneRenderer();
-		sceneRenderer->Init(viewportWidth, viewportHeight);    
-	}
 	if (!isInMinimal) sceneRenderer->Draw(scene);
 }
 
@@ -129,7 +131,7 @@ void EditorWindow::DrawWindowUI()
 
 	ImGui::Begin("##dockspace", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking);
 	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
-	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoWindowMenuButton);
 	ImGui::SetWindowPos({ 0.f, 0.f });
 	ImVec2 displaySize = ImGui::GetIO().DisplaySize;
 	ImGui::SetWindowSize({ (float)displaySize.x, (float)displaySize.y });
@@ -137,7 +139,39 @@ void EditorWindow::DrawWindowUI()
 
 	ImGui::PopStyleVar(3);
 
-    // 场景物体
+	// SceneView,显示场景渲染的结果
+	//ImGui::SetNextWindowSizeConstraints(ImVec2(200, 100),   // 最小尺寸
+		//ImVec2(FLT_MAX, FLT_MAX)); // 最大尺寸(无限制)
+	
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("Scene View", nullptr);
+
+	ImVec2 currentSize = ImGui::GetWindowSize();
+
+	// 获取去掉标题栏后的高度
+	float content_height = ImGui::GetWindowSize().y -
+		(ImGui::GetFontSize() +
+			ImGui::GetStyle().FramePadding.y * 2 +
+			ImGui::GetStyle().WindowBorderSize * 2);
+
+	currentSize = ImVec2(currentSize.x, content_height);
+
+	// 窗口内容...
+	//ImGui::Text("当前尺寸: %.1f x %.1f", currentSize.x, currentSize.y);
+	Application::sceneRenderer->ChangeRenderSize(currentSize.x, currentSize.y);
+
+	auto sceneTextureID = this->sceneRenderer->frameBuffer->GetTextureColorBuffer();
+
+	// 由于 opengl 渲染图原点在左下角，而 imgui 渲染时默认以右上角为原点，所以单独设置下 uv
+	ImVec2 uv0(0, 1);  // 左下角
+	ImVec2 uv1(1, 0);  // 右上角
+	ImGui::Image(sceneTextureID, currentSize, uv0, uv1);
+
+
+	ImGui::End();
+	ImGui::PopStyleVar(1);
+
+    // 场景物体列表
     ImGui::Begin("Hierarchy");
 		
     for (size_t i = 0; i < scene->list.size(); i++)

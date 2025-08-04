@@ -238,6 +238,9 @@
     <ClCompile Include="Core\PlatformTime.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Component\Skybox.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">

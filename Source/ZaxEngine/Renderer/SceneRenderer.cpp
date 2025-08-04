@@ -8,6 +8,8 @@
 #include <math.h>
 #include "Core/Mesh.h"
 #include "Core/Vector.h"
+#include "Core/Application.h"
+
 
 SceneRenderer::SceneRenderer()
 {
@@ -19,10 +21,18 @@ SceneRenderer::~SceneRenderer()
 
 void SceneRenderer::Init(int width, int height)
 {
+    renderWidth = width;
+    renderHeight = height;
     frameBuffer = new FrameBuffer(width, height);
     screenShaderProgram = new ShaderProgram(Application::contentPath / "/Shaders/Common/screen.vs", Application::contentPath / "/Shaders/Common/screen.fs");
     shadowShader = new ShaderProgram(Application::contentPath / "/Shaders/Shadow/shadow.vs", Application::contentPath / "/Shaders/Shadow/shadow.fs");
     depthShader = new ShaderProgram(Application::contentPath / "/Shaders/Common/depth.vs", Application::contentPath / "/Shaders/Common/depth.fs");
+}
+
+void SceneRenderer::ChangeRenderSize(int width, int height)
+{
+    renderWidth = width;
+    renderHeight = height;
 }
 
 void SceneRenderer::Draw(Scene* scene)
@@ -63,13 +73,15 @@ void SceneRenderer::Draw(Scene* scene)
 		if (tempRenderer != nullptr) renderers.push_back(tempRenderer);
 	}
 
-    camera->OnViewportChange(Application::viewportWidth, Application::viewportHeight);
+    // 如果窗口变化，需要重新设置 Camera，以及纹理和rb的大小
+    camera->OnViewportChange(Application::sceneRenderer->renderWidth, Application::sceneRenderer->renderHeight);
+    frameBuffer->ChangeSize(Application::sceneRenderer->renderWidth, Application::sceneRenderer->renderHeight);
 
-    // 如果窗口变化，需要重新设置纹理和rb的大小
-    if (Application::isViewportSizeChanged)
-    {
-        frameBuffer->ChangeSize(Application::viewportWidth, Application::viewportHeight);
-    }
+    //// 如果窗口变化，需要重新设置纹理和rb的大小
+    //if (Application::isViewportSizeChanged)
+    //{
+    //    frameBuffer->ChangeSize(Application::viewportWidth, Application::viewportHeight);
+    //}
 
     if (viewMode == ViewMode::Depth) 
     {
@@ -473,17 +485,17 @@ FrameBuffer* SceneRenderer::DrawPostProcess(PostProcess* postProcess)
 
 void SceneRenderer::DrawQuad(FrameBuffer *frameBuffer)
 {
-    // 将离屏图像绘制到屏幕
+    //// 将离屏图像绘制到屏幕
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, Application::viewportWidth, Application::viewportHeight);
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glViewport(0, 0, Application::viewportWidth, Application::viewportHeight);
+    //glClearColor(0, 0, 0, 0);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    screenShaderProgram->Use();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, frameBuffer->GetTextureColorBuffer());
-    screenShaderProgram->SetUniform("screenTex", 0);
+    //screenShaderProgram->Use();
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, frameBuffer->GetTextureColorBuffer());
+    //screenShaderProgram->SetUniform("screenTex", 0);
 
-    Mesh::GetQuadMesh()->Draw();
+    //Mesh::GetQuadMesh()->Draw();
 }
 
