@@ -37,6 +37,10 @@ FrameBuffer::~FrameBuffer()
 
 void FrameBuffer::ChangeSize(int width, int height)
 {
+	if (this->width == width && this->height == height) 
+	{
+		return;
+	}
 	this->width = width;
 	this->height = height;
 	glBindTexture(GL_TEXTURE_2D, textureColorBuffer);

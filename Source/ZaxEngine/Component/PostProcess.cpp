@@ -10,7 +10,7 @@ PostProcess::PostProcess()
 
 FrameBuffer* PostProcess::Draw(FrameBuffer& source)
 {
-    if (Application::isViewportSizeChanged) frameBuffer1->ChangeSize(Application::viewportWidth, Application::viewportHeight);
+    frameBuffer1->ChangeSize(Application::sceneRenderer->renderWidth, Application::sceneRenderer->renderHeight);
 
     glDepthFunc(GL_LESS);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer1->GetID());

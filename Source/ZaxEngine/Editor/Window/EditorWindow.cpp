@@ -22,11 +22,15 @@
 
 using namespace boost;
 
+static int64_t FrameCount;
+
 EditorWindow::EditorWindow():WindowBase("Editor")
 {
 	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();
 	Application::projectConfig.EditorStartupMap = value.c_str();
+	
+	FrameCount = -1;
 
 	sceneRenderer = new SceneRenderer();
 	sceneRenderer->Init(sceneViewWidth, sceneViewHeight);
@@ -57,12 +61,18 @@ void EditorWindow::DrawScene()
 
 void EditorWindow::PreDrawImgui()
 {
+	FrameCount++;
+
 	HandleDeltaTime();
 	if (scene == nullptr)
 	{
 		LoadScene();
 	}
 	GameLogicUpdate();
+
+	// 由于 dockspace 导致界面初次启动时会延迟2帧才能有正确的布局，所以这里延迟2帧
+	if (FrameCount < 2) return;
+
 	DrawScene();
 }
 
@@ -144,7 +154,7 @@ void EditorWindow::DrawWindowUI()
 		//ImVec2(FLT_MAX, FLT_MAX)); // 最大尺寸(无限制)
 	
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Scene View", nullptr);
+	ImGui::Begin("Scene View");
 
 	ImVec2 currentSize = ImGui::GetWindowSize();
 
@@ -174,6 +184,8 @@ void EditorWindow::DrawWindowUI()
     // 场景物体列表
     ImGui::Begin("Hierarchy");
 		
+	ImVec2 currentSize2 = ImGui::GetWindowSize();
+
     for (size_t i = 0; i < scene->list.size(); i++)
     {
         auto go = scene->list[i];
@@ -187,6 +199,8 @@ void EditorWindow::DrawWindowUI()
 
     // 组件属性检视面板
     ImGui::Begin("Inspector");
+
+	ImVec2 currentSize3 = ImGui::GetWindowSize();
 
     if (selectedGO != nullptr)
     {
