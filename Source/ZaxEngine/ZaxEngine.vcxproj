@@ -151,6 +151,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   <ItemGroup>
     <ClCompile Include="Assets\AssetModel.cpp" />
     <ClCompile Include="Component\Camera.cpp" />
+    <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\Light.cpp" />
     <ClCompile Include="Component\MeshRenderer.cpp" />
     <ClCompile Include="Component\PostProcess.cpp" />
