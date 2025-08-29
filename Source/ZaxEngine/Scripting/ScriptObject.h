@@ -8,11 +8,10 @@ namespace ZaxEngine::Scripting
 	/// </summary>
 	struct ScriptObject
 	{
+		MonoObject* monoObj;
 		MonoClass* monoClass;
 
-		void operator =(MonoObject* obj) {
-			this->monoClass = mono_object_get_class(obj);
-		}
+		void operator =(MonoObject* obj); 
 	};
 }
 

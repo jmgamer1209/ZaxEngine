@@ -67,4 +67,24 @@ namespace ZaxEngine::Binding::BindingHelper {
 		}
 		return result;
 	}
+
+	void GetAllFields(MonoObject* obj)
+	{
+		void* iter = NULL;
+		MonoClassField* field;
+
+		auto objClass = mono_object_get_class(obj);
+
+		while ((field = mono_class_get_fields(objClass, &iter))) {
+			const char* name = mono_field_get_name(field);
+			MonoType* type = mono_field_get_type(field);
+			const char* type_name = mono_type_get_name(type);
+
+			
+
+			//Debug::Log()
+
+			//printf("Field: %s (Type: %s)\n", name, type_name);
+		}
+	}
 }

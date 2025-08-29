@@ -4,5 +4,5 @@
 
 void Component::OnGui()
 {
-
+	//scriptObj.monoObj
 }

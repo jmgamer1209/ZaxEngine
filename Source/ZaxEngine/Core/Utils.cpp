@@ -47,7 +47,7 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// 设置过滤方式，下面表示 放大缩小时都是线性
+	// 设置过滤方式，下面表示 放大缩小时都是双线性过滤
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
