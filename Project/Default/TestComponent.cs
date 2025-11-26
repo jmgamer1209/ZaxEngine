@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class TestComponent:ZaxEngine.GameComponent
 {
+    bool updatecall = true;
     public TestComponent() 
     {
 
@@ -13,6 +14,10 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void Update()
     {
-        ZaxEngine.Debug.Log("Test Update Call");
+        if (updatecall)
+        {
+            ZaxEngine.Debug.Log("Test Update Call");
+            updatecall = false;
+        }
     }
 }

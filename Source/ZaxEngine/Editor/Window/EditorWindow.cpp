@@ -99,7 +99,7 @@ void EditorWindow::HandleDeltaTime()
 	double CurrentRealTime = PlatformTime::Seconds();
 	double RealDeltaTime = CurrentRealTime - lastRealTime;
 	lastRealTime = CurrentRealTime;
-	Debug::Log(RealDeltaTime);
+	//Debug::Log(RealDeltaTime);
 }
 
 

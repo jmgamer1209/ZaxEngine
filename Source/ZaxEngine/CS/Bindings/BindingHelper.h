@@ -39,6 +39,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 	MonoMethod* GetUpdateFunc(MonoObject* obj);
 
 	MonoObject* MonoInvoke(MonoMethod* method, void* obj, void** params);
+
+	void GetAllFields(MonoObject* obj);
 }
 
 
