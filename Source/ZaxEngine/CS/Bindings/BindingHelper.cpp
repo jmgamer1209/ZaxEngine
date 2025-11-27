@@ -8,6 +8,8 @@
 #include "Component/Component.h"
 #include "Component/Transform.h"
 #include "BindingCommon.h"
+#include "Scripting/ScriptField.h"
+using namespace ZaxEngine::Scripting;
 
 namespace ZaxEngine::Binding::BindingHelper {
 
@@ -27,6 +29,11 @@ namespace ZaxEngine::Binding::BindingHelper {
 		auto mono_class = mono_object_get_class(obj);
 		auto mono_field = mono_class_get_field_from_name(mono_class, fieldName);
 		mono_field_set_value(obj, mono_field, value);
+	}
+
+	void MonoObjectSetValue(MonoObject* obj, MonoClassField* field, void* value)
+	{
+		mono_field_set_value(obj, field, value);
 	}
 
 	string StringFromMonoString(MonoString* str)
@@ -68,26 +75,28 @@ namespace ZaxEngine::Binding::BindingHelper {
 		return result;
 	}
 
-	void GetAllFields(MonoObject* obj)
+	const char* GetTypeName(MonoObject* obj)
+	{
+		auto objClass = mono_object_get_class(obj);
+		auto objClassName = mono_class_get_name(objClass);
+		return objClassName;
+	}
+
+	std::vector<ScriptField> GetAllFields(MonoObject* obj)
 	{
 		void* iter = NULL;
 		MonoClassField* field;
-
+		
+		std::vector<ScriptField> list = {};
 		auto objClass = mono_object_get_class(obj);
-		auto objClassName = mono_class_get_name(objClass);
-		//Debug::Log(objClassName);
 
 		while ((field = mono_class_get_fields(objClass, &iter))) {
 			const char* name = mono_field_get_name(field);
 			MonoType* type = mono_field_get_type(field);
 			const char* type_name = mono_type_get_name(type);
-			
-			//mono_field_get_value(field)
-
-
-			//Debug::Log(type_name);
-
-			//printf("Field: %s (Type: %s)\n", name, type_name);
+			ScriptField sfield(field, obj);
+			list.push_back(sfield);
 		}
+		return list;
 	}
 }

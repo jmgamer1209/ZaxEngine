@@ -6,6 +6,8 @@
 #include "mono/metadata/object.h"
 #include "Core/ZString.h"
 #include <string>
+#include <vector>
+#include <Scripting/ScriptField.h>
 
 namespace ZaxEngine::Binding::BindingHelper {
 
@@ -14,6 +16,7 @@ namespace ZaxEngine::Binding::BindingHelper {
 	MonoObject* NewMonoObject(const char* name_space, const char* name);
 
 	void MonoObjectSetValue(MonoObject* obj, const char* fieldName, void* value);
+	void MonoObjectSetValue(MonoObject* obj, MonoClassField* field, void* value);
 
 	template<typename T>
 	T MonoObjectGetValue(MonoObject* obj, const char* fieldName) {
@@ -22,6 +25,14 @@ namespace ZaxEngine::Binding::BindingHelper {
 		T value;
 		//void* value = nullptr;
 		mono_field_get_value(obj, mono_field, &value);
+		return value;
+	}
+
+	template<typename T>
+	T MonoObjectGetValue(MonoObject* obj, MonoClassField* field) {
+		T value;
+		//void* value = nullptr;
+		mono_field_get_value(obj, field, &value);
 		return value;
 	}
 
@@ -40,7 +51,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 
 	MonoObject* MonoInvoke(MonoMethod* method, void* obj, void** params);
 
-	void GetAllFields(MonoObject* obj);
+	const char* GetTypeName(MonoObject* obj);
+	std::vector<Scripting::ScriptField> GetAllFields(MonoObject* obj);
 }
 
 

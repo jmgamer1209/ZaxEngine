@@ -244,6 +244,9 @@
     <ClCompile Include="Component\Component.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="Scripting\ScriptField.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -429,6 +432,9 @@
     </ClInclude>
     <ClInclude Include="Core\PlatformTime.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\ScriptField.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

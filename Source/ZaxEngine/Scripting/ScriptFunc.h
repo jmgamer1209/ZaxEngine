@@ -5,7 +5,7 @@
 namespace ZaxEngine::Scripting
 {
 	/// <summary>
-	/// 脚本对象，根据不同的脚本封装不同类型，比如使用C#脚本，则对象为 Mono，如果是 Lua，则应该是 Lua
+	/// 脚本函数，由 MonoMethod 构成
 	/// </summary>
 	struct ScriptFunc
 	{

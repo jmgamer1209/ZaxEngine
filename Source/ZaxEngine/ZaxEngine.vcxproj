@@ -199,6 +199,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Renderer\FrameBuffer.cpp" />
     <ClCompile Include="Renderer\SceneRenderer.cpp" />
+    <ClCompile Include="Scripting\ScriptField.cpp" />
     <ClCompile Include="Scripting\ScriptFunc.cpp" />
     <ClCompile Include="Scripting\ScriptObject.cpp" />
     <ClCompile Include="ThirdParty\glad\src\gl.c" />
@@ -267,6 +268,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Renderer\ShadowFrameBuffer.h" />
     <ClInclude Include="Renderer\ShadowFrameBufferBase.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scripting\ScriptField.h" />
     <ClInclude Include="Scripting\ScriptFunc.h" />
     <ClInclude Include="Scripting\ScriptObject.h" />
     <ClInclude Include="ThirdParty\assimp\include\assimp\Importer.hpp" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class TestComponent:ZaxEngine.GameComponent
 {
+    int test = 100;
     bool updatecall = true;
     public TestComponent() 
     {

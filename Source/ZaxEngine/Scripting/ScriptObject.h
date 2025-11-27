@@ -1,5 +1,7 @@
 #pragma once
 #include "mono/metadata/object.h"
+#include "ScriptField.h"
+#include <vector>
 
 namespace ZaxEngine::Scripting
 {
@@ -12,6 +14,12 @@ namespace ZaxEngine::Scripting
 		MonoClass* monoClass;
 
 		void operator =(MonoObject* obj); 
+
+		bool IsValidate();
+
+		const char* GetName();
+
+		std::vector<ScriptField> GetInspectorFields();
 	};
 }
 
