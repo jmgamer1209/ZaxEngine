@@ -193,6 +193,8 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="CS\Bindings\TransformBinding.cpp" />
     <ClCompile Include="CS\MonoEntry.cpp" />
     <ClCompile Include="CS\MonoRegisterInternalCall.cpp" />
+    <ClCompile Include="Editor\Inspector\CameraEditor.cpp" />
+    <ClCompile Include="Editor\Inspector\InspectorEditor.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
@@ -258,6 +260,8 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="CS\Bindings\TransformBinding.h" />
     <ClInclude Include="CS\MonoEntry.h" />
     <ClInclude Include="CS\MonoRegisterInternalCall.h" />
+    <ClInclude Include="Editor\Inspector\CameraEditor.h" />
+    <ClInclude Include="Editor\Inspector\InspectorEditor.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />

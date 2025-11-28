@@ -20,7 +20,10 @@
 #include <Core/Application.h>
 #include <imgui_internal.h>
 
+#include "Editor/Inspector/InspectorEditor.h"
+
 using namespace boost;
+using namespace ZaxEngine;
 
 static int64_t FrameCount;
 
@@ -212,10 +215,7 @@ void EditorWindow::DrawWindowUI()
         ImGui::Separator();
         ImGui::Spacing();
 
-        for (size_t i = 0; i < selectedGO->components.size(); i++)
-        {
-            selectedGO->components[i]->OnGui();
-        }
+		Editor::InspectorEditor::DrawInspector(*selectedGO);
     }
 
     ImGui::End();

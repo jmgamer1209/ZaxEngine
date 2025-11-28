@@ -59,6 +59,9 @@
     <Filter Include="Scripting">
       <UniqueIdentifier>{daa61037-84e7-4b9c-9710-c07af81c5cf0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Inspector">
+      <UniqueIdentifier>{cec2aa9f-415b-427c-bf11-954831e1d8ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -246,6 +249,12 @@
     </ClCompile>
     <ClCompile Include="Scripting\ScriptField.cpp">
       <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Inspector\InspectorEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Inspector\CameraEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -435,6 +444,12 @@
     </ClInclude>
     <ClInclude Include="Scripting\ScriptField.h">
       <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\InspectorEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\CameraEditor.h">
+      <Filter>Editor\Inspector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
