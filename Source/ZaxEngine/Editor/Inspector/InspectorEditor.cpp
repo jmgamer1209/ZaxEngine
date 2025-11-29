@@ -59,7 +59,7 @@ namespace ZaxEngine::Editor
 
 	static GameObject* drawGO = nullptr;
 	static unordered_map<Component*, InspectorEditor*> drawEditorMap = {};
-	static void DrawInspector(GameObject& go)
+	void InspectorEditor::DrawInspector(GameObject& go)
 	{
 		for (size_t i = 0; i < go.components.size(); i++)
 		{

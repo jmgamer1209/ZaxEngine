@@ -5,7 +5,7 @@ namespace ZaxEngine::Editor
 {
 	void CameraEditor::OnGui()
 	{
-		auto scriptObj = target.scriptObj;
+		auto scriptObj = target->scriptObj;
 		if (scriptObj.IsValidate()) {
 			auto name = scriptObj.GetName();
 			if (ImGui::TreeNode(name)) {
