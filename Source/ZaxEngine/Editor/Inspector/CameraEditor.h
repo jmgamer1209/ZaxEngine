@@ -7,6 +7,7 @@ namespace ZaxEngine::Editor
 	class CameraEditor:InspectorEditor
 	{
 		public:
+			CameraEditor(Component* target);
 			void OnGui() override;
 
 	};

@@ -1,6 +1,8 @@
 #include "InspectorEditor.h"
 #include <imgui.h>
 #include <unordered_map>
+#include "Component/Camera.h"
+#include "CameraEditor.h"
 
 namespace ZaxEngine::Editor
 {
@@ -51,10 +53,25 @@ namespace ZaxEngine::Editor
 							ImGui::Text("Far:");
 							ImGui::DragFloat("##Far", &this->clippingFar, 1.0f, 0, (float)INT32_MAX);*/
 
-					ImGui::TreePop();
+					
 				}
+
+				ImGui::TreePop();
 			}
 		}
+	}
+
+
+	InspectorEditor* GetInspectorEditor(Component* component)
+	{
+		// 判断 component 和 CameraEditor* 类型是否相同
+		if (dynamic_cast<Camera*>(component)) {
+			return (InspectorEditor*)new CameraEditor(component);
+		}
+		else {
+			return new InspectorEditor(component); // 或返回默认编辑器
+		}
+		
 	}
 
 	static GameObject* drawGO = nullptr;
@@ -64,7 +81,12 @@ namespace ZaxEngine::Editor
 		for (size_t i = 0; i < go.components.size(); i++)
 		{
 			Component* component = go.components[i];
-			InspectorEditor* editor = new InspectorEditor(component);
+			auto editor = drawEditorMap[component];
+			if (editor == nullptr) {
+				editor = GetInspectorEditor(component);
+				drawEditorMap[component] = editor;
+			}
+			editor->OnGui();
 		}
 	}
 }
