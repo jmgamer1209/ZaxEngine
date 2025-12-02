@@ -23,6 +23,5 @@ public:
 
 private:
 	glm::vec3 cameraFront;
-	void OnGui() override;
 };
 

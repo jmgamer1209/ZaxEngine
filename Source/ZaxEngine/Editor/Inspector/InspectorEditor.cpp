@@ -3,6 +3,13 @@
 #include <unordered_map>
 #include "Component/Camera.h"
 #include "CameraEditor.h"
+#include <Component/Light.h>
+#include "LightEditor.h"
+#include "MeshRendererEditor.h"
+#include "PostProcessEditor.h"
+#include "TransformEditor.h"
+#include <Component/MeshRenderer.h>
+#include <Component/PostProcess.h>
 
 namespace ZaxEngine::Editor
 {
@@ -68,16 +75,35 @@ namespace ZaxEngine::Editor
 		if (dynamic_cast<Camera*>(component)) {
 			return (InspectorEditor*)new CameraEditor(component);
 		}
+		else if (dynamic_cast<Light*>(component)) {
+			return (InspectorEditor*)new LightEditor(component);
+		}
+		else if (dynamic_cast<MeshRenderer*>(component)) {
+			return (InspectorEditor*)new MeshRendererEditor(component);
+		}
+		else if (dynamic_cast<PostProcess*>(component)) {
+			return (InspectorEditor*)new PostProcessEditor(component);
+		}
+		else if (dynamic_cast<Transform*>(component)) {
+			return (InspectorEditor*)new TransformEditor(component);
+		}
 		else {
 			return new InspectorEditor(component); // 或返回默认编辑器
 		}
-		
 	}
 
 	static GameObject* drawGO = nullptr;
 	static unordered_map<Component*, InspectorEditor*> drawEditorMap = {};
 	void InspectorEditor::DrawInspector(GameObject& go)
 	{
+		if (drawGO != &go) {
+			drawGO = &go;
+			for (const auto &pair : drawEditorMap)
+			{
+				delete pair.second;
+			}
+			drawEditorMap.clear();
+		}
 		for (size_t i = 0; i < go.components.size(); i++)
 		{
 			Component* component = go.components[i];

@@ -256,6 +256,18 @@
     <ClCompile Include="Editor\Inspector\CameraEditor.cpp">
       <Filter>Editor\Inspector</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Inspector\LightEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Inspector\MeshRendererEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Inspector\PostProcessEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Inspector\TransformEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -449,6 +461,18 @@
       <Filter>Editor\Inspector</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Inspector\CameraEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\LightEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\MeshRendererEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\PostProcessEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\TransformEditor.h">
       <Filter>Editor\Inspector</Filter>
     </ClInclude>
   </ItemGroup>

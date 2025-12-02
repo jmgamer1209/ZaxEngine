@@ -11,7 +11,6 @@ public:
 	Vector3 scale;
 
 	Transform();
-	void OnGui() override;
 	Vector3 GetForward();
 	Vector3 GetRight();
 	Vector3 GetUp();

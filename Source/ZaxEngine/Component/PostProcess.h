@@ -17,7 +17,5 @@ public:
     PostProcess();
 
     FrameBuffer* Draw(FrameBuffer& source);
-
-    void OnGui() override;
 };
 

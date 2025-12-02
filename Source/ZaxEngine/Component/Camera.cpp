@@ -53,8 +53,3 @@ void Camera::OnViewportChange(int width, int height)
 	viewportWidth = width;
 	viewportHeight = height;
 }
-
-void Camera::OnGui()
-{
-
-}

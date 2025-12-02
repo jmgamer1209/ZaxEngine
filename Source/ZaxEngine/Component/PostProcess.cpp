@@ -26,13 +26,3 @@ FrameBuffer* PostProcess::Draw(FrameBuffer& source)
 
     return frameBuffer1;
 }
-
-void PostProcess::OnGui()
-{
-    if (ImGui::TreeNode("PostProcess"))
-    {
-        ImGui::Text("Enable: "); ImGui::SameLine();
-        ImGui::Checkbox("##Enable:", &enabled);
-        ImGui::TreePop();
-    }
-}

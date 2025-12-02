@@ -32,16 +32,5 @@ public:
     {
 
     }
-
-    void OnGui() override
-    {
-        if (ImGui::TreeNode("MeshRenderer"))
-        {
-            mat->OnGui();
-
-            ImGui::TreePop();
-        }
-        
-    }
 };
 

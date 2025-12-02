@@ -15,5 +15,4 @@ public:
 	GameObject* gameObject;
 	ScriptObject scriptObj;
 	ScriptFunc updateFunc;
-	virtual void OnGui();
 };

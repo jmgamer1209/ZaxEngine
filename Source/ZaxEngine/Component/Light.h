@@ -58,6 +58,6 @@ public:
 	}
 
 private:
-	void OnGui() override;
+
 };
 
