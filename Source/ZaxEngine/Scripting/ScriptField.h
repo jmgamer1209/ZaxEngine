@@ -22,9 +22,14 @@ namespace ZaxEngine::Scripting
 		bool IsValidate();
 
 		const char* GetTypeName();
+		bool TypeNameEqual(const char* target);
 		const char* GetName();
 		int GetInteger();
 		void SetInteger(int);
+		bool GetBool();
+		void SetBool(bool value);
+		float GetFloat();
+		void SetFloat(float value);
 	};
 }
 

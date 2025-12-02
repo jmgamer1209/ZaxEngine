@@ -30,6 +30,11 @@ namespace ZaxEngine::Scripting
 		return name;
 	}
 
+	bool ScriptField::TypeNameEqual(const char* target)
+	{
+		return strcmp(this->GetTypeName(), target) == 0;
+	}
+
 	const char* ScriptField::GetName()
 	{
 		const char* name = mono_field_get_name(this->field);
@@ -42,6 +47,26 @@ namespace ZaxEngine::Scripting
 	}
 
 	void ScriptField::SetInteger(int value)
+	{
+		return Binding::BindingHelper::MonoObjectSetValue(obj, field, &value);
+	}
+
+	bool ScriptField::GetBool()
+	{
+		return Binding::BindingHelper::MonoObjectGetValue<bool>(this->obj, this->field);
+	}
+
+	void ScriptField::SetBool(bool value)
+	{
+		return Binding::BindingHelper::MonoObjectSetValue(obj, field, &value);
+	}
+
+	float ScriptField::GetFloat()
+	{
+		return Binding::BindingHelper::MonoObjectGetValue<float>(this->obj, this->field);
+	}
+
+	void ScriptField::SetFloat(float value)
 	{
 		return Binding::BindingHelper::MonoObjectSetValue(obj, field, &value);
 	}

@@ -34,13 +34,27 @@ namespace ZaxEngine::Editor
 					ImGui::SameLine(0, -2);
 					std::string label = string("##") + string(fieldName);
 
-					if (strcmp(field.GetTypeName(), "System.Int32") == 0)
+					if (field.TypeNameEqual("System.Int32"))
 					{
 						int value = field.GetInteger();
-
 						if (ImGui::InputInt(label.c_str(), &value))
 						{
 							field.SetInteger(value);
+						}
+					}
+					else if (field.TypeNameEqual("System.Boolean"))
+					{
+						bool value = field.GetBool();
+						if (ImGui::Checkbox(label.c_str(), &value))
+						{
+							field.SetBool(value);
+						}
+					}
+					else if (field.TypeNameEqual("System.Single")) {
+						float value = field.GetFloat();
+						if (ImGui::InputFloat(label.c_str(), &value))
+						{
+							field.SetFloat(value);
 						}
 					}
 					else {
