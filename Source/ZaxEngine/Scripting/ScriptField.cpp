@@ -70,4 +70,16 @@ namespace ZaxEngine::Scripting
 	{
 		return Binding::BindingHelper::MonoObjectSetValue(obj, field, &value);
 	}
+
+	void ScriptField::SetString(const char* value)
+	{
+		auto monostr = mono_string_from_utf16((mono_unichar2*)ZString(value).GetU16String().c_str());
+		return Binding::BindingHelper::MonoObjectSetValue(this->obj, this->field, monostr);
+	}
+
+	std::string ScriptField::GetString()
+	{
+		auto monostr = Binding::BindingHelper::MonoObjectGetValue<MonoString*>(obj, field);
+		return Binding::BindingHelper::StringFromMonoString(monostr);
+	}
 }

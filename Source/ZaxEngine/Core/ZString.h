@@ -15,6 +15,13 @@ public:
 	ZString();
 	ZString(const wchar_t* wstr);
 	ZString(const uint16_t* utf16_str);
+	/// <summary>
+	/// 通过 utf8 字符串生成 zstring
+	/// </summary>
+	/// <param name="utf8_str"></param>
+	ZString(const char* utf8_str);
 	string GetU8String();
+	u16string GetU16String();
+	~ZString();
 };
 

@@ -30,6 +30,8 @@ namespace ZaxEngine::Scripting
 		void SetBool(bool value);
 		float GetFloat();
 		void SetFloat(float value);
+		void SetString(const char* value);
+		std::string GetString();
 	};
 }
 

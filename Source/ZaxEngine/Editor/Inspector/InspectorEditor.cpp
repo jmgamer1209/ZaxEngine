@@ -57,6 +57,16 @@ namespace ZaxEngine::Editor
 							field.SetFloat(value);
 						}
 					}
+					else if (field.TypeNameEqual("System.String")) {
+						auto str = field.GetString();
+						const char* value = str.c_str();
+						char temp[128];
+						strcpy_s(temp, strlen(value) + 1, value);
+						if (ImGui::InputText(label.c_str(), temp, 128))
+						{
+							field.SetString(temp);
+						}
+					}
 					else {
 						ImGui::Text(field.GetTypeName());
 					}

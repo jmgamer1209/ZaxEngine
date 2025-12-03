@@ -8,7 +8,7 @@ public class TestComponent:ZaxEngine.GameComponent
 {
     int test = 100;
     bool updatecall = false;
-    string str = "哈哈";
+    string str = "this is string";
     float testf = 20f;
 
     public TestComponent() 

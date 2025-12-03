@@ -37,7 +37,23 @@ ZString::ZString(const uint16_t* utf16_str)
     }
 }
 
+ZString::ZString(const char* utf8_str)
+{
+    if (utf8_str != nullptr) {
+        data = boost::locale::conv::utf_to_utf<char16_t>(utf8_str);
+    }
+}
+
 string ZString::GetU8String() 
 {
     return boost::locale::conv::utf_to_utf<char>(data);
+}
+
+u16string ZString::GetU16String()
+{
+    return data;
+}
+
+ZString::~ZString()
+{
 }
