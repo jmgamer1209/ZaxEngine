@@ -8,8 +8,10 @@
 #include "MeshRendererEditor.h"
 #include "PostProcessEditor.h"
 #include "TransformEditor.h"
+#include "SkyboxEditor.h"
 #include <Component/MeshRenderer.h>
 #include <Component/PostProcess.h>
+#include <Component/Skybox.h>
 
 namespace ZaxEngine::Editor
 {
@@ -110,6 +112,9 @@ namespace ZaxEngine::Editor
 		}
 		else if (dynamic_cast<Transform*>(component)) {
 			return (InspectorEditor*)new TransformEditor(component);
+		}
+		else if (dynamic_cast<Skybox*>(component)) {
+			return (InspectorEditor*)new SkyboxEditor(component);
 		}
 		else {
 			return new InspectorEditor(component); // 或返回默认编辑器

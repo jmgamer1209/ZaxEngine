@@ -198,6 +198,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Editor\Inspector\LightEditor.cpp" />
     <ClCompile Include="Editor\Inspector\MeshRendererEditor.cpp" />
     <ClCompile Include="Editor\Inspector\PostProcessEditor.cpp" />
+    <ClCompile Include="Editor\Inspector\SkyboxEditor.cpp" />
     <ClCompile Include="Editor\Inspector\TransformEditor.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
@@ -269,6 +270,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Editor\Inspector\LightEditor.h" />
     <ClInclude Include="Editor\Inspector\MeshRendererEditor.h" />
     <ClInclude Include="Editor\Inspector\PostProcessEditor.h" />
+    <ClInclude Include="Editor\Inspector\SkyboxEditor.h" />
     <ClInclude Include="Editor\Inspector\TransformEditor.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />

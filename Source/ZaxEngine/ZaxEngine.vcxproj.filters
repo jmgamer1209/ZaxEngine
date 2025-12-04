@@ -268,6 +268,9 @@
     <ClCompile Include="Editor\Inspector\TransformEditor.cpp">
       <Filter>Editor\Inspector</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Inspector\SkyboxEditor.cpp">
+      <Filter>Editor\Inspector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -473,6 +476,9 @@
       <Filter>Editor\Inspector</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Inspector\TransformEditor.h">
+      <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Inspector\SkyboxEditor.h">
       <Filter>Editor\Inspector</Filter>
     </ClInclude>
   </ItemGroup>
