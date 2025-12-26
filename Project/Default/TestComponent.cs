@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZaxEngine;
+using ZaxEngine.InputSystem;
 
 public class TestComponent:ZaxEngine.GameComponent
 {
@@ -22,5 +24,6 @@ public class TestComponent:ZaxEngine.GameComponent
         {
             ZaxEngine.Debug.Log("Test Update Call");
         }
+        ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.W);
     }
 }

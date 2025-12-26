@@ -62,6 +62,9 @@
     <Filter Include="Editor\Inspector">
       <UniqueIdentifier>{cec2aa9f-415b-427c-bf11-954831e1d8ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\InputSystem">
+      <UniqueIdentifier>{4b4a4498-ea3d-462d-9ecc-0d58d9204743}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -270,6 +273,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Inspector\SkyboxEditor.cpp">
       <Filter>Editor\Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="CS\Bindings\InputBinding.cpp">
+      <Filter>CS\Binding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -480,6 +486,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Inspector\SkyboxEditor.h">
       <Filter>Editor\Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\InputBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
