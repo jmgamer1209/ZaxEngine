@@ -9,6 +9,7 @@
 
 #include "Application.h"
 #include "Core/Debug.h"
+#include <boost/locale/encoding.hpp>
 
 
 char* Utils::WChar2Char(const wchar_t* wchar)
@@ -21,20 +22,24 @@ char* Utils::WChar2Char(const wchar_t* wchar)
 	return m_char;
 }
 
+/// <summary>
+/// utf16 wstring 转 utf8 string
+/// </summary>
+/// <param name="ws"></param>
+/// <returns></returns>
 string Utils::WString2String(const wstring& ws)
 {
-    _bstr_t t = ws.c_str();
-    char* pchar = (char*)t;
-    string result = pchar;
-    return result;
+    return boost::locale::conv::from_utf<wchar_t>(ws, "utf8", boost::locale::conv::skip);
 }
 
+/// <summary>
+/// utf8 string 转 utf16 wstring
+/// </summary>
+/// <param name="s"></param>
+/// <returns></returns>
 wstring Utils::String2Wstring(const string& s)
 {
-    _bstr_t t = s.c_str();
-    wchar_t* pwchar = (wchar_t*)t;
-    wstring result = pwchar;
-    return result;
+    return boost::locale::conv::to_utf<wchar_t>(s, "utf8", boost::locale::conv::skip);
 }
 
 void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_vertically)

@@ -30,7 +30,7 @@ public class TestComponent:ZaxEngine.GameComponent
         }
         if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Left))
         {
-            ZaxEngine.Debug.Log("mouse left");
+            ZaxEngine.Debug.Log("鼠标 left");
         }
         if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Right))
         {
