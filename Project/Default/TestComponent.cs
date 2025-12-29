@@ -28,5 +28,13 @@ public class TestComponent:ZaxEngine.GameComponent
         {
             ZaxEngine.Debug.Log("input w");
         }
+        if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Left))
+        {
+            ZaxEngine.Debug.Log("mouse left");
+        }
+        if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Right))
+        {
+            ZaxEngine.Debug.Log("mouse right");
+        }
     }
 }
