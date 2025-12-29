@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ZaxEngine;
@@ -26,7 +27,31 @@ public class TestComponent:ZaxEngine.GameComponent
         }
         if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.W))
         {
-            ZaxEngine.Debug.Log("input w");
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.z = position.z - 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.S))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.z = position.z + 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.A))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.x = position.x - 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.D))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.x = position.x + 1;
+            transform.position = position;
         }
         if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Left))
         {
