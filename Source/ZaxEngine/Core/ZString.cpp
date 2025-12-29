@@ -54,6 +54,11 @@ u16string ZString::GetU16String()
     return data;
 }
 
+wstring ZString::GetWString()
+{
+    return boost::locale::conv::utf_to_utf<wchar_t>(data);
+}
+
 ZString::~ZString()
 {
 }

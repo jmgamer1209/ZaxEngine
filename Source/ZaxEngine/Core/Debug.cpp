@@ -7,8 +7,9 @@ void Debug::Log(const std::string& log)
 	// 控制台输出
 	std::cout << log << "\n";
 	// 调试器输出
+	// 不使用 OutputDebugStringA，因为带A的函数，参数使用的是 ascii 编码而不是 utf8
 	auto temp = log + "\n";
-	OutputDebugString(Utils::String2Wstring(temp).c_str());
+	OutputDebugString(Utils::String2Wstring(temp).c_str());  
 }
 
 void Debug::Log(std::initializer_list<std::string> list)

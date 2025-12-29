@@ -10,7 +10,7 @@ namespace ZaxEngine::Binding::Debug {
 
 	void Internal_Log(MonoString* monoStr)
 	{
-		auto log = BindingHelper::StringFromMonoString(monoStr);
+		auto log = BindingHelper::WStringFromMonoString(monoStr);
 		::Debug::Log(log);
 	}
 

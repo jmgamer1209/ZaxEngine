@@ -22,6 +22,7 @@ public:
 	ZString(const char* utf8_str);
 	string GetU8String();
 	u16string GetU16String();
+	wstring GetWString();
 	~ZString();
 };
 

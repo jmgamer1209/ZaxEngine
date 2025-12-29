@@ -41,6 +41,11 @@ namespace ZaxEngine::Binding::BindingHelper {
 		return ZString(mono_string_to_utf16(str)).GetU8String();
 	}
 
+	wstring WStringFromMonoString(MonoString* str)
+	{
+		return ZString(mono_string_to_utf16(str)).GetWString();
+	}
+
 	::Component* GetComponent(GameObject* go, const char* name_space, const char* class_name) 
 	{
 		if (name_space != "ZaxEngine") return nullptr;

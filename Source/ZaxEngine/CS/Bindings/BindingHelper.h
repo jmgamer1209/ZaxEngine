@@ -37,6 +37,7 @@ namespace ZaxEngine::Binding::BindingHelper {
 	}
 
 	std::string StringFromMonoString(MonoString* str);
+	std::wstring WStringFromMonoString(MonoString* str);
 
 	template<typename T>
 	T GetNativeObj(MonoObject* obj) 
