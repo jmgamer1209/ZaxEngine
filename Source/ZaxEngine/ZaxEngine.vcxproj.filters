@@ -277,6 +277,9 @@
     <ClCompile Include="CS\Bindings\InputBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="Core\InputSystem\Input.cpp">
+      <Filter>Core\InputSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -489,6 +492,9 @@
     </ClInclude>
     <ClInclude Include="CS\Bindings\InputBinding.h">
       <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\InputSystem\Input.h">
+      <Filter>Core\InputSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

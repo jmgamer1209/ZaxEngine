@@ -24,6 +24,9 @@ public class TestComponent:ZaxEngine.GameComponent
         {
             ZaxEngine.Debug.Log("Test Update Call");
         }
-        ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.W);
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.W))
+        {
+            ZaxEngine.Debug.Log("input w");
+        }
     }
 }

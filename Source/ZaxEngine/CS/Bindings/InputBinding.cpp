@@ -3,19 +3,18 @@
 #include "Component/Camera.h"
 #include "BindingHelper.h"
 #include <Core/Debug.h>
+#include <Core/InputSystem/Input.h>
 
 namespace ZaxEngine::Binding::Input
 {
 	bool GetKeyDown(int key)
 	{
-		Debug::Log(key);
-		return false;
+		return ZaxEngine::InputSystem::Input::GetKeyDown(key);
 	}
 
 	bool GetMouseDown(int key)
 	{
-		Debug::Log(key);
-		return false;
+		return ZaxEngine::InputSystem::Input::GetMouseDown(key);
 	}
 
 	void RegisterInternalCall()
