@@ -46,16 +46,6 @@ namespace ZaxEngine::Binding::BindingHelper {
 		return ZString(mono_string_to_utf16(str)).GetWString();
 	}
 
-	::Component* GetComponent(GameObject* go, const char* name_space, const char* class_name) 
-	{
-		if (name_space != "ZaxEngine") return nullptr;
-		if (class_name == "Transform")
-		{
-			return go->GetComponent<::Transform>();
-		}
-		return nullptr;
-	}
-
 	bool IsSubOfGameComponent(MonoObject* obj)
 	{
 		auto objClass = mono_object_get_class(obj);
