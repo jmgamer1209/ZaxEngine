@@ -77,7 +77,7 @@ void Utils::LoadTexture(unsigned int *texture, string& path, bool flip_verticall
 }
 
 /// <summary>
-/// 
+/// 加载图片
 /// </summary>
 /// <param name="path">utf8编码的字符串</param>
 /// <param name="flip_vertically"></param>

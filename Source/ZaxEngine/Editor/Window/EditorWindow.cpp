@@ -133,21 +133,38 @@ void EditorWindow::DrawWindowUI()
 
     ImGui::EndMainMenuBar();
 
-	// Main Dockspace
+	ImVec2 menubarSize = ImGui::GetItemRectSize();
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
-	ImGui::SetNextWindowPos(viewport->Pos);
-	ImGui::SetNextWindowSize(viewport->Size);
+	
+	// Play Bar
+	ImVec2 playbarSize(viewport->Size.x, 40);
+	ImGui::SetNextWindowSize(playbarSize);
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + menubarSize.y));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("##playbar", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking);
+	ImGui::SetCursorPos(ImVec2(8, 5));
+	if (ImGui::Button("Play", ImVec2(50, 30)))
+	{
+		Debug::Log("Play");
+	}
+	ImGui::End();
+	ImGui::PopStyleVar(1);
+
+	// Main Dockspace
+	ImVec2 dockspaceSize(viewport->Size.x, viewport->Size.y - menubarSize.y - playbarSize.y);
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + menubarSize.y + playbarSize.y));
+	ImGui::SetNextWindowSize(dockspaceSize);
 	ImGui::SetNextWindowViewport(viewport->ID);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-	ImGui::Begin("##dockspace", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking);
+	ImGui::Begin("##dockspace", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDocking);
 	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoWindowMenuButton);
-	ImGui::SetWindowPos({ 0.f, 0.f });
-	ImVec2 displaySize = ImGui::GetIO().DisplaySize;
-	ImGui::SetWindowSize({ (float)displaySize.x, (float)displaySize.y });
+	//ImGui::SetWindowPos({ 0.f, 0.f });
+	/*ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+	ImGui::SetWindowSize({ (float)displaySize.x, (float)displaySize.y });*/
 	ImGui::End();
 
 	ImGui::PopStyleVar(3);
@@ -157,7 +174,7 @@ void EditorWindow::DrawWindowUI()
 		//ImVec2(FLT_MAX, FLT_MAX)); // 最大尺寸(无限制)
 	
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Scene View");
+	ImGui::Begin("Scene View", nullptr);
 
 	ImVec2 currentSize = ImGui::GetWindowSize();
 
@@ -185,7 +202,7 @@ void EditorWindow::DrawWindowUI()
 	ImGui::PopStyleVar(1);
 
     // 场景物体列表
-    ImGui::Begin("Hierarchy");
+    ImGui::Begin("Hierarchy", nullptr);
 		
 	ImVec2 currentSize2 = ImGui::GetWindowSize();
 
@@ -201,7 +218,7 @@ void EditorWindow::DrawWindowUI()
     ImGui::End();
 
     // 组件属性检视面板
-    ImGui::Begin("Inspector");
+    ImGui::Begin("Inspector", nullptr);
 
 	ImVec2 currentSize3 = ImGui::GetWindowSize();
 
