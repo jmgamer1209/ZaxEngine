@@ -21,6 +21,7 @@
 #include <imgui_internal.h>
 
 #include "Editor/Inspector/InspectorEditor.h"
+#include "Jolt/Jolt.h"
 
 using namespace boost;
 using namespace ZaxEngine;
