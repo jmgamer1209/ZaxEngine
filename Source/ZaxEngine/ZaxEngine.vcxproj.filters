@@ -65,6 +65,9 @@
     <Filter Include="Core\InputSystem">
       <UniqueIdentifier>{4b4a4498-ea3d-462d-9ecc-0d58d9204743}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\JoltPhysics">
+      <UniqueIdentifier>{12a51e0e-5f3d-4ee0-a077-248504235abf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -495,6 +498,9 @@
     </ClInclude>
     <ClInclude Include="Core\InputSystem\Input.h">
       <Filter>Core\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Jolt.h">
+      <Filter>ThirdParty\JoltPhysics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

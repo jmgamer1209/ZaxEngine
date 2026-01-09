@@ -295,6 +295,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h" />
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp" />
     <ClInclude Include="ThirdParty\glm\glm.hpp" />
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Jolt.h" />
     <ClInclude Include="WindowsMain\ZaxEngine.h" />
   </ItemGroup>
   <ItemGroup>
