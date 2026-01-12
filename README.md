@@ -38,8 +38,8 @@
 **引擎引入的第三方插件和库：**
 * imgui v1.92.1-docking，配置过程参考示例中的 example_glfw_opengl3，glfw 是一个多平台窗口管理器，同时因为项目初始使用 OpenGL API，所以此界面插件也采用此图形库。
 * glad2 v2.0.4，用于运行时查找 opengl 函数。github 需要选择 glad2 分支。库要在网站生成，选项选择 gl 3.3，勾选 loader。注意是 glad2 而不是旧版的 glad
-* stb_image，图片加载库
-* glm，数学库
+* stb_image v2.28，图片加载库
+* glm v1.0.1，数学库
 * assimp v5.3.1, 资源模型导入库，比如 obj，fbx
 * boost，v1.86.0，基础能力，比如 filesystem,json
 * unity mono, branch 是 unity-2022.3-mbe, 提供C#脚本能力
