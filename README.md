@@ -43,7 +43,7 @@
 * assimp v5.3.1, 资源模型导入库，比如 obj，fbx
 * boost，v1.86.0，基础能力，比如 filesystem,json
 * unity mono, branch 是 unity-2022.3-mbe, 提供C#脚本能力
-* JoltPhysics, 物理引擎，编译的库使用的模式为不保证跨平台一致性(后续可能调整编译选项)
+* JoltPhysics v5.5.0, 物理引擎，编译的库使用的模式为不保证跨平台一致性(后续可能调整编译选项)
 
 参考引擎：Overload,Godot,Unity,Unreal
 
