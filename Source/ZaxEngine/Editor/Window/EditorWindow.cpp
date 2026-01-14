@@ -22,6 +22,7 @@
 
 #include "Editor/Inspector/InspectorEditor.h"
 #include "Jolt/Jolt.h"
+#include "Physics/PhysicsSystem.h"
 
 using namespace boost;
 using namespace ZaxEngine;
@@ -47,7 +48,8 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	catch (const std::exception& e) {
 		Debug::Log(e.what());
 	}
-	
+
+	Physics::PhysicsSystem::GetInstance();
 }
 
 void EditorWindow::OnWindowClosed()

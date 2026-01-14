@@ -68,6 +68,24 @@
     <Filter Include="ThirdParty\JoltPhysics">
       <UniqueIdentifier>{12a51e0e-5f3d-4ee0-a077-248504235abf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\JoltPhysics\Jolt">
+      <UniqueIdentifier>{5a439a20-e061-4e63-adfb-796115e8ebf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\JoltPhysics\Jolt\Physics">
+      <UniqueIdentifier>{9d7e023d-63af-4c84-a420-7aa5a72d6d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision">
+      <UniqueIdentifier>{c3a23bc4-e056-4bac-83c2-ab326c118c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape">
+      <UniqueIdentifier>{cbc507c6-3c91-451a-9235-3ee61bb1f375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\JoltPhysics\Jolt\Core">
+      <UniqueIdentifier>{fc89fc2e-4e25-4858-8dc2-fddd4311c9fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{205e3d3c-8dc4-4b5c-b9e2-53607e33574f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -282,6 +300,18 @@
     </ClCompile>
     <ClCompile Include="Core\InputSystem\Input.cpp">
       <Filter>Core\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\BoxCollider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\PhysicsSystem.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RigidBody.cpp">
+      <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,16 +529,312 @@
     <ClInclude Include="Core\InputSystem\Input.h">
       <Filter>Core\InputSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Jolt.h">
-      <Filter>ThirdParty\JoltPhysics</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\stb_image.h">
       <Filter>ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\BoxCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Jolt.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\BoxShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\CapsuleShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\CompoundShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\CompoundShapeVisitors.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\ConvexHullShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\ConvexShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\CylinderShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\DecoratedShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\EmptyShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\GetTrianglesContext.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\HeightFieldShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\MeshShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\MutableCompoundShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\OffsetCenterOfMassShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\PlaneShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\PolyhedronSubmergedVolumeCalculator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\RotatedTranslatedShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\ScaledShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\ScaleHelpers.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\Shape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\SphereShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\StaticCompoundShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\SubShapeID.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\SubShapeIDPair.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\TaperedCapsuleShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\TaperedCylinderShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape\TriangleShape.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics\Collision\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\ARMNeon.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Array.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Atomics.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\BinaryHeap.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\ByteBuffer.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Color.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Core.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Factory.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\FixedSizeFreeList.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\FPControlWord.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\FPException.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\FPFlushDenormals.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\HashCombine.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\HashTable.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\InsertionSort.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\IssueReporting.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\JobSystem.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\JobSystemSingleThreaded.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\JobSystemThreadPool.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\JobSystemWithBarrier.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\LinearCurve.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\LockFreeHashMap.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Memory.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Mutex.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\MutexArray.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\NonCopyable.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Profiler.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\QuickSort.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Reference.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Result.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\RTTI.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\ScopeExit.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\Semaphore.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StaticArray.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\STLAlignedAllocator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\STLAllocator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\STLLocalAllocator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\STLTempAllocator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StreamIn.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StreamOut.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StreamUtils.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StreamWrapper.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StridedPtr.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\StringTools.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\TempAllocator.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\TickCounter.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\UnorderedMap.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Core\UnorderedSet.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\ConfigurationString.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\RegisterTypes.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\DeterminismLog.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\EActivation.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\EPhysicsUpdateError.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\IslandBuilder.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\LargeIslandSplitter.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsLock.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsScene.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsSettings.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsStepListener.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsSystem.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\PhysicsUpdateContext.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\StateRecorder.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\StateRecorderImpl.h">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\PhysicsSystem.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RigidBody.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ZaxEngine.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\JoltPhysics\Jolt\Core\FixedSizeFreeList.inl">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </None>
+    <None Include="ThirdParty\JoltPhysics\Jolt\Core\JobSystem.inl">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </None>
+    <None Include="ThirdParty\JoltPhysics\Jolt\Core\LockFreeHashMap.inl">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </None>
+    <None Include="ThirdParty\JoltPhysics\Jolt\Core\Profiler.inl">
+      <Filter>ThirdParty\JoltPhysics\Jolt\Core</Filter>
+    </None>
   </ItemGroup>
 </Project>
