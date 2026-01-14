@@ -40,6 +40,7 @@ namespace ZaxEngine::Physics
 
 	PhysicsSystem& PhysicsSystem::GetInstance()
 	{
+		// 未加锁
 		if (instance == nullptr)
 		{
 			instance = new PhysicsSystem();
