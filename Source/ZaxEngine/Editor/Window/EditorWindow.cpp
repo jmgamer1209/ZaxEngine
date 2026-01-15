@@ -78,6 +78,7 @@ void EditorWindow::PreDrawImgui()
 	// 由于 dockspace 导致界面初次启动时会延迟2帧才能有正确的布局，所以这里延迟2帧
 	if (FrameCount < 2) return;
 
+	Physics::PhysicsSystem::GetInstance().Update(0.016f);
 	GameLogicUpdate();
 	DrawScene();
 }

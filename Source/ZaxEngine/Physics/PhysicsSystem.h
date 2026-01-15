@@ -6,6 +6,7 @@
 #include "Jolt/Physics/Body/BodyActivationListener.h"
 #include "Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h"
 
+#include "Core/Event/Event.h"
 
 #include <iostream>
 #include <cstdarg>
@@ -22,20 +23,25 @@ namespace ZaxEngine::Physics
 	class PhysicsSystem
 	{
 	private:
-		PhysicsSystem();
+		static PhysicsSystem* instance;
+		
 		JPH::TempAllocatorImpl* temp_allocator = nullptr;
 		JPH::PhysicsSystem joltPhysicsSystem;
 		JPH::JobSystemThreadPool joltJobSystem;
-		static PhysicsSystem* instance;
-	
-	public:
-		static PhysicsSystem& GetInstance();
 
 	public:
+		Event OnPhysicsUpdateBegin;
+		Event OnPhysicsUpdateEnd;
+	
+	private:
+		PhysicsSystem();
+		
+	public:
+		static PhysicsSystem& GetInstance();
 		void AddBody(Body& body);
 		void RemoveBody(Body& body);
 		JPH::BodyInterface& GetBodyInterface();
-
+		void Update(float inDeltaTime);
 
 	private:
 		static bool AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine);

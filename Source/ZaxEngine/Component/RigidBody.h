@@ -19,6 +19,8 @@ public:
 	RigidBody();
 	void AddToWorld();
 	void RemoveFromWorld();
+	void OnPhysicsUpdateBegin();
+	void OnPhysicsUpdateEnd();
 
 public:
 	

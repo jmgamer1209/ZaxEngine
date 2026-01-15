@@ -48,6 +48,15 @@ namespace ZaxEngine::Physics
 		return *instance;
 	}
 
+	void PhysicsSystem::Update(float inDeltaTime)
+	{
+		OnPhysicsUpdateBegin.Execute();
+
+		joltPhysicsSystem.Update(inDeltaTime, 1, temp_allocator, &joltJobSystem);
+
+		OnPhysicsUpdateEnd.Execute();
+	}
+
 	void PhysicsSystem::AddBody(Body& body)
 	{
 		JPH::BodyInterface& body_interface = joltPhysicsSystem.GetBodyInterface();
