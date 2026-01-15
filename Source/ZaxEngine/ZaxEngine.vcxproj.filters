@@ -86,6 +86,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{205e3d3c-8dc4-4b5c-b9e2-53607e33574f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Event">
+      <UniqueIdentifier>{3e84bf3b-c51f-48b0-a6d8-051eccb9c518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -312,6 +315,9 @@
     </ClCompile>
     <ClCompile Include="Component\RigidBody.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Event\Event.cpp">
+      <Filter>Core\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -816,6 +822,9 @@
     </ClInclude>
     <ClInclude Include="Component\RigidBody.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Event\Event.h">
+      <Filter>Core\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
