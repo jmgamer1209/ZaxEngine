@@ -5,9 +5,7 @@
 #include "Jolt/Core/JobSystemThreadPool.h"
 #include "Jolt/Physics/Body/BodyActivationListener.h"
 #include "Jolt/Physics/Collision/BroadPhase/BroadPhaseLayer.h"
-
 #include "Core/Event/Event.h"
-
 #include <iostream>
 #include <cstdarg>
 #include <thread>
@@ -17,31 +15,39 @@ using uint = JPH::uint;
 using uint64 = JPH::uint64;
 using Body = JPH::Body;
 using RVec3Arg = JPH::RVec3Arg;
+class PhysicsUpdateListener;
 
 namespace ZaxEngine::Physics
 {
+	class PhysicsUpdateListener
+	{
+		virtual void OnPhysicsUpdateBegin() = 0;
+		virtual void OnPhysicsUpdateEnd() = 0;
+	};
+
 	class PhysicsSystem
 	{
-	private:
-		static PhysicsSystem* instance;
-		
-		JPH::TempAllocatorImpl* temp_allocator = nullptr;
-		JPH::PhysicsSystem joltPhysicsSystem;
-		JPH::JobSystemThreadPool joltJobSystem;
-
-	public:
-		Event OnPhysicsUpdateBegin;
-		Event OnPhysicsUpdateEnd;
-	
-	private:
-		PhysicsSystem();
-		
 	public:
 		static PhysicsSystem& GetInstance();
 		void AddBody(Body& body);
 		void RemoveBody(Body& body);
 		JPH::BodyInterface& GetBodyInterface();
 		void Update(float inDeltaTime);
+		
+		Event<> OnPhysicsUpdateBegin;
+		Event<> OnPhysicsUpdateEnd;
+		/*void AddPhysicsUpdateListener(PhysicsUpdateListener* listener);
+		void RemovePhysicsUpdateListener(PhysicsUpdateListener* listener);*/
+
+	private:
+		static PhysicsSystem* instance;
+
+		JPH::TempAllocatorImpl* temp_allocator = nullptr;
+		JPH::PhysicsSystem joltPhysicsSystem;
+		JPH::JobSystemThreadPool joltJobSystem;
+		//std::vector<PhysicsUpdateListener*> physicsUpdateListenerList;
+	private:
+		PhysicsSystem();
 
 	private:
 		static bool AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine);

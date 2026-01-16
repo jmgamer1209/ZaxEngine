@@ -1,23 +1,23 @@
 #include "Event.h"
 
-Event& Event::operator+=(const std::function<void()> &func)
-{
-	list.push_back(func);
-	return *this;
-}
+uint64_t EventListenerBase::sIndexID = 0;
+std::vector<uint64_t> EventListenerBase::sReuseIDList;
 
-Event& Event::operator-=(const std::function<void()> &func)
+EventListenerBase::EventListenerBase()
 {
-    auto it = std::remove_if(list.begin(), list.end(),
-        [&](const std::function<void()>& f) { return f.target_type() == func.target_type(); });
-    list.erase(it, list.end());
-	return *this;
-}
-
-void Event::Execute()
-{
-	for (auto e : list)
+	if (!sReuseIDList.empty())
 	{
-		e();
+		ID = sReuseIDList.back();
+		sReuseIDList.pop_back();
 	}
+	else
+	{
+		ID = sIndexID;
+		sIndexID++;
+	}
+}
+
+EventListenerBase::~EventListenerBase()
+{
+	sReuseIDList.push_back(ID);
 }

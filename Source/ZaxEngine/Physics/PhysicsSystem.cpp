@@ -50,11 +50,12 @@ namespace ZaxEngine::Physics
 
 	void PhysicsSystem::Update(float inDeltaTime)
 	{
-		OnPhysicsUpdateBegin.Execute();
+		//OnPhysicsUpdateBegin.Execute();
 
 		joltPhysicsSystem.Update(inDeltaTime, 1, temp_allocator, &joltJobSystem);
+		//joltPhysicsSystem.sim
 
-		OnPhysicsUpdateEnd.Execute();
+		//OnPhysicsUpdateEnd.Execute();
 	}
 
 	void PhysicsSystem::AddBody(Body& body)
@@ -73,6 +74,17 @@ namespace ZaxEngine::Physics
 	{
 		return joltPhysicsSystem.GetBodyInterface();
 	}
+
+	//void PhysicsSystem::AddPhysicsUpdateListener(PhysicsUpdateListener* listener)
+	//{
+	//	physicsUpdateListenerList.push_back(listener);
+	//}
+
+	//void PhysicsSystem::RemovePhysicsUpdateListener(PhysicsUpdateListener* listener)
+	//{
+
+	//}
+
 
 	bool PhysicsSystem::AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine)
 	{

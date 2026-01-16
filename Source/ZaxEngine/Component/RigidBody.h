@@ -6,6 +6,7 @@
 #include "Jolt/Jolt.h"
 #include "Jolt/Physics/Body/Body.h"
 #include "Jolt/Physics/Body/BodyCreationSettings.h"
+#include "Physics/PhysicsSystem.h"
 
 class RigidBody: public Component
 {	
@@ -22,6 +23,9 @@ public:
 	void OnPhysicsUpdateBegin();
 	void OnPhysicsUpdateEnd();
 
+	EventListener<> physicsBegin = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateBegin, this));
+	EventListener<> physicsEnd = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateEnd, this));
+	
 public:
 	
 };

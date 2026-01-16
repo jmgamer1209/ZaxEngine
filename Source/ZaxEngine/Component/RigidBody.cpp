@@ -19,8 +19,9 @@ void RigidBody::AddToWorld()
 		auto postion = gameObject->GetComponent<Transform>()->position;
 		settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
 		body = system.GetBodyInterface().CreateBody(settings);
-		system.OnPhysicsUpdateBegin += std::bind(&RigidBody::OnPhysicsUpdateBegin, this);
-		system.OnPhysicsUpdateEnd += std::bind(&RigidBody::OnPhysicsUpdateEnd, this);
+		system.OnPhysicsUpdateBegin.Add(physicsBegin);
+		system.OnPhysicsUpdateEnd.Add(physicsEnd);
+		//system.AddPhysicsUpdateListener((PhysicsUpdateListener*)this);
 	}
 	system.AddBody(*body);
 }
@@ -28,8 +29,8 @@ void RigidBody::AddToWorld()
 void RigidBody::RemoveFromWorld()
 {
 	PhysicsSystem& system = PhysicsSystem::GetInstance();
-	system.OnPhysicsUpdateBegin -= (std::bind(&RigidBody::OnPhysicsUpdateBegin, this));
-	system.OnPhysicsUpdateEnd -= std::bind(&RigidBody::OnPhysicsUpdateEnd, this);
+	system.OnPhysicsUpdateBegin.Remove(physicsBegin);
+	system.OnPhysicsUpdateEnd.Remove(physicsEnd);
 	system.RemoveBody(*body);
 }
 
