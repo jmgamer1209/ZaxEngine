@@ -19,40 +19,6 @@ class PhysicsUpdateListener;
 
 namespace ZaxEngine::Physics
 {
-	class PhysicsUpdateListener
-	{
-		virtual void OnPhysicsUpdateBegin() = 0;
-		virtual void OnPhysicsUpdateEnd() = 0;
-	};
-
-	class PhysicsSystem
-	{
-	public:
-		static PhysicsSystem& GetInstance();
-		void AddBody(Body& body);
-		void RemoveBody(Body& body);
-		JPH::BodyInterface& GetBodyInterface();
-		void Update(float inDeltaTime);
-		
-		Event<> OnPhysicsUpdateBegin;
-		Event<> OnPhysicsUpdateEnd;
-		/*void AddPhysicsUpdateListener(PhysicsUpdateListener* listener);
-		void RemovePhysicsUpdateListener(PhysicsUpdateListener* listener);*/
-
-	private:
-		static PhysicsSystem* instance;
-
-		JPH::TempAllocatorImpl* temp_allocator = nullptr;
-		JPH::PhysicsSystem joltPhysicsSystem;
-		JPH::JobSystemThreadPool joltJobSystem;
-		//std::vector<PhysicsUpdateListener*> physicsUpdateListenerList;
-	private:
-		PhysicsSystem();
-
-	private:
-		static bool AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine);
-		static void TraceImpl(const char* inFMT, ...);
-	};
 
 	namespace Layers
 	{
@@ -81,7 +47,7 @@ namespace ZaxEngine::Physics
 	{
 	public:
 		BPLayerInterfaceImpl();
-		
+
 
 		virtual uint					GetNumBroadPhaseLayers() const override;
 
@@ -117,12 +83,53 @@ namespace ZaxEngine::Physics
 		virtual JPH::ValidateResult	OnContactValidate(const Body& inBody1, const Body& inBody2, RVec3Arg inBaseOffset, const JPH::CollideShapeResult& inCollisionResult) override;
 
 		virtual void			OnContactAdded(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings) override;
-		
+
 
 		virtual void			OnContactPersisted(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings) override;
 
 		virtual void			OnContactRemoved(const JPH::SubShapeIDPair& inSubShapePair) override;
 	};
+
+	class PhysicsUpdateListener
+	{
+		virtual void OnPhysicsUpdateBegin() = 0;
+		virtual void OnPhysicsUpdateEnd() = 0;
+	};
+
+	class PhysicsSystem
+	{
+	public:
+		static PhysicsSystem& GetInstance();
+		void AddBody(Body& body);
+		void RemoveBody(Body& body);
+		JPH::BodyInterface& GetBodyInterface();
+		void Update(float inDeltaTime);
+		
+		Event<> OnPhysicsUpdateBegin;
+		Event<> OnPhysicsUpdateEnd;
+		/*void AddPhysicsUpdateListener(PhysicsUpdateListener* listener);
+		void RemovePhysicsUpdateListener(PhysicsUpdateListener* listener);*/
+
+	private:
+		static PhysicsSystem* instance;
+
+		JPH::TempAllocatorImpl* temp_allocator = nullptr;
+		JPH::PhysicsSystem joltPhysicsSystem;
+		JPH::JobSystemThreadPool joltJobSystem;
+		BPLayerInterfaceImpl broad_phase_layer_interface;
+		ObjectVsBroadPhaseLayerFilterImpl object_vs_broadphase_layer_filter;
+		ObjectLayerPairFilterImpl object_vs_object_layer_filter;
+		MyBodyActivationListener body_activation_listener;
+		MyContactListener contact_listener;
+		//std::vector<PhysicsUpdateListener*> physicsUpdateListenerList;
+	private:
+		PhysicsSystem();
+
+	private:
+		static bool AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine);
+		static void TraceImpl(const char* inFMT, ...);
+	};
+
 }
 
 

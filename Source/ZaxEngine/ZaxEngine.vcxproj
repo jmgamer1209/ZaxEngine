@@ -194,6 +194,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="CS\Bindings\MeshBinding.cpp" />
     <ClCompile Include="CS\Bindings\MeshRendererBinding.cpp" />
     <ClCompile Include="CS\Bindings\PostProcessBinding.cpp" />
+    <ClCompile Include="CS\Bindings\RigidBodyBinding.cpp" />
     <ClCompile Include="CS\Bindings\SceneBinding.cpp" />
     <ClCompile Include="CS\Bindings\ShaderProgramBinding.cpp" />
     <ClCompile Include="CS\Bindings\SkyboxBinding.cpp" />
@@ -273,6 +274,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="CS\Bindings\MeshBinding.h" />
     <ClInclude Include="CS\Bindings\MeshRendererBinding.h" />
     <ClInclude Include="CS\Bindings\PostProcessBinding.h" />
+    <ClInclude Include="CS\Bindings\RigidBodyBinding.h" />
     <ClInclude Include="CS\Bindings\SceneBinding.h" />
     <ClInclude Include="CS\Bindings\ShaderProgramBinding.h" />
     <ClInclude Include="CS\Bindings\SkyboxBinding.h" />

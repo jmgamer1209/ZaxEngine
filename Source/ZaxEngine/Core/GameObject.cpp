@@ -15,6 +15,7 @@ void GameObject::AddComponent(Component* component)
 {
 	component->gameObject = this;
 	components.push_back(component);
+	component->OnAddToGO();
 }
 
 void GameObject::Unserialize(json::object obj)

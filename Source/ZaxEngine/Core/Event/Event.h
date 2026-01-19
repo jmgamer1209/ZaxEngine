@@ -38,7 +38,7 @@ public:
 
 	void Invoke(Args... args)
 	{
-		this->action(args);
+		this->action(args...);
 	}
 
 private:
@@ -65,7 +65,7 @@ public:
 	{
 		for (EventListener<Args...> listener : list)
 		{
-			listener.Invoke(args);
+			listener.Invoke(args...);
 		}
 	}
 

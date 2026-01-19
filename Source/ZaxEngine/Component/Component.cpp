@@ -4,3 +4,6 @@
 using namespace ZaxEngine::Binding;
 #include "imgui.h"
 
+void Component::OnAddToGO()
+{
+}

@@ -27,6 +27,6 @@ public:
 	EventListener<> physicsEnd = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateEnd, this));
 	
 public:
-	
+	void OnAddToGO() override;
 };
 

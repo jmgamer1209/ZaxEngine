@@ -15,6 +15,7 @@
 #include "Bindings/GameComponentBinding.h"
 #include "Bindings/DebugBinding.h"
 #include "Bindings/InputBinding.h"
+#include "Bindings/RigidBodyBinding.h"
 
 void MonoRegister()
 {
@@ -34,4 +35,5 @@ void MonoRegister()
 	ZaxEngine::Binding::GameComponent::RegisterInternalCall();
 	ZaxEngine::Binding::Debug::RegisterInternalCall();
 	ZaxEngine::Binding::Input::RegisterInternalCall();
+	ZaxEngine::Binding::RigidBody::RegisterInternalCall();
 }

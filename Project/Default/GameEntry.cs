@@ -90,6 +90,12 @@ public class GameEntry
             }
             box.GetComponent<Transform>().position = position;
             box.GetComponent<Transform>().rotation = rotation;
+
+            if (i == 1)
+            {
+                var rigidBody = new RigidBody();
+                box.AddComponent(rigidBody);
+            }
         }
 
         //创建1个平面

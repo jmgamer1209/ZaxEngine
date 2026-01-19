@@ -25,15 +25,8 @@ namespace ZaxEngine::Physics
 			const uint cNumBodyMutexes = 0;
 			const uint cMaxBodyPairs = 1024;
 			const uint cMaxContactConstraints = 1024;
-			BPLayerInterfaceImpl broad_phase_layer_interface;
-			ObjectVsBroadPhaseLayerFilterImpl object_vs_broadphase_layer_filter;
-			ObjectLayerPairFilterImpl object_vs_object_layer_filter;
 			joltPhysicsSystem.Init(cMaxBodies, cNumBodyMutexes, cMaxBodyPairs, cMaxContactConstraints, broad_phase_layer_interface, object_vs_broadphase_layer_filter, object_vs_object_layer_filter);
-
-			MyBodyActivationListener body_activation_listener;
 			joltPhysicsSystem.SetBodyActivationListener(&body_activation_listener);
-
-			MyContactListener contact_listener;
 			joltPhysicsSystem.SetContactListener(&contact_listener);
 		}
 	}
@@ -50,12 +43,12 @@ namespace ZaxEngine::Physics
 
 	void PhysicsSystem::Update(float inDeltaTime)
 	{
-		//OnPhysicsUpdateBegin.Execute();
+		OnPhysicsUpdateBegin.Invoke();
 
 		joltPhysicsSystem.Update(inDeltaTime, 1, temp_allocator, &joltJobSystem);
 		//joltPhysicsSystem.sim
 
-		//OnPhysicsUpdateEnd.Execute();
+		OnPhysicsUpdateEnd.Invoke();
 	}
 
 	void PhysicsSystem::AddBody(Body& body)

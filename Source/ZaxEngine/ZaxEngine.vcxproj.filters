@@ -319,6 +319,9 @@
     <ClCompile Include="Core\Event\Event.cpp">
       <Filter>Core\Event</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\RigidBodyBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -825,6 +828,9 @@
     </ClInclude>
     <ClInclude Include="Core\Event\Event.h">
       <Filter>Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\RigidBodyBinding.h">
+      <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
