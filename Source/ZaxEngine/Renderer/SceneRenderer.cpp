@@ -133,7 +133,6 @@ void SceneRenderer::DrawDepth()
         model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
         model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-
         model = glm::scale(model, Vector3ToGLMVec(transform->scale));
 
         view = camera->GetViewMatrix();
@@ -445,7 +444,9 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
     glm::mat4 view(1.0f);
     glm::mat4 projection(1.0f);
 
+    // 由于 glm 的矩阵计算是右乘，所以这里的顺序虽然是 位移->旋转->缩放，但是和顶点相乘之后，这个实际的计算顺序就变成了 位置 -> 缩放 -> 旋转 -> 位移
     model = glm::translate(model, Vector3ToGLMVec(transform->position));
+    
     // 注意，此旋转是基于模型本身的轴，所以其实当轴不是正xyz时，旋转会看起来很奇怪。这是正常的，后面会调整为欧拉角显示
     model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
     model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
