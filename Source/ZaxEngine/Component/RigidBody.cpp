@@ -43,6 +43,7 @@ void RigidBody::RemoveFromWorld()
 	PhysicsSystem& system = PhysicsSystem::GetInstance();
 	system.OnPhysicsUpdateBegin.Remove(physicsBegin);
 	system.OnPhysicsUpdateEnd.Remove(physicsEnd);
+	system.GetBodyInterface().DeactivateBody(body->GetID());
 	system.RemoveBody(*body);
 }
 
