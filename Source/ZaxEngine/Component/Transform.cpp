@@ -49,6 +49,7 @@ Vector3 Transform::GetUp()
 
 glm::mat4 Transform::GetModelMat()
 {
+	// 基于局部空间坐标构造，glm 默认是右乘
 	glm::mat4 model(1.0f);
 	// 位移
 	model = glm::translate(model, Vector3ToGLMVec(this->position));
