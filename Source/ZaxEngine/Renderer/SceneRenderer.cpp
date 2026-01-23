@@ -125,18 +125,9 @@ void SceneRenderer::DrawDepth()
         depthShader->Use();
 
         // 设置 MVP 矩阵
-        glm::mat4 model(1.0f);
-        glm::mat4 view(1.0f);
-        glm::mat4 projection(1.0f);
-
-        model = glm::translate(model, Vector3ToGLMVec(transform->position));
-        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
-
-        view = camera->GetViewMatrix();
-        projection = camera->GetProjection();
+        glm::mat4 model = transform->GetModelMat();
+        glm::mat4 view = camera->GetViewMatrix();
+        glm::mat4 projection = camera->GetProjection();
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
         depthShader->SetUniform("model", model);
