@@ -125,7 +125,7 @@ void SceneRenderer::DrawDepth()
         depthShader->Use();
 
         // 设置 MVP 矩阵
-        glm::mat4 model = transform->GetModelMat();
+        glm::mat4 model = transform->GetModelMatrix();
         glm::mat4 view = camera->GetViewMatrix();
         glm::mat4 projection = camera->GetProjection();
         glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
@@ -188,7 +188,7 @@ void SceneRenderer::DrawShadow(Light* light)
         shadowShader->Use();
 
         // 设置 MVP 矩阵
-        glm::mat4 model = transform->GetModelMat();
+        glm::mat4 model = transform->GetModelMatrix();
         
         auto projection = light->GetProjectionMatrix();
         shadowShader->SetUniform("model", model);
@@ -425,7 +425,7 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
     auto transform = renderer->gameObject->GetComponent<Transform>();
 
     // 设置 MVP 矩阵
-    glm::mat4 model = transform->GetModelMat();
+    glm::mat4 model = transform->GetModelMatrix();
     glm::mat4 view = camera->GetViewMatrix();
     glm::mat4 projection = camera->GetProjection();
     glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));

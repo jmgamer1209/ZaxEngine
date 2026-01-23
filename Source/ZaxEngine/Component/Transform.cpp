@@ -47,7 +47,7 @@ Vector3 Transform::GetUp()
 	return v1;
 }
 
-glm::mat4 Transform::GetModelMat()
+glm::mat4 Transform::GetModelMatrix()
 {
 	// 基于局部空间坐标构造，glm 默认是右乘
 	glm::mat4 model(1.0f);
