@@ -14,4 +14,5 @@ public:
 	Vector3 GetForward();
 	Vector3 GetRight();
 	Vector3 GetUp();
+	glm::mat4 GetModelMat();
 };

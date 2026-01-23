@@ -197,13 +197,7 @@ void SceneRenderer::DrawShadow(Light* light)
         shadowShader->Use();
 
         // 设置 MVP 矩阵
-        glm::mat4 model(1.0f);
-
-        model = glm::translate(model, transform->position.ToGLMVec());
-        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-        model = glm::scale(model, transform->scale.ToGLMVec());
+        glm::mat4 model = transform->GetModelMat();
         
         auto projection = light->GetProjectionMatrix();
         shadowShader->SetUniform("model", model);
@@ -440,24 +434,9 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
     auto transform = renderer->gameObject->GetComponent<Transform>();
 
     // 设置 MVP 矩阵
-    glm::mat4 model(1.0f);
-    glm::mat4 view(1.0f);
-    glm::mat4 projection(1.0f);
-
-    // glm 的默认矩阵计算是右乘，下面的构造属于基于局部坐标轴的变换
-    {
-        // 位移
-        model = glm::translate(model, Vector3ToGLMVec(transform->position));
-        // 旋转，此旋转构造是基于模型本身的局部坐标轴
-        model = glm::rotate(model, glm::radians(transform->rotation.y), glm::vec3(0, 1, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.x), glm::vec3(1, 0, 0));
-        model = glm::rotate(model, glm::radians(transform->rotation.z), glm::vec3(0, 0, 1));
-        // 缩放
-        model = glm::scale(model, Vector3ToGLMVec(transform->scale));
-    }
-
-    view = camera->GetViewMatrix();
-    projection = camera->GetProjection();
+    glm::mat4 model = transform->GetModelMat();
+    glm::mat4 view = camera->GetViewMatrix();
+    glm::mat4 projection = camera->GetProjection();
     glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
     shaderProgram->SetUniform3f("cameraPos", camera->gameObject->GetComponent<Transform>()->position.FloatPTR());

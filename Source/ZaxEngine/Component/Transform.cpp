@@ -46,3 +46,18 @@ Vector3 Transform::GetUp()
 
 	return v1;
 }
+
+glm::mat4 Transform::GetModelMat()
+{
+	glm::mat4 model(1.0f);
+	// 位移
+	model = glm::translate(model, Vector3ToGLMVec(this->position));
+	// 旋转，此旋转构造是基于模型本身的局部坐标轴
+	model = glm::rotate(model, glm::radians(this->rotation.y), glm::vec3(0, 1, 0));
+	model = glm::rotate(model, glm::radians(this->rotation.x), glm::vec3(1, 0, 0));
+	model = glm::rotate(model, glm::radians(this->rotation.z), glm::vec3(0, 0, 1));
+	// 缩放
+	model = glm::scale(model, Vector3ToGLMVec(this->scale));
+	
+	return model;
+}
