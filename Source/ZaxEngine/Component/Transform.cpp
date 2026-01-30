@@ -49,11 +49,11 @@ Vector3 Transform::GetUp()
 
 glm::mat4 Transform::GetModelMatrix()
 {
-	// 基于局部空间坐标构造，glm 默认是右乘
+	// glm 默认是右乘, 下面的右乘写法，可避免构造多余临时变量，执行的是 model = T * R * S
 	glm::mat4 model(1.0f);
 	// 位移
 	model = glm::translate(model, Vector3ToGLMVec(this->position));
-	// 旋转，此旋转构造是基于模型本身的局部坐标轴
+	// 旋转，内旋 y-x-z，即沿世界空间 z-x-y
 	model = glm::rotate(model, glm::radians(this->rotation.y), glm::vec3(0, 1, 0));
 	model = glm::rotate(model, glm::radians(this->rotation.x), glm::vec3(1, 0, 0));
 	model = glm::rotate(model, glm::radians(this->rotation.z), glm::vec3(0, 0, 1));
