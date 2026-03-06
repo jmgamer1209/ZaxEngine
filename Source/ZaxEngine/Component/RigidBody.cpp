@@ -16,26 +16,8 @@ RigidBody::RigidBody():Component()
 void RigidBody::AddToWorld()
 {
 	PhysicsSystem& system = PhysicsSystem::GetInstance();
-	if (body == nullptr)
-	{
-		auto postion = gameObject->GetComponent<Transform>()->position;
-		settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
-
-		JPH::EmptyShapeSettings empty_shape_settings; // (JPH::Vec3(1.0f, 1.0f, 1.0f));
-		empty_shape_settings.SetEmbedded(); 
-		// Create the shape
-		JPH::ShapeSettings::ShapeResult empty_shape_result = empty_shape_settings.Create();
-		JPH::ShapeRefC shape = empty_shape_result.Get(); 
-		settings.SetShape(shape);
-
-		body = system.GetBodyInterface().CreateBody(settings);
-		system.AddBody(*body);
-		system.GetBodyInterface().ActivateBody(body->GetID());
-
-		system.OnPhysicsUpdateBegin.Add(physicsBegin);
-		system.OnPhysicsUpdateEnd.Add(physicsEnd);
-		//system.AddPhysicsUpdateListener((PhysicsUpdateListener*)this);
-	}
+	system.OnPhysicsUpdateBegin.Add(physicsBegin);
+	system.OnPhysicsUpdateEnd.Add(physicsEnd);
 }
 
 void RigidBody::RemoveFromWorld()
@@ -49,7 +31,25 @@ void RigidBody::RemoveFromWorld()
 
 void RigidBody::OnPhysicsUpdateBegin()
 {
+	auto collider = gameObject->GetComponent<BoxCollider>();
+	if (collider == this->collider || collider == nullptr) return;
+	PhysicsSystem& system = PhysicsSystem::GetInstance();
 
+	if (body != nullptr) 
+	{
+		system.GetBodyInterface().DeactivateBody(body->GetID());
+		system.RemoveBody(*body);
+	}
+
+	// 创建新的 body
+	auto postion = gameObject->GetComponent<Transform>()->position;
+	settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
+	settings.SetShape(collider->GetShape());
+	body = system.GetBodyInterface().CreateBody(settings);
+	system.AddBody(*body);
+	system.GetBodyInterface().ActivateBody(body->GetID());
+
+	this->collider = collider;
 }
 
 void RigidBody::OnPhysicsUpdateEnd()

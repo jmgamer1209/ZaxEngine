@@ -7,6 +7,7 @@
 #include "Jolt/Physics/Body/Body.h"
 #include "Jolt/Physics/Body/BodyCreationSettings.h"
 #include "Physics/PhysicsSystem.h"
+#include "BoxCollider.h"
 
 class RigidBody: public Component
 {	
@@ -15,6 +16,7 @@ public:
 private:
 	JPH::BodyCreationSettings settings;
 	JPH::Body* body = nullptr;
+	BoxCollider* collider = nullptr;
 
 public:
 	RigidBody();

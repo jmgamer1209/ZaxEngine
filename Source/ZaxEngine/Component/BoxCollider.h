@@ -11,12 +11,12 @@
 class BoxCollider: public Collider
 {	
 public:
-	
+	BoxCollider();
 
 public:
-
+	JPH::BoxShape* GetShape();
 
 private:
-	JPH::BoxShape shape;
+	JPH::ShapeRefC shape;
 };
 
