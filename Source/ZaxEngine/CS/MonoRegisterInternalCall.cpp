@@ -16,6 +16,7 @@
 #include "Bindings/DebugBinding.h"
 #include "Bindings/InputBinding.h"
 #include "Bindings/RigidBodyBinding.h"
+#include "Bindings/BoxColliderBinding.h"
 
 void MonoRegister()
 {
@@ -36,4 +37,5 @@ void MonoRegister()
 	ZaxEngine::Binding::Debug::RegisterInternalCall();
 	ZaxEngine::Binding::Input::RegisterInternalCall();
 	ZaxEngine::Binding::RigidBody::RegisterInternalCall();
+	ZaxEngine::Binding::BoxCollider::RegisterInternalCall();
 }

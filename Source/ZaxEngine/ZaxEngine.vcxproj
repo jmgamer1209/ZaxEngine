@@ -183,6 +183,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="CS\Bindings\ApplicationBinding.cpp" />
     <ClCompile Include="CS\Bindings\BindingCommon.cpp" />
     <ClCompile Include="CS\Bindings\BindingHelper.cpp" />
+    <ClCompile Include="CS\Bindings\BoxColliderBinding.cpp" />
     <ClCompile Include="CS\Bindings\CameraBinding.cpp" />
     <ClCompile Include="CS\Bindings\ComponentBinding.cpp" />
     <ClCompile Include="CS\Bindings\DebugBinding.cpp" />
@@ -263,6 +264,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="CS\Bindings\ApplicationBinding.h" />
     <ClInclude Include="CS\Bindings\BindingCommon.h" />
     <ClInclude Include="CS\Bindings\BindingHelper.h" />
+    <ClInclude Include="CS\Bindings\BoxColliderBinding.h" />
     <ClInclude Include="CS\Bindings\CameraBinding.h" />
     <ClInclude Include="CS\Bindings\ComponentBinding.h" />
     <ClInclude Include="CS\Bindings\DebugBinding.h" />

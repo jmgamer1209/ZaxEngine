@@ -33,6 +33,7 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 {
 	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();
+	Debug::Log(value.c_str());
 	Application::projectConfig.EditorStartupMap = value.c_str();
 	
 	FrameCount = -1;
@@ -41,15 +42,15 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	sceneRenderer->Init(sceneViewWidth, sceneViewHeight);
 	Application::sceneRenderer = sceneRenderer;
 
-	Debug::Log(value.c_str());
+	Physics::PhysicsSystem::GetInstance();
+	
+	// 执行 mono 入口函数，必须放在最后
 	try {
 		MonoEntry::GetInstance()->RunGameStart();
 	}
 	catch (const std::exception& e) {
 		Debug::Log(e.what());
 	}
-
-	Physics::PhysicsSystem::GetInstance();
 }
 
 void EditorWindow::OnWindowClosed()

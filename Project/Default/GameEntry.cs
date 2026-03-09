@@ -94,7 +94,9 @@ public class GameEntry
             if (i == 1)
             {
                 var rigidBody = new RigidBody();
+                var collider = new BoxCollider();
                 box.AddComponent(rigidBody);
+                box.AddComponent(collider);
             }
         }
 

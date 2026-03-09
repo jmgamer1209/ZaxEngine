@@ -44,6 +44,7 @@ void RigidBody::OnPhysicsUpdateBegin()
 	// 创建新的 body
 	auto postion = gameObject->GetComponent<Transform>()->position;
 	settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
+	settings.mRotation = JPH::Quat::sIdentity();
 	settings.SetShape(collider->GetShape());
 	body = system.GetBodyInterface().CreateBody(settings);
 	system.AddBody(*body);
@@ -54,9 +55,12 @@ void RigidBody::OnPhysicsUpdateBegin()
 
 void RigidBody::OnPhysicsUpdateEnd()
 {
-	auto transform = this->gameObject->GetComponent<Transform>(); 
-	auto newPos = body->GetPosition();
-	transform->position = Vector3(newPos.GetX(), newPos.GetY(), newPos.GetZ());
+	if (body != nullptr) 
+	{
+		auto transform = this->gameObject->GetComponent<Transform>();
+		auto newPos = body->GetPosition();
+		transform->position = Vector3(newPos.GetX(), newPos.GetY(), newPos.GetZ());
+	}
 }
 
 void RigidBody::OnAddToGO()

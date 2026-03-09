@@ -322,6 +322,9 @@
     <ClCompile Include="CS\Bindings\RigidBodyBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="CS\Bindings\BoxColliderBinding.cpp">
+      <Filter>CS\Binding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -830,6 +833,9 @@
       <Filter>Core\Event</Filter>
     </ClInclude>
     <ClInclude Include="CS\Bindings\RigidBodyBinding.h">
+      <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="CS\Bindings\BoxColliderBinding.h">
       <Filter>CS\Binding</Filter>
     </ClInclude>
   </ItemGroup>
