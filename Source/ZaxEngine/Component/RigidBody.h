@@ -9,26 +9,33 @@
 #include "Physics/PhysicsSystem.h"
 #include "BoxCollider.h"
 
-class RigidBody: public Component
-{	
-public:
+namespace ZaxEngine::Component 
+{
 
-private:
-	JPH::BodyCreationSettings settings;
-	JPH::Body* body = nullptr;
-	BoxCollider* collider = nullptr;
+	class RigidBody: public Component
+	{	
+	public:
 
-public:
-	RigidBody();
-	void AddToWorld();
-	void RemoveFromWorld();
-	void OnPhysicsUpdateBegin();
-	void OnPhysicsUpdateEnd();
+	private:
+		JPH::BodyCreationSettings settings;
+		JPH::Body* body = nullptr;
+		BoxCollider* collider = nullptr;
+		JPH::EMotionType motionType = JPH::EMotionType::Dynamic;
 
-	EventListener<> physicsBegin = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateBegin, this));
-	EventListener<> physicsEnd = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateEnd, this));
+	public:
+		RigidBody();
+		void AddToWorld();
+		void RemoveFromWorld();
+		void OnPhysicsUpdateBegin();
+		void OnPhysicsUpdateEnd();
+
+		EventListener<> physicsBegin = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateBegin, this));
+		EventListener<> physicsEnd = EventListener<>(std::bind(&RigidBody::OnPhysicsUpdateEnd, this));
 	
-public:
-	void OnAddToGO() override;
-};
+	public:
+		void OnAddToGO() override;
+		void SetMotionType(JPH::EMotionType type);
+		JPH::EMotionType GetMotionType();
+	};
 
+}

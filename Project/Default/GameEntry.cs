@@ -108,6 +108,11 @@ public class GameEntry
         transform.scale = new Vector3(15);
         planeGO.AddComponent(transform);
         planeGO.AddComponent(new MeshRenderer(Mesh.GetQuadMesh(), planeMat));
+        var planeRigidBody = new RigidBody();
+        var planeCollider = new BoxCollider();
+        planeRigidBody.SetMotionType(EMotionType.Static);
+        planeGO.AddComponent(planeRigidBody);
+        planeGO.AddComponent(planeCollider);
 
         //创建摄像机
         var cameraGO = new GameObject("Camera");
