@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 
 namespace ZaxEngine
 {
-    public class BoxCollider: Component
+    public class BoxCollider:Collider
     {
         public BoxCollider()
         {
             Internal_Create();
         }
 
+        public void SetShapeScale(Vector3 scale)
+        {
+            Internal_SetShapeScale(scale);
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void Internal_Create();
+        private extern void Internal_Create();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Internal_SetShapeScale(Vector3 scale);
     }
 }

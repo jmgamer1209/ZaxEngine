@@ -7,6 +7,7 @@
 #include "Collider.h"
 #include "Jolt/Jolt.h"
 #include "Jolt/Physics/Collision/Shape/BoxShape.h"
+#include "Core/Vector.h"
 
 class BoxCollider: public Collider
 {	
@@ -15,6 +16,7 @@ public:
 
 public:
 	JPH::BoxShape* GetShape();
+	void SetShapeScale(Vector3) override;
 
 private:
 	JPH::ShapeRefC shape;
