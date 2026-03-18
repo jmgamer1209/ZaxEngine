@@ -48,8 +48,10 @@ namespace ZaxEngine::Component {
 		settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
 		settings.mRotation = JPH::Quat::sIdentity();
 		settings.SetShape(collider->GetShape());
+		settings.mObjectLayer = Layers::MOVING;
 		body = system.GetBodyInterface().CreateBody(settings);
 		body->SetMotionType(motionType);
+		//system.GetBodyInterface().SetObjectLayer(body->GetID(), Layers::MOVING);
 		system.AddBody(*body);
 		system.GetBodyInterface().ActivateBody(body->GetID());
 

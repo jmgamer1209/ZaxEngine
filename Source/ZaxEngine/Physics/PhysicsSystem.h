@@ -22,7 +22,7 @@ namespace ZaxEngine::Physics
 
 	namespace Layers
 	{
-		static constexpr JPH::ObjectLayer NON_MOVING = 0;
+		static constexpr JPH::ObjectLayer NON_MOVING = 0;      // 此layer层之间的碰撞，默认不触发碰撞事件
 		static constexpr JPH::ObjectLayer MOVING = 1;
 		static constexpr JPH::ObjectLayer NUM_LAYERS = 2;
 	};

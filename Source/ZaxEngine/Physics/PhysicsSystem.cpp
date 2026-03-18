@@ -4,6 +4,7 @@
 #include "Jolt/Core/IssueReporting.h"
 #include "Jolt/RegisterTypes.h"
 #include "Jolt/Core/TempAllocator.h"
+#include <Core/Debug.h>
 
 namespace ZaxEngine::Physics
 {
@@ -182,7 +183,7 @@ namespace ZaxEngine::Physics
 
 	void	MyContactListener::OnContactAdded(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
 	{
-		cout << "A contact was added" << endl;
+		Debug::Log("A contact was added");
 	}
 
 	void			MyContactListener::OnContactPersisted(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)

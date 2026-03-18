@@ -103,7 +103,7 @@ public class GameEntry
         //创建1个平面
         var planeGO = new GameObject("Plane");
         var transform = new Transform();
-        transform.position = new Vector3(0, -10, -5);
+        transform.position = new Vector3(-11, -10, -8);
         transform.rotation = new Vector3(-90, 0, 0);
         transform.scale = new Vector3(15);
         planeGO.AddComponent(transform);
