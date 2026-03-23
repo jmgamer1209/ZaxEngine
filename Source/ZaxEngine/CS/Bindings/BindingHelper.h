@@ -42,6 +42,8 @@ namespace ZaxEngine::Binding::BindingHelper {
 	template<typename T>
 	T GetNativeObj(MonoObject* obj) 
 	{
+		// 编译期检查 T 是否为指针类型，否则报错
+		static_assert(std::is_pointer_v<T>, "模板参数 T 必须是指针类型！例如 GetNativeObj<Quat*>(obj)");
 		T native = MonoObjectGetValue<T>(obj, "nativePtr");
 		return native;
 	}
