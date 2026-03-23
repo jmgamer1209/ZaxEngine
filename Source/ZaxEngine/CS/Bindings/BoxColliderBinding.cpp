@@ -16,13 +16,20 @@ namespace ZaxEngine::Binding::BoxCollider
 
 	void SetShapeScale(MonoObject* obj, Vector3 scale)
 	{
-		auto native = BindingHelper::GetNativeObj<::BoxCollider>(obj);
-		native.SetShapeScale(scale);
+		auto native = BindingHelper::GetNativeObj<::BoxCollider*>(obj);
+		native->SetShapeScale(scale);
+	}
+
+	void SetSize(MonoObject* obj, Vector3 size)
+	{
+		auto native = BindingHelper::GetNativeObj<::BoxCollider*>(obj);
+		native->SetSize(size);
 	}
 
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_Create", reinterpret_cast<void*>(Create));
 		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_SetShapeScale", reinterpret_cast<void*>(SetShapeScale));
+		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_SetSize", reinterpret_cast<void*>(SetSize));
 	}
 };

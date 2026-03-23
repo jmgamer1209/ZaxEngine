@@ -19,10 +19,18 @@ namespace ZaxEngine
             Internal_SetShapeScale(scale);
         }
 
+        public void SetSize(Vector3 size)
+        {
+            Internal_SetSize(size);
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_Create();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_SetShapeScale(Vector3 scale);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Internal_SetSize(Vector3 size);
     }
 }

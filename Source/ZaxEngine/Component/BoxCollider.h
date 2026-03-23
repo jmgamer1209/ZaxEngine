@@ -13,12 +13,16 @@ class BoxCollider: public Collider
 {	
 public:
 	BoxCollider();
+	~BoxCollider();
+	void CreateShape();
 
 public:
 	JPH::BoxShape* GetShape();
 	void SetShapeScale(Vector3) override;
+	void SetSize(Vector3);
 
 private:
 	JPH::ShapeRefC shape;
+	Vector3 boxSize;
 };
 

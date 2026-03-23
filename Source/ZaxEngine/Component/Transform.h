@@ -8,6 +8,7 @@ class Transform : public Component
 public:
 	Vector3 position;
 	// 欧拉角，旋转方向为内旋 y->x->z
+	// 角度制，非弧度制
 	Vector3 rotation;
 	Vector3 scale;
 

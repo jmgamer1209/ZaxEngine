@@ -70,8 +70,8 @@ public class GameEntry
 
             if (i == 1)
             {
-                position = new Vector3(-11.0f, -2.5f, -8.0f);
-                rotation = new Vector3(45.0f, -30.0f, 0);
+                position = new Vector3(-11.0f, 20f, -8.0f);
+                rotation = new Vector3(48.0f, -30.0f, 0);
             }
             else if (i == 2)
             {
@@ -105,11 +105,12 @@ public class GameEntry
         var transform = new Transform();
         transform.position = new Vector3(-11, -10, -8);
         transform.rotation = new Vector3(-90, 0, 0);
-        transform.scale = new Vector3(15);
+        transform.scale = new Vector3(10, 10, 15);
         planeGO.AddComponent(transform);
         planeGO.AddComponent(new MeshRenderer(Mesh.GetQuadMesh(), planeMat));
         var planeRigidBody = new RigidBody();
         var planeCollider = new BoxCollider();
+        planeCollider.SetSize(new Vector3(10f, 10f, 0.01f));
         planeRigidBody.SetMotionType(EMotionType.Static);
         planeGO.AddComponent(planeRigidBody);
         planeGO.AddComponent(planeCollider);

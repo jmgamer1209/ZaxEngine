@@ -5,6 +5,7 @@
 #include "Physics/PhysicsSystem.h"
 #include "Jolt/Physics/Collision/Shape/EmptyShape.h"
 #include "Jolt/Physics/Collision/Shape/BoxShape.h"
+#include "Core/Math.h"
 
 using namespace ZaxEngine::Physics;
 
@@ -43,15 +44,24 @@ namespace ZaxEngine::Component {
 			system.RemoveBody(*body);
 		}
 
+		collider->CreateShape();
 		// 创建新的 body
-		auto postion = gameObject->GetComponent<Transform>()->position;
+		auto t = gameObject->GetComponent<Transform>();
+		auto postion = t->position;
+		auto rotation = t->rotation;
+
+		JPH::Quat quat_y = JPH::Quat::sRotation(JPH::Vec3Arg(0,1,0), JPH::DegreesToRadians(rotation.y));  // 绕Y轴
+		JPH::Quat quat_x = JPH::Quat::sRotation(JPH::Vec3Arg(1,0,0), JPH::DegreesToRadians(rotation.x));  // 绕X轴
+		JPH::Quat quat_z = JPH::Quat::sRotation(JPH::Vec3Arg(0,0,1), JPH::DegreesToRadians(rotation.z));  // 绕Z轴
+		// 内旋 YXZ：对应矩阵 Ry*Rx*Rz，Jolt四元数左乘语义下需写成 Qy*Qx*Qz
+		JPH::Quat custom_quat = quat_y * quat_x * quat_z;
+		
 		settings.mPosition = JPH::RVec3(postion.x, postion.y, postion.z);
-		settings.mRotation = JPH::Quat::sIdentity();
+		settings.mRotation = custom_quat;
 		settings.SetShape(collider->GetShape());
 		settings.mObjectLayer = Layers::MOVING;
 		body = system.GetBodyInterface().CreateBody(settings);
 		body->SetMotionType(motionType);
-		//system.GetBodyInterface().SetObjectLayer(body->GetID(), Layers::MOVING);
 		system.AddBody(*body);
 		system.GetBodyInterface().ActivateBody(body->GetID());
 
@@ -64,8 +74,10 @@ namespace ZaxEngine::Component {
 		{
 			auto transform = this->gameObject->GetComponent<Transform>();
 			auto newPos = body->GetPosition();
+			auto quat = body->GetRotation();
+			auto rotation = Math::EularAngleYXZFormJPHQuat(quat);
 			transform->position = Vector3(newPos.GetX(), newPos.GetY(), newPos.GetZ());
-			//(JPH::BoxShape*)body->GetShape()->
+			transform->rotation = rotation;
 		}
 	}
 

@@ -325,6 +325,9 @@
     <ClCompile Include="CS\Bindings\BoxColliderBinding.cpp">
       <Filter>CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Math.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Debug.h">
@@ -837,6 +840,9 @@
     </ClInclude>
     <ClInclude Include="CS\Bindings\BoxColliderBinding.h">
       <Filter>CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Math.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
