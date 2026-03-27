@@ -3,7 +3,7 @@
 namespace ZaxEngine::Math
 {
 	/// <summary>
-	/// 返回欧拉角度(注意不是弧度)
+	/// 返回物理世界的欧拉角度(注意不是弧度)
 	/// 右手坐标系，X轴朝右，旋转顺序 YXZ（内旋，对应矩阵 Ry*Rx*Rz）
 	/// 对应正向构造：Q = Qy * Qx * Qz，展开后：
 	///   qx =  cy*sx*cz + sy*cx*sz
@@ -15,7 +15,7 @@ namespace ZaxEngine::Math
 	///   Y = atan2( 2*(w*y + z*x),  1 - 2*(x²+y²) )
 	///   Z = atan2( 2*(w*z + x*y),  1 - 2*(x²+z²) )
 	/// </summary>
-	Vector3 EularAngleYXZFormJPHQuat(JPH::Quat& quat)
+	Vector3 JPHEularAngleYXZFormJPHQuat(JPH::Quat& quat)
 	{
         float x = quat.GetX();
         float y = quat.GetY();
@@ -81,5 +81,42 @@ namespace ZaxEngine::Math
         //    JPH::RadiansToDegrees(angleY),
         //    JPH::RadiansToDegrees(angleZ)
         //);
+	}
+
+    /// <summary>
+    /// 从引擎的欧拉角(注意不是弧度)转换为Jolt物理世界的四元数
+    /// </summary>
+    /// <param name="eular"></param>
+    /// <returns></returns>
+    JPH::Quat JPHQuatFromEularAngleYXZ(Vector3& eular)
+	{
+        // 这里本质上是需要将渲染坐标系的旋转转换为 Jolt 坐标系的旋转，一般的做法，可以先将欧拉角转为矩阵，然后再进行轴旋转，最后转成四元数
+        // 不过，这里由于轴是镜像的，所以可以直接取反，Jolt 坐标系与渲染坐标系 X、Z 轴取反，绕镜像轴旋转 θ = 绕原轴旋转 -θ
+        JPH::Quat quat_y = JPH::Quat::sRotation(JPH::Vec3Arg(0, 1, 0), JPH::DegreesToRadians(eular.y));  // Y轴不变
+        JPH::Quat quat_x = JPH::Quat::sRotation(JPH::Vec3Arg(1, 0, 0), JPH::DegreesToRadians(-eular.x));  // X轴镜像，角度取反
+        JPH::Quat quat_z = JPH::Quat::sRotation(JPH::Vec3Arg(0, 0, 1), JPH::DegreesToRadians(-eular.z));  // Z轴镜像，角度取反
+
+        // 内旋 YXZ：Jolt四元数左乘语义下写成 Qy*Qx*Qz
+        JPH::Quat custom_quat = quat_y * quat_x * quat_z;
+        return custom_quat;
+
+        // 下面是直接计算四元数的公式，效率更高
+		/*float x = JPH::DegreesToRadians(eular.x);
+		float y = JPH::DegreesToRadians(eular.y);
+		float z = JPH::DegreesToRadians(eular.z);
+
+		float cy = std::cos(y * 0.5f);
+		float sy = std::sin(y * 0.5f);
+		float cp = std::cos(x * 0.5f);
+		float sp = std::sin(x * 0.5f);
+		float cr = std::cos(z * 0.5f);
+		float sr = std::sin(z * 0.5f);
+
+		float qw = cy * cp * cr + sy * sp * sr;
+		float qx = cy * sp * cr + sy * cp * sr;
+		float qy = sy * cp * cr - cy * sp * sr;
+		float qz = cy * cp * sr - sy * sp * cr;
+
+		return JPH::Quat(qx, qy, qz, qw);*/
 	}
 }
