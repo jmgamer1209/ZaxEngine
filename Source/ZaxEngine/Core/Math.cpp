@@ -90,7 +90,7 @@ namespace ZaxEngine::Math
     /// <returns></returns>
     JPH::Quat JPHQuatFromEularAngleYXZ(Vector3& eular)
 	{
-        // 这里本质上是需要将渲染坐标系的旋转转换为 Jolt 坐标系的旋转，一般的做法，可以先将欧拉角转为矩阵，然后再进行轴旋转，最后转成四元数
+        // 对于空间变换，一般情况，可以先计算出自身坐标系的四元数，然后根据 最终四元数 = q_basis * 你的旋转四元数 * q_basis的逆 来计算出最终四元数，当然利用矩阵也可以
         // 不过，这里由于轴是镜像的，所以可以直接取反，Jolt 坐标系与渲染坐标系 X、Z 轴取反，绕镜像轴旋转 θ = 绕原轴旋转 -θ
         JPH::Quat quat_y = JPH::Quat::sRotation(JPH::Vec3Arg(0, 1, 0), JPH::DegreesToRadians(eular.y));  // Y轴不变
         JPH::Quat quat_x = JPH::Quat::sRotation(JPH::Vec3Arg(1, 0, 0), JPH::DegreesToRadians(-eular.x));  // X轴镜像，角度取反
@@ -100,7 +100,7 @@ namespace ZaxEngine::Math
         JPH::Quat custom_quat = quat_y * quat_x * quat_z;
         return custom_quat;
 
-        // 下面是直接计算四元数的公式，效率更高
+        // 下面是直接计算四元数的公式，效率更高，不过暂时先不用
 		/*float x = JPH::DegreesToRadians(eular.x);
 		float y = JPH::DegreesToRadians(eular.y);
 		float z = JPH::DegreesToRadians(eular.z);

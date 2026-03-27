@@ -50,10 +50,11 @@ namespace ZaxEngine::Component {
 		auto postion = t->position;
 		auto rotation = t->rotation;
 
-		// 获取物理世界四元数
+		// 获取物理世界变换四元数
 		auto custom_quat = Math::JPHQuatFromEularAngleYXZ(rotation);
 
 		// boxCenter 转到 Jolt 坐标系（X、Z 取反），再用 Jolt 四元数旋转到物理世界空间
+		// 正常来说，要把一个点从一个空间转换到另一个空间，本来是求出变换矩阵(或者变换四元数)，对原位置变换，但是因为位置关系比较简单，可以直接取反即可，上面又求出了旋转四元数，这样组合就等同于变换矩阵
 		JPH::Vec3 localCenter(-collider->boxCenter.x, collider->boxCenter.y, -collider->boxCenter.z);
         JPH::Vec3 physicsWorldCenter = custom_quat * localCenter;
 
