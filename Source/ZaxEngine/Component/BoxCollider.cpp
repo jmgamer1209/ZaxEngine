@@ -37,6 +37,11 @@ void BoxCollider::SetSize(Vector3 size)
 	this->boxSize = size;
 }
 
+void BoxCollider::SetBoxCenter(Vector3 center)
+{
+	this->boxCenter = center;
+}
+
 BoxCollider::~BoxCollider()
 {
 	auto x = this->boxSize.x;

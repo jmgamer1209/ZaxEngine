@@ -124,6 +124,10 @@ private:
 	static vector<Vector3> quadVertices; 
 
 public:
+	/// <summary>
+	/// 获取一个 2x2 的正方形 mesh
+	/// </summary>
+	/// <returns></returns>
 	static Mesh* GetQuadMesh()
 	{
 		if (Mesh::quadMesh == nullptr)

@@ -20,9 +20,14 @@ public:
 	JPH::BoxShape* GetShape();
 	void SetShapeScale(Vector3) override;
 	void SetSize(Vector3);
+	void SetBoxCenter(Vector3);
+
+public:
+	Vector3 boxCenter;
 
 private:
 	JPH::ShapeRefC shape;
 	Vector3 boxSize;
+    
 };
 

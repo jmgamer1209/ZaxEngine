@@ -24,6 +24,11 @@ namespace ZaxEngine
             Internal_SetSize(size);
         }
 
+        public void SetBoxCenter(Vector3 center)
+        {
+            Internal_SetBoxCenter(center);
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_Create();
 
@@ -32,5 +37,8 @@ namespace ZaxEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Internal_SetSize(Vector3 size);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Internal_SetBoxCenter(Vector3 center);
     }
 }

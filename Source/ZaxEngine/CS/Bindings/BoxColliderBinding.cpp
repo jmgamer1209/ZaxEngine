@@ -26,10 +26,17 @@ namespace ZaxEngine::Binding::BoxCollider
 		native->SetSize(size);
 	}
 
+	void SetBoxCenter(MonoObject* obj, Vector3 center)
+	{
+		auto native = BindingHelper::GetNativeObj<::BoxCollider*>(obj);
+		native->SetBoxCenter(center);
+	}
+
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_Create", reinterpret_cast<void*>(Create));
 		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_SetShapeScale", reinterpret_cast<void*>(SetShapeScale));
 		mono_add_internal_call("ZaxEngine.BoxCollider::Internal_SetSize", reinterpret_cast<void*>(SetSize));
+        mono_add_internal_call("ZaxEngine.BoxCollider::Internal_SetBoxCenter", reinterpret_cast<void*>(SetBoxCenter));
 	}
 };

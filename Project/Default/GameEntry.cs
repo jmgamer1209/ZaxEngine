@@ -11,6 +11,7 @@ public class GameEntry
         var customComponent = new TestComponent();
 
         var scene = new Scene();
+        // box 默认大小为 5m×5m
         var woodenBox = new Mesh(Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Wooden Crate.obj"));
         //Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs"
         var shaderProgram = new ShaderProgram(Path.Combine(Application.contentPath, "Shaders", "Common", "forward.vs"), Path.Combine(Application.contentPath, "Shaders", "Common", "forward.fs"));
@@ -71,7 +72,7 @@ public class GameEntry
             if (i == 1)
             {
                 position = new Vector3(-11.0f, 20f, -8.0f);
-                rotation = new Vector3(48.0f, -30.0f, 0);
+                rotation = new Vector3(60.0f, 0.0f, 0);
             }
             else if (i == 2)
             {
@@ -95,6 +96,8 @@ public class GameEntry
             {
                 var rigidBody = new RigidBody();
                 var collider = new BoxCollider();
+                collider.SetSize(new Vector3(5, 5, 5));
+                collider.SetBoxCenter(new Vector3(0f, 2.5f, 0)); // 因为箱子的中心点不在箱子中心，所以需要设置碰撞体偏移
                 box.AddComponent(rigidBody);
                 box.AddComponent(collider);
             }
@@ -105,12 +108,12 @@ public class GameEntry
         var transform = new Transform();
         transform.position = new Vector3(-11, -10, -8);
         transform.rotation = new Vector3(-90, 0, 0);
-        transform.scale = new Vector3(10, 10, 15);
+        transform.scale = new Vector3(15f, 15f, 15f);
         planeGO.AddComponent(transform);
         planeGO.AddComponent(new MeshRenderer(Mesh.GetQuadMesh(), planeMat));
         var planeRigidBody = new RigidBody();
         var planeCollider = new BoxCollider();
-        planeCollider.SetSize(new Vector3(10f, 10f, 0.01f));
+        planeCollider.SetSize(new Vector3(15f, 15f, 0.1f));
         planeRigidBody.SetMotionType(EMotionType.Static);
         planeGO.AddComponent(planeRigidBody);
         planeGO.AddComponent(planeCollider);
@@ -120,7 +123,9 @@ public class GameEntry
         cameraGO.AddComponent(new Transform());
         var camera = new Camera();
         cameraGO.AddComponent(camera);
-        cameraGO.GetComponent<Transform>().position = new Vector3(0, 0, 30);
+        cameraGO.GetComponent<Transform>().position = new Vector3(0, 0, 30f);
+        //cameraGO.GetComponent<Transform>().position = new Vector3(-40, -2.7f, -5.5f);
+        //cameraGO.GetComponent<Transform>().rotation = new Vector3(0, -80, 0);
         var post = new PostProcess();
         post.enabled = false;
         cameraGO.AddComponent(post);
