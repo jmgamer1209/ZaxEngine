@@ -14,24 +14,6 @@
     <Filter Include="ThirdParty\glad">
       <UniqueIdentifier>{1cfe4628-b42f-4552-a534-6563db3fdff3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{854ec3d9-a919-4b68-906d-e044ca0dbc69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WindowsMain">
-      <UniqueIdentifier>{84237b7b-d5ab-4160-8a37-419cc50bfaaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets">
-      <UniqueIdentifier>{9b064b97-b855-4ac6-b917-55b48330e10c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component">
-      <UniqueIdentifier>{62754661-ec6a-4013-bc7e-9e5f9f73d25d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{02c420ad-a007-484a-b415-386774709440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Renderer">
-      <UniqueIdentifier>{86109a35-71f6-47e5-951a-fab27f52adbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty\glm">
       <UniqueIdentifier>{bb8a6f1c-2935-4074-bab4-8b1496163eba}</UniqueIdentifier>
     </Filter>
@@ -50,20 +32,11 @@
     <Filter Include="ThirdParty\mono">
       <UniqueIdentifier>{e4888bad-f711-41ad-aa1a-8536e90b150a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CS">
-      <UniqueIdentifier>{4ec4768f-c7be-4704-afe6-5a7b03279933}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CS\Binding">
-      <UniqueIdentifier>{4a000fac-3637-456d-97ad-f1957e023663}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripting">
       <UniqueIdentifier>{daa61037-84e7-4b9c-9710-c07af81c5cf0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Editor\Inspector">
       <UniqueIdentifier>{cec2aa9f-415b-427c-bf11-954831e1d8ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\InputSystem">
-      <UniqueIdentifier>{4b4a4498-ea3d-462d-9ecc-0d58d9204743}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\JoltPhysics">
       <UniqueIdentifier>{12a51e0e-5f3d-4ee0-a077-248504235abf}</UniqueIdentifier>
@@ -83,11 +56,41 @@
     <Filter Include="ThirdParty\JoltPhysics\Jolt\Core">
       <UniqueIdentifier>{fc89fc2e-4e25-4858-8dc2-fddd4311c9fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics">
+    <Filter Include="Runtime">
+      <UniqueIdentifier>{79add176-585a-4ccc-ab3a-3e491b47e50b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting\CS">
+      <UniqueIdentifier>{4ec4768f-c7be-4704-afe6-5a7b03279933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting\CS\Binding">
+      <UniqueIdentifier>{4a000fac-3637-456d-97ad-f1957e023663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Core">
+      <UniqueIdentifier>{854ec3d9-a919-4b68-906d-e044ca0dbc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Core\InputSystem">
+      <UniqueIdentifier>{4b4a4498-ea3d-462d-9ecc-0d58d9204743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Core\Event">
+      <UniqueIdentifier>{3e84bf3b-c51f-48b0-a6d8-051eccb9c518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Renderer">
+      <UniqueIdentifier>{86109a35-71f6-47e5-951a-fab27f52adbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Component">
+      <UniqueIdentifier>{62754661-ec6a-4013-bc7e-9e5f9f73d25d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Assets">
+      <UniqueIdentifier>{9b064b97-b855-4ac6-b917-55b48330e10c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Physics">
       <UniqueIdentifier>{205e3d3c-8dc4-4b5c-b9e2-53607e33574f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Event">
-      <UniqueIdentifier>{3e84bf3b-c51f-48b0-a6d8-051eccb9c518}</UniqueIdentifier>
+    <Filter Include="Runtime\Platform">
+      <UniqueIdentifier>{02c420ad-a007-484a-b415-386774709440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\WindowsMain">
+      <UniqueIdentifier>{84237b7b-d5ab-4160-8a37-419cc50bfaaf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,41 +112,41 @@
     <ClCompile Include="ThirdParty\glad\src\gl.c">
       <Filter>ThirdParty\glad</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Debug.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Debug.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\GameObject.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\GameObject.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Scene.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Scene.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ShaderProgram.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\ShaderProgram.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\std_handler.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\std_handler.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Utils.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Utils.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsMain\ZaxEngine.cpp">
-      <Filter>WindowsMain</Filter>
+    <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp">
+      <Filter>Runtime\WindowsMain</Filter>
     </ClCompile>
-    <ClCompile Include="Assets\AssetModel.cpp">
-      <Filter>Assets</Filter>
+    <ClCompile Include="Runtime\Assets\AssetModel.cpp">
+      <Filter>Runtime\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Camera.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Camera.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Light.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Light.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\MeshRenderer.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\MeshRenderer.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Transform.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Transform.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_glfw.cpp">
       <Filter>ThirdParty\imgui</Filter>
@@ -151,23 +154,23 @@
     <ClCompile Include="ThirdParty\imgui\backends\imgui_impl_opengl3.cpp">
       <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Component\PostProcess.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\PostProcess.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Application.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Application.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Mesh.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Mesh.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\FrameBuffer.cpp">
-      <Filter>Renderer</Filter>
+    <ClCompile Include="Runtime\Renderer\FrameBuffer.cpp">
+      <Filter>Runtime\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\SceneRenderer.cpp">
-      <Filter>Renderer</Filter>
+    <ClCompile Include="Runtime\Renderer\SceneRenderer.cpp">
+      <Filter>Runtime\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Vector.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Vector.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Window\EditorWindow.cpp">
       <Filter>Editor</Filter>
@@ -175,104 +178,104 @@
     <ClCompile Include="Editor\Window\OpenWindow.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Core\WindowBase.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\WindowBase.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ZObject.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\ZObject.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SceneManager.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\SceneManager.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
     <ClCompile Include="Editor\ProjectConfig.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Texture.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Texture.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Material.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Material.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\SceneBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\SceneBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\MonoRegisterInternalCall.cpp">
-      <Filter>CS</Filter>
+    <ClCompile Include="Scripting\CS\MonoRegisterInternalCall.cpp">
+      <Filter>Scripting\CS</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\MeshBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\MeshBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\ApplicationBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\ApplicationBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\MonoEntry.cpp">
-      <Filter>CS</Filter>
+    <ClCompile Include="Scripting\CS\MonoEntry.cpp">
+      <Filter>Scripting\CS</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\BindingHelper.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\BindingHelper.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\BindingCommon.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\BindingCommon.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\ShaderProgramBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\ShaderProgramBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\MaterialBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\MaterialBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\TextureBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\TextureBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ZString.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\ZString.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\GameObjectBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\GameObjectBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\TransformBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\TransformBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\SkyboxBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\SkyboxBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\MeshRendererBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\MeshRendererBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\ScriptObject.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\CameraBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\CameraBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\PostProcessBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\PostProcessBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\ComponentBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\ComponentBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\LightBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\LightBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\GameComponentBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\GameComponentBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\ScriptFunc.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\DebugBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\DebugBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="Core\PlatformTime.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\PlatformTime.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Skybox.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Skybox.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Component.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Component.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\ScriptField.cpp">
       <Filter>Scripting</Filter>
@@ -298,106 +301,103 @@
     <ClCompile Include="Editor\Inspector\SkyboxEditor.cpp">
       <Filter>Editor\Inspector</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\InputBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\InputBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="Core\InputSystem\Input.cpp">
-      <Filter>Core\InputSystem</Filter>
+    <ClCompile Include="Runtime\Core\InputSystem\Input.cpp">
+      <Filter>Runtime\Core\InputSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Component\BoxCollider.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\BoxCollider.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Collider.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\Collider.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Physics\PhysicsSystem.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="Runtime\Physics\PhysicsSystem.cpp">
+      <Filter>Runtime\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Component\RigidBody.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Runtime\Component\RigidBody.cpp">
+      <Filter>Runtime\Component</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Event\Event.cpp">
-      <Filter>Core\Event</Filter>
+    <ClCompile Include="Runtime\Core\Event\Event.cpp">
+      <Filter>Runtime\Core\Event</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\RigidBodyBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\RigidBodyBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="CS\Bindings\BoxColliderBinding.cpp">
-      <Filter>CS\Binding</Filter>
+    <ClCompile Include="Scripting\CS\Bindings\BoxColliderBinding.cpp">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Math.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Runtime\Core\Math.cpp">
+      <Filter>Runtime\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Debug.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Debug.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\GameObject.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\GameObject.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Scene.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Scene.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ShaderProgram.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\ShaderProgram.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Utils.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Utils.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsMain\ZaxEngine.h">
-      <Filter>WindowsMain</Filter>
+    <ClInclude Include="Runtime\WindowsMain\ZaxEngine.h">
+      <Filter>Runtime\WindowsMain</Filter>
     </ClInclude>
-    <ClInclude Include="Assets\AssetModel.h">
-      <Filter>Assets</Filter>
+    <ClInclude Include="Runtime\Assets\AssetModel.h">
+      <Filter>Runtime\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Camera.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\Camera.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Light.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\Light.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\MeshRenderer.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\MeshRenderer.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\windows.h">
-      <Filter>Platform</Filter>
+    <ClInclude Include="Runtime\Component\Component.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Component.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\Transform.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Transform.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Core\Color.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Color.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Component\PostProcess.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\PostProcess.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Core\Mesh.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Mesh.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Application.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Application.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Component\Skybox.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Skybox.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Renderer\FrameBuffer.h">
+      <Filter>Runtime\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\FrameBuffer.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="Runtime\Renderer\SceneRenderer.h">
+      <Filter>Runtime\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\SceneRenderer.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="Runtime\Renderer\ShadowFrameBuffer.h">
+      <Filter>Runtime\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\ShadowFrameBuffer.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="Runtime\Core\Vertex.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Vertex.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Vector.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Vector.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\glm\glm.hpp">
       <Filter>ThirdParty\glm</Filter>
@@ -408,8 +408,8 @@
     <ClInclude Include="ThirdParty\assimp\include\assimp\postprocess.h">
       <Filter>ThirdParty\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\ShadowFrameBufferBase.h">
-      <Filter>Renderer</Filter>
+    <ClInclude Include="Runtime\Renderer\ShadowFrameBufferBase.h">
+      <Filter>Runtime\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Window\EditorWindow.h">
       <Filter>Editor</Filter>
@@ -420,99 +420,99 @@
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp">
       <Filter>ThirdParty\boost\filesystem</Filter>
     </ClInclude>
-    <ClInclude Include="Core\WindowBase.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\WindowBase.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
       <Filter>Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ZObject.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\ZObject.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\SceneManager.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\SceneManager.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="Editor\ProjectConfig.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Core\Texture.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Texture.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Material.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Material.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\SceneBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\SceneBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\MonoRegisterInternalCall.h">
-      <Filter>CS</Filter>
+    <ClInclude Include="Scripting\CS\MonoRegisterInternalCall.h">
+      <Filter>Scripting\CS</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\MeshBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\MeshBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\ApplicationBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\ApplicationBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\MonoEntry.h">
-      <Filter>CS</Filter>
+    <ClInclude Include="Scripting\CS\MonoEntry.h">
+      <Filter>Scripting\CS</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\BindingHelper.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\BindingHelper.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\BindingCommon.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\BindingCommon.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\ShaderProgramBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\ShaderProgramBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\MaterialBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\MaterialBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\TextureBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\TextureBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="Core\ZString.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\ZString.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\GameObjectBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\GameObjectBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\TransformBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\TransformBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\SkyboxBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\SkyboxBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\MeshRendererBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\MeshRendererBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
     <ClInclude Include="Scripting\ScriptObject.h">
       <Filter>Scripting</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\CameraBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\CameraBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\PostProcessBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\PostProcessBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\ComponentBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\ComponentBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\LightBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\LightBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\GameComponentBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\GameComponentBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
     <ClInclude Include="Scripting\ScriptFunc.h">
       <Filter>Scripting</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\DebugBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\DebugBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="Core\PlatformTime.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\PlatformTime.h">
+      <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="Scripting\ScriptField.h">
       <Filter>Scripting</Filter>
@@ -538,20 +538,20 @@
     <ClInclude Include="Editor\Inspector\SkyboxEditor.h">
       <Filter>Editor\Inspector</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\InputBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\InputBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="Core\InputSystem\Input.h">
-      <Filter>Core\InputSystem</Filter>
+    <ClInclude Include="Runtime\Core\InputSystem\Input.h">
+      <Filter>Runtime\Core\InputSystem</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\stb_image.h">
       <Filter>ThirdParty</Filter>
     </ClInclude>
-    <ClInclude Include="Component\BoxCollider.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\BoxCollider.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Collider.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\Collider.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Jolt.h">
       <Filter>ThirdParty\JoltPhysics\Jolt</Filter>
@@ -826,23 +826,26 @@
     <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\StateRecorderImpl.h">
       <Filter>ThirdParty\JoltPhysics\Jolt\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\PhysicsSystem.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="Runtime\Physics\PhysicsSystem.h">
+      <Filter>Runtime\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Component\RigidBody.h">
-      <Filter>Component</Filter>
+    <ClInclude Include="Runtime\Component\RigidBody.h">
+      <Filter>Runtime\Component</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Event\Event.h">
-      <Filter>Core\Event</Filter>
+    <ClInclude Include="Runtime\Core\Event\Event.h">
+      <Filter>Runtime\Core\Event</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\RigidBodyBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\RigidBodyBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="CS\Bindings\BoxColliderBinding.h">
-      <Filter>CS\Binding</Filter>
+    <ClInclude Include="Scripting\CS\Bindings\BoxColliderBinding.h">
+      <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Math.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Runtime\Core\Math.h">
+      <Filter>Runtime\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\Platform\windows.h">
+      <Filter>Runtime\Platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

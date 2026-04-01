@@ -2,8 +2,8 @@
 
 #include "Editor/Window/EditorWindow.h"
 #include "CS/Bindings/ApplicationBinding.h"
-#include <CS/MonoEntry.h>
-#include <CS/MonoRegisterInternalCall.h>
+#include "CS/MonoEntry.h"
+#include "CS/MonoRegisterInternalCall.h"
 
 boost::filesystem::path Application::projectPath;
 boost::filesystem::path Application::projectName;

@@ -2,7 +2,7 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include <CS/MonoEntry.h>
+#include "CS/MonoEntry.h"
 #include "BindingHelper.h"
 //#include "mono/utils/mono-logger.h"
 
