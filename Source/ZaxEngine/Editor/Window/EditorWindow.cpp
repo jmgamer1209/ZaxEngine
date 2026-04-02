@@ -23,6 +23,7 @@
 #include "Editor/Inspector/InspectorEditor.h"
 #include "Jolt/Jolt.h"
 #include "Physics/PhysicsSystem.h"
+#include "Audio/AudioEngine.h"
 
 using namespace boost;
 using namespace ZaxEngine;
@@ -51,6 +52,8 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	catch (const std::exception& e) {
 		Debug::Log(e.what());
 	}
+
+    Audio::AudioEngine::GetInstance().PlaySound((Application::contentPath / "Audio" / "winning-a-coin.wav").string().c_str());
 }
 
 void EditorWindow::OnWindowClosed()

@@ -152,6 +152,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
+    <ClCompile Include="Runtime\Audio\AudioEngine.cpp" />
     <ClCompile Include="Runtime\Component\BoxCollider.cpp" />
     <ClCompile Include="Runtime\Component\Camera.cpp" />
     <ClCompile Include="Runtime\Component\Collider.cpp" />
@@ -230,9 +231,11 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp" />
+    <ClCompile Include="ThirdParty\miniaudio\miniaudio.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Assets\AssetModel.h" />
+    <ClInclude Include="Runtime\Audio\AudioEngine.h" />
     <ClInclude Include="Runtime\Component\BoxCollider.h" />
     <ClInclude Include="Runtime\Component\Camera.h" />
     <ClInclude Include="Runtime\Component\Collider.h" />
@@ -402,6 +405,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\StateRecorder.h" />
     <ClInclude Include="ThirdParty\JoltPhysics\Jolt\Physics\StateRecorderImpl.h" />
     <ClInclude Include="ThirdParty\JoltPhysics\Jolt\RegisterTypes.h" />
+    <ClInclude Include="ThirdParty\miniaudio\miniaudio.h" />
     <ClInclude Include="ThirdParty\stb_image.h" />
     <ClInclude Include="Runtime\WindowsMain\ZaxEngine.h" />
   </ItemGroup>

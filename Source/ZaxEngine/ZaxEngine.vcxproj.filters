@@ -92,6 +92,12 @@
     <Filter Include="Runtime\WindowsMain">
       <UniqueIdentifier>{84237b7b-d5ab-4160-8a37-419cc50bfaaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\Audio">
+      <UniqueIdentifier>{79a282fc-5d63-4c69-9689-3dd96fc5c236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\miniaudio">
+      <UniqueIdentifier>{00a396c2-6916-43cd-937c-fd0aea0b364c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -330,6 +336,12 @@
     </ClCompile>
     <ClCompile Include="Runtime\Core\Math.cpp">
       <Filter>Runtime\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Runtime\Audio\AudioEngine.cpp">
+      <Filter>Runtime\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\miniaudio\miniaudio.c">
+      <Filter>ThirdParty\miniaudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -846,6 +858,12 @@
     </ClInclude>
     <ClInclude Include="Runtime\Platform\windows.h">
       <Filter>Runtime\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\miniaudio\miniaudio.h">
+      <Filter>ThirdParty\miniaudio</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\Audio\AudioEngine.h">
+      <Filter>Runtime\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
