@@ -18,8 +18,11 @@ namespace ZaxEngine::Binding::GameComponent
 		auto name_space = mono_class_get_namespace(objClass);
 		auto name = mono_class_get_name(objClass);*/
 		
-		native->updateFunc = BindingHelper::GetUpdateFunc(obj);
+		native->updateFunc = BindingHelper::GetMonoFunc(obj, "Update");
 		native->updateFunc.obj = obj;
+
+		native->startFunc = BindingHelper::GetMonoFunc(obj, "Start");
+		native->startFunc.obj = obj;
 
 		Debug::Log("Create Custom Component Success");
 	}

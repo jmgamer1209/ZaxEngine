@@ -19,6 +19,11 @@ public class TestComponent:ZaxEngine.GameComponent
 
     }
 
+    void Start()
+    {
+        ZaxEngine.Debug.Log("Test Start Call"); 
+    }
+
     void Update()
     {
         if (updatecall)

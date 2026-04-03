@@ -15,6 +15,8 @@ public:
 	GameObject* gameObject;
 	ScriptObject scriptObj;
 	ScriptFunc updateFunc;
+	ScriptFunc startFunc;
+	bool alreadyCallStart = false;
 
 	virtual void OnAddToGO();
 };

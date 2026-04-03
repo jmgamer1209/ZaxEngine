@@ -17,10 +17,13 @@ public:
     void DrawScene();
     void PreDrawImgui() override;
     void OnWindowClosed() override;
-    void GameLogicUpdate();
+    
 
 private:
     void HandleDeltaTime();
+    void GameLogicUpdate();
+    void GameLogicStart();
+private:
     int sceneViewWidth = 1280;
     int sceneViewHeight = 720;
 };

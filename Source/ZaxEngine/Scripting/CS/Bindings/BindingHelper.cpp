@@ -53,9 +53,10 @@ namespace ZaxEngine::Binding::BindingHelper {
 		return mono_class_is_subclass_of(objClass, componentClass, false);
 	}
 
-	MonoMethod* GetUpdateFunc(MonoObject* obj) {
+	MonoMethod* GetMonoFunc(MonoObject* obj, const char* name)
+	{
 		auto objClass = mono_object_get_class(obj);
-		auto updateMethod = mono_class_get_method_from_name(objClass, "Update", 0);
+		auto updateMethod = mono_class_get_method_from_name(objClass, name, 0);
 		return updateMethod;
 	}
 
