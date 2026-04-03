@@ -44,6 +44,7 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	Application::sceneRenderer = sceneRenderer;
 
 	Physics::PhysicsSystem::GetInstance();
+	Audio::AudioEngine::GetInstance();
 	
 	// 执行 mono 入口函数，必须放在最后
 	try {
@@ -52,8 +53,6 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	catch (const std::exception& e) {
 		Debug::Log(e.what());
 	}
-
-    Audio::AudioEngine::GetInstance().PlaySound((Application::contentPath / "Audio" / "winning-a-coin.wav").string().c_str());
 }
 
 void EditorWindow::OnWindowClosed()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,7 +17,7 @@ public class TestComponent:ZaxEngine.GameComponent
 
     public TestComponent() 
     {
-
+        AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"));
     }
 
     void Start()
