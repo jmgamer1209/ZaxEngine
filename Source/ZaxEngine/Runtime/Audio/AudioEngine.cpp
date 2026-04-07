@@ -31,20 +31,51 @@ namespace ZaxEngine::Audio {
 		}
 	}
 
-	void AudioEngine::PlaySound(const char* soundFile) {
+	void AudioEngine::PlaySound(const char* soundFile, bool loop) {
 		if (initResult != MA_SUCCESS) {
 			std::cerr << "Audio engine not initialized" << std::endl;
 			return;
 		}
-		
-		ma_result result = ma_engine_play_sound(&engine, soundFile, nullptr);
+
+		ma_uint32 flags = 0;
+		if (loop) {
+			flags |= MA_SOUND_FLAG_LOOPING;
+		}
+		ma_sound* sound = new ma_sound();
+		ma_result result = ma_sound_init_from_file(&engine, soundFile, flags, nullptr, nullptr, sound);
 		if (result != MA_SUCCESS) {
-			std::cerr << "Failed to play sound: " << result << std::endl;
+			std::cerr << "Failed to load sound for looping (" << soundFile << "): " << result << std::endl;
+			return;
+		}
+		
+		if (loop) {
+			ma_sound_set_looping(sound, MA_TRUE);
+			result = ma_sound_start(sound);
+			if (result != MA_SUCCESS) {
+				std::cerr << "Failed to start looping sound (" << soundFile << "): " << result << std::endl;
+				ma_sound_uninit(sound);
+			} else {
+				// Store the sound to keep it alive for looping
+				loopingSounds.push_back(sound);
+				std::cout << "Looping sound started successfully: " << soundFile << std::endl;
+			}
+		} else {
+			result = ma_sound_start(sound);
+			if (result != MA_SUCCESS) {
+				std::cerr << "Failed to play sound: " << result << std::endl;
+			}
 		}
 	}
 
 	void AudioEngine::Shutdown() {
 		if (initResult == MA_SUCCESS) {
+			// Clean up all looping sounds
+			for (auto sound : loopingSounds) {
+				ma_sound_uninit(sound);
+				delete sound;
+			}
+			loopingSounds.clear();
+			
 			ma_engine_uninit(&engine);
 			initResult = MA_ERROR;
 		}

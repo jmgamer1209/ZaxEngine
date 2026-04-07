@@ -9,12 +9,12 @@ namespace ZaxEngine
 {
     public class AudioManager
     {
-        public static void Play(string path)
+        public static void Play(string path, bool loop = false)
         {
-            Internal_Play(path);
+            Internal_Play(path, loop);
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void Internal_Play(string path);
+        private static extern void Internal_Play(string path, bool loop);
     }
 }

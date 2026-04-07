@@ -7,10 +7,10 @@
 
 namespace ZaxEngine::Binding::AudioManager
 {
-	void Play(MonoString* path)
+	void Play(MonoString* path, bool loop)
 	{
 		std::string pathStr = BindingHelper::StringFromMonoString(path);
-		Audio::AudioEngine::GetInstance().PlaySound(pathStr.c_str());
+		Audio::AudioEngine::GetInstance().PlaySound(pathStr.c_str(), loop);
 	}
 
 	void RegisterInternalCall()

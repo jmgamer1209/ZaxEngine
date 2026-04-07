@@ -1,5 +1,6 @@
 #pragma once
 #include "miniaudio/miniaudio.h"
+#include <vector>
 #undef PlaySound
 
 namespace ZaxEngine::Audio
@@ -9,7 +10,7 @@ namespace ZaxEngine::Audio
 	public:
 		static AudioEngine& GetInstance();
 		void Init();
-		void PlaySound(const char* soundFile);
+		void PlaySound(const char* soundFile, bool loop = false);
 		void Shutdown();
 
 		ma_engine* GetEngine() { return &engine; }
@@ -18,6 +19,7 @@ namespace ZaxEngine::Audio
 		static AudioEngine* instance;
 		ma_engine engine;
 		ma_result initResult;
+		std::vector<ma_sound*> loopingSounds;
 		
 		AudioEngine();
 		~AudioEngine();

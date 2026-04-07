@@ -17,7 +17,8 @@ public class TestComponent:ZaxEngine.GameComponent
 
     public TestComponent() 
     {
-        AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"));
+        AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"), false);
+        AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "game-music-loop.mp3"), true);
     }
 
     void Start()
