@@ -73,6 +73,7 @@ namespace ZaxEngine::Component {
 		settings.mObjectLayer = Layers::MOVING;
 		body = system.GetBodyInterface().CreateBody(settings);
 		body->SetMotionType(motionType);
+		body->SetUserData(reinterpret_cast<uint64_t>(collider));
 		system.AddBody(*body);
 		system.GetBodyInterface().ActivateBody(body->GetID());
 

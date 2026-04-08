@@ -13,7 +13,7 @@ public:
 
 public:
 	virtual void SetShapeScale(Vector3 scale);
-
+	void OnColliderEnter(Collider* other);
 private:
 	
 };

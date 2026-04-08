@@ -24,6 +24,9 @@ namespace ZaxEngine::Binding::GameComponent
 		native->startFunc = BindingHelper::GetMonoFunc(obj, "Start");
 		native->startFunc.obj = obj;
 
+		native->onColliderEnterFunc = BindingHelper::GetMonoFunc(obj, "OnColliderEnter", 1);
+		native->onColliderEnterFunc.obj = obj;
+
 		Debug::Log("Create Custom Component Success");
 	}
 

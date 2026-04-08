@@ -5,6 +5,7 @@
 #include "Jolt/RegisterTypes.h"
 #include "Jolt/Core/TempAllocator.h"
 #include <Core/Debug.h>
+#include "Runtime/Component/Collider.h"
 
 namespace ZaxEngine::Physics
 {
@@ -181,17 +182,37 @@ namespace ZaxEngine::Physics
 		return JPH::ValidateResult::AcceptAllContactsForThisBodyPair;
 	}
 
-	void	MyContactListener::OnContactAdded(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
+	void MyContactListener::OnContactAdded(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
 	{
-		Debug::Log("A contact was added");
+		if (inBody1.IsSensor() == false && inBody2.IsSensor() == false)
+		{
+			// Collider 逻辑，触发碰撞事件
+			Collider* collider1 = reinterpret_cast<Collider*>(inBody1.GetUserData());
+			Collider* collider2 = reinterpret_cast<Collider*>(inBody2.GetUserData());
+			if (collider1 && collider2)
+			{
+				collider1->OnColliderEnter(collider2);
+				collider2->OnColliderEnter(collider1);
+			}
+		}
+		else
+		{
+			// Trigger 逻辑，触发 Trigger 事件
+			const Body* sensorBody = inBody1.IsSensor() ? &inBody1 : &inBody2;
+			const Body* otherBody = sensorBody == &inBody1 ? &inBody2 : &inBody1;
+
+			// 触发进入逻辑（如拾取道具、开门），待完成
+			/*BoxCollider* collider = static_cast<BoxCollider*>(sensorBody->GetUserData());
+			if (collider) collider->OnActorEnter(otherBody);*/
+		}
 	}
 
-	void			MyContactListener::OnContactPersisted(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
+	void MyContactListener::OnContactPersisted(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
 	{
 		cout << "A contact was persisted" << endl;
 	}
 
-	void			MyContactListener::OnContactRemoved(const JPH::SubShapeIDPair& inSubShapePair)
+	void MyContactListener::OnContactRemoved(const JPH::SubShapeIDPair& inSubShapePair)
 	{
 		cout << "A contact was removed" << endl;
 	}

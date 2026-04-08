@@ -16,4 +16,9 @@ namespace ZaxEngine::Scripting
 	{
 		Binding::BindingHelper::MonoInvoke(method, obj, NULL);
 	}
+
+	void ScriptFunc::Call(void** params)
+	{
+		Binding::BindingHelper::MonoInvoke(method, obj, params);
+	}
 }

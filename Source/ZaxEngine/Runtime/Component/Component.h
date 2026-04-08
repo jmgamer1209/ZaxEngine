@@ -16,6 +16,7 @@ public:
 	ScriptObject scriptObj;
 	ScriptFunc updateFunc;
 	ScriptFunc startFunc;
+	ScriptFunc onColliderEnterFunc;
 	bool alreadyCallStart = false;
 
 	virtual void OnAddToGO();

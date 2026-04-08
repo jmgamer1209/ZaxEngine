@@ -50,7 +50,7 @@ namespace ZaxEngine::Binding::BindingHelper {
 
 	bool IsSubOfGameComponent(MonoObject* obj);
 
-	MonoMethod* GetMonoFunc(MonoObject* obj, const char* name);
+	MonoMethod* GetMonoFunc(MonoObject* obj, const char* name, int param_count = 0);
 
 	MonoObject* MonoInvoke(MonoMethod* method, void* obj, void** params);
 

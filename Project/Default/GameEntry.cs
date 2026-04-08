@@ -100,6 +100,7 @@ public class GameEntry
                 collider.SetBoxCenter(new Vector3(0f, 2.5f, 0)); // 因为箱子的中心点不在箱子中心，所以需要设置碰撞体偏移
                 box.AddComponent(rigidBody);
                 box.AddComponent(collider);
+                box.AddComponent(customComponent);
             }
         }
 
@@ -129,7 +130,7 @@ public class GameEntry
         var post = new PostProcess();
         post.enabled = false;
         cameraGO.AddComponent(post);
-        cameraGO.AddComponent(customComponent);
+        //cameraGO.AddComponent(customComponent);
 
         // 创建光源
         Light light;

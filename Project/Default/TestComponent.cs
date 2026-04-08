@@ -26,6 +26,11 @@ public class TestComponent:ZaxEngine.GameComponent
         ZaxEngine.Debug.Log("Test Start Call"); 
     }
 
+    void OnColliderEnter(Collider collider)
+    {
+        ZaxEngine.Debug.Log("Test Collider Enter");
+    }
+
     void Update()
     {
         if (updatecall)

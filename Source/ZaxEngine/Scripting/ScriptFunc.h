@@ -17,6 +17,7 @@ namespace ZaxEngine::Scripting
 		bool IsValidate();
 
 		void Call();
+		void Call(void** params);
 	};
 }
 
