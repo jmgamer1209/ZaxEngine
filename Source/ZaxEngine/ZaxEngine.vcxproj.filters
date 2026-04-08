@@ -340,9 +340,6 @@
     <ClCompile Include="Runtime\Audio\AudioEngine.cpp">
       <Filter>Runtime\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\miniaudio\miniaudio.c">
-      <Filter>ThirdParty\miniaudio</Filter>
-    </ClCompile>
     <ClCompile Include="Scripting\CS\Bindings\AudioManagerBinding.cpp">
       <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>

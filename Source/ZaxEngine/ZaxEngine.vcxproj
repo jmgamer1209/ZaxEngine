@@ -232,7 +232,6 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp" />
-    <ClCompile Include="ThirdParty\miniaudio\miniaudio.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Assets\AssetModel.h" />

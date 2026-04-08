@@ -19,7 +19,6 @@ namespace ZaxEngine::Audio
 		static AudioEngine* instance;
 		ma_engine engine;
 		ma_result initResult;
-		std::vector<ma_sound*> loopingSounds;
 		
 		AudioEngine();
 		~AudioEngine();
