@@ -25,7 +25,7 @@ public class TestComponent:ZaxEngine.GameComponent
         ZaxEngine.Debug.Log("Test Start Call"); 
     }
 
-    void OnColliderEnter(BoxCollider collider)
+    void OnColliderEnter(Collider collider)
     {
         ZaxEngine.Debug.Log("Test Collider Enter");
         AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"), false);
