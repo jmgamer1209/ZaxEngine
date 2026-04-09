@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cstdarg>
 #include <thread>
+#include <vector>
+#include <mutex>
 
 using namespace std;
 using uint = JPH::uint;
@@ -16,6 +18,7 @@ using uint64 = JPH::uint64;
 using Body = JPH::Body;
 using RVec3Arg = JPH::RVec3Arg;
 class PhysicsUpdateListener;
+class Collider;
 
 namespace ZaxEngine::Physics
 {
@@ -96,8 +99,17 @@ namespace ZaxEngine::Physics
 		virtual void OnPhysicsUpdateEnd() = 0;
 	};
 
+	// 碰撞事件对，用于延迟到主线程处理
+	struct CollisionEvent
+	{
+		Collider* self;
+		Collider* other;
+	};
+
 	class PhysicsSystem
 	{
+		friend MyContactListener;
+
 	public:
 		static PhysicsSystem& GetInstance();
 		void AddBody(Body& body);
@@ -122,8 +134,22 @@ namespace ZaxEngine::Physics
 		MyBodyActivationListener body_activation_listener;
 		MyContactListener contact_listener;
 		//std::vector<PhysicsUpdateListener*> physicsUpdateListenerList;
+
 	private:
 		PhysicsSystem();
+
+		// 待处理的碰撞事件队列（线程安全）
+		std::vector<CollisionEvent> pendingCollisionEvents;
+		std::mutex collisionEventMutex;
+
+		// 由物理线程调用，缓存碰撞事件
+		void EnqueueCollisionEvent(Collider* self, Collider* other);
+
+		// 在主线程处理所有缓存的碰撞事件
+		void ProcessPendingCollisionEvents();
+
+		// 实际执行碰撞回调（仅在主线程调用）
+		void DispatchColliderEnter(Collider* self, Collider* other);
 
 	private:
 		static bool AssertFailedImpl(const char* inExpression, const char* inMessage, const char* inFile, JPH::uint inLine);

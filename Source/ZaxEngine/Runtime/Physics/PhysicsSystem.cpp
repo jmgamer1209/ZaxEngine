@@ -48,7 +48,9 @@ namespace ZaxEngine::Physics
 		OnPhysicsUpdateBegin.Invoke();
 
 		joltPhysicsSystem.Update(inDeltaTime, 1, temp_allocator, &joltJobSystem);
-		//joltPhysicsSystem.sim
+
+		// joltPhysicsSystem.Update 返回后已回到主线程，此时处理缓存的碰撞事件
+		ProcessPendingCollisionEvents();
 
 		OnPhysicsUpdateEnd.Invoke();
 	}
@@ -68,6 +70,44 @@ namespace ZaxEngine::Physics
 	JPH::BodyInterface& PhysicsSystem::GetBodyInterface()
 	{
 		return joltPhysicsSystem.GetBodyInterface();
+	}
+
+	void PhysicsSystem::EnqueueCollisionEvent(Collider* self, Collider* other)
+	{
+		// 物理线程中调用，仅缓存事件，不直接调用 Mono
+		std::lock_guard<std::mutex> lock(collisionEventMutex);
+		pendingCollisionEvents.push_back({ self, other });
+	}
+
+	void PhysicsSystem::ProcessPendingCollisionEvents()
+	{
+		// 主线程中调用，取出所有缓存的碰撞事件并处理
+		std::vector<CollisionEvent> events;
+		{
+			std::lock_guard<std::mutex> lock(collisionEventMutex);
+			events.swap(pendingCollisionEvents);  // 清空 pending 列表，填充 events
+		}
+
+		for (auto& evt : events)
+		{
+			if (evt.self && evt.other)
+			{
+				DispatchColliderEnter(evt.self, evt.other);
+			}
+		}
+	}
+
+	void PhysicsSystem::DispatchColliderEnter(Collider* self, Collider* other)
+	{
+		for (auto comp : self->gameObject->components)
+		{
+			if (comp->onColliderEnterFunc.IsValidate())
+			{
+				void* args[1];
+				args[0] = other->scriptObj.monoObj;
+				comp->onColliderEnterFunc.Call(args);
+			}
+		}
 	}
 
 	//void PhysicsSystem::AddPhysicsUpdateListener(PhysicsUpdateListener* listener)
@@ -182,6 +222,14 @@ namespace ZaxEngine::Physics
 		return JPH::ValidateResult::AcceptAllContactsForThisBodyPair;
 	}
 
+	/// <summary>
+	/// 碰撞事件
+	/// 重要：该函数执行在物理线程，任何和主线程相关的，都要考虑线程安全
+	/// </summary>
+	/// <param name="inBody1"></param>
+	/// <param name="inBody2"></param>
+	/// <param name="inManifold"></param>
+	/// <param name="ioSettings"></param>
 	void MyContactListener::OnContactAdded(const Body& inBody1, const Body& inBody2, const JPH::ContactManifold& inManifold, JPH::ContactSettings& ioSettings)
 	{
 		if (inBody1.IsSensor() == false && inBody2.IsSensor() == false)
@@ -191,8 +239,8 @@ namespace ZaxEngine::Physics
 			Collider* collider2 = reinterpret_cast<Collider*>(inBody2.GetUserData());
 			if (collider1 && collider2)
 			{
-				collider1->OnColliderEnter(collider2);
-				collider2->OnColliderEnter(collider1);
+				PhysicsSystem::GetInstance().EnqueueCollisionEvent(collider1, collider2);
+				PhysicsSystem::GetInstance().EnqueueCollisionEvent(collider2, collider1);
 			}
 		}
 		else

@@ -5,16 +5,10 @@
 #include <GLFW/glfw3.h>
 #include "Core/GameObject.h"
 #include "Core/Vector.h"
+#include <vector>
 
 class Collider: public Component
 {	
 public:
-	
-
-public:
 	virtual void SetShapeScale(Vector3 scale);
-	void OnColliderEnter(Collider* other);
-private:
-	
 };
-
