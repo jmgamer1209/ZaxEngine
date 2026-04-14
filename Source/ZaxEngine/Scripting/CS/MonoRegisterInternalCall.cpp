@@ -18,6 +18,7 @@
 #include "Bindings/RigidBodyBinding.h"
 #include "Bindings/BoxColliderBinding.h"
 #include "Bindings/AudioManagerBinding.h"
+#include "Bindings/ImGuiBinding.h"
 
 void MonoRegister()
 {
@@ -40,4 +41,5 @@ void MonoRegister()
 	ZaxEngine::Binding::RigidBody::RegisterInternalCall();
 	ZaxEngine::Binding::BoxCollider::RegisterInternalCall();
 	ZaxEngine::Binding::AudioManager::RegisterInternalCall();
+	ZaxEngine::Binding::ImGui::RegisterInternalCall();
 }

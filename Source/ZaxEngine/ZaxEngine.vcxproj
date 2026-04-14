@@ -192,6 +192,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Scripting\CS\Bindings\DebugBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\GameComponentBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\GameObjectBinding.cpp" />
+    <ClCompile Include="Scripting\CS\Bindings\ImGuiBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\InputBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\LightBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\MaterialBinding.cpp" />
@@ -276,6 +277,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Scripting\CS\Bindings\DebugBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\GameComponentBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\GameObjectBinding.h" />
+    <ClInclude Include="Scripting\CS\Bindings\ImGuiBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\InputBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\LightBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\MaterialBinding.h" />

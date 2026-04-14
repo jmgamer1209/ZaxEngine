@@ -7,3 +7,11 @@ using namespace ZaxEngine::Binding;
 void Component::OnAddToGO()
 {
 }
+
+void Component::OnGui()
+{
+	if (onGuiFunc.IsValidate())
+	{
+		onGuiFunc.Call();
+	}
+}

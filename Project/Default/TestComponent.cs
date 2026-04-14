@@ -31,6 +31,14 @@ public class TestComponent:ZaxEngine.GameComponent
         AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"), false);
     }
 
+    void OnGui()
+    {
+        if (ImGui.Button("Test Button"))
+        {
+            Debug.Log("Test Button Click");
+        }
+    }
+
     void Update()
     {
         if (updatecall)

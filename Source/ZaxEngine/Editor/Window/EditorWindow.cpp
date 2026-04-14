@@ -194,36 +194,62 @@ void EditorWindow::DrawWindowUI()
 	ImGui::PopStyleVar(3);
 
 	// SceneView,显示场景渲染的结果
-	//ImGui::SetNextWindowSizeConstraints(ImVec2(200, 100),   // 最小尺寸
+	{
+		//ImGui::SetNextWindowSizeConstraints(ImVec2(200, 100),   // 最小尺寸
 		//ImVec2(FLT_MAX, FLT_MAX)); // 最大尺寸(无限制)
-	
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Scene View", nullptr);
 
-	ImVec2 currentSize = ImGui::GetWindowSize();
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("Scene View", nullptr);
 
-	// 获取去掉标题栏后的高度
-	float content_height = ImGui::GetWindowSize().y -
-		(ImGui::GetFontSize() +
-			ImGui::GetStyle().FramePadding.y * 2 +
-			ImGui::GetStyle().WindowBorderSize * 2);
+		ImVec2 currentSize = ImGui::GetWindowSize();
 
-	currentSize = ImVec2(currentSize.x, content_height);
+		// 获取去掉标题栏后的高度
+		float content_height = ImGui::GetWindowSize().y -
+			(ImGui::GetFontSize() +
+				ImGui::GetStyle().FramePadding.y * 2 +
+				ImGui::GetStyle().WindowBorderSize * 2);
 
-	// 窗口内容...
-	//ImGui::Text("当前尺寸: %.1f x %.1f", currentSize.x, currentSize.y);
-	Application::sceneRenderer->ChangeRenderSize(currentSize.x, currentSize.y);
+		currentSize = ImVec2(currentSize.x, content_height);
 
-	auto sceneTextureID = this->sceneRenderer->frameBuffer->GetTextureColorBuffer();
+		// 窗口内容...
+		//ImGui::Text("当前尺寸: %.1f x %.1f", currentSize.x, currentSize.y);
+		Application::sceneRenderer->ChangeRenderSize(currentSize.x, currentSize.y);
 
-	// 由于 opengl 渲染图原点在左下角，而 imgui 渲染时默认以右上角为原点，所以单独设置下 uv
-	ImVec2 uv0(0, 1);  // 左下角
-	ImVec2 uv1(1, 0);  // 右上角
-	ImGui::Image(sceneTextureID, currentSize, uv0, uv1);
+		auto sceneTextureID = this->sceneRenderer->frameBuffer->GetTextureColorBuffer();
+
+		// 由于 opengl 渲染图原点在左下角，而 imgui 渲染时默认以右上角为原点，所以单独设置下 uv
+		ImVec2 uv0(0, 1);  // 左下角
+		ImVec2 uv1(1, 0);  // 右上角
+		ImGui::Image(sceneTextureID, currentSize, uv0, uv1);
+		//ImGui::SetItemAllowOverlap();
+
+		// -------------------------------------
+		// GameUI
+		// -------------------------------------
+		{
+			ImVec2 contentMin = ImGui::GetWindowContentRegionMin();
+			ImGui::SetCursorPos(ImVec2(contentMin.x, contentMin.y));
+			//ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 0, 0, 255));
+			ImGui::BeginChild("##GameUI", currentSize, ImGuiChildFlags_None);
+
+			if (scene)
+			{
+				for (auto go : scene->list) {
+					for (auto comp : go->components)
+					{
+						comp->OnGui();
+					}
+				}
+			}
+
+			ImGui::EndChild();
+			//ImGui::PopStyleColor(1);
+		}
 
 
-	ImGui::End();
-	ImGui::PopStyleVar(1);
+		ImGui::End();
+		ImGui::PopStyleVar(1);
+	}
 
     // 场景物体列表
     ImGui::Begin("Hierarchy", nullptr);
