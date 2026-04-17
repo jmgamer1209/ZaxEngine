@@ -18,6 +18,16 @@ void GameObject::AddComponent(Component* component)
 	component->OnAddToGO();
 }
 
+void GameObject::SetActive(bool active)
+{
+	this->isActive = active;
+}
+
+bool GameObject::GetActive()
+{
+	return isActive;
+}
+
 void GameObject::Unserialize(json::object obj)
 {
 	//this->name = obj["name"].as_string().c_str();

@@ -228,6 +228,8 @@ void EditorWindow::DrawWindowUI()
 		// -------------------------------------
 		{
 			ImVec2 contentMin = ImGui::GetWindowContentRegionMin();
+			Debug::Log(contentMin.x);
+			Debug::Log(contentMin.y);
 			ImGui::SetCursorPos(ImVec2(contentMin.x, contentMin.y));
 			//ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 0, 0, 255));
 			ImGui::BeginChild("##GameUI", currentSize, ImGuiChildFlags_None);
@@ -235,6 +237,7 @@ void EditorWindow::DrawWindowUI()
 			if (scene)
 			{
 				for (auto go : scene->list) {
+					if (go->GetActive() == false) continue;
 					for (auto comp : go->components)
 					{
 						comp->OnGui();
@@ -276,8 +279,11 @@ void EditorWindow::DrawWindowUI()
     {
         ImGui::Text(selectedGO->name.c_str());
         ImGui::Text("isActive: "); ImGui::SameLine();
-        ImGui::Checkbox("##isActive", &selectedGO->isActive);
-
+		bool active = selectedGO->GetActive();
+		if (ImGui::Checkbox("##isActive", &active))
+		{
+			selectedGO->SetActive(active);
+		}
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();

@@ -73,6 +73,9 @@ void SceneRenderer::Draw(Scene* scene)
 		if (tempRenderer != nullptr) renderers.push_back(tempRenderer);
 	}
 
+    if (camera == nullptr) return;
+
+
     // 如果窗口变化，需要重新设置 Camera，以及纹理和rb的大小
     camera->OnViewportChange(Application::sceneRenderer->renderWidth, Application::sceneRenderer->renderHeight);
     frameBuffer->ChangeSize(Application::sceneRenderer->renderWidth, Application::sceneRenderer->renderHeight);
@@ -104,6 +107,8 @@ void SceneRenderer::Draw(Scene* scene)
         DrawTransparent();
 
         auto postBuffer = DrawPostProcess(camera->gameObject->GetComponent<PostProcess>());
+
+        // 将离屏渲染的场景，绘制到编辑器的UI上
         DrawQuad(postBuffer);
     }
 }
@@ -119,7 +124,7 @@ void SceneRenderer::DrawDepth()
     for (size_t i = 0; i < renderers.size(); i++)
     {
         auto renderer = renderers[i];
-        if (renderer->gameObject->isActive == false) continue;
+        if (renderer->gameObject->GetActive() == false) continue;
 
         auto transform = renderer->gameObject->GetComponent<Transform>();
         depthShader->Use();
@@ -181,7 +186,7 @@ void SceneRenderer::DrawShadow(Light* light)
     for (size_t i = 0; i < renderers.size(); i++)
     {
         auto renderer = renderers[i];
-        if (renderer->gameObject->isActive == false) continue;
+        if (renderer->gameObject->GetActive() == false) continue;
 
         auto transform = renderer->gameObject->GetComponent<Transform>();
 
@@ -299,7 +304,7 @@ void SceneRenderer::DrawGroupRenderers(const vector<MeshRenderer*>& group, Blend
     for (size_t i = 0; i < group.size(); i++)
     {
         auto renderer = group[i];
-        if (renderer->gameObject->isActive == false) continue;
+        if (renderer->gameObject->GetActive() == false) continue;
 
         if (surface == BlendMode::Opaque)
         {
@@ -444,7 +449,7 @@ void SceneRenderer::SetGlobalShaderVar(MeshRenderer* renderer, Light* light, Sha
 void SceneRenderer::DrawSkybox(Skybox* skybox)
 {
     if (skybox == nullptr) return;
-    if (skybox->gameObject->isActive == false) return;
+    if (skybox->gameObject->GetActive() == false) return;
     
     //skybox->SetCubeMap(pointLights[0]->shadowFrameBuffer->GetBindTexture()); // 用于测试 pointLight 阴影贴图
     skybox->Draw(camera);

@@ -7,10 +7,19 @@ public class GameEntry
 {
     public static void GameStart()
     {
+        //return;
 
         var customComponent = new TestComponent();
 
         var scene = new Scene();
+
+        var ui = new GameObject("UI");
+        ui.AddComponent(customComponent);
+
+        scene.AddGameObject(ui);
+
+        return;
+
         // box 默认大小为 5m×5m
         var woodenBox = new Mesh(Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Wooden Crate.obj"));
         //Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs"

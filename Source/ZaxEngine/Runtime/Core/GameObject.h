@@ -15,14 +15,17 @@ class GameObject:ZObject
 public:
 	vector<Component*> components;
 	string name;
+	
+private:
 	bool isActive = true;
 
 public:
 	GameObject();
 	GameObject(const string& name);
-    void AddComponent(Component* component);
+
 	void Unserialize(json::object obj) override;
 
+    void AddComponent(Component* component);
 	template<typename T>
 	T* GetComponent()
 	{
@@ -37,4 +40,8 @@ public:
 		}
 		return nullptr;
 	}
+
+	void SetActive(bool active);
+	bool GetActive();
+
 };

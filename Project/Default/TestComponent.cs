@@ -33,7 +33,7 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void OnGui()
     {
-        if (ImGui.Button("Test Button"))
+        if (ImGui.Button("Enter Game"))
         {
             Debug.Log("Test Button Click");
         }
