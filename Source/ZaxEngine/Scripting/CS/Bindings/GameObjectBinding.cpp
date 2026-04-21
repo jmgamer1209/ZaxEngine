@@ -69,11 +69,18 @@ namespace ZaxEngine::Binding::GameObject {
 		return monoobj;
 	}
 
+	void Internal_SetActive(MonoObject* obj, bool isActive)
+	{
+		auto go = BindingHelper::GetNativeObj<::GameObject*>(obj);
+		go->SetActive(isActive);
+	}
+
 	void RegisterInternalCall()
 	{
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_CreateWithName", reinterpret_cast<void*>(CreateWithName));
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_Create", reinterpret_cast<void*>(Create));
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_AddComponent", reinterpret_cast<void*>(AddComponent));
 		mono_add_internal_call("ZaxEngine.GameObject::Internal_GetComponent", reinterpret_cast<void*>(Internal_GetComponent));
+		mono_add_internal_call("ZaxEngine.GameObject::Internal_SetActive", reinterpret_cast<void*>(Internal_SetActive));
 	}
 }

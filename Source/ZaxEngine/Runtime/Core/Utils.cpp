@@ -173,3 +173,8 @@ boost::filesystem::path Utils::GetExeDirectory() {
     boost::filesystem::path result(path);
     return result.parent_path();
 }
+
+boost::filesystem::path Utils::GetEngineContentDirectory()
+{
+    return GetExeDirectory().parent_path().parent_path() / "ZaxEngine" / "Content";
+}

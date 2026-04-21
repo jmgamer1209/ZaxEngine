@@ -32,6 +32,11 @@ namespace ZaxEngine
             return (T)component;
         }
 
+        public void SetActive(bool isActive)
+        {
+            Internal_SetActive(isActive);
+        }
+
         #region Internal Call
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -48,6 +53,9 @@ namespace ZaxEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern Component Internal_GetComponent(System.Type type);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Internal_SetActive(bool isActive);
 
         #endregion
     }

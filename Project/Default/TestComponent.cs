@@ -14,6 +14,7 @@ public class TestComponent:ZaxEngine.GameComponent
     bool updatecall = false;
     string str = "this is string";
     float testf = 20f;
+    public event System.Action OnStartGame;
 
     public TestComponent() 
     {
@@ -22,7 +23,7 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void Start()
     {
-        ZaxEngine.Debug.Log("Test Start Call"); 
+        ZaxEngine.Debug.Log("Test Start Call");
     }
 
     void OnColliderEnter(Collider collider)
@@ -33,9 +34,10 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void OnGui()
     {
-        if (ImGui.Button("Enter Game"))
+        if (ImGui.Button("进入游戏"))
         {
             Debug.Log("Test Button Click");
+            OnStartGame();
         }
     }
 

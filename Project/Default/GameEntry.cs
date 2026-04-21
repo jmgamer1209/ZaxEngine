@@ -5,21 +5,28 @@ using ZaxEngine;
 
 public class GameEntry
 {
+    public static Scene scene;
     public static void GameStart()
     {
-        //return;
 
-        var customComponent = new TestComponent();
-
-        var scene = new Scene();
+        scene = new Scene();
 
         var ui = new GameObject("UI");
+        var customComponent = new TestComponent();
         ui.AddComponent(customComponent);
+        customComponent.OnStartGame += () =>
+        {
+            ui.SetActive(false);
+            StartGame();
+        };
 
         scene.AddGameObject(ui);
 
         return;
-
+    }
+    
+    public static void StartGame()
+    {
         // box 默认大小为 5m×5m
         var woodenBox = new Mesh(Path.Combine(Application.contentPath, "Common", "WoodenCrate", "Wooden Crate.obj"));
         //Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs"
@@ -50,13 +57,13 @@ public class GameEntry
         var t = new Transform();
         skyboxGO.AddComponent(t);
         var skybox = new Skybox();
-        var folderPath = Path.Combine(Application.contentPath, "Common", "Skybox" , "1");
+        var folderPath = Path.Combine(Application.contentPath, "Common", "Skybox", "1");
         var cubeMapTex = Texture.Load(folderPath, TextureType.CubeMap);
         skybox.SetCubeMap(cubeMapTex);
         skyboxGO.AddComponent(skybox);
 
         // 反射材质
-        var reflectionShader = new ShaderProgram(Path.Combine(Application.contentPath,"Shaders", "Common" , "reflectionCube.vs"), Path.Combine(Application.contentPath,"Shaders" , "Common" , "reflectionCube.fs"));
+        var reflectionShader = new ShaderProgram(Path.Combine(Application.contentPath, "Shaders", "Common", "reflectionCube.vs"), Path.Combine(Application.contentPath, "Shaders", "Common", "reflectionCube.fs"));
         var reflectionMat = new Material(reflectionShader);
         var albedoTexture = woodenBoxAlbedoTexture;
         reflectionMat.SetProperty("albedoTexture", albedoTexture);
@@ -68,7 +75,7 @@ public class GameEntry
         List<GameObject> boxes = new List<GameObject>(4);
         for (int i = 1; i <= 4; i++)
         {
-            var box = new GameObject("Box"+i);
+            var box = new GameObject("Box" + i);
             boxes.Add(box);
             box.AddComponent(new Transform());
             if (i == 3) box.AddComponent(new MeshRenderer(woodenBox, transparentMat));
@@ -109,7 +116,6 @@ public class GameEntry
                 collider.SetBoxCenter(new Vector3(0f, 2.5f, 0)); // 因为箱子的中心点不在箱子中心，所以需要设置碰撞体偏移
                 box.AddComponent(rigidBody);
                 box.AddComponent(collider);
-                box.AddComponent(customComponent);
             }
         }
 
@@ -155,7 +161,7 @@ public class GameEntry
         transform = new Transform();
         pointLightGO.AddComponent(transform);
         light = new Light(LightType.Point);
-        light.color = new Color(1,0,0);
+        light.color = new Color(1, 0, 0);
         light.range = 60;
         transform.position = new Vector3(-2.0f, 10.0f, 3.0f);
         pointLightGO.AddComponent(light);
@@ -185,4 +191,5 @@ public class GameEntry
         scene.AddGameObject(skyboxGO);
         scene.AddGameObject(planeGO);
     }
+
 }

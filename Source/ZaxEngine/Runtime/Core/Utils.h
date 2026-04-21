@@ -19,6 +19,7 @@ namespace Utils
 	unsigned int LoadCubeMap(const string& folderPath);
 	glm::mat4 GetViewMatrix(const Transform& transform);
 	boost::filesystem::path GetExeDirectory();
+	boost::filesystem::path GetEngineContentDirectory();
 	std::string GetDefaultProjectPath();
 	boost::json::object LoadJsonFile(const boost::filesystem::path& path);
 	
