@@ -228,12 +228,8 @@ void EditorWindow::DrawWindowUI()
 		// -------------------------------------
 		{
 			ImVec2 contentMin = ImGui::GetWindowContentRegionMin();
-			Debug::Log(contentMin.x);
-			Debug::Log(contentMin.y);
 			ImGui::SetCursorPos(ImVec2(contentMin.x, contentMin.y));
-			//ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(0, 0, 0, 255));
 			ImGui::BeginChild("##GameUI", currentSize, ImGuiChildFlags_None);
-
 			if (scene)
 			{
 				for (auto go : scene->list) {

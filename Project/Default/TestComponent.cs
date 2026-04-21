@@ -34,7 +34,8 @@ public class TestComponent:ZaxEngine.GameComponent
 
     void OnGui()
     {
-        if (ImGui.Button("进入游戏"))
+        ImGui.SetCursorPos(100, 100);
+        if (ImGui.Button("进入游戏", new ZaxEngine.Vector2(150f, 50f)))
         {
             Debug.Log("Test Button Click");
             OnStartGame();
