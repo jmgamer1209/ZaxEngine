@@ -39,7 +39,8 @@
     <Compile Include="Source\BasicScene.cs" />
     <Compile Include="Source\GameEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\SimpleGame.cs" />
+    <Compile Include="Source\SimpleGame\SimpleGame.cs" />
+    <Compile Include="Source\SimpleGame\UIComponent.cs" />
     <Compile Include="Source\Test.cs" />
     <Compile Include="Source\TestComponent.cs" />
   </ItemGroup>

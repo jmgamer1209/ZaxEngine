@@ -14,7 +14,7 @@ internal class SimpleGame
         scene = new Scene();
 
         var ui = new GameObject("UI");
-        var customComponent = new TestComponent();
+        var customComponent = new UIComponent();
         ui.AddComponent(customComponent);
         customComponent.OnStartGame += () =>
         {

@@ -64,9 +64,10 @@ namespace ZaxEngine::Binding::GameObject {
 		//
 
 		//auto component = go->GetComponent<::Transform>();
-		auto monoobj = BindingHelper::NewMonoObject("ZaxEngine", "Transform");
-		BindingHelper::SetNativePtr(monoobj, target);
-		return monoobj;
+		/*auto monoobj = BindingHelper::NewMonoObject("ZaxEngine", "Transform");
+		BindingHelper::SetNativePtr(monoobj, target);*/
+		if (target == nullptr) return nullptr;
+		return target->scriptObj.monoObj;
 	}
 
 	void Internal_SetActive(MonoObject* obj, bool isActive)
