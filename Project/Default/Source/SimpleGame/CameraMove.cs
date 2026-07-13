@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using ZaxEngine;
+using ZaxEngine.InputSystem;
+
+public class CameraMove:ZaxEngine.GameComponent
+{
+    bool updatecall = false;
+
+    public CameraMove() 
+    {
+        
+    }
+
+    void Start()
+    {
+        ZaxEngine.Debug.Log("Test Start Call");
+    }
+
+    void OnColliderEnter(Collider collider)
+    {
+        ZaxEngine.Debug.Log("Test Collider Enter");
+        AudioManager.Play(Path.Combine(ZaxEngine.Application.contentPath, "Audio", "winning-a-coin.wav"), false);
+    }
+
+    void OnGui()
+    {
+
+    }
+
+    void Update()
+    {
+        if (updatecall)
+        {
+            ZaxEngine.Debug.Log("Test Update Call");
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.W))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.z = position.z - 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.S))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.z = position.z + 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.A))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.x = position.x - 1;
+            transform.position = position;
+        }
+        if (ZaxEngine.InputSystem.Input.GetKeyDown(KeyCode.D))
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var position = transform.position;
+            position.x = position.x + 1;
+            transform.position = position;
+        }
+        //if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Left))
+        //{
+        //    ZaxEngine.Debug.Log("鼠标 left");
+        //}
+        //if (ZaxEngine.InputSystem.Input.GetMouseDown(MouseButton.Right))
+        //{
+        //    ZaxEngine.Debug.Log("mouse right");
+        //}
+    }
+}

@@ -142,10 +142,11 @@ internal class SimpleGame
         cameraGO.GetComponent<Transform>().position = new Vector3(0, 0, 30f);
         //cameraGO.GetComponent<Transform>().position = new Vector3(-40, -2.7f, -5.5f);
         //cameraGO.GetComponent<Transform>().rotation = new Vector3(0, -80, 0);
+        var move = new CameraMove();
         var post = new PostProcess();
         post.enabled = false;
         cameraGO.AddComponent(post);
-        //cameraGO.AddComponent(customComponent);
+        cameraGO.AddComponent(move);
 
         // 创建光源
         Light light;

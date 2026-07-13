@@ -53,7 +53,7 @@ public class UIComponent:ZaxEngine.GameComponent
             var transform = gameObject.GetComponent<Transform>();
             if (transform == null)
             {
-                Debug.Log("No Transform!");
+                //Debug.Log("UIComponent No Transform!");
             }
             
             //var position = transform.position;
