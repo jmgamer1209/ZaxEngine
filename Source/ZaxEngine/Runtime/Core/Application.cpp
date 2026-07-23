@@ -5,7 +5,7 @@
 #include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
 
-boost::filesystem::path Application::projectPath;
+boost::filesystem::path Application::zprojectFilePath;
 boost::filesystem::path Application::projectName;
 boost::filesystem::path Application::projectFolderPath;
 ProjectConfig Application::projectConfig;
@@ -21,7 +21,7 @@ SceneRenderer* Application::sceneRenderer = nullptr;
 
 void Application::OpenEditor(const boost::filesystem::path& projectPath)
 {
-    Application::projectPath = projectPath;
+    Application::zprojectFilePath = projectPath;
     Application::projectFolderPath = projectPath.parent_path();
     Application::projectName = projectPath.stem().string();
     contentPath = (Application::projectFolderPath / ("Content")).string();

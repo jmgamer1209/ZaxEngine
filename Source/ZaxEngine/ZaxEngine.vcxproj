@@ -152,6 +152,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp" />
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
     <ClCompile Include="Runtime\Audio\AudioEngine.cpp" />
     <ClCompile Include="Runtime\Component\BoxCollider.cpp" />
@@ -236,6 +237,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Editor\FileSystem\FileSystemWindow.h" />
     <ClInclude Include="Runtime\Assets\AssetModel.h" />
     <ClInclude Include="Runtime\Audio\AudioEngine.h" />
     <ClInclude Include="Runtime\Component\BoxCollider.h" />

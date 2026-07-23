@@ -98,6 +98,12 @@
     <Filter Include="ThirdParty\miniaudio">
       <UniqueIdentifier>{00a396c2-6916-43cd-937c-fd0aea0b364c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\FileSystem">
+      <UniqueIdentifier>{c24b8c5b-a37a-47ce-856d-72f0da5a432c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Window">
+      <UniqueIdentifier>{5d468d9d-469e-46f0-9549-52630d9748c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -178,17 +184,8 @@
     <ClCompile Include="Runtime\Core\Vector.cpp">
       <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Window\EditorWindow.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Window\OpenWindow.cpp">
-      <Filter>Editor</Filter>
-    </ClCompile>
     <ClCompile Include="Runtime\Core\WindowBase.cpp">
       <Filter>Runtime\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
-      <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="Runtime\Core\ZObject.cpp">
       <Filter>Runtime\Core</Filter>
@@ -346,6 +343,18 @@
     <ClCompile Include="Scripting\CS\Bindings\ImGuiBinding.cpp">
       <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Window\EditorWindow.cpp">
+      <Filter>Editor\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Window\OpenWindow.cpp">
+      <Filter>Editor\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp">
+      <Filter>Editor\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp">
+      <Filter>Editor\FileSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Core\Debug.h">
@@ -426,20 +435,11 @@
     <ClInclude Include="Runtime\Renderer\ShadowFrameBufferBase.h">
       <Filter>Runtime\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Window\EditorWindow.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Window\OpenWindow.h">
-      <Filter>Editor</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\boost\filesystem\path.hpp">
       <Filter>ThirdParty\boost\filesystem</Filter>
     </ClInclude>
     <ClInclude Include="Runtime\Core\WindowBase.h">
       <Filter>Runtime\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
-      <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="Runtime\Core\ZObject.h">
       <Filter>Runtime\Core</Filter>
@@ -873,6 +873,18 @@
     </ClInclude>
     <ClInclude Include="Scripting\CS\Bindings\ImGuiBinding.h">
       <Filter>Scripting\CS\Binding</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\EditorWindow.h">
+      <Filter>Editor\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\OpenWindow.h">
+      <Filter>Editor\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\CommonFileDialogApp.h">
+      <Filter>Editor\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\FileSystem\FileSystemWindow.h">
+      <Filter>Editor\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
