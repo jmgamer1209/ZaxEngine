@@ -104,6 +104,9 @@
     <Filter Include="Editor\Window">
       <UniqueIdentifier>{5d468d9d-469e-46f0-9549-52630d9748c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\FileSystem">
+      <UniqueIdentifier>{a5e1d613-2a92-420b-a700-06a0dac59aa8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -354,6 +357,9 @@
     </ClCompile>
     <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp">
       <Filter>Editor\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Runtime\FileSystem\FileSystem.cpp">
+      <Filter>Runtime\FileSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -885,6 +891,9 @@
     </ClInclude>
     <ClInclude Include="Editor\FileSystem\FileSystemWindow.h">
       <Filter>Editor\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\FileSystem\FileSystem.h">
+      <Filter>Runtime\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
