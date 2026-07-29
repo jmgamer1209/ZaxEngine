@@ -53,6 +53,8 @@ EditorWindow::EditorWindow():WindowBase("Editor")
 	catch (const std::exception& e) {
 		Debug::Log(e.what());
 	}
+
+	fileSystemWindow = make_shared < Editor::FileSystem::FileSystemWindow>();
 }
 
 void EditorWindow::OnWindowClosed()
@@ -300,6 +302,8 @@ void EditorWindow::DrawWindowUI()
 
         ImGui::End();
     }
+
+	fileSystemWindow->OnGUI();
 
     //ImGui_ShowDemoWindow();
 }

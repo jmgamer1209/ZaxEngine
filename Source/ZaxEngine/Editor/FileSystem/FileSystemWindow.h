@@ -4,7 +4,7 @@
 #include <memory>
 #include "boost/filesystem/path.hpp"
 
-namespace Editor::FileSystem
+namespace ZaxEngine::Editor::FileSystem
 {
 	enum class NodeType:std::uint8_t
     {
@@ -19,10 +19,11 @@ namespace Editor::FileSystem
         bool     isExpanded; // 是否展开
         boost::filesystem::path relativePath;  // 相对路径
         std::vector<std::shared_ptr<FileSystemNode>> subNodes;  // 子目录
+        bool isRoot = false;
 
     public:
         FileSystemNode();
-        FileSystemNode(NodeType type, boost::filesystem::path& relativePath);
+        FileSystemNode(NodeType type, const boost::filesystem::path& relativePath);
     };
 
     class FileSystemWindow
@@ -30,6 +31,7 @@ namespace Editor::FileSystem
     public:
         FileSystemWindow();
         void OnGUI();
+        void OnGUI_ShowNode(FileSystemNode& node);
     private:
         boost::filesystem::path projectPath;
         std::unique_ptr<FileSystemNode> rootNode;

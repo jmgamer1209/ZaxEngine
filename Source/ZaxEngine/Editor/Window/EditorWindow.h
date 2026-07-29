@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/WindowBase.h"
 #include "Renderer/SceneRenderer.h"
+#include "FileSystem/FileSystemWindow.h"
 
 class EditorWindow: public WindowBase
 {
@@ -9,6 +10,7 @@ public:
     GameObject* selectedGO;
     bool isShowLightingSettings;
     Scene* scene;
+    std::shared_ptr<ZaxEngine::Editor::FileSystem::FileSystemWindow> fileSystemWindow;
     //ShaderProgram* shaderProgram;
 
     EditorWindow();
