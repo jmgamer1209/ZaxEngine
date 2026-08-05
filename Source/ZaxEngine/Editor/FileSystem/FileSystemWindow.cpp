@@ -3,10 +3,13 @@
 #include "boost/filesystem/operations.hpp"
 #include "boost/filesystem/directory.hpp"
 #include <vector>
+#include <unordered_set>
 
 namespace fs = boost::filesystem;
 namespace ZaxEngine::Editor::FileSystem
 {
+	std::unordered_set<std::string> rootFolderSet = { "Content", "Source"};
+
 	// 获取指定目录下一级所有子文件夹（不递归深层）
 	void FileSystemWindow::FillSubNodes(FileSystemNode& node)
 	{	
@@ -21,6 +24,13 @@ namespace ZaxEngine::Editor::FileSystem
 		{
 			auto nodeType = NodeType::File;
 			if (fs::is_directory(entry.path())) nodeType = NodeType::Folder;
+			if (node.isRoot)
+			{
+				if (rootFolderSet.count(entry.path().filename().string()) == false)
+				{
+					continue;
+				}
+			}
 			auto entryNode = std::make_shared<FileSystemNode>(nodeType, node.relativePath / entry.path().filename());
 			node.subNodes.push_back(entryNode);
 		}
@@ -44,17 +54,21 @@ namespace ZaxEngine::Editor::FileSystem
 		}
 		else
 		{
+			string nodeID = "";
 			string name = "";
 			if (node.isRoot)
 			{
 				name = "Root";
+				nodeID = "Root";
 			}
 			else {
 				name = node.relativePath.filename().string();
+				nodeID = node.relativePath.string();
 			}
 			FillSubNodes(node);
 			//Debug::Log(name);
-			if (ImGui::TreeNode(name.c_str()))
+			
+			if (ImGui::TreeNode(nodeID.c_str(), "%s", name.c_str()))
 			{
 				node.isExpanded = true;
 				
