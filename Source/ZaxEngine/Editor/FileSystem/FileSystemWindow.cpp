@@ -46,11 +46,19 @@ namespace ZaxEngine::Editor::FileSystem
 		this->rootNode->isRoot = true;
 	}
 
+
+	string select_item_name = "";
 	void FileSystemWindow::OnGUI_ShowNode(FileSystemNode& node)
 	{
 		if (node.type == NodeType::File)
 		{
-			ImGui::Text(node.relativePath.filename().string().c_str());
+			float indent = ImGui::GetTreeNodeToLabelSpacing();
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + indent);
+			auto name = node.relativePath.filename().string() + "##" + node.relativePath.string();
+			if (ImGui::Selectable(name.c_str(), select_item_name == name))
+			{
+				select_item_name = name;
+			}
 		}
 		else
 		{
