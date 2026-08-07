@@ -71,24 +71,37 @@ namespace ZaxEngine::Editor::FileSystem
 			}
 			else {
 				name = node.relativePath.filename().string();
-				nodeID = node.relativePath.string();
+				nodeID = node.relativePath.filename().string() + "##" + node.relativePath.string();
 			}
 			FillSubNodes(node);
 			//Debug::Log(name);
 			
-			if (ImGui::TreeNode(nodeID.c_str(), "%s", name.c_str()))
+			auto isExpanded = ImGui::TreeNodeEx(nodeID.c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | (select_item_name == nodeID ? ImGuiTreeNodeFlags_Selected : 0));
+
+			// 右键弹出菜单，绑定当前item
+			if (ImGui::BeginPopupContextItem(nodeID.c_str()))
 			{
-				node.isExpanded = true;
-				
+				select_item_name = nodeID; // 右键点击时选中该节点
+				if (ImGui::MenuItem("新建文件夹")) { /* logic */ }
+				if (ImGui::MenuItem("重命名")) { /* logic */ }
+				if (ImGui::MenuItem("删除")) { /* logic */ }
+				ImGui::EndPopup();
+			}
+
+			// 左键点击选中
+			if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && !ImGui::IsItemToggledOpen())
+			{
+				select_item_name = nodeID;
+			}
+
+			node.isExpanded = isExpanded;
+			if (isExpanded)
+			{	
 				for (size_t i = 0; i < node.subNodes.size(); i++)
 				{
 					OnGUI_ShowNode(*(node.subNodes[i]));
 				}
 				ImGui::TreePop();
-			}
-			else
-			{
-				node.isExpanded = false;
 			}
 		}
 	}
