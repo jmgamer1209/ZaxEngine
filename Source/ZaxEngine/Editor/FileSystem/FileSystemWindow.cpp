@@ -82,9 +82,7 @@ namespace ZaxEngine::Editor::FileSystem
 			if (ImGui::BeginPopupContextItem(nodeID.c_str()))
 			{
 				select_item_name = nodeID; // 右键点击时选中该节点
-				if (ImGui::MenuItem("新建文件夹")) { /* logic */ }
-				if (ImGui::MenuItem("重命名")) { /* logic */ }
-				if (ImGui::MenuItem("删除")) { /* logic */ }
+				if (ImGui::MenuItem("资源导入")) { /* logic */ }
 				ImGui::EndPopup();
 			}
 
