@@ -5,6 +5,8 @@
 #include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
 
+using namespace ZaxEngine::Platform;
+
 boost::filesystem::path Application::zprojectFilePath;
 boost::filesystem::path Application::projectName;
 boost::filesystem::path Application::projectFolderPath;
@@ -30,5 +32,5 @@ void Application::OpenEditor(const boost::filesystem::path& projectPath)
     MonoRegister();
     ZaxEngine::Binding::Application::TriggerStaticInit();
     ZaxEngine::Binding::Application::SetContentPath(contentPath.string());
-    window = dynamic_cast<WindowBase*>(new EditorWindow());
+    window = new EditorWindow(); //dynamic_cast<WindowBase*>();
 }

@@ -30,7 +30,7 @@ using namespace ZaxEngine;
 
 static int64_t FrameCount;
 
-EditorWindow::EditorWindow():WindowBase("Editor")
+EditorWindow::EditorWindow():ZaxEngine::Platform::WindowBase("Editor")
 {
 	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
 	auto value = config["EditorStartupMap"].as_string();

@@ -23,7 +23,7 @@ public:
 	static bool isViewportSizeChanged;
 	static bool isInMinimal;
 	static bool isRunning;
-	static WindowBase* window;
+	static ZaxEngine::Platform::WindowBase* window;
 	static SceneRenderer* sceneRenderer;
 
 	static void OpenEditor(const boost::filesystem::path& projectPath);

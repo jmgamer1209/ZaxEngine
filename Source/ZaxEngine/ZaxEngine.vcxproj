@@ -115,6 +115,7 @@
       <AdditionalOptions>/utf-8</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ObjectFileName>$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +154,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp" />
+    <ClCompile Include="Editor\Window\WindowBase.cpp" />
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
     <ClCompile Include="Runtime\Audio\AudioEngine.cpp" />
     <ClCompile Include="Runtime\Component\BoxCollider.cpp" />
@@ -239,6 +241,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\FileSystem\FileSystemWindow.h" />
+    <ClInclude Include="Editor\Window\WindowBase.h" />
     <ClInclude Include="Runtime\Assets\AssetModel.h" />
     <ClInclude Include="Runtime\Audio\AudioEngine.h" />
     <ClInclude Include="Runtime\Component\BoxCollider.h" />

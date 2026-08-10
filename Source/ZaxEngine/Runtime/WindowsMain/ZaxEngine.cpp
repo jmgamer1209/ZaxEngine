@@ -37,8 +37,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	setvbuf(stdout, nullptr, _IONBF, 0); //设置控制台立即输出
 
 	GLFW_INIT
-	
-	Application::window = dynamic_cast<WindowBase*>(new OpenWindow());
+
+	Application::window = new OpenWindow();
 	Application::isRunning = true;
 
 	auto assemblies_path = monoPath.string() + ";" + standardPath.string(); // windows使用; 类Unix使用:，这里先只适配 windows

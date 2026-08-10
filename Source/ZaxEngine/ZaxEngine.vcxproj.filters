@@ -361,6 +361,9 @@
     <ClCompile Include="Runtime\FileSystem\FileSystem.cpp">
       <Filter>Runtime\FileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\Window\WindowBase.cpp">
+      <Filter>Editor\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Core\Debug.h">
@@ -894,6 +897,9 @@
     </ClInclude>
     <ClInclude Include="Runtime\FileSystem\FileSystem.h">
       <Filter>Runtime\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Window\WindowBase.h">
+      <Filter>Editor\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

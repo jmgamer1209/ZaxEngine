@@ -4,43 +4,45 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-class WindowBase
-{
-public:
-    GLFWwindow* window;
-    bool isClosed = false;
-    const char* windowTitle = "ZaxEngine";
-    int viewportWidth = 1280;
-    int viewportHeight = 720;
-    bool isInMinimal;
-    bool firstMouseRecord = true;
-    float lastXPos;
-    float lastYPos;
-    float xOffsetPos;
-    float yOffsetPos;
-
-    WindowBase(std::string title)
+namespace ZaxEngine::Platform {
+    class WindowBase
     {
-        windowTitle = title.c_str();
-        ImGui_Init();
-    }
-    
-    void Update();
-    int ImGui_Init();
-    void LoadFont();
-    void ImGui_NewFrame();
-    void UpdateWindowSize();
-    void UpdateCursorPos();
-    void ProcessInput(GLFWwindow* window);
+    public:
+        GLFWwindow* window;
+        bool isClosed = false;
+        const char* windowTitle = "ZaxEngine";
+        int viewportWidth = 1280;
+        int viewportHeight = 720;
+        bool isInMinimal;
+        bool firstMouseRecord = true;
+        float lastXPos;
+        float lastYPos;
+        float xOffsetPos;
+        float yOffsetPos;
 
-    virtual void DrawWindowUI() {}
-    virtual void PreDrawImgui() {}
-    virtual void OnWindowClosed()
-    {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-        glfwDestroyWindow(window);
-        isClosed = true;
+        WindowBase(std::string title)
+        {
+            windowTitle = title.c_str();
+            ImGui_Init();
+        }
+
+        void Update();
+        int ImGui_Init();
+        void LoadFont();
+        void ImGui_NewFrame();
+        void UpdateWindowSize();
+        void UpdateCursorPos();
+        void ProcessInput(GLFWwindow* window);
+
+        virtual void DrawWindowUI() {}
+        virtual void PreDrawImgui() {}
+        virtual void OnWindowClosed()
+        {
+            ImGui_ImplOpenGL3_Shutdown();
+            ImGui_ImplGlfw_Shutdown();
+            ImGui::DestroyContext();
+            glfwDestroyWindow(window);
+            isClosed = true;
+        };
     };
-};
+}

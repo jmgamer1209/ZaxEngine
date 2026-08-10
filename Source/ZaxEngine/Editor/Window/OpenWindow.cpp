@@ -23,7 +23,7 @@ char Path[MAX_PATH] = "";
 boost::filesystem::path projectPath;
 bool shouldOpenEditorOnClose = false;
 
-OpenWindow::OpenWindow():WindowBase("Project Hub")
+OpenWindow::OpenWindow():ZaxEngine::Platform::WindowBase("Project Hub")
 {
     boost::filesystem::path exe_path = boost::dll::program_location();
     auto projectRoot = exe_path.parent_path().parent_path().parent_path().parent_path();

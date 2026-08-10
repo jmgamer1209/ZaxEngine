@@ -3,7 +3,7 @@
 #include "Renderer/SceneRenderer.h"
 #include "FileSystem/FileSystemWindow.h"
 
-class EditorWindow: public WindowBase
+class EditorWindow: public ZaxEngine::Platform::WindowBase
 {
 public:
     SceneRenderer* sceneRenderer;

@@ -2,7 +2,7 @@
 
 #include "Core/WindowBase.h"
 
-class OpenWindow: public WindowBase
+class OpenWindow: public ZaxEngine::Platform::WindowBase
 {
 public:
     
