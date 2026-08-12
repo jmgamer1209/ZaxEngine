@@ -14,7 +14,7 @@
 #include "Core/GameObject.h"
 #include "Core/Application.h"
 #include "Core/WindowBase.h"
-#include "Editor/Window/EditorWindow.h"
+#include "Editor/Window/GameEditorWindow.h"
 #include "Editor/Window/OpenWindow.h"
 #include "filesystem/path.hpp"
 #include "filesystem/directory.hpp"

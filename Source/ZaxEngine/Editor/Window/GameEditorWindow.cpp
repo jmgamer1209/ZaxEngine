@@ -1,0 +1,466 @@
+#include "GameEditorWindow.h"
+
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
+#include "boost/json.hpp"
+#include "boost/filesystem/path.hpp"
+
+#include "Core/SceneManager.h"
+#include "CS/MonoEntry.h"
+#include "CS/MonoRegisterInternalCall.h"
+
+
+#include "Core/PlatformTime.h"
+#include <Core/Application.h>
+#include <imgui_internal.h>
+
+#include "Editor/Inspector/InspectorEditor.h"
+#include "Jolt/Jolt.h"
+#include "Physics/PhysicsSystem.h"
+#include "Audio/AudioEngine.h"
+
+using namespace boost;
+using namespace ZaxEngine;
+
+static int64_t FrameCount;
+
+GameEditorWindow::GameEditorWindow():ZaxEngine::Platform::WindowBase("Editor")
+{
+	auto config = Utils::LoadJsonFile(Application::projectFolderPath / "Config" / "DefaultEngine.json");
+	auto value = config["EditorStartupMap"].as_string();
+	Debug::Log(value.c_str());
+	Application::projectConfig.EditorStartupMap = value.c_str();
+	
+	FrameCount = -1;
+
+	sceneRenderer = new SceneRenderer();
+	sceneRenderer->Init(sceneViewWidth, sceneViewHeight);
+	Application::sceneRenderer = sceneRenderer;
+
+	Physics::PhysicsSystem::GetInstance();
+	Audio::AudioEngine::GetInstance();
+	
+	// 执行 mono 入口函数，必须放在最后
+	try {
+		MonoEntry::GetInstance()->RunGameStart();
+	}
+	catch (const std::exception& e) {
+		Debug::Log(e.what());
+	}
+
+	fileSystemWindow = make_shared < Editor::FileSystem::FileSystemWindow>();
+}
+
+void GameEditorWindow::OnWindowClosed()
+{
+	delete scene;
+	//shaderProgram->Delete();
+	WindowBase::OnWindowClosed();
+	Application::isRunning = false;
+}
+
+void GameEditorWindow::DrawScene()
+{
+	if (!isInMinimal) sceneRenderer->Draw(scene);
+}
+
+void GameEditorWindow::PreDrawImgui()
+{
+	FrameCount++;
+
+	HandleDeltaTime();
+	if (scene == nullptr)
+	{
+		LoadScene();
+	}
+	
+	// 由于 dockspace 导致界面初次启动时会延迟2帧才能有正确的布局，所以这里延迟2帧
+	if (FrameCount < 2) return;
+	GameLogicStart();
+	Physics::PhysicsSystem::GetInstance().Update(0.016f);
+	GameLogicUpdate();
+	DrawScene();
+}
+
+void GameEditorWindow::GameLogicStart()
+{
+	for (size_t i = 0; i < this->scene->list.size(); i++)
+	{
+		auto go = this->scene->list[i];
+		for (size_t j = 0; j < go->components.size(); j++)
+		{
+			auto comp = go->components[j];
+			if (comp->startFunc.IsValidate() && !comp->alreadyCallStart)
+			{
+                comp->startFunc.Call();
+				comp->alreadyCallStart = true;
+			}
+		}
+	}
+}
+
+void GameEditorWindow::GameLogicUpdate()
+{
+	for (size_t i = 0; i < this->scene->list.size(); i++)
+	{
+		auto go = this->scene->list[i];
+		for (size_t j = 0; j < go->components.size(); j++) 
+		{
+			auto comp = go->components[j];
+			if (comp->updateFunc.IsValidate())
+			{
+				comp->updateFunc.Call();
+			}
+		}
+	}
+}
+
+void GameEditorWindow::HandleDeltaTime()
+{
+	//声明 lastRealTime 并同时初始化
+	static double lastRealTime = PlatformTime::Seconds() - 0.0001;
+	double CurrentRealTime = PlatformTime::Seconds();
+	double RealDeltaTime = CurrentRealTime - lastRealTime;
+	lastRealTime = CurrentRealTime;
+	//Debug::Log(RealDeltaTime);
+}
+
+
+void GameEditorWindow::DrawWindowUI()
+{
+    // 菜单设置
+    ImGui::BeginMainMenuBar();
+
+    if (ImGui::BeginMenu("Scene Settings"))
+    {
+        if (ImGui::MenuItem("Lighting")) 
+        {
+            isShowLightingSettings = true;
+        }
+        ImGui::EndMenu();
+    }
+
+    if (ImGui::BeginMenu("View Mode"))
+    {
+        static int viewMode = (int)sceneRenderer->viewMode;
+        if (ImGui::Combo("##View Mode", &viewMode, "Lit\0Depth\0\0")) {
+            sceneRenderer->viewMode = (ViewMode)viewMode;
+        }
+		
+        ImGui::EndMenu();
+    }
+	
+
+    ImGui::EndMainMenuBar();
+
+	ImVec2 menubarSize = ImGui::GetItemRectSize();
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	
+	// Play Bar
+	ImVec2 playbarSize(viewport->Size.x, 40);
+	ImGui::SetNextWindowSize(playbarSize);
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + menubarSize.y));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("##playbar", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking);
+	ImGui::SetCursorPos(ImVec2(8, 5));
+	if (ImGui::Button("Play", ImVec2(50, 30)))
+	{
+		Debug::Log("Play");
+	}
+	ImGui::End();
+	ImGui::PopStyleVar(1);
+
+	// Main Dockspace
+	ImVec2 dockspaceSize(viewport->Size.x, viewport->Size.y - menubarSize.y - playbarSize.y);
+	ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + menubarSize.y + playbarSize.y));
+	ImGui::SetNextWindowSize(dockspaceSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+	ImGui::Begin("##dockspace", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDocking);
+	ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoWindowMenuButton);
+	//ImGui::SetWindowPos({ 0.f, 0.f });
+	/*ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+	ImGui::SetWindowSize({ (float)displaySize.x, (float)displaySize.y });*/
+	ImGui::End();
+
+	ImGui::PopStyleVar(3);
+
+	// SceneView,显示场景渲染的结果
+	{
+		//ImGui::SetNextWindowSizeConstraints(ImVec2(200, 100),   // 最小尺寸
+		//ImVec2(FLT_MAX, FLT_MAX)); // 最大尺寸(无限制)
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("Scene View", nullptr);
+
+		ImVec2 currentSize = ImGui::GetWindowSize();
+
+		// 获取去掉标题栏后的高度
+		float content_height = ImGui::GetWindowSize().y -
+			(ImGui::GetFontSize() +
+				ImGui::GetStyle().FramePadding.y * 2 +
+				ImGui::GetStyle().WindowBorderSize * 2);
+
+		currentSize = ImVec2(currentSize.x, content_height);
+
+		// 窗口内容...
+		//ImGui::Text("当前尺寸: %.1f x %.1f", currentSize.x, currentSize.y);
+		Application::sceneRenderer->ChangeRenderSize(currentSize.x, currentSize.y);
+
+		auto sceneTextureID = this->sceneRenderer->frameBuffer->GetTextureColorBuffer();
+
+		// 由于 opengl 渲染图原点在左下角，而 imgui 渲染时默认以右上角为原点，所以单独设置下 uv
+		ImVec2 uv0(0, 1);  // 左下角
+		ImVec2 uv1(1, 0);  // 右上角
+		ImGui::Image(sceneTextureID, currentSize, uv0, uv1);
+		//ImGui::SetItemAllowOverlap();
+
+		// -------------------------------------
+		// GameUI
+		// -------------------------------------
+		{
+			ImVec2 contentMin = ImGui::GetWindowContentRegionMin();
+			ImGui::SetCursorPos(ImVec2(contentMin.x, contentMin.y));
+			ImGui::BeginChild("##GameUI", currentSize, ImGuiChildFlags_None);
+			if (scene)
+			{
+				for (auto go : scene->list) {
+					if (go->GetActive() == false) continue;
+					for (auto comp : go->components)
+					{
+						comp->OnGui();
+					}
+				}
+			}
+
+			ImGui::EndChild();
+			//ImGui::PopStyleColor(1);
+		}
+
+
+		ImGui::End();
+		ImGui::PopStyleVar(1);
+	}
+
+    // 场景物体列表
+    ImGui::Begin("Hierarchy", nullptr);
+		
+	ImVec2 currentSize2 = ImGui::GetWindowSize();
+
+    for (size_t i = 0; i < scene->list.size(); i++)
+    {
+        auto go = scene->list[i];
+        if (ImGui::Selectable(go->name.c_str(), false))
+        {
+            selectedGO = go;
+        }
+    }
+
+    ImGui::End();
+
+    // 组件属性检视面板
+    ImGui::Begin("Inspector", nullptr);
+
+	ImVec2 currentSize3 = ImGui::GetWindowSize();
+
+    if (selectedGO != nullptr)
+    {
+        ImGui::Text(selectedGO->name.c_str());
+        ImGui::Text("isActive: "); ImGui::SameLine();
+		bool active = selectedGO->GetActive();
+		if (ImGui::Checkbox("##isActive", &active))
+		{
+			selectedGO->SetActive(active);
+		}
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
+		Editor::InspectorEditor::DrawInspector(*selectedGO);
+    }
+
+    ImGui::End();
+
+    // 光照设置
+    if (isShowLightingSettings)
+    {
+        ImGui::Begin("Lighting Settings", &isShowLightingSettings);
+        ImGui::Text("Ambient Color:");
+        ImGui::ColorEdit3("##Ambient Color", scene->lightingSettings.ambientColor.FloatPTR());
+        ImGui::Text("Ambient Intensity:");
+        ImGui::DragFloat("##Ambient Intensity", &scene->lightingSettings.ambientIntensity, 0.01f, 0, 1);
+
+        ImGui::End();
+    }
+
+	fileSystemWindow->OnGUI();
+
+    //ImGui_ShowDemoWindow();
+}
+
+void GameEditorWindow::LoadScene()
+{
+	scene = SceneManager::mainScene; //用脚本端创建的场景
+
+	/*******
+
+	// 导入 Mesh
+	Mesh* woodenBox = new Mesh(Application::contentPath / "Common" / "WoodenCrate" / "Wooden Crate.obj");
+
+	// 创建 Shader Program 和 材质
+	shaderProgram = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "forward.vs", Application::contentPath / "Shaders" / "Common" / "forward.fs");
+	Material* mat = new Material(shaderProgram);
+
+	// 加载纹理
+	std::string baseColorPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_BaseColor.png").string();
+	std::string normalPath = (Application::contentPath / "Common" / "WoodenCrate" / "Textures" / "Wooden Crate_Crate_Normal.png").string();
+	auto woodenBoxAlbedoTexture = Texture::Load(baseColorPath);
+	auto woodenBoxNormalTexture = Texture::Load(normalPath);
+
+	mat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+	mat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
+
+	Material* planeMat = new Material(shaderProgram);
+	planeMat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+
+
+	Material* transparentMat = new Material(shaderProgram);
+	transparentMat->SetProperty("AlbedoTexture", MaterialProperty(woodenBoxAlbedoTexture));
+	transparentMat->SetProperty("NormalMap", MaterialProperty(woodenBoxNormalTexture));
+	transparentMat->SetProperty("SurfaceType", MaterialProperty(1));
+	transparentMat->SetProperty("Alpha", MaterialProperty(0.5f));
+
+
+	// 先创建天空盒
+	auto skyboxGO = new GameObject("Skybox");
+	skyboxGO->AddComponent(new Transform());
+	auto skybox = new Skybox();
+	auto folderPath = (Application::contentPath / "/Common/Skybox/1").string();
+	auto cubeMapTex = Texture::Load(folderPath, TextureType::CubeMap);
+	skybox->SetCubeMap(cubeMapTex);
+	skyboxGO->AddComponent(skybox);
+
+	// 反射材质
+	auto reflectionShader = new ShaderProgram(Application::contentPath / "Shaders" / "Common" / "reflectionCube.vs", Application::contentPath / "Shaders" / "Common" / "reflectionCube.fs");
+	auto reflectionMat = new Material(reflectionShader);
+	auto albedoTexture = woodenBoxAlbedoTexture;
+	reflectionMat->SetProperty("albedoTexture", MaterialProperty(albedoTexture));
+	reflectionMat->SetProperty("environmentTexture", MaterialProperty(skybox->GetCubeMap()));
+	reflectionMat->SetProperty("specularIntensity", MaterialProperty(0.5f));
+	reflectionMat->SetProperty("reflectionIntensity", MaterialProperty(0.5f));
+
+	// 创建渲染物体
+	vector<GameObject*> boxes;
+	for (size_t i = 1; i <= 4; i++)
+	{
+		auto box = new GameObject(string("Box")+std::to_string(i));
+		boxes.push_back(box);
+		box->AddComponent(new Transform());
+		if (i == 3) box->AddComponent(new MeshRenderer(woodenBox, transparentMat));
+		else if (i < 4) box->AddComponent(new MeshRenderer(woodenBox, mat));
+		else box->AddComponent(new MeshRenderer(woodenBox, reflectionMat));
+
+		Vector3 position(0, 0, 0);
+		Vector3 rotation(0, 0, 0);
+
+		if (i == 1) {
+			position = Vector3(-11.0f, -2.5f, -8.0f);
+			rotation = Vector3(45.0f, -30.0f, 0);
+		}
+		else if (i == 2){
+			position = Vector3(-2.5f, -2.5f, 0);
+			rotation = Vector3(45.0f, 0, 0);
+		}
+		else if (i == 3)
+		{
+			position = Vector3(6.5f, -2.5f, 0);
+			rotation = Vector3(45.0f, 0, -30.0f);
+		}
+		else if (i == 4)
+		{
+			position = Vector3(4.5f, 2.0f, -2.0f);
+			rotation = Vector3(0, 35.0f, 0);
+		}
+		box->GetComponent<Transform>()->position = position;
+		box->GetComponent<Transform>()->rotation = rotation;
+	}
+
+	// 创建1个平面
+	auto planeGO = new GameObject(string("Plane"));
+	auto transform = new Transform();
+	transform->position = Vector3(0, -10, -5);
+	transform->rotation = Vector3(-90, 0, 0);
+	transform->scale = Vector3(15);
+	planeGO->AddComponent(transform);
+	planeGO->AddComponent(new MeshRenderer(Mesh::GetQuadMesh(), planeMat));
+	
+
+	// 设置摄像机
+	auto cameraGO = new GameObject("Camera");
+	cameraGO->AddComponent(new Transform());
+	auto camera = new Camera();
+	cameraGO->AddComponent(camera);
+	cameraGO->GetComponent<Transform>()->position.z = 30;
+	auto post = new PostProcess();
+	post->enabled = false;
+	cameraGO->AddComponent(post);
+
+	// 创建光源
+	Light* light;
+	auto lightGO = new GameObject("DirectionalLight");
+	transform = new Transform();
+	lightGO->AddComponent(transform);
+	light = new Light(LightType::Directional);
+	lightGO->AddComponent(light);
+	transform->position = Vector3(0,10,0);
+	transform->rotation = Vector3(-90, 0, 0);
+
+	auto pointLightGO = new GameObject("PointLight");
+	transform = new Transform();
+	pointLightGO->AddComponent(transform);
+	light = new Light(LightType::Point);
+	light->color = { 1,0,0 };
+	light->range = 60;
+	transform->position = Vector3(-2.0f, 10.0f, 3.0f); 
+	pointLightGO->AddComponent(light);
+
+	auto spotLightGO = new GameObject("SpotLight");
+	transform = new Transform();
+	transform->position = Vector3(7, 20, 0);
+	transform->rotation = Vector3(-90, 0, 0);
+	spotLightGO->AddComponent(transform);
+	light = new Light(LightType::Spot);
+	light->color = { 0,1,0 };
+	light->range = 100;
+	light->innerAngle = 30;
+	light->outerAngle = 40;
+	spotLightGO->AddComponent(light);
+
+	// 创建场景
+	scene = SceneManager::mainScene; //用脚本端创建的场景
+	/*scene->lightingSettings.ambientColor = Color(1, 1, 1);
+	scene->lightingSettings.ambientIntensity = 0.1f;*/
+
+	/**
+	scene->AddGameObject(cameraGO);
+	for (size_t i = 0; i < boxes.size(); i++)
+	{
+		scene->AddGameObject(boxes[i]);
+	}
+	scene->AddGameObject(lightGO);
+	scene->AddGameObject(pointLightGO);
+	scene->AddGameObject(spotLightGO);
+	scene->AddGameObject(skyboxGO);
+	scene->AddGameObject(planeGO);
+	*******/
+}

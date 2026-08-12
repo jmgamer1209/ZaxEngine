@@ -346,7 +346,7 @@
     <ClCompile Include="Scripting\CS\Bindings\ImGuiBinding.cpp">
       <Filter>Scripting\CS\Binding</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Window\EditorWindow.cpp">
+    <ClCompile Include="Editor\Window\GameEditorWindow.cpp">
       <Filter>Editor\Window</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Window\OpenWindow.cpp">
@@ -361,7 +361,7 @@
     <ClCompile Include="Runtime\FileSystem\FileSystem.cpp">
       <Filter>Runtime\FileSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Window\WindowBase.cpp">
+    <ClCompile Include="Editor\Window\EditorWindow.cpp">
       <Filter>Editor\Window</Filter>
     </ClCompile>
   </ItemGroup>
@@ -883,7 +883,7 @@
     <ClInclude Include="Scripting\CS\Bindings\ImGuiBinding.h">
       <Filter>Scripting\CS\Binding</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Window\EditorWindow.h">
+    <ClInclude Include="Editor\Window\GameEditorWindow.h">
       <Filter>Editor\Window</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Window\OpenWindow.h">
@@ -898,7 +898,7 @@
     <ClInclude Include="Runtime\FileSystem\FileSystem.h">
       <Filter>Runtime\FileSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Editor\Window\WindowBase.h">
+    <ClInclude Include="Editor\Window\EditorWindow.h">
       <Filter>Editor\Window</Filter>
     </ClInclude>
   </ItemGroup>

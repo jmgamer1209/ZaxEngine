@@ -154,7 +154,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp" />
-    <ClCompile Include="Editor\Window\WindowBase.cpp" />
+    <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
     <ClCompile Include="Runtime\Audio\AudioEngine.cpp" />
     <ClCompile Include="Runtime\Component\BoxCollider.cpp" />
@@ -221,7 +221,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Editor\Inspector\TransformEditor.cpp" />
     <ClCompile Include="Editor\ProjectConfig.cpp" />
     <ClCompile Include="Editor\Window\CommonFileDialogApp.cpp" />
-    <ClCompile Include="Editor\Window\EditorWindow.cpp" />
+    <ClCompile Include="Editor\Window\GameEditorWindow.cpp" />
     <ClCompile Include="Editor\Window\OpenWindow.cpp" />
     <ClCompile Include="Runtime\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="Runtime\Renderer\FrameBuffer.cpp" />
@@ -241,7 +241,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\FileSystem\FileSystemWindow.h" />
-    <ClInclude Include="Editor\Window\WindowBase.h" />
+    <ClInclude Include="Editor\Window\EditorWindow.h" />
     <ClInclude Include="Runtime\Assets\AssetModel.h" />
     <ClInclude Include="Runtime\Audio\AudioEngine.h" />
     <ClInclude Include="Runtime\Component\BoxCollider.h" />
@@ -309,7 +309,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Editor\Inspector\TransformEditor.h" />
     <ClInclude Include="Editor\ProjectConfig.h" />
     <ClInclude Include="Editor\Window\CommonFileDialogApp.h" />
-    <ClInclude Include="Editor\Window\EditorWindow.h" />
+    <ClInclude Include="Editor\Window\GameEditorWindow.h" />
     <ClInclude Include="Editor\Window\OpenWindow.h" />
     <ClInclude Include="Runtime\Physics\PhysicsSystem.h" />
     <ClInclude Include="Runtime\Platform\windows.h" />

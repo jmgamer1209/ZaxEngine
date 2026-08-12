@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "Editor/Window/EditorWindow.h"
+#include "Editor/Window/GameEditorWindow.h"
 #include "CS/Bindings/ApplicationBinding.h"
 #include "CS/MonoEntry.h"
 #include "CS/MonoRegisterInternalCall.h"
@@ -32,5 +32,5 @@ void Application::OpenEditor(const boost::filesystem::path& projectPath)
     MonoRegister();
     ZaxEngine::Binding::Application::TriggerStaticInit();
     ZaxEngine::Binding::Application::SetContentPath(contentPath.string());
-    window = new EditorWindow(); //dynamic_cast<WindowBase*>();
+    window = new GameEditorWindow(); //dynamic_cast<WindowBase*>();
 }

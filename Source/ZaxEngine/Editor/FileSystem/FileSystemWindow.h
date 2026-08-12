@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "boost/filesystem/path.hpp"
+#include "Window/EditorWindow.h"
 
 namespace ZaxEngine::Editor::FileSystem
 {
@@ -26,11 +27,11 @@ namespace ZaxEngine::Editor::FileSystem
         FileSystemNode(NodeType type, const boost::filesystem::path& relativePath);
     };
 
-    class FileSystemWindow
+    class FileSystemWindow:EditorWindow
     {
     public:
         FileSystemWindow();
-        void OnGUI();
+        void OnGUI() override;
         void OnGUI_ShowNode(FileSystemNode& node);
     private:
         boost::filesystem::path projectPath;
