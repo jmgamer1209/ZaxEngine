@@ -16,6 +16,7 @@ namespace ZaxEngine::Editor
 
 	EditorWindow::EditorWindow()
 	{
+		// TODO:后续重用ID，防止 ID 超限制
 		gwindowID++;
 		windowID = gwindowID;
 	}
@@ -55,8 +56,8 @@ namespace ZaxEngine::Editor
 				if (ImGui::Begin(name.c_str(), &bShow))
 				{
 					OnGUI();
-					ImGui::End();
 				}
+				ImGui::End();
 			}
 			else
 			{
