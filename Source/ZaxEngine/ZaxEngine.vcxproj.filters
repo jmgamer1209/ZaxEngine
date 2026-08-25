@@ -364,6 +364,9 @@
     <ClCompile Include="Editor\Window\EditorWindow.cpp">
       <Filter>Editor\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\FileSystem\FileImportWindow.cpp">
+      <Filter>Editor\FileSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Core\Debug.h">
@@ -900,6 +903,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Window\EditorWindow.h">
       <Filter>Editor\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\FileSystem\FileImportWindow.h">
+      <Filter>Editor\FileSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

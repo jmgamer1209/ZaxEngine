@@ -24,6 +24,7 @@
 #include "Jolt/Jolt.h"
 #include "Physics/PhysicsSystem.h"
 #include "Audio/AudioEngine.h"
+#include "EditorWindow.h"
 
 using namespace boost;
 using namespace ZaxEngine;
@@ -54,7 +55,8 @@ GameEditorWindow::GameEditorWindow():ZaxEngine::Platform::WindowBase("Editor")
 		Debug::Log(e.what());
 	}
 
-	fileSystemWindow = make_shared < Editor::FileSystem::FileSystemWindow>();
+	fileSystemWindow = Editor::EditorWindow::GetWindow(Editor::WindowNameType::FileSystem);
+	Editor::EditorWindow::Show(fileSystemWindow);
 }
 
 void GameEditorWindow::OnWindowClosed()
@@ -303,7 +305,7 @@ void GameEditorWindow::DrawWindowUI()
         ImGui::End();
     }
 
-	fileSystemWindow->OnGUI();
+	Editor::EditorWindow::AllOnGUI();
 
     //ImGui_ShowDemoWindow();
 }

@@ -153,6 +153,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Editor\FileSystem\FileImportWindow.cpp" />
     <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
@@ -240,6 +241,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Editor\FileSystem\FileImportWindow.h" />
     <ClInclude Include="Editor\FileSystem\FileSystemWindow.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />
     <ClInclude Include="Runtime\Assets\AssetModel.h" />

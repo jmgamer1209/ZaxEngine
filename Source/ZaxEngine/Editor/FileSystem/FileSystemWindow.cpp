@@ -4,11 +4,17 @@
 #include "boost/filesystem/directory.hpp"
 #include <vector>
 #include <unordered_set>
+#include <Window/CommonFileDialogApp.h>
+#include "FileImportWindow.h"
 
 namespace fs = boost::filesystem;
 namespace ZaxEngine::Editor::FileSystem
 {
 	std::unordered_set<std::string> rootFolderSet = { "Content", "Source"};
+	std::shared_ptr<FileImportWindow> importWindowPtr;
+	static bool isOpenImport = false;
+	fs::path importSourcePath;
+	fs::path importTargetPath;
 
 	// 获取指定目录下一级所有子文件夹（不递归深层）
 	void FileSystemWindow::FillSubNodes(FileSystemNode& node)
@@ -44,6 +50,7 @@ namespace ZaxEngine::Editor::FileSystem
 		this->rootNode->relativePath = "";
 		this->rootNode->isExpanded = false;
 		this->rootNode->isRoot = true;
+		windowTitle = "File System";
 	}
 
 
@@ -82,7 +89,17 @@ namespace ZaxEngine::Editor::FileSystem
 			if (ImGui::BeginPopupContextItem(nodeID.c_str()))
 			{
 				select_item_name = nodeID; // 右键点击时选中该节点
-				if (ImGui::MenuItem("资源导入")) { /* logic */ }
+				if (ImGui::MenuItem("资源导入")) { 
+					auto fullPath = (Application::projectFolderPath / node.relativePath).string();
+					if (OpenFileDialog(fullPath))
+					{
+						Debug::Log(fullPath);
+						importSourcePath = fullPath;
+						importTargetPath = Application::projectFolderPath / node.relativePath;
+						auto importWindow = EditorWindow::GetWindow(WindowNameType::FileImport);
+						EditorWindow::Show(importWindow);
+					}
+				}
 				ImGui::EndPopup();
 			}
 
@@ -106,12 +123,7 @@ namespace ZaxEngine::Editor::FileSystem
 
 	void FileSystemWindow::OnGUI()
 	{
-		// 组件属性检视面板
-		ImGui::Begin("File System");
-
 		OnGUI_ShowNode(*rootNode);
-
-		ImGui::End();
 	}
 	FileSystemNode::FileSystemNode()
 	{

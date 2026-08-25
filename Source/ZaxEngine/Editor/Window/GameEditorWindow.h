@@ -10,7 +10,7 @@ public:
     GameObject* selectedGO;
     bool isShowLightingSettings;
     Scene* scene;
-    std::shared_ptr<ZaxEngine::Editor::FileSystem::FileSystemWindow> fileSystemWindow;
+    std::shared_ptr<ZaxEngine::Editor::EditorWindow> fileSystemWindow;
     //ShaderProgram* shaderProgram;
 
     GameEditorWindow();

@@ -27,7 +27,7 @@ namespace ZaxEngine::Editor::FileSystem
         FileSystemNode(NodeType type, const boost::filesystem::path& relativePath);
     };
 
-    class FileSystemWindow:EditorWindow
+    class FileSystemWindow: public EditorWindow
     {
     public:
         FileSystemWindow();
