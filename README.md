@@ -49,6 +49,7 @@
 * unity mono, branch 是 unity-2022.3-mbe, 提供C#脚本能力
 * JoltPhysics v5.5.0, 物理引擎，编译的库使用的模式为不保证跨平台一致性(后续可能调整编译选项)
 * miniaudio v0.11.25, 简易音频播放库，可跨平台使用
+* yaml-cpp，v0.9.0，yaml 处理库
 
 参考引擎：Overload,Godot,Unity,Unreal
 

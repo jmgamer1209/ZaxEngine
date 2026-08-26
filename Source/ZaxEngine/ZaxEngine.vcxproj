@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLFW_INCLUDE_NONE;WIN32;_WINDOWS;JPH_FLOATING_POINT_EXCEPTIONS_ENABLED;JPH_DEBUG_RENDERER;JPH_PROFILE_ENABLED;JPH_OBJECT_STREAM;JPH_USE_AVX2;JPH_USE_AVX;JPH_USE_SSE4_1;JPH_USE_SSE4_2;JPH_USE_LZCNT;JPH_USE_TZCNT;JPH_USE_F16C;JPH_USE_FMADD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\Runtime;$(ProjectDir)\Editor;$(ProjectDir)\Scripting;ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;ThirdParty\boost;ThirdParty\mono\include;ThirdParty\JoltPhysics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\Runtime;$(ProjectDir)\Editor;$(ProjectDir)\Scripting;ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;ThirdParty\boost;ThirdParty\mono\include;ThirdParty\JoltPhysics;ThirdParty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -122,7 +122,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc143-mtd.lib;shlwapi.lib;propsys.lib;comctl32.lib;mono-2.0-bdwgc.lib;Debug/Jolt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib;msvcprt</IgnoreSpecificDefaultLibraries>
-      <AdditionalLibraryDirectories>ThirdParty\imgui\examples\libs\glfw\lib-vc2010-64;ThirdParty\assimp;ThirdParty\boost\libs;ThirdParty\mono\lib;ThirdParty\JoltPhysics\Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>ThirdParty\imgui\examples\libs\glfw\lib-vc2010-64;ThirdParty\assimp;ThirdParty\boost\libs;ThirdParty\mono\lib;ThirdParty\JoltPhysics\Win64;ThirdParty\yaml-cpp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>assimp-vc143-mtd.dll;mono-2.0-bdwgc.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>

@@ -17,6 +17,7 @@
 using namespace boost;
 
 #include <Editor/Window/CommonFileDialogApp.h>
+#include "yaml-cpp/yaml.h"
 
 
 char Path[MAX_PATH] = "";
