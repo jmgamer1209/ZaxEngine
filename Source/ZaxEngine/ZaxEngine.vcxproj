@@ -155,6 +155,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   <ItemGroup>
     <ClCompile Include="Editor\FileSystem\FileImportWindow.cpp" />
     <ClCompile Include="Editor\FileSystem\FileSystemWindow.cpp" />
+    <ClCompile Include="Editor\Importer\TextureImporter.cpp" />
     <ClCompile Include="Editor\Window\EditorWindow.cpp" />
     <ClCompile Include="Runtime\Assets\AssetModel.cpp" />
     <ClCompile Include="Runtime\Audio\AudioEngine.cpp" />
@@ -243,6 +244,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
   <ItemGroup>
     <ClInclude Include="Editor\FileSystem\FileImportWindow.h" />
     <ClInclude Include="Editor\FileSystem\FileSystemWindow.h" />
+    <ClInclude Include="Editor\Importer\TextureImporter.h" />
     <ClInclude Include="Editor\Window\EditorWindow.h" />
     <ClInclude Include="Runtime\Assets\AssetModel.h" />
     <ClInclude Include="Runtime\Audio\AudioEngine.h" />

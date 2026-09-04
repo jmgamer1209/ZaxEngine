@@ -5,6 +5,7 @@
 #include "boost/filesystem/path.hpp"
 #include <string>
 #include <unordered_map>
+#include "imgui/imgui.h"
 
 namespace ZaxEngine::Editor
 {
@@ -29,6 +30,7 @@ namespace ZaxEngine::Editor
 
         std::string windowTitle;
         WindowShowType showType = WindowShowType::Normal;
+        ImVec2 windowSize;
 
         static void AllOnGUI();
 

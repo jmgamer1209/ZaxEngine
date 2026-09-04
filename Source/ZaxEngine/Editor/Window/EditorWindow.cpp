@@ -53,6 +53,9 @@ namespace ZaxEngine::Editor
 			std::string name = windowTitle + "##EditorWindow" + std::to_string(windowID);
 			if (this->showType == WindowShowType::Normal)
 			{
+				if (this->windowSize.x != 0 && this->windowSize.y != 0) {
+					ImGui::SetNextWindowSize(ImVec2(300, 400), ImGuiCond_FirstUseEver);
+				}
 				if (ImGui::Begin(name.c_str(), &bShow))
 				{
 					OnGUI();
@@ -62,6 +65,9 @@ namespace ZaxEngine::Editor
 			else
 			{
 				ImGui::OpenPopup(name.c_str());
+				if (this->windowSize.x != 0 && this->windowSize.y != 0) {
+					ImGui::SetNextWindowSize(ImVec2(300, 400), ImGuiCond_FirstUseEver);
+				}
 				if (ImGui::BeginPopupModal(name.c_str(), &bShow))
 				{
 					OnGUI();

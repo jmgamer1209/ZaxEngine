@@ -107,6 +107,9 @@
     <Filter Include="Runtime\FileSystem">
       <UniqueIdentifier>{a5e1d613-2a92-420b-a700-06a0dac59aa8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor\Importer">
+      <UniqueIdentifier>{8f7d0bd1-d2bf-487e-8c81-caac481edab6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -366,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="Editor\FileSystem\FileImportWindow.cpp">
       <Filter>Editor\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Importer\TextureImporter.cpp">
+      <Filter>Editor\Importer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -906,6 +912,9 @@
     </ClInclude>
     <ClInclude Include="Editor\FileSystem\FileImportWindow.h">
       <Filter>Editor\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Importer\TextureImporter.h">
+      <Filter>Editor\Importer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
