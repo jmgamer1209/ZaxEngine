@@ -189,6 +189,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\Core\ZObject.cpp" />
     <ClCompile Include="Runtime\Core\ZString.cpp" />
     <ClCompile Include="Runtime\FileSystem\FileSystem.cpp" />
+    <ClCompile Include="Runtime\ThirdPartyExtension\imgui\imgui_extension.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\ApplicationBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\AudioManagerBinding.cpp" />
     <ClCompile Include="Scripting\CS\Bindings\BindingCommon.cpp" />
@@ -279,6 +280,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Runtime\Core\ZObject.h" />
     <ClInclude Include="Runtime\Core\ZString.h" />
     <ClInclude Include="Runtime\FileSystem\FileSystem.h" />
+    <ClInclude Include="Runtime\ThirdPartyExtension\imgui\imgui_extension.h" />
     <ClInclude Include="Scripting\CS\Bindings\ApplicationBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\AudioManagerBinding.h" />
     <ClInclude Include="Scripting\CS\Bindings\BindingCommon.h" />

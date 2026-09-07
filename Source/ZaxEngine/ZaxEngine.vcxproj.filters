@@ -110,6 +110,12 @@
     <Filter Include="Editor\Importer">
       <UniqueIdentifier>{8f7d0bd1-d2bf-487e-8c81-caac481edab6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\ThirdPartyExtension">
+      <UniqueIdentifier>{1ee20c96-947c-4516-8bc5-20887896b5c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\ThirdPartyExtension\imgui">
+      <UniqueIdentifier>{e0875bd3-0bcf-4055-8d93-021d37d05a46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\imgui\imgui.cpp">
@@ -372,6 +378,9 @@
     </ClCompile>
     <ClCompile Include="Editor\Importer\TextureImporter.cpp">
       <Filter>Editor\Importer</Filter>
+    </ClCompile>
+    <ClCompile Include="Runtime\ThirdPartyExtension\imgui\imgui_extension.cpp">
+      <Filter>Runtime\ThirdPartyExtension\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -915,6 +924,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Importer\TextureImporter.h">
       <Filter>Editor\Importer</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\ThirdPartyExtension\imgui\imgui_extension.h">
+      <Filter>Runtime\ThirdPartyExtension\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
