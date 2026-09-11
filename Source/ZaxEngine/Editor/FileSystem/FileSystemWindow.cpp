@@ -96,8 +96,10 @@ namespace ZaxEngine::Editor::FileSystem
 						Debug::Log(fullPath);
 						importSourcePath = fullPath;
 						importTargetPath = Application::projectFolderPath / node.relativePath;
-						auto importWindow = EditorWindow::GetWindow(WindowNameType::FileImport);
-						EditorWindow::Show(importWindow);
+						filesystem::copy(importSourcePath, importTargetPath);
+						// 先拷贝文件到目录，然后执行 AssetDB 的刷新操作，进行文件导入
+						/*auto importWindow = EditorWindow::GetWindow(WindowNameType::FileImport);
+						EditorWindow::Show(importWindow);*/
 					}
 				}
 				ImGui::EndPopup();

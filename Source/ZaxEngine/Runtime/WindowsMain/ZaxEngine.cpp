@@ -20,10 +20,14 @@
 #include "filesystem/directory.hpp"
 #include "filesystem/operations.hpp"
 #include "CS/MonoEntry.h"
+#include "nowide/filesystem.hpp"
 
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {
+	// 程序启动调用一次，接管 filesystem 字符串转换，对 filepath 执行 string 时，会返回 utf8 编码字符串
+	boost::nowide::nowide_filesystem();
+
 	// 添加 dll 搜索路径，这里需要导出后 dll 的位置，当前关联了项目设置的生成后事件的dll复制
 	filesystem::path exePath = Utils::GetExeDirectory();
 	auto dataPath = exePath / L"Data";
