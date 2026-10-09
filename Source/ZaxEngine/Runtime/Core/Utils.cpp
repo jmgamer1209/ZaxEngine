@@ -11,13 +11,17 @@
 #include "Core/Debug.h"
 #include <boost/locale/encoding.hpp>
 
-
+/// <summary>
+/// utf16 wchar 转 utf8 char
+/// </summary>
+/// <param name="wchar"></param>
+/// <returns></returns>
 char* Utils::WChar2Char(const wchar_t* wchar)
 {
 	char* m_char;    
-	int len= WideCharToMultiByte( CP_ACP ,0, wchar, wcslen(wchar), NULL,0, NULL ,NULL );    
+	int len= WideCharToMultiByte(CP_UTF8,0, wchar, wcslen(wchar), NULL,0, NULL ,NULL );
 	m_char= new char[len+1];     
-	WideCharToMultiByte( CP_ACP, 0, wchar, wcslen(wchar), m_char, len, NULL ,NULL );     
+	WideCharToMultiByte(CP_UTF8, 0, wchar, wcslen(wchar), m_char, len, NULL ,NULL );
 	m_char[len]= '\0';     
 	return m_char;
 }
