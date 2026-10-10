@@ -1,5 +1,6 @@
 #include "Texture.h"
-#include "Core/Utils.h"
+
+import Utils;
 
 Texture::Texture(TextureType type, unsigned int ID)
 {

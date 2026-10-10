@@ -3,7 +3,8 @@
 #include "Core/Color.h"
 #include "Component/Transform.h"
 #include "Renderer/ShadowFrameBuffer.h"
-#include "Core/Utils.h"
+
+import Utils;
 
 enum class LightType:uint8_t
 {

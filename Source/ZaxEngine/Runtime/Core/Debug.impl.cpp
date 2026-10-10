@@ -1,11 +1,13 @@
 module;
 #include <iostream>
-#include "Utils.h"
 #include"Platform/windows.h"
 #include <comutil.h>  
 #pragma comment(lib, "comsuppw.lib")
+#include <string>
 
 module Debug;
+
+import Utils;
 
 void Debug::Log(const std::string& log)
 {

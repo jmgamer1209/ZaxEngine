@@ -10,9 +10,11 @@
 #include "filesystem/operations.hpp"
 #include "dll/runtime_symbol_info.hpp"
 #include <string>
+#include <cstddef>
+#include <cstring>
 
-#include "Core/Utils.h"
 
+import Utils;
 import Debug;
 
 using namespace boost;
@@ -21,7 +23,8 @@ using namespace boost;
 #include "yaml-cpp/yaml.h"
 
 
-char Path[MAX_PATH] = "";
+constexpr std::size_t ProjectPathBufferSize = 260;
+char Path[ProjectPathBufferSize] = "";
 boost::filesystem::path projectPath;
 bool shouldOpenEditorOnClose = false;
 

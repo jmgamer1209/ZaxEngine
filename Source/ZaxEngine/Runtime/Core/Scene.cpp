@@ -5,7 +5,8 @@
 
 #include "boost/json.hpp"
 #include "Application.h"
-#include "Utils.h"
+
+import Utils;
 import Debug;
 
 using namespace boost;

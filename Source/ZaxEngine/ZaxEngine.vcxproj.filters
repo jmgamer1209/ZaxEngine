@@ -151,7 +151,7 @@
     <ClCompile Include="Runtime\Core\std_handler.cpp">
       <Filter>Runtime\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Runtime\Core\Utils.cpp">
+    <ClCompile Include="Runtime\Core\Utils.impl.cpp">
       <Filter>Runtime\Core</Filter>
     </ClCompile>
     <ClCompile Include="Runtime\WindowsMain\ZaxEngine.cpp">
@@ -385,6 +385,9 @@
     <ClCompile Include="Runtime\Core\Debug.ixx">
       <Filter>Runtime\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Runtime\Core\Utils.ixx">
+      <Filter>Runtime\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Runtime\Core\GameObject.h">
@@ -394,9 +397,6 @@
       <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="Runtime\Core\ShaderProgram.h">
-      <Filter>Runtime\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Runtime\Core\Utils.h">
       <Filter>Runtime\Core</Filter>
     </ClInclude>
     <ClInclude Include="Runtime\WindowsMain\ZaxEngine.h">

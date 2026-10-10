@@ -1,11 +1,12 @@
 #include "Component/RigidBody.h"
-#include "Core/Utils.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Component/Transform.h"
 #include "Physics/PhysicsSystem.h"
 #include "Jolt/Physics/Collision/Shape/EmptyShape.h"
 #include "Jolt/Physics/Collision/Shape/BoxShape.h"
 #include "Core/Math.h"
+
+import Utils;
 
 using namespace ZaxEngine::Physics;
 

@@ -1,5 +1,6 @@
 #include "SceneManager.h"
-#include "Utils.h"
+
+import Utils;
 
 Scene*  SceneManager::mainScene = nullptr;
 

@@ -1,9 +1,10 @@
 #include "Component/BoxCollider.h"
-#include "Core/Utils.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Component/Transform.h"
 #include "Jolt/Jolt.h"
 #include "Jolt/Physics/Collision/Shape/BoxShape.h"
+
+import Utils;
 
 BoxCollider::BoxCollider():boxSize(1.0f)
 {

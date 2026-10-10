@@ -184,7 +184,8 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\Core\ShaderProgram.cpp" />
     <ClCompile Include="Runtime\Core\std_handler.cpp" />
     <ClCompile Include="Runtime\Core\Texture.cpp" />
-    <ClCompile Include="Runtime\Core\Utils.cpp" />
+    <ClCompile Include="Runtime\Core\Utils.impl.cpp" />
+    <ClCompile Include="Runtime\Core\Utils.ixx" />
     <ClCompile Include="Runtime\Core\Vector.cpp" />
     <ClCompile Include="Runtime\Core\WindowBase.cpp" />
     <ClCompile Include="Runtime\Core\ZObject.cpp" />
@@ -273,7 +274,6 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Runtime\Core\SceneManager.h" />
     <ClInclude Include="Runtime\Core\ShaderProgram.h" />
     <ClInclude Include="Runtime\Core\Texture.h" />
-    <ClInclude Include="Runtime\Core\Utils.h" />
     <ClInclude Include="Runtime\Core\Vector.h" />
     <ClInclude Include="Runtime\Core\Vertex.h" />
     <ClInclude Include="Runtime\Core\WindowBase.h" />

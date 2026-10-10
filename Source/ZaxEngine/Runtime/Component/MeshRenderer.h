@@ -5,10 +5,11 @@
 #include "Component/Camera.h"
 #include "Component/Transform.h"
 #include "Component/Light.h"
-#include "Core/Utils.h"
 #include "imgui/imgui.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Core/Mesh.h"
+
+import Utils;
 
 class MeshRenderer: public Component
 {

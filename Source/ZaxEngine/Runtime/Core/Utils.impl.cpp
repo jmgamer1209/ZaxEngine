@@ -1,5 +1,6 @@
-#include "Utils.h"
+module;
 
+#include "Platform/windows.h"
 #include <fstream>
 
 #include "glad/gl.h"
@@ -9,6 +10,8 @@
 
 #include "Application.h"
 #include <boost/locale/encoding.hpp>
+
+module Utils;
 
 import Debug;
 

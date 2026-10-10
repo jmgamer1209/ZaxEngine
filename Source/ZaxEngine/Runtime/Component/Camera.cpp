@@ -1,8 +1,9 @@
 #include "Component/Camera.h"
-#include "Core/Utils.h"
 #include "imgui/imgui.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Component/Transform.h"
+
+import Utils;
 
 glm::mat4 Camera::GetViewMatrix()
 {

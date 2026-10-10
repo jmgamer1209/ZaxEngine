@@ -1,5 +1,5 @@
-#pragma once
-#include "Platform/windows.h"
+module;
+
 #include <string>
 #include <comutil.h>  
 #pragma comment(lib, "comsuppw.lib")
@@ -9,7 +9,9 @@
 #include "filesystem/path.hpp"
 #include "Core/Texture.h"
 
-namespace Utils
+export module Utils;
+
+export namespace Utils
 {
 	char* WChar2Char(const wchar_t* wchar);
 	string WString2String(const wstring& ws);

@@ -1,10 +1,10 @@
+#include <Window/CommonFileDialogApp.h>
 #include "FileSystemWindow.h"
 #include "Core/Application.h"
 #include "boost/filesystem/operations.hpp"
 #include "boost/filesystem/directory.hpp"
 #include <vector>
 #include <unordered_set>
-#include <Window/CommonFileDialogApp.h>
 #include "FileImportWindow.h"
 
 namespace fs = boost::filesystem;
