@@ -12,6 +12,10 @@
 
 **如何运行：**
 
+引擎编译工具：VS2022，C++版本：C++20
+
+这里没有选择CMake，目前主要开发还是在PC平台，到后期如果有跨平台需要再进行切换。
+
 1. 打开 Source/ZaxEngine.sln，生成引擎项目
 2. 打开 Project/Default/Default.sln，生成项目
 3. 在 ZaxEngine.sln 运行或者双击 Source/Binary/Debug/ZaxEngine.exe 运行
@@ -54,10 +58,6 @@
 参考引擎：Overload,Godot,Unity,Unreal
 
 图形 Debug 工具：RenderDoc
-
-引擎编译工具：VS2022，这里没有选择CMake，目前主要开发还是在PC平台，到后期如果有跨平台需要再进行切换。
-
-C++版本：C++17
 
 初始版本使用 OpenGL 图形库,版本为 3.3（此版本可以包含大部分内容了，如果后面功能不足，会进行版本升级），后续随着扩展，会逐步扩充 DirectX11，DirectX12，Vulkan。
 
