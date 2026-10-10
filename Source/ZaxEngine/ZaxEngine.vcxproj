@@ -170,7 +170,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\Component\Skybox.cpp" />
     <ClCompile Include="Runtime\Component\Transform.cpp" />
     <ClCompile Include="Runtime\Core\Application.cpp" />
-    <ClCompile Include="Runtime\Core\Debug.cpp" />
+    <ClCompile Include="Runtime\Core\Debug.impl.cpp" />
     <ClCompile Include="Runtime\Core\Debug.ixx" />
     <ClCompile Include="Runtime\Core\Event\Event.cpp" />
     <ClCompile Include="Runtime\Core\GameObject.cpp" />

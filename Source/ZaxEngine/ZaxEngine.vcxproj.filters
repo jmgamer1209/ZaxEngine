@@ -136,7 +136,7 @@
     <ClCompile Include="ThirdParty\glad\src\gl.c">
       <Filter>ThirdParty\glad</Filter>
     </ClCompile>
-    <ClCompile Include="Runtime\Core\Debug.cpp">
+    <ClCompile Include="Runtime\Core\Debug.impl.cpp">
       <Filter>Runtime\Core</Filter>
     </ClCompile>
     <ClCompile Include="Runtime\Core\GameObject.cpp">
