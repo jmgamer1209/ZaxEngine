@@ -2,9 +2,10 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include "Core/Debug.h"
 #include "BindingHelper.h"
 #include "BindingCommon.h"
+
+import Debug;
 
 namespace ZaxEngine::Binding::Debug {
 

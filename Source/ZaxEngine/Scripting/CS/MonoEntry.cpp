@@ -1,13 +1,14 @@
 #include "MonoEntry.h"
 #include <iostream>
 #include "boost/filesystem/path.hpp"
-#include "Core/Debug.h"
 #include "Core/Application.h"
 #include "Core/Utils.h"
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/exception.h>
 #include "Bindings/BindingHelper.h"
+
+import Debug;
 
 //std::cout << LOG << std::endl;	\
 

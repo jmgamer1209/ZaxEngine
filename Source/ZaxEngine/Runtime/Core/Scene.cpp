@@ -6,7 +6,7 @@
 #include "boost/json.hpp"
 #include "Application.h"
 #include "Utils.h"
-#include "Debug.h"
+import Debug;
 
 using namespace boost;
 

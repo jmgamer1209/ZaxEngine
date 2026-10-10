@@ -1,10 +1,10 @@
 #include "ShaderProgram.h"
-#include "Debug.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
 #include <algorithm>
+import Debug;
 
 class Node
 {

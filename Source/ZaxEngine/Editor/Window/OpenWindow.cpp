@@ -4,7 +4,6 @@
 #include <glad/gl.h>
 
 #include "Core/Application.h"
-#include "Core/Debug.h"
 
 #include "filesystem/path.hpp"
 #include "filesystem/directory.hpp"
@@ -13,6 +12,8 @@
 #include <string>
 
 #include "Core/Utils.h"
+
+import Debug;
 
 using namespace boost;
 

@@ -1,7 +1,6 @@
 #include "ZaxEngine.h"
 #include <iostream>
 #include "Core/ShaderProgram.h"
-#include "Core/Debug.h"
 #include "Core/Utils.h"
 #include "stb_image.h"
 #include "glm/glm.hpp"
@@ -22,6 +21,7 @@
 #include "CS/MonoEntry.h"
 #include "nowide/filesystem.hpp"
 
+import Debug;
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nShowCmd)
 {

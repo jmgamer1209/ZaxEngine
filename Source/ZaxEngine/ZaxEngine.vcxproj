@@ -113,7 +113,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\Runtime;$(ProjectDir)\Editor;$(ProjectDir)\Scripting;ThirdParty;ThirdParty\imgui;ThirdParty\imgui\backends;ThirdParty\imgui\examples\libs\glfw\include;ThirdParty\glad\include;ThirdParty\assimp\include;ThirdParty\boost;ThirdParty\mono\include;ThirdParty\JoltPhysics;ThirdParty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ObjectFileName>$(IntDir)%(RelativeDir)%(FileName).obj</ObjectFileName>
     </ClCompile>
@@ -171,6 +171,7 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClCompile Include="Runtime\Component\Transform.cpp" />
     <ClCompile Include="Runtime\Core\Application.cpp" />
     <ClCompile Include="Runtime\Core\Debug.cpp" />
+    <ClCompile Include="Runtime\Core\Debug.ixx" />
     <ClCompile Include="Runtime\Core\Event\Event.cpp" />
     <ClCompile Include="Runtime\Core\GameObject.cpp" />
     <ClCompile Include="Runtime\Core\InputSystem\Input.cpp" />
@@ -261,7 +262,6 @@ xcopy /y /d /e "ThirdParty\mono\lib\mono\net_4_x-win32\" "$(OutDir)\Data\Mono\ne
     <ClInclude Include="Runtime\Component\Transform.h" />
     <ClInclude Include="Runtime\Core\Application.h" />
     <ClInclude Include="Runtime\Core\Color.h" />
-    <ClInclude Include="Runtime\Core\Debug.h" />
     <ClInclude Include="Runtime\Core\Event\Event.h" />
     <ClInclude Include="Runtime\Core\GameObject.h" />
     <ClInclude Include="Runtime\Core\InputSystem\Input.h" />

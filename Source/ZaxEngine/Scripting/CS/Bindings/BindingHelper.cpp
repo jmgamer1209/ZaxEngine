@@ -3,12 +3,14 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include "Core/Debug.h"
 #include "CS/MonoEntry.h"
 #include "Component/Component.h"
 #include "Component/Transform.h"
 #include "BindingCommon.h"
 #include "Scripting/ScriptField.h"
+
+import Debug;
+
 using namespace ZaxEngine::Scripting;
 
 namespace ZaxEngine::Binding::BindingHelper {

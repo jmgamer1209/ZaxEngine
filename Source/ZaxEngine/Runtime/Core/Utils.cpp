@@ -8,8 +8,9 @@
 #include <vector>
 
 #include "Application.h"
-#include "Core/Debug.h"
 #include <boost/locale/encoding.hpp>
+
+import Debug;
 
 /// <summary>
 /// utf16 wchar 转 utf8 char

@@ -2,7 +2,7 @@
 #include "mono/metadata/class.h"
 #include "Component/RigidBody.h"
 #include "BindingHelper.h"
-#include <Core/Debug.h>
+import Debug;
 
 namespace ZaxEngine::Binding::BoxCollider
 {

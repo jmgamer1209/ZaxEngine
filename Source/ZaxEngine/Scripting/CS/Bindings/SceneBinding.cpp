@@ -3,10 +3,11 @@
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
 #include "Core/Scene.h"
-#include "Core/Debug.h"
 #include "Core/SceneManager.h"
 #include "BindingHelper.h"
 #include "BindingCommon.h"
+
+import Debug;
 
 namespace ZaxEngine::Binding::Scene {
 

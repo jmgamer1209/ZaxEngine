@@ -382,11 +382,11 @@
     <ClCompile Include="Runtime\ThirdPartyExtension\imgui\imgui_extension.cpp">
       <Filter>Runtime\ThirdPartyExtension\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Runtime\Core\Debug.ixx">
+      <Filter>Runtime\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Runtime\Core\Debug.h">
-      <Filter>Runtime\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Runtime\Core\GameObject.h">
       <Filter>Runtime\Core</Filter>
     </ClInclude>

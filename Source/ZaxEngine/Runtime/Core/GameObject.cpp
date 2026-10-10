@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "imgui/imgui.h"
-#include "Debug.h"
+import Debug;
 
 GameObject::GameObject()
 {

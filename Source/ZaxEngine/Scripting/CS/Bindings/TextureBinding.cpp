@@ -2,11 +2,12 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include "Core/Debug.h"
 #include "CS/MonoEntry.h"
 #include "BindingHelper.h"
 #include "BindingCommon.h"
 #include "Core/ZString.h"
+
+import Debug;
 
 namespace ZaxEngine::Binding::Texture {
 

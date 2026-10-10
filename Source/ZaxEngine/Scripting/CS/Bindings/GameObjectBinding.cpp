@@ -2,13 +2,14 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/class.h"
-#include "Core/Debug.h"
 #include "Core/GameObject.h"
 #include "CS/MonoEntry.h"
 #include "BindingHelper.h"
 #include "BindingCommon.h"
 #include "Component/Transform.h"
 #include <mono/metadata/reflection.h>
+
+import Debug;
 
 namespace ZaxEngine::Binding::GameObject {
 

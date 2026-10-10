@@ -1,6 +1,6 @@
 #pragma once
 #include "glad/gl.h"
-#include "Core/Debug.h"
+import Debug;
 
 class FrameBuffer
 {

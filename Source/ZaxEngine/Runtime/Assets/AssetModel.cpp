@@ -1,7 +1,7 @@
 #include "AssetModel.h"
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
-#include "Core/Debug.h"
+import Debug;
 
 AssetMesh::AssetMesh(vector<Vertex> vertices, vector<unsigned int> indices, unsigned int materialIndex)
 {

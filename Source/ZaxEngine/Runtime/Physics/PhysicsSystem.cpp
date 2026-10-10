@@ -4,8 +4,9 @@
 #include "Jolt/Core/IssueReporting.h"
 #include "Jolt/RegisterTypes.h"
 #include "Jolt/Core/TempAllocator.h"
-#include <Core/Debug.h>
 #include "Runtime/Component/Collider.h"
+
+import Debug;
 
 namespace ZaxEngine::Physics
 {

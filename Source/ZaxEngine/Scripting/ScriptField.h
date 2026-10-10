@@ -1,6 +1,7 @@
 #pragma once
 #include "mono/metadata/object.h"
-#include "Core/Debug.h"
+#include <string>
+import Debug;
 
 namespace ZaxEngine::Scripting
 {

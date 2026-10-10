@@ -2,9 +2,10 @@
 #include "mono/metadata/class.h"
 #include "Component/Component.h"
 #include "BindingHelper.h"
-#include <Core/Debug.h>
 #include <mono/jit/jit.h>
 #include "Scripting/ScriptFunc.h"
+
+import Debug;
 
 namespace ZaxEngine::Binding::GameComponent
 {

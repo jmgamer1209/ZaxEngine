@@ -1,6 +1,10 @@
-#include "Debug.h"
 #include <iostream>
 #include "Utils.h"
+#include"Platform/windows.h"
+#include <comutil.h>  
+#pragma comment(lib, "comsuppw.lib")
+
+module Debug;
 
 void Debug::Log(const std::string& log)
 {
@@ -30,7 +34,7 @@ void Debug::Log(const std::wstring& log)
 	auto temp = log + L"\n";
 
 	// 控制台和调试器都输出
-	std::cout << temp.c_str();
+	std::wcout << temp.c_str();
 	OutputDebugStringW(temp.c_str());
 }
 
